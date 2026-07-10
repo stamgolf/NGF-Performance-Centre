@@ -492,7 +492,7 @@ const LIES={f:"Fairway",r:"Rough",s:"Sand",g:"Green"};const DLIES={f:"Fairway",r
 const LV=["PGA Tour"];
 function spread(min,max,n){if(n===1)return [Math.round((min+max)/2)];const a=[];for(let i=0;i<n;i++)a.push(Math.round(min+(max-min)*i/(n-1)));return a;}
 const NSIT=[3,6,9,12,15,18], NHOLE=[6,9,12,18];
-const APP_VERSION="v100";
+const APP_VERSION="v101";
 const TESTS={
 putt_3_5:{name:"Putt 3–5 ft",cat:"Putten",eng:"putt_cat",dists:[3,4,5],per:8,info:"24 putts (8× vanaf 3, 4 en 5 ft). Per afstand: holed, mis binnen 3 ft, mis buiten 3 ft. Output: SG + make%."},
 putt_6_10:{name:"Putt 6–10 ft",cat:"Putten",eng:"putt_cat",dists:[6,8,10],per:8,info:"24 putts (8× vanaf 6, 8 en 10 ft). Zelfde invoer als 3–5 ft."},
@@ -999,12 +999,14 @@ openSheet(true);
 if(s.inputs)$("#editPS").onclick=()=>editSession(s,"progress");
 if(s.counts!==true){$("#delPS").onclick=()=>confirmDlg(s.results.length>1?"Alleen jouw resultaat verwijderen?":"Test verwijderen?",()=>{if(s.results.length>1){s.results=s.results.filter(x=>x.playerId!==pid);if(!s.results.length)state.sessions=(state.sessions||[]).filter(x=>x.id!==s.id);}else{state.sessions=(state.sessions||[]).filter(x=>x.id!==s.id);}rehydrate();save();closeSheet();show("progress");});}}
 let progPlayer=null, progOpen={}, progWin='all', progPuttMetric={}, progRank='all', progFiltOpen=false, progCompare='period', progCompareSeasonId=null, progTeamFilter='all', ovOpen={};
+var selPlayer=null;
+function setSelPlayer(pid){selPlayer=pid;goalPlayer=pid;progPlayer=pid;progTeamFilter='all';tlPlayer=pid;tlTeam=null;}
 function rankOk(s){return progRank==='all'||(progRank==='rank'?s.counts===true:s.counts!==true);}
 function winSlice(hist){if(progWin==='all')return hist;const n=progWin==='last'?1:progWin;return hist.slice(Math.max(0,hist.length-n));}
 function isPuttEng(t){return t.eng==='putt_cat'||t.eng==='putt_prox'||t.eng==='course';}
 function renderProgress(){const _sy=window.scrollY;$("#progSwitch").innerHTML="";const box=$("#progressBody");box.innerHTML="";chartReg={};if(progSeasonId&&team()&&!team().seasons.find(s=>s.id===progSeasonId))progSeasonId=null;
 if(!(state.players||[]).length){box.appendChild(el("div","empty",'<div class="em">📈</div><p>Nog geen spelers of data.</p>'));return;}
-if(!progPlayer||!(state.players||[]).find(p=>p.id===progPlayer))progPlayer=((state.players||[])[0]||{}).id||null;if(!progPlayer){box.appendChild(el("div","empty",'<div class="em">📈</div><p>Nog geen spelers of data.</p>'));return;}var pteams=(state.teams||[]).filter(function(tt){return (tt.playerIds||[]).indexOf(progPlayer)>=0;});if(progTeamFilter!=="all"&&!pteams.find(function(tt){return tt.id===progTeamFilter;}))progTeamFilter="all";
+if(!progPlayer||!(state.players||[]).find(p=>p.id===progPlayer))progPlayer=((state.players||[])[0]||{}).id||null;if(selPlayer&&registryPlayer(selPlayer))progPlayer=selPlayer;if(!progPlayer){box.appendChild(el("div","empty",'<div class="em">📈</div><p>Nog geen spelers of data.</p>'));return;}var pteams=(state.teams||[]).filter(function(tt){return (tt.playerIds||[]).indexOf(progPlayer)>=0;});if(progTeamFilter!=="all"&&!pteams.find(function(tt){return tt.id===progTeamFilter;}))progTeamFilter="all";
 const head=el("div","card");
 const seasonHtml=((team()&&team().seasons.length)?'<div style="display:flex;align-items:center;gap:8px;margin-top:10px"><span class="fld" style="margin:0;white-space:nowrap">Seizoen</span><select class="in" id="seasonSelP" style="flex:1"><option value="">Alle seizoenen</option>'+team().seasons.slice().reverse().map(se=>'<option value="'+se.id+'" '+(se.id===progSeasonId?'selected':'')+'>'+esc(se.name)+'</option>').join('')+'</select></div>':'');
 const cmpSeg='<div style="display:flex;align-items:center;gap:8px;margin-top:10px"><span class="fld" style="margin:0;white-space:nowrap">Vergelijk</span><div class="seg" id="cmpSeg" style="flex:1"><button class="'+(progCompare==='period'?'on':'')+'" data-cmp="period">Periode</button><button class="'+(progCompare==='season'?'on':'')+'" data-cmp="season">Seizoen</button></div></div>';
@@ -1012,7 +1014,7 @@ const cmpSeasonHtml=(progCompare==='season'&&team()&&team().seasons.length)?(fun
 const filt='<div style="display:flex;align-items:center;gap:8px;margin-top:10px"><span class="fld" style="margin:0;white-space:nowrap">Periode</span><div class="seg" id="winSeg" style="flex:1">'+[['all','Alles'],['10','10'],['5','5'],['last','1']].map(o=>'<button class="'+((''+progWin)===o[0]?'on':'')+'" data-w="'+o[0]+'">'+o[1]+'</button>').join("")+'</div></div><div style="display:flex;align-items:center;gap:8px;margin-top:10px"><span class="fld" style="margin:0;white-space:nowrap">Type</span><div class="seg" id="rankSegP" style="flex:1">'+[['all','Alles'],['rank','Ranking'],['solo','Zelfstandig']].map(o=>'<button class="'+(progRank===o[0]?'on':'')+'" data-r="'+o[0]+'">'+o[1]+'</button>').join("")+'</div></div>'+seasonHtml+cmpSeg+cmpSeasonHtml;
 head.innerHTML='<label class="fld">Speler</label><span class="acwrap" style="display:block"><input class="in" id="progSelPQ" autocomplete="off" value="'+esc(nameOf(progPlayer))+'" placeholder="Zoek speler\u2026" style="width:100%"></span>'+(pteams.length>1?'<select class="in" id="progTeamF" style="margin-top:8px"><option value="all"'+(progTeamFilter==="all"?" selected":"")+'>Alle teams</option>'+pteams.map(function(tt){return '<option value="'+tt.id+'"'+(progTeamFilter===tt.id?" selected":"")+'>'+esc(tt.name)+'</option>';}).join("")+'</select>':"")+'<div class="filtwrap'+(progFiltOpen?' open':'')+'"><button class="filttog" id="progFiltH">Filters<span class="chev">\u25b6</span></button><div class="filtbody">'+filt+'</div></div>';
 box.appendChild(head);
-var _pq=$("#progSelPQ");if(_pq){_pq.onchange=function(){var v=_pq.value.trim().toLowerCase();var p=(state.players||[]).find(function(x){return (x.name||"").toLowerCase()===v;});if(p){progPlayer=p.id;progTeamFilter="all";save();renderProgress();}};_pq.onfocus=function(){_pq.select();};acAttach(_pq,(state.players||[]),function(pp){return pp.name;},function(pp){progPlayer=pp.id;progTeamFilter="all";save();renderProgress();});}
+var _pq=$("#progSelPQ");if(_pq){_pq.onchange=function(){var v=_pq.value.trim().toLowerCase();var p=(state.players||[]).find(function(x){return (x.name||"").toLowerCase()===v;});if(p){setSelPlayer(p.id);save();renderProgress();}};_pq.onfocus=function(){_pq.select();};acAttach(_pq,(state.players||[]),function(pp){return pp.name;},function(pp){setSelPlayer(pp.id);save();renderProgress();});}
 $("#progFiltH").onclick=()=>{progFiltOpen=!progFiltOpen;renderProgress();};var _ptf=$("#progTeamF");if(_ptf)_ptf.onchange=function(){progTeamFilter=_ptf.value;renderProgress();};
 $("#winSeg").querySelectorAll("button").forEach(b=>b.onclick=()=>{progWin=(b.dataset.w==='all'||b.dataset.w==='last')?b.dataset.w:+b.dataset.w;renderProgress();});
 $("#rankSegP").querySelectorAll("button").forEach(b=>b.onclick=()=>{progRank=b.dataset.r;renderProgress();});
@@ -1359,7 +1361,7 @@ function goalSigned(g){var s=goalSub(g);if(!s)return false;if(s.free)return (g.b
 function gnum(x){return (x===""||x==null||isNaN(+x))?null:+x;}
 function goalValFmt(g,v){if(v==null)return"\u2013";var dec=goalDec(g);var str=(goalSigned(g)&&v>0?"+":"")+(+v).toFixed(dec);var u=goalUnit(g);return str+(u?" "+u:"");}
 function goalPct(g){var b=gnum(g.baseline),c=gnum(g.current),t=gnum(g.target);if(b==null||c==null||t==null||t===b)return null;return (c-b)/(t-b);}
-function goalProgSub(g){var b=gnum(g.baseline),c=gnum(g.current);if(b==null||c==null)return "";var dv=c-b;var dec=goalDec(g);var u=goalUnit(g);var dvStr=(dv>0?"+":(dv<0?"-":""))+Math.abs(dv).toFixed(dec)+(u?" "+u:"");var pv=goalPct(g);var pctStr="";if(pv!=null){var P=Math.round(pv*100);pctStr=" ("+(P>0?"+":(P<0?"-":""))+Math.abs(P)+"%)";}else if(b!==0){var dir=(g.better==="low")?-1:1;var cp=Math.round(dv/b*100)*dir;pctStr=" ("+(cp>0?"+":(cp<0?"-":""))+Math.abs(cp)+"%)";}return "\u0394 "+dvStr+pctStr;}
+function goalProgSub(g){var b=gnum(g.baseline),c=gnum(g.current);if(b==null||c==null)return "";var dv=c-b;var dec=goalDec(g);var u=goalUnit(g);var dvStr=(dv>0?"+":(dv<0?"-":""))+Math.abs(dv).toFixed(dec)+(u?" "+u:"");var pctStr="";if(b!==0){var dir=(g.better==="low")?-1:1;var cp=Math.round(dv/Math.abs(b)*100)*dir;pctStr=" ("+(cp>0?"+":(cp<0?"-":""))+Math.abs(cp)+"%)";}return "\u0394 "+dvStr+pctStr;}
 function goalReached(g){if(g.type!=="prestatie")return false;var p=goalPct(g);return p!=null&&p>=1;}
 function goalsForPlayer(pid){return (state.goals||[]).filter(function(g){return g.playerId===pid;});}
 function goalById(id){return (state.goals||[]).find(function(g){return g.id===id;});}
@@ -1379,10 +1381,10 @@ function renderGoals(){
   goalEnsure();
   var players=allPlayers();var sc=$("#goalScope");var body=$("#goalsBody");
   if(!players.length){sc.innerHTML="";body.innerHTML='<div class="empty"><div class="em">\ud83c\udfaf</div><p>Nog geen spelers. Voeg eerst een speler toe.</p></div>';return;}
-  if(!goalPlayer||!players.some(function(p){return p.id===goalPlayer;}))goalPlayer=players[0].id;
+  if(!goalPlayer||!players.some(function(p){return p.id===goalPlayer;}))goalPlayer=players[0].id;if(selPlayer&&players.some(function(p){return p.id===selPlayer;}))goalPlayer=selPlayer;
   var curP=players.find(function(p){return p.id===goalPlayer;});
   sc.innerHTML='<div class="card" style="margin-bottom:12px"><div style="display:flex;align-items:center;gap:8px"><span class="fld" style="margin:0;white-space:nowrap">Speler</span><span class="acwrap" style="flex:1"><input class="in" id="goalPlayerQ" autocomplete="off" value="'+esc(curP?curP.name:"")+'" placeholder="Zoek speler\u2026" style="width:100%"></span></div></div>';
-  var q=$("#goalPlayerQ");q.onchange=function(){var v=q.value.trim().toLowerCase();var p=players.find(function(x){return (x.name||"").toLowerCase()===v;});if(p){goalPlayer=p.id;renderGoals();}};q.onfocus=function(){q.select();};acAttach(q,players,function(pp){return pp.name;},function(pp){goalPlayer=pp.id;renderGoals();});
+  var q=$("#goalPlayerQ");q.onchange=function(){var v=q.value.trim().toLowerCase();var p=players.find(function(x){return (x.name||"").toLowerCase()===v;});if(p){setSelPlayer(p.id);renderGoals();}};q.onfocus=function(){q.select();};acAttach(q,players,function(pp){return pp.name;},function(pp){setSelPlayer(pp.id);renderGoals();});
   
   body.innerHTML="";
   var gs=goalsForPlayer(goalPlayer);var active=gs.filter(goalActive);
@@ -1693,9 +1695,9 @@ function renderTimeline(host){
   bm.innerHTML='<button class="tlmhead'+(tlEventsOpen?" open":"")+'" id="tlEvHead" style="font-size:14px"><span class="chev">\u25b6</span>Events <span class="cnt">\u00b7 '+allEvents.length+'</span></button>'+(tlEventsOpen?'<div class="scrollbox" style="margin-top:8px">'+elist+'</div>':'');
   wrap.appendChild(bm);host.appendChild(wrap);
 
-  var teamSel=$("#tlTeam");if(teamSel)teamSel.onchange=function(){var v=teamSel.value;if(v==="__pl__")return;tlTeam=v||null;tlPlayer=null;renderPlanning();};
-  var psearch=$("#tlPlayerSearch");if(psearch)psearch.onchange=function(){var v=psearch.value.trim();if(!v){tlPlayer=null;renderPlanning();return;}var aps=allPlayers();var found=aps.find(function(p){return (p.name||"").toLowerCase()===v.toLowerCase();});tlPlayer=found?found.id:null;if(found)tlTeam=null;renderPlanning();};
-  var _ps=$("#tlPlayerSearch");if(_ps){_ps.onfocus=function(){var e=this;setTimeout(function(){try{e.select();}catch(_){}},0);};acAttach(_ps,allPlayers(),function(pp){return pp.name;},function(pp){tlPlayer=pp.id;tlTeam=null;renderPlanning();});}
+  var teamSel=$("#tlTeam");if(teamSel)teamSel.onchange=function(){var v=teamSel.value;if(v==="__pl__")return;tlTeam=v||null;tlPlayer=null;selPlayer=null;renderPlanning();};
+  var psearch=$("#tlPlayerSearch");if(psearch)psearch.onchange=function(){var v=psearch.value.trim();if(!v){tlPlayer=null;renderPlanning();return;}var aps=allPlayers();var found=aps.find(function(p){return (p.name||"").toLowerCase()===v.toLowerCase();});if(found){setSelPlayer(found.id);}else{tlPlayer=null;}renderPlanning();};
+  var _ps=$("#tlPlayerSearch");if(_ps){_ps.onfocus=function(){var e=this;setTimeout(function(){try{e.select();}catch(_){}},0);};acAttach(_ps,allPlayers(),function(pp){return pp.name;},function(pp){setSelPlayer(pp.id);renderPlanning();});}
   $("#tlShow").querySelectorAll("button").forEach(function(b){b.onclick=function(){tlShow=b.dataset.sh;renderPlanning();};});
   wrap.querySelectorAll("[data-mon]").forEach(function(b){b.onclick=function(){var mm=+b.dataset.mon;tlMonthOpen[mm]=!tlMonthOpen[mm];renderPlanning();};});
   var evh=$("#tlEvHead");if(evh)evh.onclick=function(){tlEventsOpen=!tlEventsOpen;renderPlanning();};
@@ -1817,7 +1819,7 @@ var planYear=(new Date()).getFullYear(), planTab="tours", planLabel="", planQ=""
 var libTourOpen={};
 var tlPlayer=null, tlTeam=null, tlShow="all", tlMonthOpen={}, tlEventsOpen=false, tlSummaryOpen=true, tlListMode="komend";
 
-function renderPlanning(){if(planTab==="players")planTab="timeline";
+function renderPlanning(){if(planTab==="players")planTab="timeline";if(selPlayer&&registryPlayer(selPlayer)){tlPlayer=selPlayer;tlTeam=null;}
   $("#planSwitch").innerHTML="";
   var box=$("#planBody");box.innerHTML="";
   // controls
