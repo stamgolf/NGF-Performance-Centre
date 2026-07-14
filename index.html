@@ -493,7 +493,7 @@ const LIES={f:"Fairway",r:"Rough",s:"Sand",g:"Green"};const DLIES={f:"Fairway",r
 const LV=["PGA Tour"];
 function spread(min,max,n){if(n===1)return [Math.round((min+max)/2)];const a=[];for(let i=0;i<n;i++)a.push(Math.round(min+(max-min)*i/(n-1)));return a;}
 const NSIT=[3,6,9,12,15,18], NHOLE=[6,9,12,18];
-const APP_VERSION="v127";
+const APP_VERSION="v128";
 const TESTS={
 putt_3_5:{name:"Putt 3–5 ft",cat:"Putten",eng:"putt_cat",dists:[3,4,5],per:8,info:"24 putts (8× vanaf 3, 4 en 5 ft). Per afstand: holed, mis binnen 3 ft, mis buiten 3 ft. Output: SG + make%."},
 putt_6_10:{name:"Putt 6–10 ft",cat:"Putten",eng:"putt_cat",dists:[6,8,10],per:8,info:"24 putts (8× vanaf 6, 8 en 10 ft). Zelfde invoer als 3–5 ft."},
@@ -2234,17 +2234,17 @@ function perGenerate(pid,year){var cfg=perCfg();var blocks=perBlocks(pid,year);v
   /* --- opbouw vóór het blok --- */
   var availStart=prevEnd?dAddDays(prevEnd,1):yStart;
   var space=Math.max(0,dDiffDays(availStart,b.start));
-  var want={pre:cfg.pre*7,spec:cfg.spec*7,alg:cfg.alg*7};
-  var give={pre:0,spec:0,alg:0};var left=space;
-  ["pre","spec","alg"].forEach(function(k){var d=Math.min(want[k],left);give[k]=d;left-=d;});
+  /* de taper vlak v\u00f3\u00f3r de wedstrijd heeft voorrang: zonder taper geen piek op het toernooi */
+  var want={taper:cfg.taperD,pre:cfg.pre*7,spec:cfg.spec*7,alg:cfg.alg*7};
+  var give={taper:0,pre:0,spec:0,alg:0};var left=space;
+  ["taper","pre","spec","alg"].forEach(function(k){var d=Math.min(want[k],left);give[k]=d;left-=d;});
   if(left>0)give.alg+=left;                      /* rest naar algemeen */
-  ["pre","spec","alg"].forEach(function(k){if(give[k]<7){left=(left||0)+0;}});
-  /* fasen < 1 week bestaan niet: schuif ze door naar de volgende fase */
+  /* opbouwfasen < 1 week bestaan niet (de taper mag wel korter) */
   var carry=0;
   ["pre","spec","alg"].forEach(function(k){if(give[k]>0&&give[k]<7){carry+=give[k];give[k]=0;}});
-  if(carry){ if(give.spec>0)give.spec+=carry; else if(give.alg>0)give.alg+=carry; else if(give.pre>0)give.pre+=carry; }
+  if(carry){ if(give.spec>0)give.spec+=carry; else if(give.alg>0)give.alg+=carry; else if(give.pre>0)give.pre+=carry; else give.taper+=carry; }
   var cursor=b.start;
-  ["pre","spec","alg"].forEach(function(k){if(give[k]<=0)return;var end=dAddDays(cursor,-1);var start=dAddDays(end,-(give[k]-1));
+  ["taper","pre","spec","alg"].forEach(function(k){if(give[k]<=0)return;var end=dAddDays(cursor,-1);var start=dAddDays(end,-(give[k]-1));
    if(start<availStart)start=availStart;
    if(dDiffDays(start,end)>=0)out.push({id:uid(),type:k,start:start,end:end});
    cursor=start;});
@@ -2451,13 +2451,33 @@ function perMicro(pid,year){var pl=perPlan(pid,year);var phases=(pl&&pl.phases)|
    wk.vol=Math.max(5,Math.min(100,vol));wk.int=Math.max(5,Math.min(100,inten));}
   out.push(wk);cur=dAddDays(cur,7);}
  return out;}
-function perForm(micro){/* Banister: vorm = fitness (traag) \u2212 vermoeidheid (snel) */
- var fit=0,fat=0,out=[];var kf=1-Math.exp(-1/6),kv=1-Math.exp(-1/1);
- micro.forEach(function(w){var load=(w.vol*0.5+w.int*0.5)/100;
-  fit=fit+(load-fit)*kf;fat=fat+(load-fat)*kv;
-  out.push({start:w.start,val:(fit*1.0-fat*0.65)});});
- var mx=Math.max.apply(null,out.map(function(o){return o.val;}).concat([0.01]));
- var mn=Math.min.apply(null,out.map(function(o){return o.val;}).concat([0]));
+/* Vorm = (fitness \u2212 k\u00b7vermoeidheid) \u00d7 scherpte.
+   - belasting is multiplicatief (volume \u00d7 intensiteit): een taper verlaagt de belasting echt
+   - een wedstrijdweek is zelf een zware prikkel (wedstrijdfactor), dus je piekt \u00f3p de wedstrijd
+     en niet in de rustweek erna
+   - scherpte vervalt snel: zonder recente intensiteitsprikkel (transitie) zakt de vorm */
+function perLoad(type){var v=phaseVol(type)/100,i=phaseInt(type)/100;var L=v*(0.3+0.7*i);
+ if(type==="comp")L*=PER_FORM.compF;
+ return L;}
+var PER_FORM={tauFit:6,tauFat:1,tauSharp:1.0,k:0.8,compF:4.0};
+function perForm(micro,phases){
+ var kF=1-Math.exp(-1/PER_FORM.tauFit),kV=1-Math.exp(-1/PER_FORM.tauFat),kS=1-Math.exp(-1/PER_FORM.tauSharp);
+ var fit=0,fat=0,sharp=0,out=[];
+ phases=phases||[];
+ micro.forEach(function(w){
+  /* dag-gewogen mix van alle fasen in deze week: een toernooi van 3 dagen telt echt mee */
+  var load=0,inten=0,days=0;
+  phases.forEach(function(p){
+   var s2=(p.start>w.start)?p.start:w.start;
+   var e2=(p.end<w.end)?p.end:w.end;
+   var d=dDiffDays(s2,e2)+1;
+   if(d<=0)return;
+   load+=perLoad(p.type)*d;inten+=(phaseInt(p.type)/100)*d;days+=d;});
+  if(days>0){load/=days;inten/=days;}
+  out.push({start:w.start,val:(fit-PER_FORM.k*fat)*sharp});
+  fit=fit+(load-fit)*kF;fat=fat+(load-fat)*kV;sharp=sharp+(inten-sharp)*kS;});
+ var vals=out.map(function(o){return o.val;});
+ var mx=Math.max.apply(null,vals.concat([0.001])),mn=Math.min.apply(null,vals.concat([0]));
  out.forEach(function(o){o.pct=Math.max(0,Math.min(100,Math.round((o.val-mn)/((mx-mn)||1)*100)));});
  return out;}
 /* --- waarschuwingen --- */
@@ -2496,7 +2516,7 @@ function perRender(host){perEnsure();
    toastUndo(n+" fasen gewist",function(){var p6=perPlanEnsure(perUndo.pid,perUndo.year);p6.phases=perUndo.phases;perUndo=null;save();renderPlanning();toast("Hersteld \u2713");});});};
 
  var macros=perMacros(phases);
- var formAll=perForm(micro);
+ var formAll=perForm(micro,phases);
  var evAll=perBlockEvents(pid,year);
  var td=dISO(new Date());
  var MTH=["JAN","FEB","MRT","APR","MEI","JUN","JUL","AUG","SEP","OKT","NOV","DEC"];
