@@ -392,7 +392,7 @@ small.note{display:block;color:var(--muted);font-size:11.5px;line-height:1.5;mar
 .tlmhead.open .chev{transform:rotate(90deg)}
 .tlmhead .cnt{color:var(--muted);font-weight:600}
 .tlmonth.empty .tlmhead{cursor:default;font-weight:600;color:var(--muted)}
-.tlpasttog{display:block;width:100%;background:transparent;border:0;color:var(--muted);font-size:12px;font-weight:600;padding:4px 0 8px;cursor:pointer;text-align:center;opacity:.8}
+.tlpasttog{background:transparent;border:0;color:var(--muted);font-size:12px;font-weight:600;padding:2px 4px;cursor:pointer;opacity:.8}
 .tlpasttog:hover{opacity:1;color:var(--ink)}
 .trchips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
 .trchips button{background:var(--paper);border:1px solid var(--line);color:var(--ink);border-radius:14px;padding:5px 11px;font-size:12.5px;font-weight:600;cursor:pointer}
@@ -547,7 +547,7 @@ const LIES={f:"Fairway",r:"Rough",s:"Sand",g:"Green"};const DLIES={f:"Fairway",r
 const LV=["PGA Tour"];
 function spread(min,max,n){if(n===1)return [Math.round((min+max)/2)];const a=[];for(let i=0;i<n;i++)a.push(Math.round(min+(max-min)*i/(n-1)));return a;}
 const NSIT=[3,6,9,12,15,18], NHOLE=[6,9,12,18];
-const APP_VERSION="v145";
+const APP_VERSION="v146";
 const TESTS={
 putt_3_5:{name:"Putt 3–5 ft",cat:"Putten",eng:"putt_cat",dists:[3,4,5],per:8,info:"24 putts (8× vanaf 3, 4 en 5 ft). Per afstand: holed, mis binnen 3 ft, mis buiten 3 ft. Output: SG + make%."},
 putt_6_10:{name:"Putt 6–10 ft",cat:"Putten",eng:"putt_cat",dists:[6,8,10],per:8,info:"24 putts (8× vanaf 6, 8 en 10 ft). Zelfde invoer als 3–5 ft."},
@@ -1269,8 +1269,8 @@ function openCoursesSettings(){var sh=$("#sheet");var courses=(state.courses||[]
 function pickMatch(m,f){if(f.lab&&(m.labels||[]).indexOf(f.lab)<0)return false;if(f.cat&&(m.cat||"")!==f.cat)return false;if(f.kl&&(m.klasse||"")!==f.kl)return false;if(f.tour){if(f.tour==="__none__"){if(m.tourId)return false;}else if((m.tourId||"")!==f.tour)return false;}if(f.q&&(m.name||"").toLowerCase().indexOf(f.q.toLowerCase())<0)return false;return true;}
 function byName(a,b){return (a.name||"").localeCompare(b.name||"","nl");}
 function byMetaName(a,b){return edMeta(a).name.localeCompare(edMeta(b).name,"nl");}
-function filterCard(f,withMonth,withTour){var labs=state.tourLabels||[],cats=state.tourCats||[];var MN=["jan","feb","mrt","apr","mei","jun","jul","aug","sep","okt","nov","dec"];var monSel=withMonth?'<select class="in" id="fMon" style="flex:1;min-width:88px"><option value="">Alle mnd</option>'+MN.map(function(mn,i){return '<option value="'+(i+1)+'"'+((""+f.mon)===(""+(i+1))?" selected":"")+'>'+mn+'</option>';}).join("")+'</select>':'';var tourSel=withTour?'<select class="in" id="fTour" style="flex:1;min-width:110px"><option value="">Alle tours</option>'+(state.tours||[]).map(function(tr){return '<option value="'+esc(tr.id)+'"'+(f.tour===tr.id?" selected":"")+'>'+esc(tr.name)+'</option>';}).join("")+'<option value="__none__"'+(f.tour==="__none__"?" selected":"")+'>Zonder tour</option></select>':'';return '<div class="card"><div class="row" style="gap:8px;flex-wrap:wrap"><select class="in" id="fLab" style="flex:1;min-width:110px"><option value="">Alle labels</option>'+labs.map(function(l){return '<option value="'+esc(l)+'"'+(f.lab===l?" selected":"")+'>'+esc(l)+'</option>';}).join("")+'</select><select class="in" id="fCat" style="flex:1;min-width:100px"><option value="">Alle cat.</option>'+cats.map(function(c){return '<option value="'+esc(c)+'"'+(f.cat===c?" selected":"")+'>'+esc(c)+'</option>';}).join("")+'</select><select class="in" id="fKl" style="flex:0 0 auto;width:92px"><option value="">Klasse</option><option value="A"'+(f.kl==="A"?" selected":"")+'>A</option><option value="B"'+(f.kl==="B"?" selected":"")+'>B</option></select>'+tourSel+monSel+'<input class="in" id="fQ" placeholder="Zoek\u2026" value="'+esc(f.q||"")+'" style="flex:1;min-width:120px"></div></div>';}
-function bindFilterCard(f,onChange){var lab=$("#fLab");if(lab)lab.onchange=function(){f.lab=lab.value;onChange();};var cat=$("#fCat");if(cat)cat.onchange=function(){f.cat=cat.value;onChange();};var kl=$("#fKl");if(kl)kl.onchange=function(){f.kl=kl.value;onChange();};var tr=$("#fTour");if(tr)tr.onchange=function(){f.tour=tr.value;onChange();};var mon=$("#fMon");if(mon)mon.onchange=function(){f.mon=mon.value;onChange();};var q=$("#fQ");if(q)q.oninput=function(){f.q=q.value;onChange();var e=$("#fQ");if(e){e.focus();e.setSelectionRange(e.value.length,e.value.length);}};}
+function filterCard(f,withMonth,withTour){var labs=state.tourLabels||[],cats=state.tourCats||[];var MN=["jan","feb","mrt","apr","mei","jun","jul","aug","sep","okt","nov","dec"];var monSel=withMonth?'<select class="in" id="fMon" style="flex:1;min-width:88px"><option value="">Alle mnd</option>'+MN.map(function(mn,i){return '<option value="'+(i+1)+'"'+((""+f.mon)===(""+(i+1))?" selected":"")+'>'+mn+'</option>';}).join("")+'</select>':'';var tourSel=withTour?'<select class="in" id="fTour" style="flex:1;min-width:110px"><option value="">Alles</option>'+(state.tours||[]).map(function(tr){return '<option value="'+esc(tr.id)+'"'+(f.tour===tr.id?" selected":"")+'>'+esc(tr.name)+'</option>';}).join("")+'<option value="__none__"'+(f.tour==="__none__"?" selected":"")+'>Zonder tour</option></select>':'';return '<div class="card"><div class="row" style="gap:8px;flex-wrap:wrap"><select class="in" id="fLab" style="flex:1;min-width:110px"><option value="">Alle labels</option>'+labs.map(function(l){return '<option value="'+esc(l)+'"'+(f.lab===l?" selected":"")+'>'+esc(l)+'</option>';}).join("")+'</select><select class="in" id="fCat" style="flex:1;min-width:100px"><option value="">Alle cat.</option>'+cats.map(function(c){return '<option value="'+esc(c)+'"'+(f.cat===c?" selected":"")+'>'+esc(c)+'</option>';}).join("")+'</select><select class="in" id="fKl" style="flex:0 0 auto;width:92px"><option value="">Klasse</option><option value="A"'+(f.kl==="A"?" selected":"")+'>A</option><option value="B"'+(f.kl==="B"?" selected":"")+'>B</option></select>'+tourSel+monSel+'<input class="in" id="fQ" placeholder="Zoek\u2026" value="'+esc(f.q||"")+'" style="flex:1;min-width:120px"></div></div>';}
+function bindFilterCard(f,onChange,root){var Q=root||document;function g(id){return Q.querySelector(id);}var lab=g("#fLab");if(lab)lab.onchange=function(){f.lab=lab.value;onChange();};var cat=g("#fCat");if(cat)cat.onchange=function(){f.cat=cat.value;onChange();};var kl=g("#fKl");if(kl)kl.onchange=function(){f.kl=kl.value;onChange();};var tr=g("#fTour");if(tr)tr.onchange=function(){f.tour=tr.value;onChange();};var mon=g("#fMon");if(mon)mon.onchange=function(){f.mon=mon.value;onChange();};var q=g("#fQ");if(q)q.oninput=function(){f.q=q.value;onChange();var e=g("#fQ");if(e){e.focus();e.setSelectionRange(e.value.length,e.value.length);}};}
 
 /* multi-select picker for player side */
 function openTourMultiPicker(pid){
@@ -1287,7 +1287,7 @@ function openTourMultiPicker(pid){
     html+='<div class="card"><h3>Uit bibliotheek</h3><div class="scrollbox">'+(defs.length?defs.map(defRow).join(""):'<p class="muted" style="margin:0">Alles heeft al een editie dit jaar.</p>')+'</div></div>';
     html+='<div class="row" style="gap:8px"><button class="btn ghost" style="flex:1" onclick="closeSheet()">Annuleer</button><button class="btn" style="flex:2" id="mpAdd">Voeg toe</button></div>';
     sh.innerHTML=html;
-    bindFilterCard(f,draw);
+    bindFilterCard(f,draw,$("#sheet"));
     sh.querySelectorAll("[data-ed]").forEach(function(c){c.onchange=function(){sel["e:"+c.dataset.ed]=c.checked;};});
     sh.querySelectorAll("[data-defimport]").forEach(function(c){c.onclick=function(){openTourImportDated(pid,c.dataset.defimport);};});
     $("#mpAdd").onclick=function(){var n=0;Object.keys(sel).forEach(function(k){if(!sel[k])return;var id=k.slice(2);if(k.charAt(0)==="e"){addPlayerToEdition(id,pid);n++;}});if(!n){toast("Niets geselecteerd (bibliotheek-toernooien tik je aan om te importeren)");return;}save();closeSheet();renderPlanning();toast(n+" toegevoegd \u2713");};
@@ -1373,7 +1373,7 @@ function openTourTeamPicker(teamId){
     html+='<div class="card"><h3>Dit jaar ('+planYear+')</h3><div class="scrollbox">'+(eds.length?eds.map(edRow).join(""):'<p class="muted" style="margin:0">Geen.</p>')+'</div></div>';
     html+='<div class="card"><h3>Uit database</h3><div class="scrollbox">'+(defs.length?defs.map(defRow).join(""):'<p class="muted" style="margin:0">Alles heeft al een editie dit jaar.</p>')+'</div></div>';
     html+='<div class="row" style="gap:8px"><button class="btn ghost" style="flex:1" onclick="closeSheet()">Annuleer</button><button class="btn" style="flex:2" id="mpAdd">Voeg toe</button></div>';
-    sh.innerHTML=html;bindFilterCard(f,draw);
+    sh.innerHTML=html;bindFilterCard(f,draw,sh);
     sh.querySelectorAll("[data-ed]").forEach(function(c){c.onchange=function(){sel["e:"+c.dataset.ed]=c.checked;};});
     sh.querySelectorAll("[data-defimport]").forEach(function(c){c.onclick=function(){openTourImportDatedTeam(teamId,c.dataset.defimport);};});
     $("#mpAdd").onclick=function(){var n=0,ne=0;Object.keys(sel).forEach(function(k){if(!sel[k])return;var id=k.slice(2);n+=addTeamToEdition(id,teamId);ne++;});if(!ne){toast("Niets geselecteerd (database-toernooien tik je aan)");return;}save();closeSheet();renderPlanning();toast(ne+" toernooi(en) \u00b7 "+n+" deelnames \u2713");};
@@ -2157,7 +2157,8 @@ function renderTimeline(host){
     monthsHtml+='<div class="tlmonth'+(hasContent?(open?"":" collapsed"):" empty")+'">'+head+ruler+'<div class="tltrack" style="height:'+trackH+'px">'+seg+'</div>'+(leg?'<div class="tllegwrap">'+leg+'</div>':'')+'</div>';
   }
   var _pastToggle=_pastCount?'<button class="tlpasttog" id="tlPastTog">'+(tlShowPast?'\u25be Verberg voorbije maanden':'\u25b8 Toon voorbije maanden ('+_pastCount+')')+'</button>':'';
-  tl.innerHTML='<div class="row spread" style="margin-bottom:6px;align-items:center;gap:8px"><h3 style="margin:0">Tijdlijn</h3>'+showSeg+'</div>'+key+_pastToggle+monthsHtml;wrap.appendChild(tl);
+  var _togRow=_pastToggle?'<div class="row" style="justify-content:flex-end;margin:0 0 6px">'+_pastToggle+'</div>':'';
+  tl.innerHTML='<div class="row spread" style="margin-bottom:6px;align-items:center;gap:8px"><h3 style="margin:0">Tijdlijn</h3>'+showSeg+'</div>'+_togRow+monthsHtml+'<div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--line)">'+key+'</div>';wrap.appendChild(tl);
 
   var bm=el("div","card");
   var elist=events.length?events.slice().sort(function(a,b){return tlPd(a.start)-tlPd(b.start);}).map(function(ev){return '<div class="rcard"><div class="row spread"><div><b>'+evIconSpan(ev)+esc(ev.name||(ev.type==="anders"?"Anders":evTypeLabel(ev)))+'</b><small class="muted" style="display:block">'+esc(evListMeta(ev))+'</small></div><div class="row" style="gap:6px"><button class="btn ghost sm" data-eb="'+ev.id+'">Bewerk</button><button class="link" data-db="'+ev.id+'" style="color:var(--bad);font-size:18px;line-height:1">\u00d7</button></div></div></div>';}).join(""):'<p class="muted" style="margin:0">Nog geen events.</p>';
@@ -3330,7 +3331,7 @@ function renderPlanning(){if(planTab==="players")planTab="timeline";if(selPlayer
   var yrs=planYears(); if(yrs.indexOf(planYear)<0){planYear=(new Date()).getFullYear();if(yrs.indexOf(planYear)<0)planYear=yrs[yrs.length-1];}
   var ctl=el("div","card");
   ctl.innerHTML='<div class="row" style="gap:8px"><select class="in" id="planYearSel" style="flex:0 0 auto;width:120px;font-weight:700">'+yrs.map(function(y){return '<option value="'+y+'"'+(y===planYear?" selected":"")+'>'+y+'</option>';}).join("")+'</select>'
-    +'<div class="seg" id="planTabSeg" style="flex:1"><button data-t="tours" class="'+(planTab==="tours"?"on":"")+'">Toernooien</button><button data-t="timeline" class="'+(planTab==="timeline"?"on":"")+'">Tijdlijn</button><button data-t="period" class="'+(planTab==="period"?"on":"")+'">Periodisering</button></div></div>'
+    +'<div class="seg" id="planTabSeg" style="flex:1"><button data-t="tours" class="'+(planTab==="tours"?"on":"")+'">Toernooien</button><button data-t="timeline" class="'+(planTab==="timeline"?"on":"")+'">Kalender</button><button data-t="period" class="'+(planTab==="period"?"on":"")+'">Periodisering</button></div></div>'
     +(planTab==="tours"?'<button class="btn ghost block" id="planLib" style="margin-top:10px">Toernooi database beheren</button>':planTab==="timeline"?'<button class="btn ghost block" id="planAdd" style="margin-top:10px">+ Toevoegen</button>':'');
   box.appendChild(ctl);
   $("#planYearSel").onchange=function(e){planYear=+e.target.value;planPlayer=null;renderPlanning();};
@@ -3361,7 +3362,7 @@ function renderTourTab(host){
   var seg='<div class="seg tlmini" id="plTourSeg" style="max-width:150px;margin-bottom:10px"><button data-lm="komend" class="'+(planTourMode==="komend"?"on":"")+'">Komend</button><button data-lm="geweest" class="'+(planTourMode==="geweest"?"on":"")+'">Geweest</button></div>';
   wrap.innerHTML=filterCard(planFilt,true,true)+seg+'<button class="btn block blue" id="plAdd" style="margin-bottom:12px">+ Toernooi</button><div id="planListHost"></div>';
   host.appendChild(wrap);
-  bindFilterCard(planFilt,renderTourTabInline);
+  bindFilterCard(planFilt,renderTourTabInline,host);
   var _sg=$("#plTourSeg");if(_sg)_sg.querySelectorAll("[data-lm]").forEach(function(x){x.onclick=function(){planTourMode=x.dataset.lm;_sg.querySelectorAll("[data-lm]").forEach(function(y){y.classList.toggle("on",y===x);});renderTourTabInline();};});
   $("#plAdd").onclick=function(){openTourPicker({includeEditions:false,allowIncidental:true,onDef:function(defId){newEditionFromDef(defId);},onIncidental:function(){newIncidentalEdition();}});};
   fillTourList($("#planListHost"));
@@ -3448,7 +3449,7 @@ function openTourPicker(cfg){
     html+='<div class="card"><h3>Uit bibliotheek</h3><div class="scrollbox">'+(defItems.length?defItems.map(function(d){return '<button class="bkpitem" data-def="'+d.id+'">'+esc(d.name)+(d.cat?' <small class="muted">'+esc(d.cat)+'</small>':'')+'</button>';}).join(""):'<p class="muted" style="margin:0">Alle toernooien hebben al een editie dit jaar.</p>')+'</div></div>';
     if(cfg.allowIncidental)html+='<button class="btn ghost block" id="pkInc">Incidenteel toernooi</button>';
     sh.innerHTML=html;
-    bindFilterCard(f,draw);
+    bindFilterCard(f,draw,$("#sheet"));
     sh.querySelectorAll("[data-ed]").forEach(function(b){b.onclick=function(){cfg.onEdition&&cfg.onEdition(b.dataset.ed);};});
     sh.querySelectorAll("[data-def]").forEach(function(b){b.onclick=function(){cfg.onDef&&cfg.onDef(b.dataset.def);};});
     var inc=$("#pkInc");if(inc)inc.onclick=function(){cfg.onIncidental&&cfg.onIncidental();};
@@ -3573,7 +3574,7 @@ function openLibrary(){
     html+='<div class="row" style="gap:8px;margin-bottom:12px"><button class="btn blue" style="flex:2" id="lbAdd">+ Nieuw toernooi</button><button class="btn ghost" style="flex:1" id="lbTours">Tours</button></div>';
     html+='<div class="card"><div class="scrollbox">'+groups+'</div></div>';
     sh.innerHTML=html;
-    bindFilterCard(f,draw);
+    bindFilterCard(f,draw,$("#sheet"));
     $("#lbAdd").onclick=function(){openDefForm(null);};
     $("#lbTours").onclick=function(){openTours();};
     sh.querySelectorAll("[data-tgl]").forEach(function(b){b.onclick=function(){var k=b.dataset.tgl;libTourOpen[k]=(libTourOpen[k]===false)?true:false;draw();};});
