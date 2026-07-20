@@ -583,7 +583,7 @@ const LIES={f:"Fairway",r:"Rough",s:"Sand",g:"Green"};const DLIES={f:"Fairway",r
 const LV=["PGA Tour"];
 function spread(min,max,n){if(n===1)return [Math.round((min+max)/2)];const a=[];for(let i=0;i<n;i++)a.push(Math.round(min+(max-min)*i/(n-1)));return a;}
 const NSIT=[3,6,9,12,15,18], NHOLE=[6,9,12,18];
-const APP_VERSION="v152";
+const APP_VERSION="v153";
 const TESTS={
 putt_3_5:{name:"Putt 3–5 ft",cat:"Putten",eng:"putt_cat",dists:[3,4,5],per:8,info:"24 putts (8× vanaf 3, 4 en 5 ft). Per afstand: holed, mis binnen 3 ft, mis buiten 3 ft. Output: SG + make%."},
 putt_6_10:{name:"Putt 6–10 ft",cat:"Putten",eng:"putt_cat",dists:[6,8,10],per:8,info:"24 putts (8× vanaf 6, 8 en 10 ft). Zelfde invoer als 3–5 ft."},
@@ -2314,7 +2314,7 @@ function renderTimeline(host){
   var allEvents=(state.events||[]).filter(function(ev){var es=tlPd(ev.start),ee=tlPd(ev.end||ev.start);return es&&es<=_yE&&ee>=_yS;});
   var events=pid?allEvents.filter(function(ev){return evAppliesToPlayer(ev,pid);}):teamId?allEvents.filter(function(ev){return (ev.teams||[]).indexOf(teamId)>=0||(ev.players||[]).some(function(id){return tPlayerIds.indexOf(id)>=0;});}):allEvents;
 
-  var items=eds.map(function(ed){var st=tlPd(ed.start);if(!st)return null;var e=tlPd(ed.end||ed.start);var pre=(+ed.travelPre||0)+(+ed.prepDays||0);var post=(+ed.travelPost||0);return {ed:ed,m:edMeta(ed),s:st,e:e,pre:pre,post:post,extS:tlAddDays(st,-pre),extE:tlAddDays(e,post)};}).filter(Boolean);
+  var items=eds.map(function(ed){var st=tlPd(ed.start);if(!st)return null;var e=tlPd(ed.end||ed.start);var pre=edDayFor(ed,pid,'travelPre')+edDayFor(ed,pid,'prepDays');var post=edDayFor(ed,pid,'travelPost');return {ed:ed,m:edMeta(ed),s:st,e:e,pre:pre,post:post,extS:tlAddDays(st,-pre),extE:tlAddDays(e,post)};}).filter(Boolean);
   items.sort(function(a,b){return a.extS-b.extS;});
   var blockEvs=events.filter(function(ev){return evDisp(ev)==="block";}).map(function(ev){var st=tlPd(ev.start);if(!st)return null;var e=tlPd(ev.end||ev.start);return {kind:"ev",ev:ev,name:ev.name||blockTypeName(ev.type),s:st,e:e,pre:0,post:0,extS:st,extE:e};}).filter(Boolean);
   var bars=items.map(function(it){return {kind:"ed",ed:it.ed,m:it.m,s:it.s,e:it.e,pre:it.pre,post:it.post,extS:it.extS,extE:it.extE};}).concat(blockEvs);
@@ -2337,7 +2337,7 @@ function renderTimeline(host){
   function duLabel(sd){var n=Math.round((sd-_today)/86400000);if(n<0)return "geweest";if(n===0)return "vandaag";if(n===1)return "morgen";return "over "+n+" dagen";}
   function isAPeak(it){var ps=it.ed.participants||{};if(pid)return peakNum((ps[pid]||{}).peak)===5;if(teamId)return tPlayerIds.some(function(id){return peakNum((ps[id]||{}).peak)===5;});return Object.keys(ps).some(function(id){return peakNum((ps[id]||{}).peak)===5;});}
   var _tourDays=items.reduce(function(a,it){return a+(Math.round((it.e-it.s)/86400000)+1);},0);
-  var _travelDays=items.reduce(function(a,it){return a+(+it.ed.travelPre||0)+(+it.ed.travelPost||0);},0);
+  var _travelDays=items.reduce(function(a,it){return a+edDayFor(it.ed,pid,'travelPre')+edDayFor(it.ed,pid,'travelPost');},0);
   var _stageCount=events.filter(function(ev){return ev.type==="stage";}).length;
   var _trainCount=events.filter(function(ev){return ev.type==="training";}).length;
   var _sumRows=[["Toernooien",items.length],["Toernooidagen",_tourDays],["Reisdagen",_travelDays],["Trainingsstages",_stageCount],["Trainingen",_trainCount]];
@@ -2541,6 +2541,7 @@ function edMeta(ed){var d=ed.defId?tourDefById(ed.defId):null;var _ld=(d?d.load:
 function planYears(){var ys={};(state.tourEditions||[]).forEach(function(e){if(e.year)ys[e.year]=1;});var cy=(new Date()).getFullYear();ys[cy]=1;ys[cy+1]=1;return Object.keys(ys).map(Number).sort(function(a,b){return a-b;});}
 function edsForYear(y){return (state.tourEditions||[]).filter(function(e){return e.year===y;});}
 function edParts(ed){return Object.keys(ed.participants||{});}
+function edDayFor(ed,pid,key){var pp=pid&&ed.participants&&ed.participants[pid];if(pp&&pp[key]!=null&&pp[key]!=="")return Math.max(0,parseInt(pp[key],10)||0);return Math.max(0,parseInt(ed[key],10)||0);}
 function fmtRange(ed){return (ed.start?fmtDate(ed.start):"?")+((ed.end&&ed.end!==ed.start)?" \u2013 "+fmtDate(ed.end):"");}
 
 var planYear=(new Date()).getFullYear(), planTab="tours", planLabel="", planQ="", planPlayer=null, edDraft=null, edIsNew=false, edViewScope=null, blockViewScope=null;
@@ -3748,17 +3749,23 @@ function renderEditionForm(){
   }).join(""):'<p class="muted" style="margin:0">Nog geen deelnemers.</p>';
   var _addUI=(edViewScope&&edViewScope.player)?"":'<div class="sx" style="margin-bottom:8px">Voeg een heel team toe of zoek losse spelers.</div>'+teamSearch+'<input class="in" id="edPQ" placeholder="Zoek speler\u2026" autocomplete="off" style="margin-top:8px"><div id="edPSug" class="bkplist"></div>';
   var partCard='<div class="card"><h3>Deelnemers</h3>'+_addUI+'<div id="edParts" class="scrollbox" style="margin-top:10px">'+partRows+'</div></div>';
+  var _sp=(edViewScope&&edViewScope.player)?edViewScope.player:null;
+  function _ppv(key){var v=(d.participants[_sp]||{})[key];return (v!=null&&v!=="")?v:"";}
+  function _def(key){return Math.max(0,parseInt(d[key],10)||0);}
   var detCard='<div class="card">'
     +'<div class="row" style="gap:8px"><div style="flex:1"><label class="fld">Start</label><input class="in" type="date" id="edStart" value="'+esc(d.start)+'"></div><div style="flex:1"><label class="fld">Eind</label><input class="in" type="date" id="edEnd" value="'+esc(d.end)+'"></div></div>'
     +'<label class="fld" style="margin-top:10px">Locatie</label><input class="in" id="edLoc" value="'+esc(d.location)+'" placeholder="Optioneel">'
-    +'<div class="row" style="gap:8px;margin-top:10px"><div style="flex:1"><label class="fld">Reisdagen heen</label><input class="in" type="number" min="0" id="edTravPre" value="'+esc(String(d.travelPre))+'" placeholder="0"></div><div style="flex:1"><label class="fld">Reisdagen terug</label><input class="in" type="number" min="0" id="edTravPost" value="'+esc(String(d.travelPost))+'" placeholder="0"></div></div>'
-    +'<label class="fld" style="margin-top:10px">Voorbereidingsdagen op locatie</label><input class="in" type="number" min="0" id="edPrep" value="'+esc(String(d.prepDays))+'" placeholder="0"></div>';
+    +(_sp?'<div class="sx" style="margin-top:10px;color:var(--orange);font-weight:700">Reis- & voorbereidingsdagen voor '+esc(nameOf(_sp))+' — alleen deze speler. Leeg = standaard uit de toernooilijst.</div>':'')
+    +'<div class="row" style="gap:8px;margin-top:10px"><div style="flex:1"><label class="fld">Reisdagen heen</label><input class="in" type="number" min="0" id="edTravPre" value="'+esc(String(_sp?_ppv('travelPre'):d.travelPre))+'" placeholder="'+(_sp?('std '+_def('travelPre')):'0')+'"></div><div style="flex:1"><label class="fld">Reisdagen terug</label><input class="in" type="number" min="0" id="edTravPost" value="'+esc(String(_sp?_ppv('travelPost'):d.travelPost))+'" placeholder="'+(_sp?('std '+_def('travelPost')):'0')+'"></div></div>'
+    +'<label class="fld" style="margin-top:10px">Voorbereidingsdagen op locatie'+(_sp?'':' <span class="sx">(standaard, alle spelers)</span>')+'</label><input class="in" type="number" min="0" id="edPrep" value="'+esc(String(_sp?_ppv('prepDays'):d.prepDays))+'" placeholder="'+(_sp?('std '+_def('prepDays')):'0')+'"></div>';
   sh.innerHTML=head+incCard+detCard+partCard
     +'<div class="row" style="gap:8px"><button class="btn ghost" style="flex:1" onclick="closeSheet()">Annuleer</button><button class="btn" style="flex:2" id="edSave">Opslaan</button></div>'
     +(edIsNew?"":'<button class="btn danger block" style="margin-top:8px" id="edDel">Toernooi verwijderen</button>');
   // bindings
   var bind=function(sel,key){var e=$(sel);if(e)e.oninput=function(){edDraft[key]=e.value;};};
-  bind("#edStart","start");bind("#edEnd","end");bind("#edLoc","location");bind("#edTravPre","travelPre");bind("#edTravPost","travelPost");bind("#edPrep","prepDays");
+  bind("#edStart","start");bind("#edEnd","end");bind("#edLoc","location");
+  if(_sp){var pbind=function(sel,key){var e=$(sel);if(e)e.oninput=function(){if(!d.participants[_sp])d.participants[_sp]={};d.participants[_sp][key]=e.value;};};pbind("#edTravPre","travelPre");pbind("#edTravPost","travelPost");pbind("#edPrep","prepDays");}
+  else{bind("#edTravPre","travelPre");bind("#edTravPost","travelPost");bind("#edPrep","prepDays");}
   var _es=$("#edStart"),_ee=$("#edEnd");if(_es&&_ee){if(_es.value)_ee.min=_es.value;_es.addEventListener("change",function(){_ee.min=_es.value||"";if(_es.value&&(!_ee.value||_ee.value<_es.value)){_ee.value=_es.value;edDraft.end=_es.value;}});_ee.addEventListener("focus",function(){if(!_ee.value&&_es.value){_ee.value=_es.value;edDraft.end=_es.value;}});}
   if(inc){bind("#edName","name");var cs=$("#edCat");if(cs)cs.onchange=function(){edDraft.cat=cs.value;};
     var kl=$("#edKl");if(kl)kl.querySelectorAll("button").forEach(function(b){b.onclick=function(){edDraft.klasse=b.dataset.k;renderEditionForm();};});
@@ -3799,6 +3806,7 @@ function saveEdition(){
   if(!d.end)d.end=d.start;
   if(d.end<d.start){toast("Einddatum ligt v\u00f3\u00f3r de start");return;}
   ["travelPre","travelPost","prepDays"].forEach(function(k){d[k]=(d[k]===""||d[k]==null)?0:Math.max(0,parseInt(d[k],10)||0);});
+  Object.keys(d.participants||{}).forEach(function(pid){var pp=d.participants[pid];["travelPre","travelPost","prepDays"].forEach(function(k){if(pp[k]===""||pp[k]==null)delete pp[k];else pp[k]=Math.max(0,parseInt(pp[k],10)||0);});});
   d.year=(new Date(d.start)).getFullYear();
   if(inc){d.name=d.name.trim();
     if(d._saveLib){var def={id:uid(),name:d.name,cat:d.cat||"",labels:(d.labels||[]).slice(),klasse:d.klasse||""};state.tourDefs.push(def);d.defId=def.id;d.name="";d.cat="";d.labels=[];d.klasse="";}
