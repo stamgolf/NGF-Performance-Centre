@@ -597,7 +597,7 @@ const LIES={f:"Fairway",r:"Rough",s:"Sand",g:"Green"};const DLIES={f:"Fairway",r
 const LV=["PGA Tour"];
 function spread(min,max,n){if(n===1)return [Math.round((min+max)/2)];const a=[];for(let i=0;i<n;i++)a.push(Math.round(min+(max-min)*i/(n-1)));return a;}
 const NSIT=[3,6,9,12,15,18], NHOLE=[6,9,12,18];
-const APP_VERSION="v155";
+const APP_VERSION="v157";
 const TESTS={
 putt_3_5:{name:"Putt 3–5 ft",cat:"Putten",eng:"putt_cat",dists:[3,4,5],per:8,info:"24 putts (8× vanaf 3, 4 en 5 ft). Per afstand: holed, mis binnen 3 ft, mis buiten 3 ft. Output: SG + make%."},
 putt_6_10:{name:"Putt 6–10 ft",cat:"Putten",eng:"putt_cat",dists:[6,8,10],per:8,info:"24 putts (8× vanaf 6, 8 en 10 ft). Zelfde invoer als 3–5 ft."},
@@ -741,7 +741,8 @@ function skillLabelName(k){var o=SKILL_LABELS.find(function(x){return x[0]===k;}
 function drillCompCats(){return (typeof RUBRIC!=="undefined"&&RUBRIC.cats)?RUBRIC.cats.map(function(c){return {key:c.key,name:c.name};}):[];}
 function compLabelName(k){var c=drillCompCats().find(function(x){return x.key===k;});return c?c.name:k;}
 const CATMAP_V2={"Putten":["golfskills","putten"],"Lage approach":["golfskills","lageappr"],"Hoge approach":["golfskills","hogeappr"],"Bunker":["golfskills","bunker"],"Distance wedge":["golfskills","distwedge"],"Full swing":["golfskills","fullswing"],"Spelen":["spelen",null],"Mentaal":["prestatiegedrag",null],"Fysiek":["fysiek",null]};
-const TESTSUBMAP={"Putten":"putten","Short game":"hogeappr","Wedge play":"distwedge","Approach play":"approachplay","Driving":"driving","Spelen":null};
+const TESTSUBMAP={"Putten":"putten","Short game":"shortgame","Wedge play":"distwedge","Approach play":"approachplay","Driving":"driving","Spelen":null};
+const TESTSUBID={appr_low:"lageappr",appr_high:"hogeappr",lob:"lobshot",bunker:"bunker",sg_u30:"shortgame",sg_30_50:"shortgame",mission:"shortgame",par2:"shortgame"};
 function drillImgKey(id){return "drillimg_"+id;}
 function drillImgSet(id,u){try{if(typeof IDB!=="undefined"&&IDB.set)IDB.set(drillImgKey(id),u).catch(function(){});}catch(e){}}
 function drillImgGet(id,cb){try{if(typeof IDB!=="undefined"&&IDB.get){IDB.get(drillImgKey(id)).then(function(v){cb(v||null);}).catch(function(){cb(null);});return;}}catch(e){}cb(null);}
@@ -754,7 +755,7 @@ function ensureDrills(){ensureDrillTax();var changed=false;
  if(!state._drills){state.drills=state.drills||[];SEED_DRILLS.forEach(function(d){state.drills.push(seedToV2(d));});state._drills=true;state._drillsV2=true;changed=true;}
  else if(!state._drillsV2){state.drills=(state.drills||[]).map(drillV1toV2);state._drillsV2=true;changed=true;}
  return changed;}
-function testDrills(){return ORDER.map(function(tid){var t=TESTS[tid];var sub=TESTSUBMAP[t.cat];if(tid==="bunker")sub="bunker";var mc=(t.cat==="Spelen")?"spelen":"golfskills";return {id:"test_"+tid,title:t.name,mainCat:mc,subCats:sub?[sub]:[],subSubCats:[],goal:"",exec:t.info||"",vars:"",trainingType:"",svccc:{},compLabels:[],isTest:true,virtual:true,testId:tid};});}
+function testDrills(){return ORDER.map(function(tid){var t=TESTS[tid];var sub=TESTSUBID[tid]||TESTSUBMAP[t.cat];var mc=(t.cat==="Spelen")?"spelen":"golfskills";return {id:"test_"+tid,title:t.name,mainCat:mc,subCats:sub?[sub]:[],subSubCats:[],goal:"",exec:t.info||"",vars:"",trainingType:"",svccc:{},compLabels:[],isTest:true,virtual:true,testId:tid};});}
 function allDrills(){return (state.drills||[]).concat(testDrills());}
 function drillBadge(d){var txt,cls,full;if(d.isTest){txt="TE";cls="tb-test";full="Test";}else if(d.mainCat==="golfskills"&&d.trainingType){txt=({techniek:"TK",skill:"SK",performance:"PF"})[d.trainingType]||"GS";cls="tb-"+d.trainingType;full=trTypeLabel(d.trainingType);}else{txt=({fysiek:"FY",prestatiegedrag:"PG",golfskills:"GS",spelen:"SP"})[d.mainCat]||"?";cls="tb-"+d.mainCat;full=taxMainLabel(d.mainCat);}return '<span class="trbadge '+cls+'" title="'+esc(full)+'">'+txt+'</span>';}
 function drillSubLine(d){var subs=(d.subCats||[]).map(function(s){return taxSubLabel(d.mainCat,s);}).filter(Boolean);if(subs.length)return subs.join(" · ");if(d.goal){var g=d.goal.replace(/\s+/g," ").trim();return g.length>80?g.slice(0,80).replace(/\s\S*$/,"")+"…":g;}return "";}
