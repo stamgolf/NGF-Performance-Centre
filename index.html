@@ -427,6 +427,37 @@ small.note{display:block;color:var(--muted);font-size:11.5px;line-height:1.5;mar
 .svm-bar{display:flex;gap:3px}
 .svm-bar i{flex:1;height:7px;border-radius:3px;background:#e2e8ef}
 .svm-bar i.on{background:#2e78e8}
+.trfiltbar{display:flex;align-items:center;gap:10px;margin-top:12px}
+.trfiltbtn{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);border-radius:9px;padding:6px 12px;font-size:12.5px;font-weight:700;color:var(--ink);cursor:pointer}
+.trfiltbtn .chev{font-size:9px;color:var(--muted);transition:transform .15s;display:inline-block}
+.trfiltbtn.open .chev{transform:rotate(90deg)}
+.trfiltbtn .fcount{background:var(--orange);color:#fff;border-radius:9px;font-size:10.5px;font-weight:800;padding:1px 7px}
+.trclear{background:none;border:0;color:var(--orange);font-size:12px;font-weight:700;cursor:pointer;padding:4px}
+.trcnt{margin-left:auto;font-size:11.5px;color:var(--muted);font-weight:600}
+.trfiltpanel{margin-top:4px;border-top:1px solid var(--line);padding-top:2px}
+.trthumb{width:46px;height:46px;border-radius:9px;background-color:var(--paper);background-size:cover;background-position:center;flex:0 0 auto}
+.trmeta{display:flex;align-items:center;gap:7px;margin-top:4px;font-size:11px;color:var(--muted);font-weight:600}
+.trmeta b{font-weight:800}
+.trmeta .sep{width:3px;height:3px;border-radius:50%;background:var(--line);display:inline-block}
+.lmh-laag{color:#1f9d57}.lmh-mid{color:#c8791a}.lmh-hoog{color:#c2383a}
+.relgrp{display:flex;gap:10px;align-items:flex-start;padding:5px 0}
+.rel-k{flex:0 0 90px;font-size:12px;font-weight:700;color:var(--muted);padding-top:5px}
+.rel-items{display:flex;flex-wrap:wrap;gap:6px}
+.relchip{background:#fff;border:1px solid var(--line);border-radius:14px;padding:5px 11px;font-size:12.5px;font-weight:600;color:var(--blue);cursor:pointer}
+.relchip:hover{border-color:var(--blue)}
+.relrow{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--line);font-size:13px}
+.reltag{flex:0 0 auto;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;background:var(--paper);border:1px solid var(--line);border-radius:7px;padding:2px 7px;color:var(--muted)}
+.relnm{flex:1;min-width:0;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#planTabSeg{flex-wrap:wrap}
+#planTabSeg button{flex:1 1 42%;font-size:12px;padding:7px 4px;white-space:nowrap}
+.tpnav{display:flex;align-items:center;gap:10px}
+.tpwk{text-align:center;min-width:120px}
+.tpwk b{display:block;font-size:14px}
+.tpwk small{display:block;font-size:11px;color:var(--muted);font-weight:600}
+.tprow{display:flex;align-items:center;gap:9px;padding:8px 2px;border-bottom:1px solid #f0f4f8;cursor:pointer}
+.tprow:last-child{border-bottom:0}
+.tpnm{flex:1;min-width:0;font-weight:600;font-size:13.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tpalways{color:var(--orange);font-weight:800}
 .tb-techniek{background:rgba(46,120,232,.14);color:#2e78e8}
 .tb-skill{background:rgba(30,160,90,.16);color:#1ea05a}
 .tb-performance{background:rgba(232,82,10,.14);color:var(--orange)}
@@ -597,7 +628,7 @@ const LIES={f:"Fairway",r:"Rough",s:"Sand",g:"Green"};const DLIES={f:"Fairway",r
 const LV=["PGA Tour"];
 function spread(min,max,n){if(n===1)return [Math.round((min+max)/2)];const a=[];for(let i=0;i<n;i++)a.push(Math.round(min+(max-min)*i/(n-1)));return a;}
 const NSIT=[3,6,9,12,15,18], NHOLE=[6,9,12,18];
-const APP_VERSION="v157";
+const APP_VERSION="v160";
 const TESTS={
 putt_3_5:{name:"Putt 3–5 ft",cat:"Putten",eng:"putt_cat",dists:[3,4,5],per:8,info:"24 putts (8× vanaf 3, 4 en 5 ft). Per afstand: holed, mis binnen 3 ft, mis buiten 3 ft. Output: SG + make%."},
 putt_6_10:{name:"Putt 6–10 ft",cat:"Putten",eng:"putt_cat",dists:[6,8,10],per:8,info:"24 putts (8× vanaf 6, 8 en 10 ft). Zelfde invoer als 3–5 ft."},
@@ -737,6 +768,45 @@ function trTypeLabel(t){return ({techniek:"Techniek",skill:"Skill",performance:"
 const LOCSETS={golfskills:["Oefenfaciliteiten","Baan"],fysiek:["Gym","Overal"],spelen:["Grote baan","Par-3 baan"],prestatiegedrag:["Overal","Oefenfaciliteiten","Baan"]};
 function locOptions(mk){return LOCSETS[mk]||["Overal","Baan","Oefenfaciliteiten","Gym"];}
 const SKILL_LABELS=[["afstand","Afstand"],["startrichting","Startrichting"],["contact","Contact"],["hoogte","Hoogte"],["curve","Curve"],["reading","Reading"],["snelheid","Snelheid"]];
+const PLANPHASES=[["alg","Alg. voorbereiding"],["spec","Specifieke voorb."],["pre","Pre-competitie"],["taper","Taper"],["comp","Wedstrijd"],["herstel","Herstel"],["ond","Onderhoud"],["trans","Transitie"]];
+function drillPhasesEff(d){if(d.phaseTags&&d.phaseTags.length)return d.phaseTags;
+ if(d.mainCat==="golfskills"){var t=d.trainingType;if(t==="techniek")return ["alg","spec","ond","herstel"];if(t==="skill")return ["alg","spec","pre","ond"];if(t==="performance")return ["spec","pre","taper","comp","ond"];return ["alg","spec","pre","ond"];}
+ if(d.mainCat==="fysiek")return ["alg","spec","ond","herstel","pre"];
+ if(d.mainCat==="prestatiegedrag")return ["alg","spec","pre","taper","comp","ond"];
+ if(d.mainCat==="spelen")return ["spec","pre","comp","ond"];
+ return ["alg","spec","pre","ond"];}
+const SUMCAT2SUB={"Putten":["putten"],"Short game":["shortgame","lageappr","hogeappr","bunker","lobshot"],"Wedge play":["distwedge"],"Approach play":["approachplay"],"Driving":["driving"]};
+function playerWeakCats(pid){var per={};(state.sessions||[]).filter(function(s){return s.finalized;}).forEach(function(s){var t=TESTS[s.testId];if(!t||t.cat==="Spelen")return;(s.results||[]).forEach(function(r){if(r.playerId!==pid)return;var d=r.detail||{};var sg=(d.sgTotal!=null?d.sgTotal:(r.sg!=null?r.sg:null));var st=d.strokes||d.n||0;if(sg==null||!st)return;per[t.cat]=per[t.cat]||{sg:0,st:0};per[t.cat].sg+=sg;per[t.cat].st+=st;});});
+ var arr=Object.keys(per).filter(function(c){return per[c].st>=10;}).map(function(c){return {cat:c,avg:per[c].sg/per[c].st};});
+ arr.sort(function(a,b){return a.avg-b.avg;});return arr.slice(0,2);}
+function trainFocusFor(pid){if(!state.trainFocus)state.trainFocus={};return state.trainFocus[pid]||(state.trainFocus[pid]=[]);}
+function planFor(pid,ws){return (state.trainPlans||[]).find(function(p){return p.playerId===pid&&p.weekStart===ws;})||null;}
+function genWeekPlan(pid,ws){var year=+dAddDays(ws,3).slice(0,4);var micro=[];try{micro=perMicro(pid,year);}catch(e){}
+ var wk=micro.find(function(w){return w.start===ws;})||{phase:null,vol:50,int:50,n:(Math.floor((+new Date(ws)-+new Date(year+"-01-01"))/(7*864e5))+1),tours:[]};
+ var phase=wk.phase||"ond";var pool=(state.drills||[]);
+ var focus=trainFocusFor(pid);var weakSubs=[];playerWeakCats(pid).forEach(function(w){(SUMCAT2SUB[w.cat]||[]).forEach(function(s){weakSubs.push(s);});});
+ function w8(d){var w=1;(d.subCats||[]).forEach(function(s){if(focus.indexOf(s)>=0)w+=3;else if(weakSubs.indexOf(s)>=0)w+=2;});return w;}
+ var seed=wk.n||1;
+ function pick(cands,n){if(n<=0)return [];if(cands.length<=n)return cands.slice();
+  var arr=cands.slice().sort(function(a,b){return (a.title||"").localeCompare(b.title||"","nl");});
+  var scored=arr.map(function(d,i){return {d:d,k:w8(d)*1000-((i+seed)%arr.length)};});
+  scored.sort(function(a,b){return b.k-a.k;});return scored.slice(0,n).map(function(x){return x.d;});}
+ var items=[];var used={};
+ function add(list){list.forEach(function(d){if(!used[d.id]){used[d.id]=1;items.push(d.id);}});}
+ add(pool.filter(function(d){return d.always;}));
+ var inPhase=function(d){return drillPhasesEff(d).indexOf(phase)>=0;};
+ var gSlots=Math.max(2,Math.min(6,Math.round((wk.vol||50)/18)));
+ var tp=phaseType(phase);var tot=(tp.tech||0)+(tp.skill||0)+(tp.perf||0)||1;
+ var nT=Math.round(gSlots*(tp.tech||0)/tot),nP=Math.round(gSlots*(tp.perf||0)/tot);var nS=Math.max(0,gSlots-nT-nP);
+ var gs=pool.filter(function(d){return d.mainCat==="golfskills"&&!d.always&&inPhase(d);});
+ var _gPicked=0;
+ [["techniek",nT],["skill",nS],["performance",nP]].forEach(function(sl){var got=pick(gs.filter(function(d){return !used[d.id]&&(d.trainingType===sl[0]||(sl[0]==="skill"&&!d.trainingType));}),sl[1]);_gPicked+=got.length;add(got);});
+ if(_gPicked<gSlots)add(pick(gs.filter(function(d){return !used[d.id];}),gSlots-_gPicked));
+ var fSlots=({alg:3,spec:2,ond:2,herstel:2,pre:1,taper:1,comp:1,trans:1})[phase]||2;
+ add(pick(pool.filter(function(d){return d.mainCat==="fysiek"&&!d.always&&inPhase(d);}),fSlots));
+ add(pick(pool.filter(function(d){return d.mainCat==="prestatiegedrag"&&!d.always&&inPhase(d);}),1));
+ if(["spec","pre","comp","ond"].indexOf(phase)>=0)add(pick(pool.filter(function(d){return d.mainCat==="spelen"&&!d.always&&inPhase(d);}),1));
+ return {id:uid(),playerId:pid,weekStart:ws,phase:wk.phase,items:items,edited:false,created:todayISO()};}
 function skillLabelName(k){var o=SKILL_LABELS.find(function(x){return x[0]===k;});return o?o[1]:k;}
 function drillCompCats(){return (typeof RUBRIC!=="undefined"&&RUBRIC.cats)?RUBRIC.cats.map(function(c){return {key:c.key,name:c.name};}):[];}
 function compLabelName(k){var c=drillCompCats().find(function(x){return x.key===k;});return c?c.name:k;}
@@ -761,45 +831,70 @@ function drillBadge(d){var txt,cls,full;if(d.isTest){txt="TE";cls="tb-test";full
 function drillSubLine(d){var subs=(d.subCats||[]).map(function(s){return taxSubLabel(d.mainCat,s);}).filter(Boolean);if(subs.length)return subs.join(" · ");if(d.goal){var g=d.goal.replace(/\s+/g," ").trim();return g.length>80?g.slice(0,80).replace(/\s\S*$/,"")+"…":g;}return "";}
 function mcAccent(mk){return ({fysiek:"#0f9e73",prestatiegedrag:"#c8791a",golfskills:"#2e78e8",spelen:"#7a5ad2"})[mk]||"#94a3b8";}
 function trTypeRank(d){if(d.isTest)return 3;var r={techniek:0,skill:1,performance:2}[d.trainingType];return r==null?2.5:r;}
-let trainMain="",trainSub="",trainQ="",trainType="",trainAud="",trainLoc="",trainSkill="";
+let trainMain="",trainQ="",trainFiltOpen=false;
+var trainF={subs:[],types:[],skills:[],auds:[],locs:[]};
+function trainFiltCount(){return trainF.subs.length+trainF.types.length+trainF.skills.length+trainF.auds.length+trainF.locs.length;}
 function trainFiltered(){var q=trainQ.trim().toLowerCase();return allDrills().filter(function(d){
  if(trainMain&&d.mainCat!==trainMain)return false;
- if(trainSub&&(d.subCats||[]).indexOf(trainSub)<0)return false;
- if(trainType){if(trainType==="test"){if(!d.isTest)return false;}else{if(d.isTest||d.trainingType!==trainType)return false;}}
- if(trainSkill&&(d.skillLabels||[]).indexOf(trainSkill)<0)return false;
- if(trainAud){if(d.isTest||(d.audience||"")!==trainAud)return false;}
- if(trainLoc){if(d.isTest||(d.location||[]).indexOf(trainLoc)<0)return false;}
+ if(trainF.subs.length&&!trainF.subs.some(function(s){return (d.subCats||[]).indexOf(s)>=0;}))return false;
+ if(trainF.types.length){var tt=d.isTest?"test":(d.trainingType||"");if(trainF.types.indexOf(tt)<0)return false;}
+ if(trainF.skills.length&&!trainF.skills.some(function(s){return (d.skillLabels||[]).indexOf(s)>=0;}))return false;
+ if(trainF.auds.length){if(d.isTest)return false;if(trainF.auds.indexOf(d.audience||"")<0)return false;}
+ if(trainF.locs.length){if(d.isTest)return false;if(!trainF.locs.some(function(l){return (d.location||[]).indexOf(l)>=0;}))return false;}
  if(q){var hay=((d.title||"")+" "+(d.goal||"")+" "+(d.exec||"")).toLowerCase();if(hay.indexOf(q)<0)return false;}
  return true;});}
-function trainRenderList(){var box=$("#trList");if(!box)return;var list=trainFiltered();if(!list.length){box.innerHTML='<div class="trempty"><div class="em">🎯</div><p>Geen oefeningen gevonden.</p></div>';return;}
+function drillCardMeta(d){if(d.isTest)return "";var bits=[];
+ if(d.durValue!==""&&d.durValue!=null)bits.push('<span>'+d.durValue+' '+durUnitShort(d.durUnit)+(d.sets?(' ×'+d.sets):'')+'</span>');
+ if(d.intensity)bits.push('<span>Int <b class="lmh-'+d.intensity+'">'+lmhLabel(d.intensity)+'</b></span>');
+ if(d.volume)bits.push('<span>Vol <b class="lmh-'+d.volume+'">'+lmhLabel(d.volume)+'</b></span>');
+ return bits.length?('<div class="trmeta">'+bits.join('<i class="sep"></i>')+'</div>'):"";}
+function trainRenderList(){var box=$("#trList");if(!box)return;var list=trainFiltered();var cnt=$("#trCnt");if(cnt)cnt.textContent=list.length+" oefening"+(list.length===1?"":"en");
+ if(!list.length){box.innerHTML='<div class="trempty"><div class="em">🎯</div><p>Geen oefeningen gevonden.</p></div>';return;}
  var order=taxMain().map(function(m){return m.key;});var groups={};list.forEach(function(d){(groups[d.mainCat]=groups[d.mainCat]||[]).push(d);});Object.keys(groups).forEach(function(k){if(order.indexOf(k)<0)order.push(k);});
  var html="";order.forEach(function(mk){var g=groups[mk];if(!g||!g.length)return;html+='<div class="trcat"><span class="dot" style="background:'+mcAccent(mk)+'"></span>'+esc(taxMainLabel(mk))+'<span class="cnt">'+g.length+'</span></div>';
   if(mk==="golfskills")g.sort(function(a,b){var r=trTypeRank(a)-trTypeRank(b);return r||(a.title||"").localeCompare(b.title||"","nl");});
   else g.sort(function(a,b){return (a.title||"").localeCompare(b.title||"","nl");});
-  g.forEach(function(d){var sl=drillSubLine(d);html+='<div class="trcard mc-'+esc(d.mainCat)+'" data-drill="'+d.id+'"><div class="trcard-body"><div class="trcard-title">'+esc(d.title)+'</div>'+(sl?'<div class="trcard-sub">'+esc(sl)+'</div>':'')+'</div>'+drillBadge(d)+'</div>';});});
- box.innerHTML=html;box.querySelectorAll("[data-drill]").forEach(function(c){c.onclick=function(){drillDetail(c.dataset.drill);};});}
+  g.forEach(function(d){var sl=drillSubLine(d);var thumb=d.image?'<div class="trthumb" data-timg="'+d.id+'"></div>':'';
+   html+='<div class="trcard mc-'+esc(d.mainCat)+'" data-drill="'+d.id+'">'+thumb+'<div class="trcard-body"><div class="trcard-title">'+esc(d.title)+'</div>'+(sl?'<div class="trcard-sub">'+esc(sl)+'</div>':'')+drillCardMeta(d)+'</div>'+drillBadge(d)+'</div>';});});
+ box.innerHTML=html;box.querySelectorAll("[data-drill]").forEach(function(c){c.onclick=function(){drillDetail(c.dataset.drill);};});
+ box.querySelectorAll("[data-timg]").forEach(function(el){drillImgGet(el.dataset.timg,function(u){if(u){el.style.backgroundImage='url("'+u+'")';el.classList.add("has");}});});}
+function trainChipSet(id,items,arr){var html='<div class="trchips" id="'+id+'"><button data-v="" class="'+(arr.length?"":"on")+'">Alle</button>'+items.map(function(o){var isA=Array.isArray(o);var k=isA?o[0]:o,l=isA?o[1]:o;return '<button data-v="'+esc(String(k))+'" class="'+(arr.indexOf(k)>=0?"on":"")+'">'+esc(String(l))+'</button>';}).join("")+'</div>';return html;}
+function trainBindSet(id,arr){var el=$("#"+id);if(!el)return;el.querySelectorAll("button").forEach(function(b){b.onclick=function(){var v=b.dataset.v;if(!v)arr.length=0;else{var i=arr.indexOf(v);if(i>=0)arr.splice(i,1);else arr.push(v);}renderTrain();};});}
 function renderTrain(){var box=$("#trainBody");if(!box)return;var mains=taxMain();
  var mainChips='<div class="trchips" id="trMain"><button data-m="" class="'+(trainMain===""?"on":"")+'">Alle</button>'+mains.map(function(m){return '<button data-m="'+m.key+'" class="'+(trainMain===m.key?"on":"")+'">'+esc(m.label)+'</button>';}).join("")+'</div>';
- var parts="";
- if(trainMain){var subs=taxSubs(trainMain);if(subs.length)parts+='<div class="trlbl">Subcategorie</div><select class="in" id="trSub"><option value="">Alle</option>'+subs.map(function(s){return '<option value="'+s.key+'"'+(trainSub===s.key?" selected":"")+'>'+esc(s.label)+'</option>';}).join("")+'</select>';}
- if(trainMain==="golfskills"){
-  parts+='<div class="trlbl">Type training</div><div class="trchips" id="trType"><button data-t="" class="'+(trainType===""?"on":"")+'">Alle</button>'+TRTYPES.concat([["test","Test"]]).map(function(o){return '<button data-t="'+o[0]+'" class="'+(trainType===o[0]?"on":"")+'">'+o[1]+'</button>';}).join("")+'</div>';
-  parts+='<div class="trlbl">Skill</div><div class="trchips" id="trSkill"><button data-sk="" class="'+(trainSkill===""?"on":"")+'">Alle</button>'+SKILL_LABELS.map(function(o){return '<button data-sk="'+o[0]+'" class="'+(trainSkill===o[0]?"on":"")+'">'+o[1]+'</button>';}).join("")+'</div>';
+ var nf=trainFiltCount();
+ var bar='<div class="trfiltbar"><button class="trfiltbtn'+(trainFiltOpen?" open":"")+'" id="trFiltTog"><span class="chev">▶</span>Filters'+(nf?'<span class="fcount">'+nf+'</span>':'')+'</button>'+(nf?'<button class="trclear" id="trClear">Wis alles</button>':'')+'<span class="trcnt" id="trCnt"></span></div>';
+ var panel="";
+ if(trainFiltOpen){
+  var sec="";
+  if(trainMain){var subs=taxSubs(trainMain);if(subs.length)sec+='<div class="trlbl">Subcategorie</div>'+trainChipSet("trSub",subs.map(function(s){return [s.key,s.label];}),trainF.subs);}
+  if(trainMain==="golfskills"){
+   sec+='<div class="trlbl">Type training</div>'+trainChipSet("trType",TRTYPES.concat([["test","Test"]]),trainF.types);
+   sec+='<div class="trlbl">Skill</div>'+trainChipSet("trSkill",SKILL_LABELS,trainF.skills);
+  }
+  sec+='<div class="trlbl">Voor</div>'+trainChipSet("trAud",AUD,trainF.auds);
+  var locs;if(trainMain){locs=locOptions(trainMain);}else{var set={},kk=[];taxMain().forEach(function(m){locOptions(m.key).forEach(function(l){if(!set[l]){set[l]=1;kk.push(l);}});});locs=kk;}
+  sec+='<div class="trlbl">Locatie</div>'+trainChipSet("trLoc",locs,trainF.locs);
+  panel='<div class="trfiltpanel">'+sec+'</div>';
  }
- parts+='<div class="trlbl">Voor</div><div class="trchips" id="trAud"><button data-a="" class="'+(trainAud===""?"on":"")+'">Alle</button>'+AUD.map(function(a){return '<button data-a="'+a[0]+'" class="'+(trainAud===a[0]?"on":"")+'">'+a[1]+'</button>';}).join("")+'</div>';
- var locs;if(trainMain){locs=locOptions(trainMain);}else{var set={},kk=[];taxMain().forEach(function(m){locOptions(m.key).forEach(function(l){if(!set[l]){set[l]=1;kk.push(l);}});});locs=kk;}
- parts+='<div class="trlbl">Locatie</div><div class="trchips" id="trLoc"><button data-l="" class="'+(trainLoc===""?"on":"")+'">Alle</button>'+locs.map(function(l){return '<button data-l="'+esc(l)+'" class="'+(trainLoc===l?"on":"")+'">'+esc(l)+'</button>';}).join("")+'</div>';
- var head='<div class="card"><input class="in" id="trQ" placeholder="Zoek oefening…" value="'+esc(trainQ)+'"><div class="trlbl">Hoofdcategorie</div>'+mainChips+parts+'</div>';
+ var head='<div class="card" style="padding-bottom:'+(trainFiltOpen?'14px':'10px')+'"><input class="in" id="trQ" placeholder="Zoek oefening…" value="'+esc(trainQ)+'"><div class="trlbl">Hoofdcategorie</div>'+mainChips+bar+panel+'</div>';
  box.innerHTML=head+'<button class="btn block blue" id="trAdd" style="margin-bottom:6px">+ Nieuwe oefening</button><div id="trList"></div>';
  var _q=$("#trQ");if(_q)_q.oninput=function(){trainQ=_q.value;trainRenderList();};
- $("#trMain").querySelectorAll("button").forEach(function(b){b.onclick=function(){trainMain=b.dataset.m;trainSub="";trainType="";trainSkill="";trainLoc="";renderTrain();};});
- var _ss=$("#trSub");if(_ss)_ss.onchange=function(){trainSub=_ss.value;trainRenderList();};
- var _tt=$("#trType");if(_tt)_tt.querySelectorAll("button").forEach(function(b){b.onclick=function(){trainType=b.dataset.t;renderTrain();};});
- var _sk=$("#trSkill");if(_sk)_sk.querySelectorAll("button").forEach(function(b){b.onclick=function(){trainSkill=b.dataset.sk;renderTrain();};});
- var _au=$("#trAud");if(_au)_au.querySelectorAll("button").forEach(function(b){b.onclick=function(){trainAud=b.dataset.a;renderTrain();};});
- var _lo=$("#trLoc");if(_lo)_lo.querySelectorAll("button").forEach(function(b){b.onclick=function(){trainLoc=b.dataset.l;renderTrain();};});
+ $("#trMain").querySelectorAll("button").forEach(function(b){b.onclick=function(){trainMain=b.dataset.m;trainF.subs=[];trainF.types=[];trainF.skills=[];trainF.locs=[];renderTrain();};});
+ var _tg=$("#trFiltTog");if(_tg)_tg.onclick=function(){trainFiltOpen=!trainFiltOpen;renderTrain();};
+ var _cl=$("#trClear");if(_cl)_cl.onclick=function(){trainF={subs:[],types:[],skills:[],auds:[],locs:[]};renderTrain();};
+ trainBindSet("trSub",trainF.subs);trainBindSet("trType",trainF.types);trainBindSet("trSkill",trainF.skills);trainBindSet("trAud",trainF.auds);trainBindSet("trLoc",trainF.locs);
  var _a=$("#trAdd");if(_a)_a.onclick=function(){openDrillForm(null);};
  trainRenderList();}
+const RELTYPES=[["easier","Makkelijker"],["harder","Moeilijker"],["variant","Variant"]];
+function relTypeLabel(t){return ({easier:"Makkelijker",harder:"Moeilijker",variant:"Variant"})[t]||t;}
+function drillRelGroups(d){var out={easier:[],harder:[],variant:[]};var seen={};
+ function add(type,t){if(!t||t.id===d.id)return;var k=type+"|"+t.id;if(seen[k])return;seen[k]=1;out[type].push(t);}
+ var all=allDrills();
+ (d.rels||[]).forEach(function(r){add(r.type,all.find(function(x){return x.id===r.id;}));});
+ var inv={easier:"harder",harder:"easier",variant:"variant"};
+ (state.drills||[]).forEach(function(o){(o.rels||[]).forEach(function(r){if(r.id===d.id)add(inv[r.type]||"variant",o);});});
+ return out;}
 function drillMeter(label,val){var lv=({laag:1,mid:2,hoog:3})[val]||0;var seg="";for(var i=1;i<=3;i++)seg+='<i class="'+(i<=lv?"on lv"+lv:"")+'"></i>';return '<div class="svmeter"><div class="svm-top"><span class="svm-l">'+esc(label)+'</span><span class="svm-v'+(lv?"":" off")+'">'+(lv?lmhLabel(val):"–")+'</span></div><div class="svm-bar">'+seg+'</div></div>';}
 function drillDetail(id){var d=allDrills().find(function(x){return x.id===id;});if(!d)return;var sh=$("#sheet");
  function _di(k,v){return '<div class="dinfo"><span class="di-k">'+esc(k)+'</span><span class="di-v">'+v+'</span></div>';}
@@ -837,6 +932,8 @@ function drillDetail(id){var d=allDrills().find(function(x){return x.id===id;});
  if(d.exec)body+='<div class="dsec"><div class="dsh">Uitvoering</div><p>'+esc(d.exec).replace(/\n/g,"<br>")+'</p></div>';
  if(d.vars)body+='<div class="dsec"><div class="dsh">Variaties</div><p>'+esc(d.vars).replace(/\n/g,"<br>")+'</p></div>';
  if((d.compLabels||[]).length)body+='<div class="dsec"><div class="dsh">Competenties</div><div class="trchips" style="margin-top:4px">'+d.compLabels.map(function(k){return '<span class="trchip-static">'+esc(compLabelName(k))+'</span>';}).join("")+'</div></div>';
+ var _rg=drillRelGroups(d);var _relHtml="";RELTYPES.forEach(function(rt){var arr=_rg[rt[0]];if(!arr.length)return;_relHtml+='<div class="relgrp"><span class="rel-k">'+rt[1]+'</span><span class="rel-items">'+arr.map(function(t){return '<button class="relchip" data-rel="'+t.id+'">'+esc(t.title)+'</button>';}).join("")+'</span></div>';});
+ if(_relHtml)body+='<div class="dsec"><div class="dsh">Progressie & relaties</div>'+_relHtml+'</div>';
  if(d.link)body+='<div class="dsec"><div class="dsh">Video / link</div><a href="'+esc(d.link)+'" target="_blank" rel="noopener">Bekijk ↗</a></div>';
  var imgHtml=d.image?'<div class="dsec" id="drImgWrap"><img id="drImg" style="max-width:100%;border-radius:10px;display:block" alt=""></div>':'';
  var catChip=d.isTest?'<span class="dcatchip" style="background:rgba(120,90,200,.14);color:#7a5ad2">Test</span>':'<span class="dcatchip" style="background:'+mcAccent(d.mainCat)+'22;color:'+mcAccent(d.mainCat)+'">'+esc(taxMainLabel(d.mainCat))+'</span>';
@@ -845,6 +942,7 @@ function drillDetail(id){var d=allDrills().find(function(x){return x.id===id;});
  sh.innerHTML='<div class="shead"><div><h2>'+esc(d.title)+'</h2><div style="margin-top:5px">'+catChip+'</div></div><div class="sheadact">'+actIcons+'<button class="xbtn" onclick="closeSheet()">×</button></div></div>'+infoHtml+body+imgHtml+bottom;
  openSheet();
  if(d.image)drillImgGet(d.id,function(u){var el=$("#drImg");if(el&&u){el.src=u;}else{var w=$("#drImgWrap");if(w)w.style.display="none";}});
+ sh.querySelectorAll("[data-rel]").forEach(function(b){b.onclick=function(){drillDetail(b.dataset.rel);};});
  var _s=$("#drStart");if(_s)_s.onclick=function(){closeSheet();startChallenge(d.testId);};
  var _e=$("#drEdit");if(_e)_e.onclick=function(){openDrillForm(d.id);};
  var _dl=$("#drDel");if(_dl)_dl.onclick=function(){confirmDlg("Oefening “"+d.title+"” verwijderen?",function(){drillImgDel(d.id);state.drills=(state.drills||[]).filter(function(x){return x.id!==d.id;});save();closeSheet();renderTrain();toast("Verwijderd ✓");});};}
@@ -852,7 +950,7 @@ var drillDraft=null;
 function bindLMH(id,cb){var el=$("#"+id);if(!el)return;el.querySelectorAll("button").forEach(function(b){b.onclick=function(){cb(b.dataset.v||"");el.querySelectorAll("button").forEach(function(x){x.classList.toggle("on",x===b);});};});}
 function openDrillForm(id){var d=id?((state.drills||[]).find(function(x){return x.id===id;})):null;
  drillDraft=d?JSON.parse(JSON.stringify(d)):{id:uid(),title:"",mainCat:"golfskills",subCats:[],subSubCats:[],goal:"",exec:"",vars:"",durUnit:"ballen",durValue:"",sets:"",audience:"ind",location:[],intensity:"",volume:"",trainingType:"",skillLabels:[],svccc:{},compLabels:[],link:"",image:false,tags:[],always:false,phaseTags:[],builtin:false,created:todayISO(),v:2};
- if(!drillDraft.location)drillDraft.location=[];if(!drillDraft.skillLabels)drillDraft.skillLabels=[];if(drillDraft.sets==null)drillDraft.sets="";
+ if(!drillDraft.location)drillDraft.location=[];if(!drillDraft.skillLabels)drillDraft.skillLabels=[];if(drillDraft.sets==null)drillDraft.sets="";if(!drillDraft.rels)drillDraft.rels=[];drillDraft._relType="harder";
  drillDraft._isEdit=!!d;drillDraft._imgData=null;drillDraft._imgCleared=false;
  renderDrillForm();openSheet();
  if(d&&d.image)drillImgGet(d.id,function(u){if(u){drillDraft._imgData=u;var p=$("#dfImgPrev");if(p){p.src=u;p.style.display="block";}var rm=$("#dfImgRm");if(rm)rm.style.display="";}});}
@@ -874,6 +972,11 @@ function renderDrillForm(){var dd=drillDraft;var sh=$("#sheet");var mains=taxMai
   gsHtml='<label class="fld">Type training</label>'+trSeg+'<label class="fld">Skills</label>'+skChips+'<label class="fld">SVCCC</label><div class="svwrap">'+svcHtml+'</div>';}
  var comps=drillCompCats();
  var compHtml=(dd.mainCat==="prestatiegedrag")?('<label class="fld">Competenties <span class="sx">(labels)</span></label><div class="trchips" id="dfComp">'+comps.map(function(c){return '<button data-c="'+c.key+'" class="'+((dd.compLabels||[]).indexOf(c.key)>=0?"on":"")+'">'+esc(c.name)+'</button>';}).join("")+'</div>'):'';
+ var _phChips='<div class="trchips" id="dfPhase">'+PLANPHASES.map(function(o){return '<button data-p="'+o[0]+'" class="'+((dd.phaseTags||[]).indexOf(o[0])>=0?"on":"")+'">'+o[1]+'</button>';}).join("")+'</div>';
+ var phaseBlock='<label class="fld">Periodisering <span class="sx">(in welke fases past deze oefening?)</span></label>'+_phChips+'<div class="sx" style="margin-top:4px">'+((dd.phaseTags||[]).length?'':'Zonder selectie gebruikt de planner een slimme standaard op basis van categorie en type training.')+'</div><label class="rubtoggle" style="margin-top:8px"><input type="checkbox" id="dfAlways"'+(dd.always?" checked":"")+'><span class="sx">Altijd terugkerend — komt in elk weekplan, ongeacht de fase (bv. warming-up, routines)</span></label>';
+ var _relRows=(dd.rels||[]).map(function(r,i){var t=allDrills().find(function(x){return x.id===r.id;});return t?'<div class="relrow"><span class="reltag">'+relTypeLabel(r.type)+'</span><span class="relnm">'+esc(t.title)+'</span><button class="bkrm" data-reldel="'+i+'">×</button></div>':'';}).join("");
+ var _relSeg='<div class="seg" id="dfRelT">'+RELTYPES.map(function(o){return '<button data-t="'+o[0]+'" class="'+(dd._relType===o[0]?"on":"")+'">'+o[1]+'</button>';}).join("")+'</div>';
+ var relsBlock='<label class="fld">Progressie & relaties <span class="sx">(optioneel)</span></label>'+_relRows+_relSeg+'<span class="acwrap" style="display:block;margin-top:6px"><input class="in" id="dfRelQ" autocomplete="off" placeholder="Zoek oefening om te koppelen…"></span>';
  var hasImg=!!(dd.image||dd._imgData);
  var imgBlock='<label class="fld">Afbeelding <span class="sx">(optioneel, max 2 MB)</span></label><div class="row" style="gap:8px;align-items:center"><input type="file" accept="image/*" id="dfImg" style="flex:1;font-size:12px"><button class="btn ghost sm" id="dfImgRm" style="display:'+(hasImg?"":"none")+'">Verwijder</button></div><img id="dfImgPrev" style="max-width:100%;border-radius:10px;margin-top:8px;display:'+(hasImg?"block":"none")+'" alt="">';
  sh.innerHTML='<div class="shead"><div><h2>'+(dd._isEdit?"Oefening bewerken":"Nieuwe oefening")+'</h2></div><button class="xbtn" onclick="closeSheet()">×</button></div>'
@@ -891,6 +994,8 @@ function renderDrillForm(){var dd=drillDraft;var sh=$("#sheet");var mains=taxMai
   +'<label class="fld">Volume</label>'+lmhSeg("dfVol",dd.volume)
   +gsHtml
   +compHtml
+  +phaseBlock
+  +relsBlock
   +'<label class="fld">Link <span class="sx">(optioneel)</span></label><input class="in" id="dfLink" value="'+esc(dd.link||"")+'" placeholder="https://…">'
   +imgBlock
   +'<button class="btn block blue" id="dfSave" style="margin-top:14px">Opslaan</button>';
@@ -910,10 +1015,15 @@ function renderDrillForm(){var dd=drillDraft;var sh=$("#sheet");var mains=taxMai
  bindLMH("dfInt",function(v){dd.intensity=v;});bindLMH("dfVol",function(v){dd.volume=v;});
  if(dd.mainCat==="golfskills"){var tr=$("#dfTr");if(tr)tr.querySelectorAll("button").forEach(function(b){b.onclick=function(){dd.trainingType=b.dataset.t;tr.querySelectorAll("button").forEach(function(x){x.classList.toggle("on",x===b);});};});var _skl=$("#dfSkill");if(_skl)_skl.querySelectorAll("button").forEach(function(b){b.onclick=function(){var k=b.dataset.sk;var i=(dd.skillLabels||(dd.skillLabels=[])).indexOf(k);if(i>=0)dd.skillLabels.splice(i,1);else dd.skillLabels.push(k);b.classList.toggle("on");};});SVCCC.forEach(function(o){bindLMH("dfsv_"+o[0],function(v){dd.svccc=dd.svccc||{};dd.svccc[o[0]]=v;});});}
  var _cp=$("#dfComp");if(_cp)_cp.querySelectorAll("button").forEach(function(b){b.onclick=function(){var k=b.dataset.c;var i=dd.compLabels.indexOf(k);if(i>=0)dd.compLabels.splice(i,1);else dd.compLabels.push(k);b.classList.toggle("on");};});
+ var _ph=$("#dfPhase");if(_ph)_ph.querySelectorAll("button").forEach(function(b){b.onclick=function(){if(!dd.phaseTags)dd.phaseTags=[];var i=dd.phaseTags.indexOf(b.dataset.p);if(i>=0)dd.phaseTags.splice(i,1);else dd.phaseTags.push(b.dataset.p);b.classList.toggle("on");};});
+ var _aw=$("#dfAlways");if(_aw)_aw.onchange=function(){dd.always=this.checked;};
+ var _rt=$("#dfRelT");if(_rt)_rt.querySelectorAll("button").forEach(function(b){b.onclick=function(){dd._relType=b.dataset.t;_rt.querySelectorAll("button").forEach(function(x){x.classList.toggle("on",x===b);});};});
+ var _rq=$("#dfRelQ");if(_rq){var _cand=allDrills().filter(function(x){return x.id!==dd.id&&!(dd.rels||[]).some(function(r){return r.id===x.id;});});acAttach(_rq,_cand,function(t){return t.title;},function(t){dd.rels.push({id:t.id,type:dd._relType||"harder"});renderDrillForm();});}
+ sh.querySelectorAll("[data-reldel]").forEach(function(b){b.onclick=function(){dd.rels.splice(+b.dataset.reldel,1);renderDrillForm();};});
  var fi=$("#dfImg");if(fi)fi.onchange=function(){var f=this.files&&this.files[0];if(!f)return;if(f.size>2*1024*1024){toast("Afbeelding te groot (max 2 MB)");this.value="";return;}var r=new FileReader();r.onload=function(){dd._imgData=r.result;dd._imgCleared=false;var p=$("#dfImgPrev");if(p){p.src=r.result;p.style.display="block";}var rm=$("#dfImgRm");if(rm)rm.style.display="";};r.readAsDataURL(f);};
  var rmb=$("#dfImgRm");if(rmb)rmb.onclick=function(){dd._imgData=null;dd._imgCleared=true;dd.image=false;var p=$("#dfImgPrev");if(p){p.src="";p.style.display="none";}this.style.display="none";var fi2=$("#dfImg");if(fi2)fi2.value="";};
  $("#dfSave").onclick=function(){if(!(dd.title||"").trim()){toast("Geef een titel");return;}
-  var rec={id:dd.id,title:dd.title.trim(),mainCat:dd.mainCat,subCats:(dd.subCats||[]).slice(),subSubCats:(dd.subSubCats||[]).slice(),goal:(dd.goal||"").trim(),exec:(dd.exec||"").trim(),vars:(dd.vars||"").trim(),durUnit:dd.durUnit,durValue:(dd.durValue!==""&&dd.durValue!=null?+dd.durValue:""),sets:(dd.sets!==""&&dd.sets!=null?+dd.sets:""),audience:dd.audience,location:(dd.location||[]).slice(),intensity:dd.intensity,volume:dd.volume,trainingType:(dd.mainCat==="golfskills"?dd.trainingType:""),skillLabels:(dd.mainCat==="golfskills"?(dd.skillLabels||[]).slice():[]),svccc:(dd.mainCat==="golfskills"?(dd.svccc||{}):{}),compLabels:(dd.mainCat==="prestatiegedrag"?(dd.compLabels||[]).slice():[]),link:(dd.link||"").trim(),image:!!dd._imgData,tags:dd.tags||[],always:!!dd.always,phaseTags:dd.phaseTags||[],builtin:!!dd.builtin,created:dd.created||todayISO(),v:2};
+  var rec={id:dd.id,title:dd.title.trim(),mainCat:dd.mainCat,subCats:(dd.subCats||[]).slice(),subSubCats:(dd.subSubCats||[]).slice(),goal:(dd.goal||"").trim(),exec:(dd.exec||"").trim(),vars:(dd.vars||"").trim(),durUnit:dd.durUnit,durValue:(dd.durValue!==""&&dd.durValue!=null?+dd.durValue:""),sets:(dd.sets!==""&&dd.sets!=null?+dd.sets:""),audience:dd.audience,location:(dd.location||[]).slice(),intensity:dd.intensity,volume:dd.volume,trainingType:(dd.mainCat==="golfskills"?dd.trainingType:""),skillLabels:(dd.mainCat==="golfskills"?(dd.skillLabels||[]).slice():[]),svccc:(dd.mainCat==="golfskills"?(dd.svccc||{}):{}),compLabels:(dd.mainCat==="prestatiegedrag"?(dd.compLabels||[]).slice():[]),rels:(dd.rels||[]).slice(),link:(dd.link||"").trim(),image:!!dd._imgData,tags:dd.tags||[],always:!!dd.always,phaseTags:dd.phaseTags||[],builtin:!!dd.builtin,created:dd.created||todayISO(),v:2};
   if(dd._imgData)drillImgSet(rec.id,dd._imgData);else if(dd._imgCleared)drillImgDel(rec.id);
   var ex=(state.drills||[]).findIndex(function(x){return x.id===rec.id;});state.drills=state.drills||[];if(ex>=0)state.drills[ex]=rec;else state.drills.push(rec);
   save();closeSheet();renderTrain();toast(dd._isEdit?"Opgeslagen ✓":"Oefening toegevoegd ✓");};}
@@ -3611,6 +3721,54 @@ function openPerCfg(){perEnsure();var c=perCfg();var sh=$("#sheet");
  $("#pcUseB").onchange=function(){c.useB=$("#pcUseB").checked;save();};
  $("#pcGuide").onclick=function(){openPhaseGuide();};}
 
+var tpPlayer=null, tpWeek=null, tpFocusOpen=false;
+function renderTrainPlanTab(host){
+ if(!tpPlayer&&typeof selPlayer!=="undefined"&&selPlayer&&registryPlayer(selPlayer))tpPlayer=selPlayer;
+ if(tpPlayer&&!registryPlayer(tpPlayer))tpPlayer=null;
+ if(!tpWeek)tpWeek=weekStart(todayISO());
+ var wrap=el("div","");
+ wrap.innerHTML='<div class="card"><label class="fld">Speler</label><span class="acwrap" style="display:block"><input class="in" id="tpQ" autocomplete="off" placeholder="Zoek speler…" value="'+esc(tpPlayer?nameOf(tpPlayer):"")+'"></span></div><div id="tpBody"></div>';
+ host.appendChild(wrap);
+ var q=$("#tpQ");acAttach(q,allPlayers(),function(p){return p.name;},function(p){tpPlayer=p.id;renderPlanning();});
+ if(q)q.onfocus=function(){var e=this;setTimeout(function(){try{e.select();}catch(_){}},0);};
+ fillTrainPlan($("#tpBody"));
+}
+function fillTrainPlan(box){ if(!box)return; if(!tpPlayer){box.innerHTML='<div class="card"><p class="muted" style="margin:0">Kies een speler om het trainingsplan te bekijken en te genereren.</p></div>';return;}
+ var pid=tpPlayer,ws=tpWeek,we=dAddDays(ws,6);var year=+dAddDays(ws,3).slice(0,4);
+ var micro=[];try{micro=perMicro(pid,year);}catch(e){}
+ var wk=micro.find(function(w){return w.start===ws;});
+ var pd=(wk&&wk.phase)?phaseDef(wk.phase):null;
+ var phBadge=pd?'<span class="phbadge sm" style="background:'+pd[2]+'">'+pd[5]+'</span><b style="font-size:13px;margin-left:6px">'+esc(pd[1])+'</b>':'<span class="muted" style="font-size:12.5px">Geen periodisering voor deze week</span>';
+ var tours=(wk&&wk.tours)||[];
+ var nav='<div class="tpnav"><button class="xbtn sm" id="tpPrev">‹</button><div class="tpwk"><b>Week '+(wk?wk.n:isoWeek(new Date(ws)))+'</b><small>'+fmtDate(ws)+' – '+fmtDate(we)+'</small></div><button class="xbtn sm" id="tpNext">›</button><button class="btn ghost sm" id="tpToday" style="margin-left:auto">Vandaag</button></div>';
+ var head='<div class="card">'+nav+'<div class="row" style="gap:6px;margin-top:10px;align-items:center">'+phBadge+(wk&&wk.phase?'<span class="sx" style="margin-left:auto">Vol '+wk.vol+'% · Int '+wk.int+'%</span>':'')+'</div>'+(tours.length?'<div class="sx" style="margin-top:6px">🏆 '+tours.map(function(t){return esc(t.name);}).join(", ")+'</div>':'')+'</div>';
+ var focus=trainFocusFor(pid);var weak=playerWeakCats(pid);
+ var focusChips='<div class="trchips" id="tpFocus">'+taxSubs("golfskills").map(function(s){return '<button data-s="'+s.key+'" class="'+(focus.indexOf(s.key)>=0?"on":"")+'">'+esc(s.label)+'</button>';}).join("")+'</div>';
+ var weakTxt=weak.length?('Zwakste categorieën uit tests: <b>'+weak.map(function(w){return esc(w.cat);}).join("</b>, <b>")+'</b> — krijgen automatisch extra gewicht.'):'Nog geen testdata — automatische accenten volgen zodra er challenge-resultaten zijn.';
+ var focusCard='<div class="card"><div class="collap'+(tpFocusOpen?' open':'')+'"><div class="ch" id="tpFocusH"><b>Trainingsfocus'+(focus.length?' · '+focus.length:'')+'</b><span class="chev">▶</span></div><div class="cb"><div class="sx" style="margin-bottom:6px">'+weakTxt+'</div><div class="trlbl">Handmatige focus (telt zwaarst)</div>'+focusChips+'</div></div></div>';
+ var plan=planFor(pid,ws);
+ var planCard;
+ if(!plan){planCard='<div class="card"><p class="muted" style="margin:0 0 10px">Nog geen weekplan voor deze week.</p><button class="btn block blue" id="tpGen">Genereer weekplan</button></div>';}
+ else{
+  var order=taxMain().map(function(m){return m.key;});var groups={};
+  plan.items.forEach(function(id){var d=(state.drills||[]).find(function(x){return x.id===id;});if(d)(groups[d.mainCat]=groups[d.mainCat]||[]).push(d);});
+  var rows="";order.forEach(function(mk){var g=groups[mk];if(!g||!g.length)return;
+   rows+='<div class="trcat" style="margin-top:12px"><span class="dot" style="background:'+mcAccent(mk)+'"></span>'+esc(taxMainLabel(mk))+'<span class="cnt">'+g.length+'</span></div>';
+   g.forEach(function(d){rows+='<div class="tprow" data-open="'+d.id+'">'+drillBadge(d)+'<span class="tpnm">'+esc(d.title)+(d.always?' <span class="tpalways" title="Altijd terugkerend">∞</span>':'')+'</span><button class="bkrm" data-del="'+d.id+'">×</button></div>';});});
+  planCard='<div class="card"><div class="row spread" style="align-items:center"><h3 style="margin:0">Weekplan'+(plan.edited?' <span class="sx">(aangepast)</span>':'')+'</h3><button class="btn ghost sm" id="tpRegen">Opnieuw genereren</button></div>'+(rows||'<p class="muted" style="margin:8px 0 0">Leeg plan — voeg oefeningen toe.</p>')+'<span class="acwrap" style="display:block;margin-top:12px"><input class="in" id="tpAdd" autocomplete="off" placeholder="+ Oefening toevoegen…"></span></div>';
+ }
+ box.innerHTML=head+focusCard+planCard;
+ $("#tpPrev").onclick=function(){tpWeek=dAddDays(tpWeek,-7);renderPlanning();};
+ $("#tpNext").onclick=function(){tpWeek=dAddDays(tpWeek,7);renderPlanning();};
+ $("#tpToday").onclick=function(){tpWeek=weekStart(todayISO());renderPlanning();};
+ var fh=$("#tpFocusH");if(fh)fh.onclick=function(){tpFocusOpen=!tpFocusOpen;renderPlanning();};
+ var fc=$("#tpFocus");if(fc)fc.querySelectorAll("button").forEach(function(b){b.onclick=function(){var arr=trainFocusFor(pid);var i=arr.indexOf(b.dataset.s);if(i>=0)arr.splice(i,1);else arr.push(b.dataset.s);save();b.classList.toggle("on");};});
+ var gen=$("#tpGen");if(gen)gen.onclick=function(){var p=genWeekPlan(pid,ws);state.trainPlans=state.trainPlans||[];state.trainPlans.push(p);save();renderPlanning();toast("Weekplan gegenereerd ✓");};
+ var rg=$("#tpRegen");if(rg)rg.onclick=function(){var doIt=function(){state.trainPlans=(state.trainPlans||[]).filter(function(p){return !(p.playerId===pid&&p.weekStart===ws);});var p=genWeekPlan(pid,ws);state.trainPlans.push(p);save();renderPlanning();toast("Opnieuw gegenereerd ✓");};if(plan&&plan.edited)confirmDlg("Dit weekplan is handmatig aangepast. Opnieuw genereren overschrijft je aanpassingen. Doorgaan?",doIt);else doIt();};
+ box.querySelectorAll("[data-open]").forEach(function(r){r.onclick=function(e){if(e.target.closest("[data-del]"))return;drillDetail(r.dataset.open);};});
+ box.querySelectorAll("[data-del]").forEach(function(b){b.onclick=function(){plan.items=plan.items.filter(function(id){return id!==b.dataset.del;});plan.edited=true;save();renderPlanning();};});
+ var ta=$("#tpAdd");if(ta){var cand=(state.drills||[]).filter(function(d){return plan&&plan.items.indexOf(d.id)<0;});acAttach(ta,cand,function(d){return d.title;},function(d){plan.items.push(d.id);plan.edited=true;save();renderPlanning();});}
+}
 function renderPlanning(){if(planTab==="players")planTab="timeline";if(selPlayer&&registryPlayer(selPlayer)){tlPlayer=selPlayer;tlTeam=null;}
   $("#planSwitch").innerHTML="";
   var box=$("#planBody");box.innerHTML="";
@@ -3618,7 +3776,7 @@ function renderPlanning(){if(planTab==="players")planTab="timeline";if(selPlayer
   var yrs=planYears(); if(yrs.indexOf(planYear)<0){planYear=(new Date()).getFullYear();if(yrs.indexOf(planYear)<0)planYear=yrs[yrs.length-1];}
   var ctl=el("div","card");
   ctl.innerHTML='<div class="row" style="gap:8px"><select class="in" id="planYearSel" style="flex:0 0 auto;width:120px;font-weight:700">'+yrs.map(function(y){return '<option value="'+y+'"'+(y===planYear?" selected":"")+'>'+y+'</option>';}).join("")+'</select>'
-    +'<div class="seg" id="planTabSeg" style="flex:1"><button data-t="tours" class="'+(planTab==="tours"?"on":"")+'">Toernooien</button><button data-t="timeline" class="'+(planTab==="timeline"?"on":"")+'">Kalender</button><button data-t="period" class="'+(planTab==="period"?"on":"")+'">Periodisering</button></div></div>'
+    +'<div class="seg" id="planTabSeg" style="flex:1"><button data-t="tours" class="'+(planTab==="tours"?"on":"")+'">Toernooien</button><button data-t="timeline" class="'+(planTab==="timeline"?"on":"")+'">Kalender</button><button data-t="period" class="'+(planTab==="period"?"on":"")+'">Periodisering</button><button data-t="training" class="'+(planTab==="training"?"on":"")+'">Training</button></div></div>'
     +(planTab==="tours"?'<button class="btn ghost block" id="planLib" style="margin-top:10px">Toernooi database beheren</button>':planTab==="timeline"?'<button class="btn ghost block" id="planAdd" style="margin-top:10px">+ Toevoegen</button>':'');
   box.appendChild(ctl);
   $("#planYearSel").onchange=function(e){planYear=+e.target.value;planPlayer=null;renderPlanning();};
@@ -3626,7 +3784,7 @@ function renderPlanning(){if(planTab==="players")planTab="timeline";if(selPlayer
   var _pl=$("#planLib");if(_pl)_pl.onclick=openLibrary;
   var _pa=$("#planAdd");if(_pa)_pa.onclick=openAddChooser;
   var host=el("div","");box.appendChild(host);
-  if(planTab==="timeline")renderTimeline(host); else if(planTab==="tours")renderTourTab(host); else if(planTab==="period")perRender(host); else if(planPlayer)renderPlayerSchedule(host); else renderPlayerTab(host);
+  if(planTab==="timeline")renderTimeline(host); else if(planTab==="tours")renderTourTab(host); else if(planTab==="period")perRender(host); else if(planTab==="training")renderTrainPlanTab(host); else if(planPlayer)renderPlayerSchedule(host); else renderPlayerTab(host);
 }
 
 function labelFilterRow(onChange){
