@@ -523,6 +523,12 @@ input[type=time]{min-width:0;width:100%;max-width:100%;-webkit-appearance:none;a
 .moodbtn{flex:1;font-size:22px;background:var(--paper);border:2px solid transparent;border-radius:10px;padding:7px 0;cursor:pointer;transition:.12s}
 .moodbtn.on{border-color:var(--orange);background:#fff;transform:scale(1.08)}
 .tdcomp{display:flex;align-items:center;gap:8px;margin:-4px 0 12px}
+.tdfocus{font-size:12px;color:var(--muted);line-height:1.5;margin:-2px 0 12px;border-left:3px solid var(--orange);padding-left:9px}
+.tdfocus b{color:var(--ink)}
+.trdeep{margin:6px 0 2px;padding:7px 10px;background:#f6f8fb;border-radius:10px}
+.trdlbl{font-size:11px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.06em}
+.trchips.sm{margin-top:5px}
+.trchips.sm button{padding:4px 10px;font-size:11.5px}
 .tddays{display:inline-flex;gap:4px}
 .tdday{width:10px;height:10px;border-radius:50%;background:#e9eef4;display:inline-block}
 .tdday.on{background:var(--good)}
@@ -746,7 +752,7 @@ const LIES={f:"Fairway",r:"Rough",s:"Sand",g:"Green"};const DLIES={f:"Fairway",r
 const LV=["PGA Tour"];
 function spread(min,max,n){if(n===1)return [Math.round((min+max)/2)];const a=[];for(let i=0;i<n;i++)a.push(Math.round(min+(max-min)*i/(n-1)));return a;}
 const NSIT=[3,6,9,12,15,18], NHOLE=[6,9,12,18];
-const APP_VERSION="v169";
+const APP_VERSION="v170";
 const TESTS={
 putt_3_5:{name:"Putt 3–5 ft",cat:"Putten",eng:"putt_cat",dists:[3,4,5],per:8,info:"24 putts (8× vanaf 3, 4 en 5 ft). Per afstand: holed, mis binnen 3 ft, mis buiten 3 ft. Output: SG + make%."},
 putt_6_10:{name:"Putt 6–10 ft",cat:"Putten",eng:"putt_cat",dists:[6,8,10],per:8,info:"24 putts (8× vanaf 6, 8 en 10 ft). Zelfde invoer als 3–5 ft."},
@@ -960,11 +966,59 @@ function weekTourDays(pid,ws){var set={};calItemsWeek(pid,ws).forEach(function(c
 function typeMinutesWeek(pid,ws,type){return activeBlocksWeek(pid,ws).blocks.filter(function(b){return b.type===type;}).reduce(function(a,b){return a+blockMin(b);},0);}
 function fmtUren(min){if(!min)return "–";var u=Math.round(min/6)/10;return (String(u).replace(".",","))+" u";}
 function planFor(pid,ws){return (state.trainPlans||[]).find(function(p){return p.playerId===pid&&p.weekStart===ws;})||null;}
+/* ===== v170: generator-hierarchie 2.0 - doelen -> fase -> handmatige override ===== */
+const GOALCAT2SUB={driving:["driving","fullswing"],approach:["approachplay"],wedge:["distwedge"],shortgame:["shortgame","lageappr","hogeappr","bunker","lobshot"],putting:["putten"]};
+const SKILL_LABEL_KEYS=SKILL_LABELS.map(function(x){return x[0];});
+const PHASE_GOALROOM={alg:0.8,spec:1.0,pre:1.15,taper:1.15,comp:1.25,herstel:0.6,ond:1.0,trans:0.5};
+function trainGoalsOn(pid){if(!state.trainFocusGoals)state.trainFocusGoals={};var v=state.trainFocusGoals[pid];return v===undefined?true:!!v;}
+function setTrainGoalsOn(pid,v){if(!state.trainFocusGoals)state.trainFocusGoals={};state.trainFocusGoals[pid]=!!v;}
+function focusTokParse(tok){var s=String(tok);var i=s.indexOf(">");if(i<0)return {sub:s,deep:null};return {sub:s.slice(0,i),deep:s.slice(i+1)};}
+function focusSubToks(arr,sub){return (arr||[]).filter(function(t){return focusTokParse(t).sub===sub;});}
+function focusToggleSub(arr,sub){if(focusSubToks(arr,sub).length){for(var i=arr.length-1;i>=0;i--){if(focusTokParse(arr[i]).sub===sub)arr.splice(i,1);}}else{arr.push(sub);}}
+function focusToggleDeep(arr,tok){var p=focusTokParse(tok);var i=arr.indexOf(tok);if(i>=0){arr.splice(i,1);if(focusSubToks(arr,p.sub).length===0)arr.push(p.sub);}else{var pi=arr.indexOf(p.sub);if(pi>=0)arr.splice(pi,1);arr.push(tok);}}
+function focusDeepLabel(sub,deep){if(SKILL_LABEL_KEYS.indexOf(deep)>=0)return skillLabelName(deep);return taxSubSubLabel("golfskills",sub,deep);}
+function drillMatchesDeep(d,deep){if(SKILL_LABEL_KEYS.indexOf(deep)>=0)return (d.skillLabels||[]).indexOf(deep)>=0;return (d.subSubCats||[]).indexOf(deep)>=0;}
+function goalBehind(g){var pct=goalPct(g);if(pct==null||pct>=1)return false;var dl=(typeof goalHorizonDate==="function")?goalHorizonDate(g):null;if(!dl)return false;var sd=g.baselineDate?new Date(g.baselineDate):(g.createdAt?new Date(g.createdAt):null);var ed=new Date(dl);if(!sd||isNaN(+sd)||isNaN(+ed))return false;var nd=new Date(todayISO());var tot=+ed-+sd;if(tot<=0)return false;var exp=Math.max(0,Math.min(1,(+nd-+sd)/tot));return pct<exp-0.1;}
+function goalInTheme(g){return (state.goalThemes||[]).some(function(t){return t.playerId===g.playerId&&(t.goalIds||[]).indexOf(g.id)>=0;});}
+function openPerfGoals(pid){return (state.goals||[]).filter(function(g){return g.playerId===pid&&g.type==="prestatie"&&(!g.status||g.status==="open");});}
+function buildGenCtx(pid,ws,wk,phase){
+ var focus=trainFocusFor(pid);var useGoals=trainGoalsOn(pid);
+ var goalW={},goalReasons={},goalScoringW=0,scoringReason=null;
+ var room=PHASE_GOALROOM[phase]||1.0;
+ if(useGoals){openPerfGoals(pid).forEach(function(g){
+  var w=2;var behind=goalBehind(g);if(behind)w+=1;if((g.priority||0)===0)w+=1;if(goalInTheme(g))w+=1;w=w*room;
+  if(g.cat==="scoring"){if(w>goalScoringW){goalScoringW=w;scoringReason={behind:behind};}}
+  else{(GOALCAT2SUB[g.cat]||[]).forEach(function(sub){goalW[sub]=(goalW[sub]||0)+w;if(!goalReasons[sub]||behind)goalReasons[sub]={behind:behind};});}
+ });}
+ var weakSubs=[];playerWeakCats(pid).forEach(function(x){(SUMCAT2SUB[x.cat]||[]).forEach(function(sc){if(weakSubs.indexOf(sc)<0)weakSubs.push(sc);});});
+ return {focus:focus,useGoals:useGoals,goalW:goalW,goalReasons:goalReasons,goalScoringW:goalScoringW,scoringReason:scoringReason,weakSubs:weakSubs,phase:phase};
+}
+function drillWeight(d,ctx){
+ var w=1,subs=d.subCats||[];
+ subs.forEach(function(sc){var toks=focusSubToks(ctx.focus,sc);if(toks.length){w+=4;toks.forEach(function(t){var p=focusTokParse(t);if(p.deep&&drillMatchesDeep(d,p.deep))w+=3;});}});
+ if(ctx.useGoals){subs.forEach(function(sc){if(ctx.goalW[sc])w+=ctx.goalW[sc];});if(d.mainCat==="spelen"&&ctx.goalScoringW)w+=ctx.goalScoringW*(subs.indexOf("strategie")>=0?1.4:1);}
+ subs.forEach(function(sc){if(ctx.weakSubs.indexOf(sc)>=0&&!ctx.goalW[sc])w+=2;});
+ return w;
+}
+function focusSummary(pid,ws){
+ var year=+dAddDays(ws,3).slice(0,4);var micro=[];try{micro=perMicro(pid,year);}catch(e){}
+ var wk=micro.find(function(w){return w.start===ws;})||{phase:null};var phase=wk.phase||"ond";
+ var ctx=buildGenCtx(pid,ws,wk,phase);var parts=[];
+ (ctx.focus||[]).forEach(function(tok){var p=focusTokParse(tok);var lbl=taxSubLabel("golfskills",p.sub);if(p.deep)lbl+=" – "+focusDeepLabel(p.sub,p.deep);parts.push(lbl+" (handmatig)");});
+ if(ctx.useGoals){
+  if(ctx.scoringReason)parts.push(goalCatName("scoring")+" (doel"+(ctx.scoringReason.behind?", loopt achter":"")+")");
+  Object.keys(ctx.goalReasons).forEach(function(sub){var r=ctx.goalReasons[sub];parts.push(taxSubLabel("golfskills",sub)+" (doel"+(r.behind?", loopt achter":"")+")");});
+ }
+ var tp=phaseType(phase);var form=(tp.perf>=tp.tech&&tp.perf>=tp.skill)?"performance":((tp.tech>=tp.skill)?"techniek":"skill");
+ var pd=(typeof phaseDef==="function")?phaseDef(phase):null;
+ parts.push((pd?pd[1]:phase)+" → "+form+" (fase)");
+ return parts;
+}
 function genWeekPlan(pid,ws){var year=+dAddDays(ws,3).slice(0,4);var micro=[];try{micro=perMicro(pid,year);}catch(e){}
  var wk=micro.find(function(w){return w.start===ws;})||{phase:null,vol:50,int:50,n:(Math.floor((+new Date(ws)-+new Date(year+"-01-01"))/(7*864e5))+1),tours:[]};
  var phase=wk.phase||"ond";var pool=(state.drills||[]);
- var focus=trainFocusFor(pid);var weakSubs=[];playerWeakCats(pid).forEach(function(w){(SUMCAT2SUB[w.cat]||[]).forEach(function(s){weakSubs.push(s);});});
- function w8(d){var w=1;(d.subCats||[]).forEach(function(s){if(focus.indexOf(s)>=0)w+=3;else if(weakSubs.indexOf(s)>=0)w+=2;});return w;}
+ var _gctx=buildGenCtx(pid,ws,wk,phase);
+ function w8(d){return drillWeight(d,_gctx);}
  var seed=wk.n||1;
  function pick(cands,n){if(n<=0)return [];if(cands.length<=n)return cands.slice();
   var arr=cands.slice().sort(function(a,b){return (a.title||"").localeCompare(b.title||"","nl");});
@@ -3955,9 +4009,11 @@ function fillTrainPlan(box){ if(!box)return; if(!tpPlayer){box.innerHTML='<div c
  var roosterCard='<div class="card"><div class="row spread" style="align-items:center;margin-bottom:8px"><h3 style="margin:0">Weekrooster'+(wbRaw.override?' <span class="sx">(aangepast)</span>':'')+'</h3>'+hdrIcons+'</div><div class="wg"><div class="wg-in">'+headRow+'<div class="wg-body">'+colsHtml+'</div></div></div>'+subStats+'</div>';
  /* --- focus --- */
  var focus=trainFocusFor(pid);var weak=playerWeakCats(pid);
- var focusChips='<div class="trchips" id="tpFocus">'+taxSubs("golfskills").map(function(s){return '<button data-s="'+s.key+'" class="'+(focus.indexOf(s.key)>=0?"on":"")+'">'+esc(s.label)+'</button>';}).join("")+'</div>';
+ var focusChips='<div class="trchips" id="tpFocus">'+taxSubs("golfskills").map(function(s){return '<button data-fsub="'+s.key+'" class="'+(focusSubToks(focus,s.key).length?"on":"")+'">'+esc(s.label)+'</button>';}).join("")+'</div>';
+ var deepRows=taxSubs("golfskills").filter(function(s){return focusSubToks(focus,s.key).length;}).map(function(s){var subsubs=(s.subs||[]);var ssC=subsubs.map(function(ss){var tk=s.key+">"+ss.key;return '<button class="'+(focus.indexOf(tk)>=0?"on":"")+'" data-ftok="'+tk+'">'+esc(ss.label)+'</button>';}).join("");var slC=SKILL_LABELS.map(function(sl){var tk=s.key+">"+sl[0];return '<button class="'+(focus.indexOf(tk)>=0?"on":"")+'" data-ftok="'+tk+'">'+esc(sl[1])+'</button>';}).join("");return '<div class="trdeep"><span class="trdlbl">'+esc(s.label)+' — fijner</span><div class="trchips sm">'+ssC+slC+'</div></div>';}).join("");
+ var goalTog='<label class="rubtoggle" style="margin-top:12px"><input type="checkbox" id="tpGoalTog"'+(trainGoalsOn(pid)?" checked":"")+'><span><b>Doelen meenemen</b> — actieve prestatiedoelen sturen de accenten (fase bepaalt de vorm; achterstand telt zwaarder).</span></label>';
  var weakTxt=weak.length?('Zwakste categorieën uit tests: <b>'+weak.map(function(w){return esc(w.cat);}).join("</b>, <b>")+'</b> — krijgen automatisch extra gewicht.'):'Nog geen testdata — automatische accenten volgen zodra er challenge-resultaten zijn.';
- var focusCard='<div class="card"><div class="collap'+(tpFocusOpen?' open':'')+'"><div class="ch" id="tpFocusH"><b>Trainingsfocus'+(focus.length?' · '+focus.length:'')+'</b><span class="chev">▶</span></div><div class="cb"><div class="sx" style="margin-bottom:6px">'+weakTxt+'</div><div class="trlbl">Handmatige focus (telt zwaarst)</div>'+focusChips+'</div></div></div>';
+ var focusCard='<div class="card"><div class="collap'+(tpFocusOpen?' open':'')+'"><div class="ch" id="tpFocusH"><b>Trainingsfocus'+(focus.length?' · '+focus.length:'')+'</b><span class="chev">▶</span></div><div class="cb"><div class="sx" style="margin-bottom:6px">'+weakTxt+'</div><div class="trlbl">Handmatige focus (telt zwaarst)</div>'+focusChips+deepRows+goalTog+'</div></div></div>';
  box.innerHTML=head+roosterCard+focusCard;
  try{microCardInto(box,pid,year);}catch(e){}
  $("#tpPrev").onclick=function(){tpWeek=dAddDays(tpWeek,-7);renderPlanning();};
@@ -3971,7 +4027,9 @@ function fillTrainPlan(box){ if(!box)return; if(!tpPlayer){box.innerHTML='<div c
  box.querySelectorAll(".wg-cell[data-blk]").forEach(function(c){c.onclick=function(){openRoosterBlock(pid,ws,c.dataset.blk);};});
  box.querySelectorAll(".wg-cell[data-cal]").forEach(function(c){c.onclick=function(){var id=c.dataset.cal;if(!id)return;if(c.dataset.calk==="ed")editionDetail(id,{player:pid});else eventDetail(id,{player:pid});};});
  var fh=$("#tpFocusH");if(fh)fh.onclick=function(){tpFocusOpen=!tpFocusOpen;renderPlanning();};
- var fc=$("#tpFocus");if(fc)fc.querySelectorAll("button").forEach(function(b){b.onclick=function(){var arr=trainFocusFor(pid);var i=arr.indexOf(b.dataset.s);if(i>=0)arr.splice(i,1);else arr.push(b.dataset.s);save();b.classList.toggle("on");};});
+ box.querySelectorAll("[data-fsub]").forEach(function(b){b.onclick=function(){var arr=trainFocusFor(pid);focusToggleSub(arr,b.dataset.fsub);save();renderPlanning();};});
+ box.querySelectorAll("[data-ftok]").forEach(function(b){b.onclick=function(){var arr=trainFocusFor(pid);focusToggleDeep(arr,b.dataset.ftok);save();renderPlanning();};});
+ var _gt=$("#tpGoalTog");if(_gt)_gt.onchange=function(){setTrainGoalsOn(pid,_gt.checked);save();renderPlanning();};
 }
 const TODOCATS=[["fysiek","Fysiek"],["golfskills","Golfskills"],["spelen","Spelen"],["prestatiegedrag","Prestatiegedrag"]];
 const TODOICONS={
@@ -4011,6 +4069,8 @@ function fillTodoTab(box){ if(!box)return; if(!tpPlayer){box.innerHTML='<div cla
   var _days='<span class="tddays">'+WKDAYS.map(function(d,i){return '<i class="tdday'+(_ld[i]?' on':'')+'" title="'+d+'"></i>';}).join("")+'</span>';
   var _stk=weekStreak(pid,ws);
   var compRow='<div class="tdcomp"><span class="sx">Getraind op</span>'+_days+(_stk>=2?'<span class="tdstreak">🔥 '+_stk+' wk</span>':'')+'</div>';
+  var _fsum=[];try{_fsum=focusSummary(pid,ws);}catch(e){}
+  var focRow=_fsum.length?'<div class="tdfocus"><b>Focus:</b> '+_fsum.slice(0,4).map(esc).join(" · ")+'</div>':'';
   var tabs='<div class="tdcats2">'+TODOCATS.map(function(c){var arr=itemsOf(c[0]);var e2=execTotals(arr.map(function(o){return o.it;}));var p2=e2.t?Math.round(100*e2.d/e2.t):0;var on=tpTodoCat===c[0];
    return '<div class="tdcatcol"><button class="plicon tdc'+(on?' on':'')+'" data-tcat="'+c[0]+'" style="--cc:'+mcAccent(c[0])+'" title="'+c[1]+'">'+TODOICONS[c[0]]+'</button><span class="tdcbar"><i style="width:'+p2+'%;background:'+mcAccent(c[0])+'"></i></span></div>';}).join("")+'</div>';
   var mk=tpTodoCat;var g=itemsOf(mk);
@@ -4019,7 +4079,7 @@ function fillTodoTab(box){ if(!box)return; if(!tpPlayer){box.innerHTML='<div cla
   g.forEach(function(o){var d=o.d;var sub=(d.subCats&&d.subCats[0])?taxSubLabel(mk,d.subCats[0]):"Algemeen";
    if(sub!==lastSub){rows+='<div class="tpsub">'+esc(sub)+'</div>';lastSub=sub;}
    rows+='<div class="tprow'+(itemFull(o.it)?' done':'')+'" data-open="'+d.id+'">'+tickBtnHtml(o.it,d.id)+'<span class="tpnm">'+esc(d.title)+(d.always?' <span class="tpalways" title="Altijd terugkerend">∞</span>':'')+'</span><button class="tpx" data-x="'+d.id+'" title="Aantal keer deze week">×'+(o.it.x||1)+'</button></div>';});
-  body='<div class="card"><div class="row spread" style="align-items:center"><h3 style="margin:0">To-do deze week'+(plan.edited?' <span class="sx">(aangepast)</span>':'')+'</h3><button class="xbtn sm" id="tpRegen" title="Opnieuw genereren">↻</button></div>'+progRow+compRow+tabs+'<div class="tdlistbox">'+(rows||'<p class="muted" style="margin:6px 0 0">Geen oefeningen in deze categorie.</p>')+'</div><button class="btn ghost sm block" id="tpAddBtn" style="margin-top:12px">+ Oefening toevoegen</button></div>';
+  body='<div class="card"><div class="row spread" style="align-items:center"><h3 style="margin:0">To-do deze week'+(plan.edited?' <span class="sx">(aangepast)</span>':'')+'</h3><button class="xbtn sm" id="tpRegen" title="Opnieuw genereren">↻</button></div>'+progRow+compRow+focRow+tabs+'<div class="tdlistbox">'+(rows||'<p class="muted" style="margin:6px 0 0">Geen oefeningen in deze categorie.</p>')+'</div><button class="btn ghost sm block" id="tpAddBtn" style="margin-top:12px">+ Oefening toevoegen</button></div>';
  }
  box.innerHTML=head+body;
  $("#tpPrev").onclick=function(){tpWeek=dAddDays(tpWeek,-7);renderPlanning();};
