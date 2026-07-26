@@ -554,7 +554,7 @@ input[type=time]{min-width:0;width:100%;max-width:100%;-webkit-appearance:none;a
 .tdscroll{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding-right:2px}
 .tdcols>.card.tdwin{height:440px}
 .tdstack{display:flex;flex-direction:column;gap:12px;height:440px;margin-bottom:14px}
-.tdstack>.card{margin-bottom:0;flex:1 1 0;min-height:0}
+.tdstack>.card{margin-bottom:0;min-height:0}
 @media(min-width:640px){.tdcols>.card.tdwin{height:520px}.tdstack{height:520px;margin-bottom:0}}
 .tegrid{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}
 .tesub{margin-left:8px;padding-left:12px;border-left:2px solid var(--line)}
@@ -571,6 +571,18 @@ input[type=time]{min-width:0;width:100%;max-width:100%;-webkit-appearance:none;a
 .teul li{font-size:13.5px;line-height:1.5;margin-bottom:3px}
 .moodbtn.mf{display:flex;align-items:center;justify-content:center;color:#94a1ae;padding:6px 0}
 .moodbtn.mf.on{color:var(--mfc);border-color:var(--mfc);background:#fff}
+input.in.tesg{width:96px;max-width:96px;flex:0 0 96px;text-align:right;font-variant-numeric:tabular-nums}
+.tebul{background-image:radial-gradient(circle at 9px 15px,#9aa4b0 1.6px,transparent 1.9px);background-attachment:local;background-size:100% 21px;background-origin:content-box;padding-left:22px;line-height:21px}
+.lbmoods{display:inline-flex;gap:1px;vertical-align:-2px;margin-left:5px}
+.lbmoods svg{display:block}
+.uprow{display:flex;align-items:center;gap:9px;padding:6px 0;border-bottom:1px solid var(--line)}
+.uprow:last-child{border-bottom:none}
+.uplbl{flex:0 0 76px;text-align:center;font-size:11px;font-weight:800;border-radius:7px;padding:3px 0;letter-spacing:.02em}
+.upnm{font-weight:700;font-size:13.5px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.updt{font-size:11.5px;color:var(--muted);flex:0 0 auto}
+.tdstack>.card.tdgrow{flex:1 1 auto;min-height:0;display:flex;flex-direction:column}
+.tdstack>.card.tdfit{flex:0 0 auto}
+.tephead{border-bottom:none!important;padding-bottom:0}
 .tddays{display:inline-flex;gap:4px}
 .tdday{width:10px;height:10px;border-radius:50%;background:#e9eef4;display:inline-block}
 .tdday.on{background:var(--good)}
@@ -794,7 +806,7 @@ const LIES={f:"Fairway",r:"Rough",s:"Sand",g:"Green"};const DLIES={f:"Fairway",r
 const LV=["PGA Tour"];
 function spread(min,max,n){if(n===1)return [Math.round((min+max)/2)];const a=[];for(let i=0;i<n;i++)a.push(Math.round(min+(max-min)*i/(n-1)));return a;}
 const NSIT=[3,6,9,12,15,18], NHOLE=[6,9,12,18];
-const APP_VERSION="v174";
+const APP_VERSION="v175";
 const TESTS={
 putt_3_5:{name:"Putt 3–5 ft",cat:"Putten",eng:"putt_cat",dists:[3,4,5],per:8,info:"24 putts (8× vanaf 3, 4 en 5 ft). Per afstand: holed, mis binnen 3 ft, mis buiten 3 ft. Output: SG + make%."},
 putt_6_10:{name:"Putt 6–10 ft",cat:"Putten",eng:"putt_cat",dists:[6,8,10],per:8,info:"24 putts (8× vanaf 6, 8 en 10 ft). Zelfde invoer als 3–5 ft."},
@@ -989,7 +1001,7 @@ function weekLogDays(pid,ws){var set={};(state.trainLog||[]).forEach(function(e)
 function weekStreak(pid,ws){var n=0;var w=dAddDays(ws,-7);while(n<99){var p=planFor(pid,w);if(!p)break;planItemsNorm(p);var et=execTotals(p.items);if(!et.t||et.d/et.t<0.8)break;n++;w=dAddDays(w,-7);}return n;}
 const MOODEMO=["😫","🙁","😕","🙂","😄","🤩"];
 function openMoodDlg(onDone){var ov=el("div","cdlg-ov");
- ov.innerHTML='<div class="cdlg"><p style="font-weight:700;margin-bottom:10px">Hoe ging het?</p><div class="moodrow">'+MOODEMO.map(function(e,i){return '<button class="moodbtn" data-m="'+(i+1)+'">'+e+'</button>';}).join("")+'</div><textarea class="in" id="moodNote" rows="2" placeholder="Opmerking (optioneel)" style="margin-top:12px;width:100%;display:block;box-sizing:border-box"></textarea><div class="row" style="gap:8px;margin-top:12px"><button class="btn ghost" style="flex:1" id="moodSkip">Overslaan</button><button class="btn blue" style="flex:1" id="moodOk" disabled>Opslaan</button></div></div>';
+ ov.innerHTML='<div class="cdlg"><p style="font-weight:700;margin-bottom:10px">Hoe ging het?</p><div class="moodrow">'+[1,2,3,4,5,6].map(function(i){return '<button class="moodbtn mf" data-m="'+i+'" style="--mfc:'+MOOD_COLORS[i-1]+'">'+moodFace(i,26)+'</button>';}).join("")+'</div><textarea class="in" id="moodNote" rows="2" placeholder="Opmerking (optioneel)" style="margin-top:12px;width:100%;display:block;box-sizing:border-box"></textarea><div class="row" style="gap:8px;margin-top:12px"><button class="btn ghost" style="flex:1" id="moodSkip">Overslaan</button><button class="btn blue" style="flex:1" id="moodOk" disabled>Opslaan</button></div></div>';
  document.body.appendChild(ov);var mood=null;var ok=ov.querySelector("#moodOk");
  ov.querySelectorAll(".moodbtn").forEach(function(b){b.onclick=function(){mood=+b.dataset.m;ov.querySelectorAll(".moodbtn").forEach(function(x){x.classList.toggle("on",x===b);});ok.disabled=false;};});
  ok.onclick=function(){var note=(ov.querySelector("#moodNote").value||"").trim();ov.remove();onDone({mood:mood,note:note});};
@@ -997,7 +1009,7 @@ function openMoodDlg(onDone){var ov=el("div","cdlg-ov");
  ov.addEventListener("click",function(e){if(e.target===ov){ov.remove();onDone(null);}});}
 function keepScrollRefresh(fn,keepList){var y=window.scrollY;var lb=keepList?document.querySelector(".tdlistbox"):null;var st=lb?lb.scrollTop:0;fn();requestAnimationFrame(function(){window.scrollTo(0,y);if(keepList){var lb2=document.querySelector(".tdlistbox");if(lb2)lb2.scrollTop=st;}requestAnimationFrame(function(){window.scrollTo(0,y);});});}
 function planTick(plan,pid,drillId,ctx){if(!plan)return;planItemsNorm(plan);var it=plan.items.find(function(i){return i.id===drillId;});if(!it)return;var x=it.x||1;
- function refresh(){keepScrollRefresh(function(){if(activeView==="today")renderToday();else renderPlanning();},true);}
+ function refresh(){keepScrollRefresh(function(){if(activeView==="today")renderToday();else renderPlanning();},true);if(window._tickHook)try{window._tickHook();}catch(e){}}
  if((it.doneN||0)>=x){it.doneN=0;it.done=false;trainLogRemoveAll(pid,plan.weekStart,drillId);save();refresh();return;}
  var fin=function(fb){it.doneN=(it.doneN||0)+1;it.done=it.doneN>=x;trainLogAdd(pid,plan.weekStart,drillId,fb,ctx);save();refresh();};
  if(state.checkFeedback)openMoodDlg(fin);else fin(null);}
@@ -4087,7 +4099,7 @@ function fillTrainPlan(box){ if(!box)return; if(!tpPlayer){box.innerHTML='<div c
 const TODOCATS=[["fysiek","Fysiek"],["golfskills","Golfskills"],["spelen","Spelen"],["prestatiegedrag","Prestatiegedrag"]];
 const TODOICONS={
  fysiek:'<svg viewBox="0 0 24 24"><path d="M6.5 6.5v11M17.5 6.5v11M3.5 9v6M20.5 9v6M6.5 12h11"/></svg>',
- golfskills:'<svg viewBox="0 0 24 24"><circle cx="10" cy="3.6" r="1.9"/><path d="M10.4 6c.8 1.5 1 3 .6 4.9"/><path d="M11 10.9 9.4 19.6"/><path d="M11 10.9l2.7 8.4"/><path d="M10.6 7.4l4.1 2.9"/><path d="M14.7 10.3l3.2 7.7"/><circle cx="19" cy="20" r="1"/></svg>',
+ golfskills:'<svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="4.2"/><path d="M9.6 13.2h4.8l-1.6 2.7h-1.6Z"/><path d="M12 15.9v4.3"/></svg>',
  spelen:'<svg viewBox="0 0 24 24"><path d="M12 16V3"/><path d="M12 4h6l-2 2.5L18 9h-6"/><path d="M5 19c0-1.4 3.1-2.5 7-2.5s7 1.1 7 2.5-3.1 2.5-7 2.5-7-1.1-7-2.5Z"/></svg>',
  prestatiegedrag:'<svg viewBox="0 0 24 24"><path d="M11.5 5.5A3 3 0 0 0 6 7v.6A3.4 3.4 0 0 0 4 11a3.4 3.4 0 0 0 1.4 5.8A3 3 0 0 0 9 20c1 0 2-.5 2.5-1.4Z"/><path d="M12.5 5.5A3 3 0 0 1 18 7v.6A3.4 3.4 0 0 1 20 11a3.4 3.4 0 0 1-1.4 5.8A3 3 0 0 1 15 20c-1 0-2-.5-2.5-1.4Z"/></svg>'};
 function renderTodoTab(host){
@@ -4308,6 +4320,31 @@ function openMjopBulk(){var sh=$("#sheet");var sel={};var f={q:"",m:""};var rng=
  }
  draw();openSheet();
 }
+/* ===== v175: trainings-afvinkvenster ===== */
+window._tickHook=null;
+function openTrainTodos(pid,ws,kind,ctxBlockId){
+ var sh=$("#sheet");
+ function draw(){
+  var plan=planItemsNorm(planFor(pid,ws));
+  var _pool=allDrills();
+  var todos=!plan?[]:plan.items.map(function(it){return {it:it,d:_pool.find(function(x){return x.id===it.id;})};}).filter(function(o){return o.d&&(kind==="golf"?(o.d.mainCat==="golfskills"||o.d.mainCat==="spelen"):o.d.mainCat==="fysiek");});
+  var et=execTotals(todos.map(function(o){return o.it;}));var pct=et.t?Math.round(100*et.d/et.t):0;
+  function row(o){var x=o.it.x||1,dn=Math.min(o.it.doneN||0,x);var dots='';for(var i=0;i<x;i++)dots+='<i class="'+(i>=x-dn?'on':'')+'"></i>';return '<div class="tdtodo'+(itemFull(o.it)?' done':'')+'" data-open="'+o.d.id+'">'+tickBtnHtml(o.it,o.d.id)+'<span class="tdtnm">'+esc(o.d.title)+'</span><span class="tddots">'+dots+'</span></div>';}
+  var inner='';
+  if(!todos.length)inner='<p class="muted" style="margin:0">'+(plan?'Geen oefeningen in deze categorie.':'Nog geen weekplan — genereer er een bij Planning → To-do.')+'</p>';
+  else if(kind==="golf"){
+   var list=todos.slice();var _g=function(o){return o.d.mainCat==="spelen"?"Spelen":((o.d.subCats&&o.d.subCats[0])?taxSubLabel("golfskills",o.d.subCats[0]):"Algemeen");};
+   list.sort(function(p,q){var gp=_g(p),gq=_g(q);var sp=(gp==="Spelen")?1:0,sq=(gq==="Spelen")?1:0;return sp-sq||gp.localeCompare(gq,"nl")||(p.d.title||"").localeCompare(q.d.title||"","nl");});
+   var last=null;list.forEach(function(o){var g=_g(o);if(g!==last){inner+='<div class="tpsub">'+esc(g)+'</div>';last=g;}inner+=row(o);});
+  }else todos.forEach(function(o){inner+=row(o);});
+  sh.innerHTML='<div class="shead"><div><h2>'+(kind==="golf"?"Golftraining (Z)":"Fysiek (Z)")+'</h2><div class="sx">Weekopdrachten · '+esc(nameOf(pid))+'</div></div><button class="xbtn" onclick="window._tickHook=null;closeSheet()">×</button></div>'
+  +'<div class="card"><div class="tdprog" style="margin:0 0 10px"><div class="tdbar"><i style="width:'+pct+'%"></i></div><span class="tdpct">'+pct+'%</span><span class="sx">'+et.d+'/'+et.t+'</span></div>'+inner+'</div>';
+  sh.querySelectorAll("[data-chk]").forEach(function(b){b.onclick=function(ev){ev.stopPropagation();var pl=planItemsNorm(planFor(pid,ws));planTick(pl,pid,b.dataset.chk,ctxBlockId?{blockId:ctxBlockId}:null);};});
+  sh.querySelectorAll(".tdtodo[data-open]").forEach(function(r){r.onclick=function(e){if(e.target.closest("[data-chk]"))return;window._tickHook=null;drillDetail(r.dataset.open,{mode:'plan',pid:pid,ws:ws});};});
+ }
+ window._tickHook=draw;
+ draw();openSheet();
+}
 /* ===== v173: MJOP-labels + spelersprofiel ===== */
 const MJOP_PHASES=[["F1","Starten en ontdekken","U6/U8"],["F2","Fundament","U8/U10"],["F3","Leren golfen","U10/U12"],["A1","Beter spelen","U12/U14"],["A2","Competitief golfen","U14/U16"],["T1","Topgolfprincipes","U16"],["T2","Trainen om te presteren","U18"],["T3","Trainen voor de top","U20/U22"],["E1","Trainen om te excelleren","U22/22+"],["E2","Excelleren","22+"],["M1","Langdurig excelleren","22+"],["M2","Wereldpodium","26+/32+"]];
 function mjopIdx(k){for(var i=0;i<MJOP_PHASES.length;i++)if(MJOP_PHASES[i][0]===k)return i;return -1;}
@@ -4342,8 +4379,8 @@ function openTourEval(pid,edId){
  +'<div class="row" style="gap:8px;margin-top:10px"><div style="flex:1"><label class="fld">Score (t.o.v. par)</label><input class="in" id="teScore" value="'+esc(d.scorePar||"")+'" placeholder="bv. +5"></div><div style="flex:1"><label class="fld">Klassering</label><input class="in" id="teRank" value="'+esc(d.ranking||"")+'" placeholder="bv. T12"></div></div></div>'
  +'<div class="card"><label class="fld">Tevredenheid over het toernooi</label>'+_teEmojiRow("_mood",+d.mood||0)
  +'<label class="fld" style="margin-top:18px">Per onderdeel</label><div class="sx" style="margin-bottom:10px">Beoordeel elk onderdeel en licht toe waar nuttig; bij de golfskills-onderdelen kun je ook de SG over het toernooi kwijt.</div>'+partsHtml+'</div>'
- +'<div class="card"><label class="fld">Sterke punten <span class="sx">(één punt per regel)</span></label><textarea class="in" id="teGood" rows="3">'+esc(d.good||"")+'</textarea>'
- +'<label class="fld" style="margin-top:10px">Kansen <span class="sx">(één punt per regel)</span></label><textarea class="in" id="teBetter" rows="3">'+esc(d.better||"")+'</textarea>'
+ +'<div class="card"><label class="fld" style="color:var(--good)">Sterke punten <span class="sx">(één punt per regel)</span></label><textarea class="in tebul" id="teGood" rows="3">'+esc(d.good||"")+'</textarea>'
+ +'<label class="fld" style="margin-top:10px;color:var(--orange)">Kansen <span class="sx">(één punt per regel)</span></label><textarea class="in tebul" id="teBetter" rows="3">'+esc(d.better||"")+'</textarea>'
  +'<label class="fld" style="margin-top:10px">Belangrijkste les</label><textarea class="in" id="teLesson" rows="2">'+esc(d.lesson||"")+'</textarea>'
  +'<label class="fld" style="margin-top:10px">Actiepunten <span class="sx">(wat neem je mee de training in?)</span></label><textarea class="in" id="teAction" rows="2">'+esc(d.action||"")+'</textarea></div>'
  +'<button class="btn block blue" id="teSave">Opslaan</button>'
@@ -4368,10 +4405,10 @@ function tourEvalDetail(id){var t=tourEvalById(id);if(!t)return;var sh=$("#sheet
  var per=(t.start?fmtDate(t.start):"")+(t.end&&t.end!==t.start?" – "+fmtDate(t.end):"");
  var left=_cell("Toernooi",esc(t.name||""))+_cell("Periode",esc(per))+_cell("Baan",esc(t.course||""));
  var right=_cell("Score (t.o.v. par)",esc(t.scorePar||""))+_cell("Klassering",esc(t.ranking||""))+'<div class="lldrow"><div class="lldlbl">Tevredenheid</div><div class="lldval">'+((+t.mood||0)?'<span style="color:'+MOOD_COLORS[t.mood-1]+';display:inline-flex">'+moodFace(+t.mood,28)+'</span>':'<span class="sx">–</span>')+'</div></div>';
- var partRows=TOUREVAL_PARTS.map(function(pp){var v=+((t.parts||{})[pp[0]])||0;var sg=(t.sg||{})[pp[0]];var note=String((t.partNotes||{})[pp[0]]||"").trim();
-  return '<div class="tepartv'+(pp[3]?' tesubv':'')+'"><span class="tepvl">'+pp[1]+'</span><span class="tesgcol">'+(pp[2]&&sg!=null?fmtSG2(sg):'')+'</span><span class="tepe2"'+(v?' style="color:'+MOOD_COLORS[v-1]+'"':'')+'>'+(v?moodFace(v,21):'<span class="sx">–</span>')+'</span></div>'+(note?'<div class="tepnote'+(pp[3]?' tesubn':'')+'">'+esc(note)+'</div>':'');}).join("");
+ var partRows='<div class="tepartv tephead"><span class="tepvl"></span><span class="tesgcol" style="font-size:10.5px;font-weight:800;color:var(--muted);letter-spacing:.06em">SG</span><span class="tepe2"></span></div>'+TOUREVAL_PARTS.map(function(pp){var v=+((t.parts||{})[pp[0]])||0;var sg=(t.sg||{})[pp[0]];var note=String((t.partNotes||{})[pp[0]]||"").trim();var sgc=(sg!=null&&+sg>0)?"var(--good)":((sg!=null&&+sg<0)?"var(--bad)":"var(--ink)");
+  return '<div class="tepartv'+(pp[3]?' tesubv':'')+'"><span class="tepvl">'+pp[1]+'</span><span class="tesgcol" style="color:'+sgc+'">'+(pp[2]&&sg!=null?fmtSG2(sg):'')+'</span><span class="tepe2"'+(v?' style="color:'+MOOD_COLORS[v-1]+'"':'')+'>'+(v?moodFace(v,21):'<span class="sx">–</span>')+'</span></div>'+(note?'<div class="tepnote'+(pp[3]?' tesubn':'')+'">'+esc(note)+'</div>':'');}).join("");
  var sk=bulletHtml(t.good),ka=bulletHtml(t.better);
- var lists=(sk||ka)?'<div class="card"><div class="tegrid"><div><div class="lldlbl">Sterke punten</div>'+(sk||'<span class="sx">–</span>')+'</div><div><div class="lldlbl">Kansen</div>'+(ka||'<span class="sx">–</span>')+'</div></div></div>':'';
+ var lists=(sk||ka)?'<div class="card"><div class="tegrid"><div><div class="lldlbl" style="color:var(--good)">Sterke punten</div>'+(sk||'<span class="sx">–</span>')+'</div><div><div class="lldlbl" style="color:var(--orange)">Kansen</div>'+(ka||'<span class="sx">–</span>')+'</div></div></div>':'';
  var les=((t.lesson||"").trim()||(t.action||"").trim())?'<div class="card">'+((t.lesson||"").trim()?'<div class="lldrow"><div class="lldlbl">Belangrijkste les</div><div class="lldval">'+esc(t.lesson)+'</div></div>':'')+((t.action||"").trim()?'<div class="lldrow"><div class="lldlbl">Actiepunten</div><div class="lldval">'+esc(t.action)+'</div></div>':'')+'</div>':'';
  sh.innerHTML='<div class="shead"><div><h2>Toernooi-evaluatie</h2><div class="sx">'+esc(t.name||"")+' · '+esc(nameOf(t.playerId))+'</div></div><div class="sheadact"><button class="xbtn" id="tevEdit" title="Bewerk">✎</button><button class="xbtn xbtn-del" id="tevDel" title="Verwijder">'+TRASH_SVG+'</button><button class="xbtn" onclick="closeSheet()">×</button></div></div>'
  +'<div class="card"><div class="tegrid"><div>'+left+'</div><div>'+right+'</div></div></div>'
@@ -4395,7 +4432,7 @@ function lessonLogDetail(id){var l=lessonLogById(id);if(!l)return;var sh=$("#she
  $("#lldDel").onclick=function(){confirmDlg("Dit trainingslog verwijderen?",function(){state.lessonLogs=lessonLogs().filter(function(x){return x.id!==id;});lessonImgsSet(id,[]);save();closeSheet();if(activeView==="today")renderToday();else if(activeView==="logbook")renderLogbook();toast("Verwijderd");});};
 }
 function trainLogDetail(pid,date,drillId){var es=(state.trainLog||[]).filter(function(e){return e.playerId===pid&&e.date===date&&e.drillId===drillId;});var d=allDrills().find(function(x){return x.id===drillId;});var sh=$("#sheet");
- var rows=es.map(function(e){return '<div class="tlfb">'+(e.mood?'<span class="tlfbe">'+MOODEMO[e.mood-1]+'</span>':'')+(e.note?'<span class="lldval">'+esc(e.note)+'</span>':'<span class="muted" style="font-size:13px">Geen opmerking</span>')+'</div>';}).join("");
+ var rows=es.map(function(e){return '<div class="tlfb">'+(e.mood?'<span class="tlfbe" style="color:'+MOOD_COLORS[e.mood-1]+'">'+moodFace(e.mood,22)+'</span>':'')+(e.note?'<span class="lldval">'+esc(e.note)+'</span>':'<span class="muted" style="font-size:13px">Geen opmerking</span>')+'</div>';}).join("");
  sh.innerHTML='<div class="shead"><div><h2>'+esc(d?d.title:"Oefening")+'</h2><div class="sx">'+fmtDate(date)+' · '+es.length+'× uitgevoerd · '+esc(nameOf(pid))+'</div></div><button class="xbtn" onclick="closeSheet()">×</button></div>'
  +'<div class="card"><label class="fld">Feedback speler</label>'+(rows||'<p class="muted" style="margin:0">–</p>')+'</div>'
  +(d?'<button class="btn block ghost" id="tldOpen">Bekijk oefening</button>':'');
@@ -4452,9 +4489,9 @@ function logbookEntries(pid){
  var grp={};
  (state.trainLog||[]).forEach(function(e){if(e.playerId!==pid)return;if(!e.date)return;var k=e.date+"|"+e.drillId;(grp[k]=grp[k]||[]).push(e);});
  Object.keys(grp).forEach(function(k){var es=grp[k];var d=(state.drills||[]).find(function(x){return x.id===es[0].drillId;});
-  var moods=es.filter(function(e){return e.mood;}).map(function(e){return MOODEMO[e.mood-1]||"";});
+  var moods=es.filter(function(e){return e.mood;}).map(function(e){return e.mood;});
   var notes=es.filter(function(e){return e.note;}).map(function(e){return e.note;});
-  out.push({date:es[0].date,type:"train",title:d?d.title:"Oefening",sub:es.length+"× uitgevoerd"+(moods.length?" · "+moods.join(""):""),note:notes.join(" · "),open:(moods.length||notes.length)?{f:"tlog",id:es[0].date+"|"+es[0].drillId}:(d?{f:"drill",id:d.id}:null)});});
+  out.push({date:es[0].date,type:"train",title:d?d.title:"Oefening",sub:es.length+"× uitgevoerd",moodLvls:moods,note:notes.join(" · "),open:(moods.length||notes.length)?{f:"tlog",id:es[0].date+"|"+es[0].drillId}:(d?{f:"drill",id:d.id}:null)});});
  (state.lessonLogs||[]).forEach(function(l){if(l.playerId!==pid||!l.date)return;out.push({date:l.date,type:"les",title:(l.blockLabel||wkTypeMeta(l.blockType)[1]),sub:lessonLogSummary(l)||"Trainingslog",note:l.done||"",open:{f:"lesson",id:l.id}});});
  (state.tourEvals||[]).forEach(function(t){if(t.playerId!==pid)return;var dd=t.end||t.start;if(!dd)return;out.push({date:dd,type:"eval",title:"Toernooi-evaluatie · "+(t.name||"Toernooi"),sub:[t.scorePar?("Score "+t.scorePar):"",t.ranking||""].filter(Boolean).join(" · "),open:{f:"toureval",id:t.id}});});
  (state.sessions||[]).forEach(function(s){if(!s.finalized||!s.date)return;var r=(s.results||[]).find(function(x){return x.playerId===pid;});if(!r)return;var t=TESTS[s.testId];if(!t)return;
@@ -4488,7 +4525,8 @@ function renderLogbook(){var box=$("#logbookBody");if(!box)return;
     var rel=(e.date===todayISO())?"Vandaag · ":(e.date===dAddDays(todayISO(),-1)?"Gisteren · ":"");
     body+='<div class="lbday">'+rel+lbl+'</div>';lastD=e.date;}
    var m=lbTypeMeta(e.type);
-   body+='<div class="lbrow'+(e.open?' clickable':'')+'"'+(e.open?' data-lbo="'+e.open.f+':'+e.open.id+'"':'')+'><span class="wkdot" style="background:'+m[2]+'"></span><div class="lbrow-b"><b>'+esc(e.title)+'</b>'+(e.sub?'<small class="muted">'+esc(e.sub)+'</small>':'')+(e.note?'<small class="lbnote">“'+esc(e.note)+'”</small>':'')+'</div><span class="lbtag" style="color:'+m[2]+'">'+m[1]+'</span></div>';});
+   var _mh2=(e.moodLvls&&e.moodLvls.length)?('<span class="lbmoods">'+e.moodLvls.slice(0,5).map(function(l){return '<span style="color:'+MOOD_COLORS[l-1]+'">'+moodFace(l,14)+'</span>';}).join("")+'</span>'):"";
+   body+='<div class="lbrow'+(e.open?' clickable':'')+'"'+(e.open?' data-lbo="'+e.open.f+':'+e.open.id+'"':'')+'><span class="wkdot" style="background:'+m[2]+'"></span><div class="lbrow-b"><b>'+esc(e.title)+'</b>'+(e.sub?'<small class="muted">'+esc(e.sub)+_mh2+'</small>':'')+(e.note?'<small class="lbnote">“'+esc(e.note)+'”</small>':'')+'</div><span class="lbtag" style="color:'+m[2]+'">'+m[1]+'</span></div>';});
   if(list.length>lbShowN)body+='<button class="btn ghost sm block" id="lbMore" style="margin-top:10px">Toon meer ('+(list.length-lbShowN)+' ouder)</button>';
  }
  html+='<div class="card">'+chips+body+'</div>';
@@ -4553,10 +4591,8 @@ function renderToday(){var box=$("#todayBody");if(!box)return;
  var _tG=allTodos(["golfskills","spelen"]),_tF=allTodos(["fysiek"]);
  function _openN(t){return t.filter(function(o){return !itemFull(o.it);}).length;}
  var _gB=bl.filter(function(b){return b.type==="golf";}),_fyB=bl.filter(function(b){return b.type==="fysiek";});
- if(_gB.length)_gB.forEach(function(b){var mt=wkTypeMeta(b.type);trainActs.push({key:'blk_'+b.id,kind:'todos',blk:b,mt:mt,title:esc(b.label||mt[1])+' · '+fmtHM(b.start),todos:_tG,openN:_openN(_tG)});});
- else if(_openN(_tG))trainActs.push({key:'gen_golf',kind:'todos',blk:null,mt:wkTypeMeta('golf'),title:'Golftraining',todos:_tG,openN:_openN(_tG)});
- if(_fyB.length)_fyB.forEach(function(b){var mt=wkTypeMeta(b.type);trainActs.push({key:'blk_'+b.id,kind:'todos',blk:b,mt:mt,title:esc(b.label||mt[1])+' · '+fmtHM(b.start),todos:_tF,openN:_openN(_tF)});});
- else if(_openN(_tF))trainActs.push({key:'gen_fys',kind:'todos',blk:null,mt:wkTypeMeta('fysiek'),title:'Fysieke training',todos:_tF,openN:_openN(_tF)});
+ if(_gB.length||_openN(_tG))trainActs.push({key:'tt_golf',kind:'tt',tt:'golf',mt:wkTypeMeta('golf'),title:'Golftraining (Z)'+(_gB.length?' · '+_gB.map(function(b){return fmtHM(b.start);}).join(", "):''),openN:_openN(_tG),blkId:(_gB.length===1?_gB[0].id:null)});
+ if(_fyB.length||_openN(_tF))trainActs.push({key:'tt_fys',kind:'tt',tt:'fys',mt:wkTypeMeta('fysiek'),title:'Fysiek (Z)'+(_fyB.length?' · '+_fyB.map(function(b){return fmtHM(b.start);}).join(", "):''),openN:_openN(_tF),blkId:(_fyB.length===1?_fyB[0].id:null)});
  var ac="";
  if(!acts.length)ac='<p class="muted" style="margin:0">Geen acties voor vandaag.</p>';
  acts.forEach(function(a){
@@ -4568,19 +4604,17 @@ function renderToday(){var box=$("#todayBody");if(!box)return;
    ac+='<div class="tdact"><div class="tdact-h"><span class="wkdot" style="background:#c8791a"></span><div style="flex:1;min-width:0"><b>'+a.title+'</b><small class="muted" style="display:block">'+a.sub+'</small></div><button class="btn ghost sm" data-tlog="'+a.blkId+'" data-tld="'+a.date+'" data-tlt="'+a.blkType+'" data-tll="'+esc(a.blkLabel)+'"'+(a.ll?' data-tlv="'+a.ll.id+'"':'')+'>'+(a.ll?'Bekijk':'Invullen')+'</button></div></div>';
   }});
  var tr="";
- function _tdRow(o,a){var x=o.it.x||1,dn=Math.min(o.it.doneN||0,x);var dots='';for(var i=0;i<x;i++)dots+='<i class="'+(i>=x-dn?'on':'')+'"></i>';return '<div class="tdtodo'+(itemFull(o.it)?' done':'')+'" data-open="'+o.d.id+'"'+(a.blk?' data-bctx="'+a.blk.id+'"':'')+'>'+tickBtnHtml(o.it,o.d.id)+'<span class="tdtnm">'+esc(o.d.title)+'</span><span class="tddots">'+dots+'</span></div>';}
- trainActs.forEach(function(a){var open=tdActOpen[a.key]===true;var openN=a.openN;
-  var inner='';
-  if(a.todos.length){
-   if(a.mt[0]==="golf"){
-    var list=a.todos.slice();var _g=function(o){return o.d.mainCat==="spelen"?"Spelen":((o.d.subCats&&o.d.subCats[0])?taxSubLabel("golfskills",o.d.subCats[0]):"Algemeen");};
-    list.sort(function(p,q){var gp=_g(p),gq=_g(q);var sp=(gp==="Spelen")?1:0,sq=(gq==="Spelen")?1:0;return sp-sq||gp.localeCompare(gq,"nl")||(p.d.title||"").localeCompare(q.d.title||"","nl");});
-    var last=null;list.forEach(function(o){var g=_g(o);if(g!==last){inner+='<div class="tpsub">'+esc(g)+'</div>';last=g;}inner+=_tdRow(o,a);});
-   }else{a.todos.forEach(function(o){inner+=_tdRow(o,a);});}
-  }else inner='<p class="sx" style="margin:4px 0">'+(plan?'Alles afgevinkt ✓':'Nog geen weekplan — genereer er een bij Planning → To-do.')+'</p>';
-  tr+='<div class="tdact"><button class="tdact-h" data-act="'+a.key+'"><span class="wkdot" style="background:'+a.mt[2]+'"></span><b>'+a.title+'</b><span class="tdact-n">'+(openN?openN+' open':'✓ klaar')+'</span><span class="chev"'+(open?' style="transform:rotate(90deg)"':'')+'>▶</span></button>'+(open?('<div class="tdtodos">'+inner+'</div>'):'')+'</div>';
+ trainActs.forEach(function(a){
+  tr+='<div class="tdact"><button class="tdact-h" data-topen="'+a.tt+'"'+(a.blkId?' data-tblk="'+a.blkId+'"':'')+'><span class="wkdot" style="background:'+a.mt[2]+'"></span><b>'+a.title+'</b><span class="tdact-n">'+(a.openN?a.openN+' open':'✓ klaar')+'</span><span class="chev">▶</span></button></div>';
  });
- html+='<div class="tdcols"><div class="card tdwin"><h3 style="margin:0 0 8px">Agenda</h3><div class="tdscroll">'+ag+'</div></div><div class="tdstack"><div class="card tdwin"><h3 style="margin:0 0 8px">Acties</h3><div class="tdscroll">'+ac+'</div></div>'+(tr?'<div class="card tdwin"><h3 style="margin:0 0 8px">Training</h3><div class="tdscroll">'+tr+'</div></div>':'')+'</div></div>';
+ var _upc=[];(state.tourEditions||[]).forEach(function(ed){var pp=ed.participants&&ed.participants[pid];if(!pp||!ed.start)return;var end=ed.end||ed.start;if(end<dt)return;_upc.push({ed:ed,pp:pp,start:ed.start,end:end});});
+ _upc.sort(function(a,b){return a.start.localeCompare(b.start);});
+ function _upRow(lbl,e,color){if(!e)return '<div class="uprow"><span class="uplbl" style="background:'+color+'1f;color:'+color+'">'+lbl+'</span><span class="sx">–</span></div>';
+  var m2=edMeta(e.ed);var days=dDiffDays(dt,e.start);var when=(e.start<dt)?'nu bezig':(days===0?'vandaag':'over '+days+' dg'+(days===1?'':'n'));
+  return '<div class="uprow clickable" data-uped="'+e.ed.id+'"><span class="uplbl" style="background:'+color+'1f;color:'+color+'">'+lbl+'</span><span class="upnm">'+esc(m2.name)+'</span><span class="updt">'+fmtDate(e.start)+(e.end!==e.start?' – '+fmtDate(e.end):'')+' · '+when+'</span></div>';}
+ var _p5=_upc.find(function(x){return peakNum(x.pp.peak)===5;}),_p4=_upc.find(function(x){return peakNum(x.pp.peak)===4;});
+ var upCard='<div class="card"><h3 style="margin:0 0 8px">Wedstrijden</h3>'+_upRow('Volgende',_upc[0],'#E8520A')+_upRow('Piek 5',_p5,'#d64550')+_upRow('Piek 4',_p4,'#c8791a')+'</div>';
+ html+=upCard+'<div class="tdcols"><div class="card tdwin"><h3 style="margin:0 0 8px">Agenda</h3><div class="tdscroll">'+ag+'</div></div><div class="tdstack"><div class="card tdwin tdgrow"><h3 style="margin:0 0 8px">Acties</h3><div class="tdscroll">'+ac+'</div></div>'+(tr?'<div class="card tdfit"><h3 style="margin:0 0 8px">Training</h3>'+tr+'</div>':'')+'</div></div>';
  box.innerHTML=html;
  bindTodayTop();
  var tp=$("#tdPrev");if(tp)tp.onclick=function(){todayDate=dAddDays(todayDate,-1);renderToday();};
@@ -4588,6 +4622,8 @@ function renderToday(){var box=$("#todayBody");if(!box)return;
  var tt=$("#tdToday");if(tt)tt.onclick=function(){todayDate=todayISO();renderToday();};
  var tpl=$("#tdPlanBtn");if(tpl)tpl.onclick=function(){tpPlayer=pid;tpWeek=ws;planTab="todo";show("planning");};
  box.querySelectorAll("[data-act]").forEach(function(b){b.onclick=function(e){if(e.target.closest("[data-chk]"))return;var k=b.dataset.act;tdActOpen[k]=!(tdActOpen[k]===true);renderToday();};});
+ box.querySelectorAll("[data-topen]").forEach(function(b){b.onclick=function(){openTrainTodos(pid,ws,b.dataset.topen,b.dataset.tblk||null);};});
+ box.querySelectorAll("[data-uped]").forEach(function(r){r.onclick=function(){editionDetail(r.dataset.uped,{player:pid});};});
  box.querySelectorAll("[data-stats]").forEach(function(b){b.onclick=function(){challengePlayer=pid;show("new");};});
  box.querySelectorAll("[data-tlog]").forEach(function(b){b.onclick=function(){if(b.dataset.tlv)lessonLogDetail(b.dataset.tlv);else openLessonLog(pid,b.dataset.tld,b.dataset.tlog,b.dataset.tlt,b.dataset.tll);};});
  box.querySelectorAll("[data-teval]").forEach(function(b){b.onclick=function(){openTourEval(pid,b.dataset.teval);};});
