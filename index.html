@@ -611,6 +611,20 @@ input.in.tesg{width:96px;max-width:96px;flex:0 0 96px;text-align:right;font-vari
 .imglb{position:fixed;inset:0;background:rgba(10,18,28,.88);z-index:1000;display:flex;align-items:center;justify-content:center;padding:18px;cursor:zoom-out}
 .imglb img{max-width:94vw;max-height:88vh;border-radius:12px;box-shadow:0 8px 40px rgba(0,0,0,.5)}
 .imglbx{position:fixed;top:14px;right:14px;width:38px;height:38px;border-radius:50%;border:none;background:rgba(255,255,255,.16);color:#fff;font-size:22px;line-height:1;cursor:pointer}
+.bmrow{display:flex;gap:10px;margin-top:6px}
+.bmwrap{flex:1;text-align:center}
+.bmsvg{width:100%;max-width:150px;height:auto}
+.bmbody{fill:#e7edf3}
+.bmdot{fill:rgba(255,255,255,.01);stroke:#b9c4cf;stroke-width:1.4;cursor:pointer}
+.bmdot.on{fill:#c2383a;fill-opacity:.9;stroke:#c2383a}
+.bmlbl{font-size:10.5px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-top:2px}
+.wplrow{display:flex;align-items:center;gap:8px;padding:6px 0}
+.wbars{display:flex;align-items:flex-end;gap:2px;height:56px;margin-top:4px}
+.wbarw{flex:1;display:flex;align-items:flex-end}
+.wbar{width:100%;border-radius:2px}
+.witems{display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:12px}
+.witem{display:flex;align-items:center;gap:5px}
+.wilbl{font-size:12px;font-weight:600}
 .tddays{display:inline-flex;gap:4px}
 .tdday{width:10px;height:10px;border-radius:50%;background:#e9eef4;display:inline-block}
 .tdday.on{background:var(--good)}
@@ -834,7 +848,7 @@ const LIES={f:"Fairway",r:"Rough",s:"Sand",g:"Green"};const DLIES={f:"Fairway",r
 const LV=["PGA Tour"];
 function spread(min,max,n){if(n===1)return [Math.round((min+max)/2)];const a=[];for(let i=0;i<n;i++)a.push(Math.round(min+(max-min)*i/(n-1)));return a;}
 const NSIT=[3,6,9,12,15,18], NHOLE=[6,9,12,18];
-const APP_VERSION="v177";
+const APP_VERSION="v178";
 const TESTS={
 putt_3_5:{name:"Putt 3–5 ft",cat:"Putten",eng:"putt_cat",dists:[3,4,5],per:8,info:"24 putts (8× vanaf 3, 4 en 5 ft). Per afstand: holed, mis binnen 3 ft, mis buiten 3 ft. Output: SG + make%."},
 putt_6_10:{name:"Putt 6–10 ft",cat:"Putten",eng:"putt_cat",dists:[6,8,10],per:8,info:"24 putts (8× vanaf 6, 8 en 10 ft). Zelfde invoer als 3–5 ft."},
@@ -1426,7 +1440,7 @@ let goalDraft=null,goalCatOpen={},goalPlayerOpen=false;
 let bucketsTeamId=null,bucketsPlayerId=null,bucketsPlayerOpen=false;
 function closeSettings(){closeSheet();show(activeView);}
 function openSettings(){const sh=$("#sheet");
-sh.innerHTML='<div class="shead"><div><h2>Instellingen</h2></div><button class="xbtn" onclick="closeSettings()">×</button></div><div class="card"><button class="btn block blue" id="setGoals">Doelen instellen</button><div class="sx" style="margin-top:7px">Targets per test · toewijzen aan team en spelers.</div></div><div class="card"><button class="btn block blue" id="setBuckets">Grenswaarden (buckets)</button><div class="sx" style="margin-top:7px">Proximity-categorieën voor wedges & approaches.</div></div><div class="card"><button class="btn block blue" id="setTourCats">Toernooicategorie\u00ebn</button><div class="sx" style="margin-top:7px">Bewerk de lijst met wedstrijdcategorie\u00ebn (admin).</div></div><div class="card"><button class="btn block blue" id="setTourLabels">Toernooilabels</button><div class="sx" style="margin-top:7px">Bewerk de labels om toernooien te filteren (admin).</div></div><div class="card"><button class="btn block blue" id="setCourses">Banen</button><div class="sx" style="margin-top:7px">Beheer de banen voor de SG (baan)-test.</div></div><div class="card"><button class="btn block blue" id="setGoalTax">Domeinen en categorieën</button><div class="sx" style="margin-top:7px">Bewerk categorieën, subcategorieën en domeinen voor ontwikkelingsdoelen.</div></div><div class="card"><button class="btn block blue" id="setEvalDom">Evaluatiedomeinen</button><div class="sx" style="margin-top:7px">Domeinen voor de duiding in voortgangsevaluaties.</div></div><div class="card"><button class="btn block blue" id="setNotif">Notificaties</button><div class="sx" style="margin-top:7px">Herinneringen, zoals de evaluatiecadans.</div></div><div class="card"><label class="rubtoggle"><input type="checkbox" id="setChkFb"'+(state.checkFeedback?" checked":"")+'><span><b>Feedback bij afvinken</b> — de speler geeft bij elke afgevinkte uitvoering aan hoe het ging (emoji-schaal) met een optionele opmerking.</span></label></div><div class="card"><button class="btn block blue" id="setRubriek">Prestatiegedrag-rubriek</button><div class="sx" style="margin-top:7px">Kies welke competenties je scoort in evaluaties.</div></div><div class="card"><button class="btn block blue" id="setDrillDb">Oefeningen-database</button><div class="sx" style="margin-top:7px">Alle oefeningen, testen en challenges — bekijken en beheren.</div></div><div class="card"><button class="btn block blue" id="setTourDb">Toernooien-database</button><div class="sx" style="margin-top:7px">Terugkerende toernooien en tours (ook bereikbaar via Planning).</div></div><div class="card"><button class="btn block blue" id="setTrainTax">Trainingscategorieën</button><div class="sx" style="margin-top:7px">Bewerk de hoofd-, sub- en sub-subcategorieën van de oefeningen-database.</div></div><div class="card"><button class="btn block blue" id="setPeriod">Periodisering</button><div class="sx" style="margin-top:7px">Standaardwaarden van de motor en de uitleg per fase.</div></div><div class="card"><button class="btn block blue" id="setBackup">Back-up &amp; data</button><div class="sx" style="margin-top:7px">Exporteer of importeer je gegevens.</div></div><div class="sx" style="text-align:center;margin-top:10px;opacity:.65">NGF Performance Centre · '+APP_VERSION+'</div>';
+sh.innerHTML='<div class="shead"><div><h2>Instellingen</h2></div><button class="xbtn" onclick="closeSettings()">×</button></div><div class="card"><button class="btn block blue" id="setGoals">Doelen instellen</button><div class="sx" style="margin-top:7px">Targets per test · toewijzen aan team en spelers.</div></div><div class="card"><button class="btn block blue" id="setBuckets">Grenswaarden (buckets)</button><div class="sx" style="margin-top:7px">Proximity-categorieën voor wedges & approaches.</div></div><div class="card"><button class="btn block blue" id="setTourCats">Toernooicategorie\u00ebn</button><div class="sx" style="margin-top:7px">Bewerk de lijst met wedstrijdcategorie\u00ebn (admin).</div></div><div class="card"><button class="btn block blue" id="setTourLabels">Toernooilabels</button><div class="sx" style="margin-top:7px">Bewerk de labels om toernooien te filteren (admin).</div></div><div class="card"><button class="btn block blue" id="setCourses">Banen</button><div class="sx" style="margin-top:7px">Beheer de banen voor de SG (baan)-test.</div></div><div class="card"><button class="btn block blue" id="setGoalTax">Domeinen en categorieën</button><div class="sx" style="margin-top:7px">Bewerk categorieën, subcategorieën en domeinen voor ontwikkelingsdoelen.</div></div><div class="card"><button class="btn block blue" id="setEvalDom">Evaluatiedomeinen</button><div class="sx" style="margin-top:7px">Domeinen voor de duiding in voortgangsevaluaties.</div></div><div class="card"><button class="btn block blue" id="setNotif">Notificaties</button><div class="sx" style="margin-top:7px">Herinneringen, zoals de evaluatiecadans.</div></div><div class="card"><label class="rubtoggle"><input type="checkbox" id="setChkFb"'+(state.checkFeedback?" checked":"")+'><span><b>Feedback bij afvinken</b> — de speler geeft bij elke afgevinkte uitvoering aan hoe het ging (emoji-schaal) met een optionele opmerking.</span></label></div><div class="card"><button class="btn block blue" id="setRubriek">Prestatiegedrag-rubriek</button><div class="sx" style="margin-top:7px">Kies welke competenties je scoort in evaluaties.</div></div><div class="card"><button class="btn block blue" id="setDrillDb">Oefeningen-database</button><div class="sx" style="margin-top:7px">Alle oefeningen, testen en challenges — bekijken en beheren.</div></div><div class="card"><button class="btn block blue" id="setTourDb">Toernooien-database</button><div class="sx" style="margin-top:7px">Terugkerende toernooien en tours (ook bereikbaar via Planning).</div></div><div class="card"><button class="btn block blue" id="setTrainTax">Trainingscategorieën</button><div class="sx" style="margin-top:7px">Bewerk de hoofd-, sub- en sub-subcategorieën van de oefeningen-database.</div></div><div class="card"><button class="btn block blue" id="setPeriod">Periodisering</button><div class="sx" style="margin-top:7px">Standaardwaarden van de motor en de uitleg per fase.</div></div><div class="card"><button class="btn block blue" id="setWellness">Wellness monitoring</button><div class="sx" style="margin-top:7px">Dagelijkse fitheid-check: aanzetten per team of speler, met frequentie (ook per fase).</div></div><div class="card"><button class="btn block blue" id="setBackup">Back-up &amp; data</button><div class="sx" style="margin-top:7px">Exporteer of importeer je gegevens.</div></div><div class="sx" style="text-align:center;margin-top:10px;opacity:.65">NGF Performance Centre · '+APP_VERSION+'</div>';
 openSheet();
 $("#setGoals").onclick=()=>{goalDraft=null;openGoals();};
 $("#setBuckets").onclick=()=>{openBuckets();};$("#setTourCats").onclick=()=>{openTourCats();};$("#setTourLabels").onclick=()=>{openTourLabels();};$("#setCourses").onclick=()=>{openCoursesSettings();};$("#setEvalDom")&&($("#setEvalDom").onclick=()=>{openEvalDomEdit();});
@@ -1436,7 +1450,7 @@ $("#setTrainTax")&&($("#setTrainTax").onclick=()=>{openDrillTaxEdit();});
 $("#setDrillDb")&&($("#setDrillDb").onclick=()=>{closeSheet();show("trainen");});
 var _cfb=$("#setChkFb");if(_cfb)_cfb.onchange=function(){state.checkFeedback=this.checked;save();};
 $("#setTourDb")&&($("#setTourDb").onclick=()=>{openLibrary();});
-$("#setPeriod")&&($("#setPeriod").onclick=()=>{openPerCfg();});$("#setGoalTax").onclick=()=>{openGoalTaxonomy();};$("#setBackup").onclick=()=>{openBackupSettings();};}
+$("#setPeriod")&&($("#setPeriod").onclick=()=>{openPerCfg();});$("#setWellness")&&($("#setWellness").onclick=()=>{openWellnessCfg();});$("#setGoalTax").onclick=()=>{openGoalTaxonomy();};$("#setBackup").onclick=()=>{openBackupSettings();};}
 function bkActBlock(CATLISTS,offObj,editable,attr){let h="";CATLISTS.forEach(C=>{h+='<div class="bkcat-h">'+C[0]+'</div>';C[1].forEach(L=>{const key=L[0];const defs=(state.bucketDefs[key]||[]).slice().sort((a,b)=>(a.op==="holed"?-1:b.op==="holed"?1:a.t-b.t));const offIds=offObj[key]||[];h+='<div class="bkgrp"><div class="bkgrp-h">'+L[1]+'</div><div class="bkacts">'+(defs.length?defs.map(d=>{const on=offIds.indexOf(d.id)<0;return '<button class="bkact'+(on?" on":"")+(editable?"":" dis")+'" data-'+attr+'="'+key+":"+d.id+'">'+opLabel(d)+'</button>';}).join(""):'<span class="sx">geen</span>')+'</div></div>';});});return h;}
 function openBuckets(){const sh=$("#sheet");
 if(!bucketsTeamId||!state.teams.some(t=>t.id===bucketsTeamId))bucketsTeamId=state.activeTeamId;
@@ -1796,7 +1810,7 @@ const cmpSeg='<div style="display:flex;align-items:center;gap:8px;margin-top:10p
 const cmpSeasonHtml=(progCompare==='season'&&team()&&team().seasons.length)?(function(){const _si=seasonIds();return '<div style="display:flex;align-items:center;gap:8px;margin-top:10px"><span class="fld" style="margin:0;white-space:nowrap">Vergelijk met</span><select class="in" id="cmpSeasonSel" style="flex:1">'+team().seasons.slice().reverse().filter(se=>se.id!==_si.curId).map(se=>'<option value="'+se.id+'" '+(se.id===_si.prevId?'selected':'')+'>Seizoen '+esc(se.name)+'</option>').join('')+'</select></div>';})():'';
 const filt='<div style="display:flex;align-items:center;gap:8px;margin-top:10px"><span class="fld" style="margin:0;white-space:nowrap">Periode</span><div class="seg" id="winSeg" style="flex:1">'+[['all','Alles'],['10','10'],['5','5'],['last','1']].map(o=>'<button class="'+((''+progWin)===o[0]?'on':'')+'" data-w="'+o[0]+'">'+o[1]+'</button>').join("")+'</div></div><div style="display:flex;align-items:center;gap:8px;margin-top:10px"><span class="fld" style="margin:0;white-space:nowrap">Type</span><div class="seg" id="rankSegP" style="flex:1">'+[['all','Alles'],['rank','Ranking'],['solo','Zelfstandig']].map(o=>'<button class="'+(progRank===o[0]?'on':'')+'" data-r="'+o[0]+'">'+o[1]+'</button>').join("")+'</div></div>'+seasonHtml+cmpSeg+cmpSeasonHtml;
 head.innerHTML='<label class="fld">Speler</label><span class="acwrap" style="display:block"><input class="in" id="progSelPQ" autocomplete="off" value="'+esc(nameOf(progPlayer))+'" placeholder="Zoek speler\u2026" style="width:100%"></span>'+(pteams.length>1?'<select class="in" id="progTeamF" style="margin-top:8px"><option value="all"'+(progTeamFilter==="all"?" selected":"")+'>Alle teams</option>'+pteams.map(function(tt){return '<option value="'+tt.id+'"'+(progTeamFilter===tt.id?" selected":"")+'>'+esc(tt.name)+'</option>';}).join("")+'</select>':"")+'<div class="filtwrap'+(progFiltOpen?' open':'')+'"><button class="filttog" id="progFiltH">Filters<span class="chev">\u25b6</span></button><div class="filtbody">'+filt+'</div></div>';
-box.appendChild(head);
+box.appendChild(head);try{wellnessCardInto(box,progPlayer);}catch(e){}
 var _pq=$("#progSelPQ");if(_pq){_pq.onchange=function(){var v=_pq.value.trim().toLowerCase();var p=(state.players||[]).find(function(x){return (x.name||"").toLowerCase()===v;});if(p){setSelPlayer(p.id);save();renderProgress();}};_pq.onfocus=function(){_pq.select();};acAttach(_pq,(state.players||[]),function(pp){return pp.name;},function(pp){setSelPlayer(pp.id);save();renderProgress();});}
 $("#progFiltH").onclick=()=>{progFiltOpen=!progFiltOpen;renderProgress();};var _ptf=$("#progTeamF");if(_ptf)_ptf.onchange=function(){progTeamFilter=_ptf.value;renderProgress();};
 $("#winSeg").querySelectorAll("button").forEach(b=>b.onclick=()=>{progWin=(b.dataset.w==='all'||b.dataset.w==='last')?b.dataset.w:+b.dataset.w;renderProgress();});
@@ -4342,6 +4356,119 @@ function openMjopBulk(){var sh=$("#sheet");var sel={};var f={q:"",m:""};var rng=
  }
  draw();openSheet();
 }
+/* ===== v178: wellness monitoring ===== */
+const WELL_ITEMS=[["sleepQ","Slaapkwaliteit","1 = heel slecht geslapen · 6 = uitstekend"],["fatigue","Vermoeidheid","1 = uitgeput · 6 = heel fris"],["soreness","Spierpijn","1 = veel spierpijn · 6 = geen"],["stress","Stress","1 = veel stress · 6 = heel ontspannen"],["recPhys","Herstel fysiek","1 = niet hersteld · 6 = volledig hersteld"],["recMent","Herstel mentaal","1 = leeg · 6 = opgeladen"],["mood","Stemming","1 = slecht humeur · 6 = opperbest"],["motivation","Motivatie","1 = geen zin · 6 = staat te popelen"],["confidence","Zelfvertrouwen","1 = heel laag · 6 = heel hoog"]];
+const BODY_PARTS=[["hoofd","Hoofd","f",60,16],["schouderL","Schouder L","f",40,37],["schouderR","Schouder R","f",80,37],["borst","Borst","f",60,50],["elleboogL","Elleboog L","f",30,64],["elleboogR","Elleboog R","f",90,64],["polsL","Pols/hand L","f",29,90],["polsR","Pols/hand R","f",91,90],["buik","Buik","f",60,72],["heupL","Heup L","f",52,96],["heupR","Heup R","f",68,96],["knieL","Knie L","f",53,130],["knieR","Knie R","f",67,130],["enkelL","Enkel/voet L","f",53,166],["enkelR","Enkel/voet R","f",67,166],["nek","Nek","b",60,31],["rugBoven","Rug boven","b",60,52],["rugOnder","Rug onder","b",60,76],["hamL","Hamstring L","b",53,116],["hamR","Hamstring R","b",67,116],["kuitL","Kuit L","b",53,148],["kuitR","Kuit R","b",67,148]];
+function bodyPartName(k){var b=BODY_PARTS.find(function(x){return x[0]===k;});return b?b[1]:k;}
+function wellness(){if(!state.wellness)state.wellness=[];return state.wellness;}
+function wellnessFor(pid,date){return wellness().find(function(w){return w.playerId===pid&&w.date===date;})||null;}
+function wellnessById(id){return wellness().find(function(w){return w.id===id;})||null;}
+function wellCfg(){if(!state.wellnessCfg)state.wellnessCfg={teams:{},players:{}};if(!state.wellnessCfg.teams)state.wellnessCfg.teams={};if(!state.wellnessCfg.players)state.wellnessCfg.players={};return state.wellnessCfg;}
+function _wellDefFreq(){return {kind:"daily",days:[],phases:{}};}
+function wellFreqFor(pid){var c=wellCfg();var pc=c.players[pid];
+ if(pc&&pc.mode==="off")return null;
+ if(pc&&pc.mode==="on")return pc.freq||_wellDefFreq();
+ var t=(state.teams||[]).find(function(tt){return (tt.playerIds||[]).indexOf(pid)>=0&&c.teams[tt.id]&&c.teams[tt.id].on;});
+ return t?(c.teams[t.id].freq||_wellDefFreq()):null;}
+function wellnessDue(pid,dt){var fr=wellFreqFor(pid);if(!fr)return false;
+ var kind=fr.kind||"daily";
+ if(fr.phases&&Object.keys(fr.phases).length){var year=+dt.slice(0,4);var micro=[];try{micro=perMicro(pid,year);}catch(e){}var wkk=micro.find(function(w){return w.start===weekStart(dt);});var ph=wkk&&wkk.phase;var ov=ph?fr.phases[ph]:null;if(ov==="off")return false;if(ov)kind=ov;}
+ if(kind==="daily")return true;
+ if(kind==="train"){var ws2=weekStart(dt);var di=dDiffDays(ws2,dt);return activeBlocksWeek(pid,ws2).blocks.some(function(b){return b.day===di&&["golf","golfb","fysiek","fysb"].indexOf(b.type)>=0;});}
+ if(kind==="days")return (fr.days||[]).indexOf(dDiffDays(weekStart(dt),dt))>=0;
+ return false;}
+function wellReadiness(w){var sum=0,n=0;WELL_ITEMS.forEach(function(it){var v=+w[it[0]]||0;if(v){sum+=v;n++;}});if(!n)return null;return Math.round(((sum/n)-1)/5*100);}
+function wellFlag(w){var r=wellReadiness(w);return !!(w.illness||(w.bodyParts||[]).length||(r!=null&&r<50));}
+function bodyMapSvg(side,sel){var shapes='<circle cx="60" cy="16" r="11"/><rect x="44" y="30" width="32" height="52" rx="12"/><rect x="25" y="33" width="9" height="46" rx="4.5"/><rect x="86" y="33" width="9" height="46" rx="4.5"/><rect x="25" y="81" width="8" height="15" rx="4"/><rect x="87" y="81" width="8" height="15" rx="4"/><rect x="46" y="84" width="28" height="16" rx="7"/><rect x="47" y="102" width="11" height="72" rx="5.5"/><rect x="62" y="102" width="11" height="72" rx="5.5"/>';
+ var dots=BODY_PARTS.filter(function(b){return b[2]===side;}).map(function(b){var on=sel.indexOf(b[0])>=0;return '<circle class="bmdot'+(on?' on':'')+'" data-bp="'+b[0]+'" cx="'+b[3]+'" cy="'+b[4]+'" r="7.5"><title>'+b[1]+'</title></circle>';}).join("");
+ return '<div class="bmwrap"><svg viewBox="14 0 92 182" class="bmsvg"><g class="bmbody">'+shapes+'</g>'+dots+'</svg><div class="bmlbl">'+(side==="f"?"Voorkant":"Achterkant")+'</div></div>';}
+function openWellness(pid,date){
+ var ex=wellnessFor(pid,date);
+ var d=ex?JSON.parse(JSON.stringify(ex)):{id:uid(),playerId:pid,date:date,sleepH:"",bodyParts:[],illness:false,stressNote:"",illNote:"",note:"",createdAt:Date.now()};
+ d.bodyParts=d.bodyParts||[];
+ var sh=$("#sheet");
+ function scaleRow(key,val){return '<div class="moodrow te" data-wrow="'+key+'">'+[1,2,3,4,5,6].map(function(i){return '<button type="button" class="moodbtn sm mf'+(val===i?' on':'')+'" data-m="'+i+'" style="--mfc:'+MOOD_COLORS[i-1]+'">'+moodFace(i,20)+'</button>';}).join("")+'</div>';}
+ var itemsHtml=WELL_ITEMS.map(function(it){return '<div class="tepart"><div class="teplbl"><span>'+it[1]+'</span>'+(it[0]==="sleepQ"?'<span class="tesgwrap"><span class="tesglbl">UREN</span><input class="in tesg" id="wSleepH" inputmode="decimal" placeholder="8" value="'+esc(d.sleepH!=null&&d.sleepH!==""?String(d.sleepH).replace(".",","):"")+'"></span>':'')+'</div><div class="sx" style="margin:-1px 0 3px">'+it[2]+'</div>'+scaleRow(it[0],+d[it[0]]||0)+(it[0]==="stress"?'<input class="in tesnote" id="wStressNote" placeholder="Wat speelt er? (bij veel stress)" style="display:'+(((+d.stress||0)>0&&(+d.stress||0)<=2)?"":"none")+'" value="'+esc(d.stressNote||"")+'">':'')+'</div>';}).join("");
+ sh.innerHTML='<div class="shead"><div><h2>Wellness check</h2><div class="sx">'+fmtDate(date)+' · '+esc(nameOf(pid))+'</div></div><button class="xbtn" onclick="closeSheet()">×</button></div>'
+ +'<div class="card"><label class="fld">Hoe voel je je vandaag?</label>'+itemsHtml+'</div>'
+ +'<div class="card"><label class="fld">Lichamelijke klachten <span class="sx">(tik de plek aan)</span></label><div class="bmrow" id="wBodyMap"></div><div id="wBpChips" class="trchips" style="margin-top:4px"></div>'
+ +'<label class="rubtoggle" style="margin-top:12px"><input type="checkbox" id="wIll"'+(d.illness?" checked":"")+'><span><b>Ziek / niet fit</b></span></label><input class="in tesnote" id="wIllNote" placeholder="Omschrijving (optioneel)" style="display:'+(d.illness?"":"none")+'" value="'+esc(d.illNote||"")+'">'
+ +'<label class="fld" style="margin-top:12px">Overige opmerkingen</label><textarea class="in" id="wNote" rows="2">'+esc(d.note||"")+'</textarea></div>'
+ +'<button class="btn block blue" id="wSave">Opslaan</button>'
+ +(ex?'<button class="btn block ghost" id="wDel" style="margin-top:8px;color:var(--bad)">Verwijderen</button>':'');
+ openSheet();
+ sh.querySelectorAll("[data-wrow]").forEach(function(row){var key=row.dataset.wrow;row.querySelectorAll(".moodbtn").forEach(function(b){b.onclick=function(){var v=+b.dataset.m;var cur=+d[key]||0;var nv=(cur===v)?0:v;d[key]=nv;row.querySelectorAll(".moodbtn").forEach(function(x){x.classList.toggle("on",+x.dataset.m===nv);});if(key==="stress"){var sn=$("#wStressNote");if(sn)sn.style.display=(nv>0&&nv<=2)?"":"none";}};});});
+ function drawBm(){var host=$("#wBodyMap");if(host)host.innerHTML=bodyMapSvg("f",d.bodyParts)+bodyMapSvg("b",d.bodyParts);var ch=$("#wBpChips");if(ch)ch.innerHTML=d.bodyParts.map(function(k){return '<button type="button" data-bprm="'+k+'" class="on" style="background:var(--bad);border-color:var(--bad)">'+esc(bodyPartName(k))+' ×</button>';}).join("");
+  sh.querySelectorAll(".bmdot").forEach(function(c){c.onclick=function(){var k=c.dataset.bp;var i=d.bodyParts.indexOf(k);if(i>=0)d.bodyParts.splice(i,1);else d.bodyParts.push(k);drawBm();};});
+  sh.querySelectorAll("[data-bprm]").forEach(function(b){b.onclick=function(){var i=d.bodyParts.indexOf(b.dataset.bprm);if(i>=0)d.bodyParts.splice(i,1);drawBm();};});}
+ drawBm();
+ var ill=$("#wIll");if(ill)ill.onchange=function(){var n=$("#wIllNote");if(n)n.style.display=ill.checked?"":"none";};
+ $("#wSave").onclick=function(){
+  var shh=$("#wSleepH");d.sleepH=(shh&&shh.value.trim()!=="")?(+shh.value.replace(",",".")||""):"";
+  var snEl=$("#wStressNote");d.stressNote=snEl?snEl.value.trim():"";
+  d.illness=!!($("#wIll")&&$("#wIll").checked);var inEl=$("#wIllNote");d.illNote=inEl?inEl.value.trim():"";
+  var ntEl=$("#wNote");d.note=ntEl?ntEl.value.trim():"";
+  var any=WELL_ITEMS.some(function(it){return +d[it[0]]>0;});
+  if(!any&&!d.bodyParts.length&&!d.illness&&!d.note){toast("Vul minimaal één onderdeel in");return;}
+  d.updatedAt=Date.now();
+  var i=wellness().findIndex(function(x){return x.id===d.id;});if(i>=0)state.wellness[i]=d;else state.wellness.push(d);
+  save();closeSheet();
+  if(activeView==="today")renderToday();else if(activeView==="progress")renderProgress();else if(activeView==="logbook")renderLogbook();
+  var r=wellReadiness(d);toast("Wellness opgeslagen ✓"+(r!=null?" · readiness "+r+"%":""));};
+ var db=$("#wDel");if(db)db.onclick=function(){confirmDlg("Deze wellness check verwijderen?",function(){state.wellness=wellness().filter(function(x){return x.id!==d.id;});save();closeSheet();if(activeView==="today")renderToday();else if(activeView==="logbook")renderLogbook();toast("Verwijderd");});};
+}
+function wellnessDetail(id){var w=wellnessById(id);if(!w)return;var sh=$("#sheet");var r=wellReadiness(w);
+ var rows=WELL_ITEMS.map(function(it){var v=+w[it[0]]||0;return '<div class="tepartv"><span class="tepvl" style="text-transform:none;font-size:13px">'+it[1]+((it[0]==="sleepQ"&&w.sleepH!==""&&w.sleepH!=null)?' <span class="sx">('+String(w.sleepH).replace(".",",")+' u)</span>':'')+'</span><span class="tepe2"'+(v?' style="color:'+MOOD_COLORS[v-1]+'"':'')+'>'+(v?moodFace(v,20):'<span class="sx">–</span>')+'</span></div>'+((it[0]==="stress"&&(w.stressNote||"").trim())?'<div class="tepnote">'+esc(w.stressNote)+'</div>':'');}).join("");
+ var bp=(w.bodyParts||[]).map(bodyPartName);
+ var rcol=(r==null)?"var(--muted)":(r<50?"var(--bad)":(r<65?"#e2812e":"var(--good)"));
+ sh.innerHTML='<div class="shead"><div><h2>Wellness check</h2><div class="sx">'+fmtDate(w.date)+' · '+esc(nameOf(w.playerId))+'</div></div><div class="sheadact"><button class="xbtn" id="wdEdit" title="Bewerk">✎</button><button class="xbtn xbtn-del" id="wdDel" title="Verwijder">'+TRASH_SVG+'</button><button class="xbtn" onclick="closeSheet()">×</button></div></div>'
+ +'<div class="card"><div class="row spread" style="align-items:center"><span class="lldlbl" style="margin:0">Readiness</span><b style="font-size:21px;color:'+rcol+'">'+(r!=null?r+"%":"–")+'</b></div></div>'
+ +'<div class="card">'+rows+'</div>'
+ +((bp.length||w.illness)?'<div class="card">'+(bp.length?'<div class="lldrow"><div class="lldlbl">Lichamelijke klachten</div><div class="trchips">'+bp.map(function(n){return '<button type="button" class="on" style="background:var(--bad);border-color:var(--bad);cursor:default">'+esc(n)+'</button>';}).join("")+'</div></div>':'')+(w.illness?'<div class="lldrow"><div class="lldlbl">Ziek / niet fit</div><div class="lldval">'+esc(w.illNote||"Ja")+'</div></div>':'')+'</div>':'')
+ +((w.note||"").trim()?'<div class="card"><div class="lldrow"><div class="lldlbl">Opmerkingen</div><div class="lldval">'+esc(w.note)+'</div></div></div>':'');
+ openSheet();
+ $("#wdEdit").onclick=function(){openWellness(w.playerId,w.date);};
+ $("#wdDel").onclick=function(){confirmDlg("Deze wellness check verwijderen?",function(){state.wellness=wellness().filter(function(x){return x.id!==id;});save();closeSheet();if(activeView==="today")renderToday();else if(activeView==="logbook")renderLogbook();toast("Verwijderd");});};
+}
+function openWellnessCfg(){var c=wellCfg();var sh=$("#sheet");
+ function frFor(pref){var kind=pref.charAt(0);var id=pref.slice(2);var o=(kind==="t")?c.teams[id]:c.players[id];if(!o.freq)o.freq=_wellDefFreq();return o.freq;}
+ function freqHtml(pref,fr){fr=fr||_wellDefFreq();
+  var kindSeg='<div class="seg" data-wfk="'+pref+'">'+[["daily","Dagelijks"],["train","Trainingsdagen"],["days","Vaste dagen"]].map(function(o){return '<button data-v="'+o[0]+'" class="'+((fr.kind||"daily")===o[0]?"on":"")+'">'+o[1]+'</button>';}).join("")+'</div>';
+  var daysChips=(fr.kind==="days")?'<div class="trchips sm" data-wfd="'+pref+'" style="margin-top:6px">'+WKDAYS.map(function(dd,i){return '<button data-d="'+i+'" class="'+((fr.days||[]).indexOf(i)>=0?"on":"")+'">'+dd+'</button>';}).join("")+'</div>':'';
+  var phRows='<div class="collap'+(fr._phOpen?' open':'')+'" style="margin-top:8px"><div class="ch" data-wfp="'+pref+'"><b style="font-size:12px;color:var(--muted)">Afwijken per periodiseringsfase</b><span class="chev">▶</span></div><div class="cb">'+PLANPHASES.map(function(pp){var v=(fr.phases||{})[pp[0]]||"";return '<div class="row" style="align-items:center;gap:8px;margin-bottom:6px"><span style="flex:1;font-size:12.5px;font-weight:600">'+pp[1]+'</span><select class="in" data-wph="'+pref+'" data-ph="'+pp[0]+'" style="flex:0 0 160px;height:34px;padding:4px 8px;font-size:12.5px"><option value="">Standaard</option><option value="daily"'+(v==="daily"?" selected":"")+'>Dagelijks</option><option value="train"'+(v==="train"?" selected":"")+'>Trainingsdagen</option><option value="off"'+(v==="off"?" selected":"")+'>Uit</option></select></div>';}).join("")+'</div></div>';
+  return kindSeg+daysChips+phRows;}
+ function draw(){
+  var teamCards=(state.teams||[]).map(function(t){var tc=c.teams[t.id]||(c.teams[t.id]={on:false,freq:_wellDefFreq()});
+   return '<div class="card"><label class="rubtoggle"><input type="checkbox" data-wteam="'+t.id+'"'+(tc.on?" checked":"")+'><span><b>'+esc(t.name)+'</b> — hele team</span></label>'+(tc.on?('<div style="margin-top:10px">'+freqHtml("t:"+t.id,tc.freq)+'</div>'):'')+'</div>';}).join("");
+  var plRows=allPlayers().map(function(pp){var pc=c.players[pp.id]||(c.players[pp.id]={mode:"team",freq:_wellDefFreq()});
+   return '<div class="wplrow"><span style="flex:1;font-weight:600;font-size:13.5px;min-width:0;overflow:hidden;text-overflow:ellipsis">'+esc(pp.name)+'</span><div class="seg" data-wpl="'+pp.id+'" style="flex:0 0 200px;min-width:0">'+[["team","Team"],["on","Aan"],["off","Uit"]].map(function(o){return '<button data-v="'+o[0]+'" class="'+(pc.mode===o[0]?"on":"")+'">'+o[1]+'</button>';}).join("")+'</div></div>'+(pc.mode==="on"?('<div style="margin:2px 0 12px">'+freqHtml("p:"+pp.id,pc.freq)+'</div>'):'');}).join("");
+  sh.innerHTML='<div class="shead"><div><h2>Wellness monitoring</h2><div class="sx">Fitheid-check per team of speler, met instelbare frequentie.</div></div><button class="xbtn" onclick="closeSheet()">×</button></div>'
+  +(teamCards||'<div class="card"><p class="muted" style="margin:0">Nog geen teams.</p></div>')
+  +'<div class="card"><label class="fld" style="margin-bottom:6px">Per speler <span class="sx">(overschrijft de teaminstelling)</span></label>'+(plRows||'<p class="muted" style="margin:0">Nog geen spelers.</p>')+'</div>';
+  sh.querySelectorAll("[data-wteam]").forEach(function(x){x.onchange=function(){c.teams[x.dataset.wteam].on=x.checked;save();draw();};});
+  sh.querySelectorAll("[data-wpl]").forEach(function(seg){seg.querySelectorAll("button").forEach(function(b){b.onclick=function(){c.players[seg.dataset.wpl].mode=b.dataset.v;save();draw();};});});
+  sh.querySelectorAll("[data-wfk]").forEach(function(seg){seg.querySelectorAll("button").forEach(function(b){b.onclick=function(){frFor(seg.dataset.wfk).kind=b.dataset.v;save();draw();};});});
+  sh.querySelectorAll("[data-wfd]").forEach(function(ch){ch.querySelectorAll("button").forEach(function(b){b.onclick=function(){var fr=frFor(ch.dataset.wfd);fr.days=fr.days||[];var i=fr.days.indexOf(+b.dataset.d);if(i>=0)fr.days.splice(i,1);else fr.days.push(+b.dataset.d);save();draw();};});});
+  sh.querySelectorAll("[data-wfp]").forEach(function(h){h.onclick=function(){var fr=frFor(h.dataset.wfp);fr._phOpen=!fr._phOpen;draw();};});
+  sh.querySelectorAll("[data-wph]").forEach(function(sl){sl.onchange=function(){var fr=frFor(sl.dataset.wph);fr.phases=fr.phases||{};if(sl.value)fr.phases[sl.dataset.ph]=sl.value;else delete fr.phases[sl.dataset.ph];save();};});
+ }
+ draw();openSheet();
+}
+function wellnessCardInto(box,pid){if(!pid)return;var list=wellness().filter(function(w){return w.playerId===pid;}).sort(function(a,b){return a.date.localeCompare(b.date);});if(!list.length)return;
+ var today=todayISO();var days=[];for(var i=27;i>=0;i--){var dd=dAddDays(today,-i);var w=list.find(function(x){return x.date===dd;});days.push({d:dd,r:w?wellReadiness(w):null});}
+ var bars=days.map(function(o){var h=o.r!=null?Math.max(8,Math.round(o.r*0.52)):3;var col=o.r==null?"#eef1f5":(o.r<50?"var(--bad)":(o.r<65?"#e2812e":"var(--good)"));return '<div class="wbarw"><div class="wbar" style="height:'+h+'px;background:'+col+'"'+(o.r!=null?' title="'+fmtDate(o.d)+' · '+o.r+'%"':'')+'></div></div>';}).join("");
+ var last7=list.filter(function(w){return w.date>dAddDays(today,-7);});var prev7=list.filter(function(w){return w.date>dAddDays(today,-14)&&w.date<=dAddDays(today,-7);});
+ function avg(arr,key){var su=0,n=0;arr.forEach(function(w){var v=+w[key]||0;if(v){su+=v;n++;}});return n?su/n:null;}
+ var items=WELL_ITEMS.map(function(it){var a=avg(last7,it[0]);if(a==null)return "";var pv=avg(prev7,it[0]);var dtx=(pv!=null)?(a-pv>=0.3?" ↑":(a-pv<=-0.3?" ↓":"")):"";var lv=Math.max(1,Math.min(6,Math.round(a)));return '<div class="witem"><span style="color:'+MOOD_COLORS[lv-1]+';display:inline-flex">'+moodFace(lv,17)+'</span><span class="wilbl">'+it[1]+dtx+'</span></div>';}).join("");
+ var latest=list[list.length-1];var lr=wellReadiness(latest);
+ var flags=list.filter(function(w){return w.date>dAddDays(today,-7)&&wellFlag(w);}).length;
+ var warn=(flags>=2)?'<div class="tdfocus" style="border-left-color:var(--bad);margin-top:12px"><b>Signaal:</b> meerdere dagen met lage readiness, klachten of ziekte in de afgelopen week — bespreek de belasting.</div>':'';
+ var card=el("div","card");
+ card.innerHTML='<div class="row spread" style="align-items:center;margin-bottom:6px"><h3 style="margin:0">Wellness</h3><span class="sx">'+(lr!=null?('laatste: '+fmtDate(latest.date)+' · <b style="color:'+(lr<50?"var(--bad)":(lr<65?"#e2812e":"var(--good)"))+'">'+lr+'%</b>'):'')+'</span></div><div class="wbars">'+bars+'</div><div class="sx" style="margin-top:3px">Readiness — laatste 4 weken</div>'+(items?'<div class="witems">'+items+'</div>':'')+warn;
+ card.querySelectorAll?null:null;
+ box.appendChild(card);
+ card.style.cursor="pointer";card.onclick=function(){var w=list[list.length-1];if(w)wellnessDetail(w.id);};
+}
 /* ===== v175: trainings-afvinkvenster ===== */
 window._tickHook=null;
 function openTrainTodos(pid,ws,kind,ctxBlockId){
@@ -4542,7 +4669,7 @@ function openLessonLog(pid,date,blockId,blockType,blockLabel){
 }
 /* ===== Logboek (tijdlijn per speler) ===== */
 var lbPlayer=null,lbFilter=null,lbShowN=30;
-const LBTYPES=[["train","Training","#0f9e73"],["les","Lessen","#0E7490"],["test","Testen","#2e78e8"],["stats","Stats","#E8520A"],["goal","Doelen","#534AB7"],["eval","Evaluaties","#854F0B"],["tour","Wedstrijden","#c8791a"]];
+const LBTYPES=[["train","Training","#0f9e73"],["les","Lessen","#0E7490"],["well","Wellness","#0ea5a3"],["test","Testen","#2e78e8"],["stats","Stats","#E8520A"],["goal","Doelen","#534AB7"],["eval","Evaluaties","#854F0B"],["tour","Wedstrijden","#c8791a"]];
 function lbTypeMeta(k){return LBTYPES.find(function(t){return t[0]===k;})||LBTYPES[0];}
 function logbookEntries(pid){
  var out=[];var today=todayISO();
@@ -4554,6 +4681,7 @@ function logbookEntries(pid){
   out.push({date:es[0].date,type:"train",title:d?d.title:"Oefening",sub:es.length+"× uitgevoerd",moodLvls:moods,note:notes.join(" · "),open:(moods.length||notes.length)?{f:"tlog",id:es[0].date+"|"+es[0].drillId}:(d?{f:"drill",id:d.id}:null)});});
  (state.lessonLogs||[]).forEach(function(l){if(l.playerId!==pid||!l.date)return;out.push({date:l.date,type:"les",title:(l.blockLabel||wkTypeMeta(l.blockType)[1]),sub:lessonLogSummary(l)||"Trainingslog",note:l.done||"",open:{f:"lesson",id:l.id}});});
  (state.tourEvals||[]).forEach(function(t){if(t.playerId!==pid)return;var dd=t.end||t.start;if(!dd)return;out.push({date:dd,type:"eval",title:"Toernooi-evaluatie · "+(t.name||"Toernooi"),sub:[t.scorePar?("Score "+t.scorePar):"",t.ranking||""].filter(Boolean).join(" · "),open:{f:"toureval",id:t.id}});});
+ (state.wellness||[]).forEach(function(w){if(w.playerId!==pid||!w.date)return;var r=wellReadiness(w);out.push({date:w.date,type:"well",title:"Wellness check",sub:(r!=null?("Readiness "+r+"%"):"")+(w.illness?" · ziek":"")+((w.bodyParts||[]).length?" · klachten":""),open:{f:"well",id:w.id}});});
  (state.sessions||[]).forEach(function(s){if(!s.finalized||!s.date)return;var r=(s.results||[]).find(function(x){return x.playerId===pid;});if(!r)return;var t=TESTS[s.testId];if(!t)return;
   var kv=(r.stats&&r.stats[0])?(r.stats[0][0]+" "+r.stats[0][1]):"";
   out.push({date:String(s.date).slice(0,10),type:(t.cat==="Spelen")?"stats":"test",title:t.name,sub:kv,open:{f:"session",id:s.id}});});
@@ -4599,6 +4727,7 @@ function renderLogbook(){var box=$("#logbookBody");if(!box)return;
   else if(f==="lesson")lessonLogDetail(id);
   else if(f==="tlog"){var _pp=id.split("|");trainLogDetail(lbPlayer,_pp[0],_pp[1]);}
   else if(f==="toureval")tourEvalDetail(id);
+  else if(f==="well")wellnessDetail(id);
   else if(f==="session"){var s=(state.sessions||[]).find(function(x){return x.id===id;});if(s)playerSessionDetail(s,lbPlayer);}
   else if(f==="goal")openGoalDetail(id);
   else if(f==="eval")evalDetail(id);
@@ -4646,6 +4775,7 @@ function renderToday(){var box=$("#todayBody");if(!box)return;
    if(!_tv){if(isToday||dt===e1)acts.push({key:'teval_'+ed.id,kind:'teval',edId:ed.id,title:'Toernooi-evaluatie — '+esc(m.name),sub:(dt===e1?'Laatste wedstrijddag':'Toernooi afgelopen · '+dayLbl(e1))});}
    else if(dISO(new Date(_tv.updatedAt||_tv.createdAt||0))===dt){acts.push({key:'teval_'+ed.id,kind:'teval',edId:ed.id,tvId:_tv.id,title:'Toernooi-evaluatie — '+esc(m.name),sub:'Ingevuld ✓'});}}
  });
+ if(isToday&&wellnessDue(pid,dt)){var _w=wellnessFor(pid,dt);acts.unshift({key:'well',kind:'well',wId:_w?_w.id:null,title:'Wellness check',sub:_w?('Ingevuld ✓'+(function(){var r=wellReadiness(_w);return r!=null?' · readiness '+r+'%':'';})()+(wellFlag(_w)?' · let op':'')):'Hoe fit ben je vandaag?'});}
  function lesAct(b,d,overdue){var mt2=wkTypeMeta(b.type);var _ll=lessonLogFor(pid,d,b.id);if(overdue&&_ll)return;acts.push({key:'log_'+b.id+'_'+d,kind:'log',blkId:b.id,blkType:b.type,blkLabel:(b.label||mt2[1]),date:d,ll:_ll,title:'Trainingslog'+(_ll?'':' invullen')+' — '+esc(b.label||mt2[1]),sub:_ll?('Ingevuld ✓'+(lessonLogSummary(_ll)?' · '+esc(lessonLogSummary(_ll)):'')):(overdue?'Van '+dayLbl(d):'Na de begeleide training')});}
  bl.forEach(function(b){if((b.type==="golfb"||b.type==="fysb")&&b.mode==="ind")lesAct(b,dt,false);});
  if(isToday){var _seenLes={};for(var _i=1;_i<=LOOKB;_i++){var _d=dAddDays(dt,-_i);var _ws2=weekStart(_d);var _di2=dDiffDays(_ws2,_d);
@@ -4662,6 +4792,8 @@ function renderToday(){var box=$("#todayBody");if(!box)return;
    ac+='<div class="tdact"><div class="tdact-h"><span class="wkdot" style="background:var(--orange)"></span><div style="flex:1;min-width:0"><b>'+a.title+'</b><small class="muted" style="display:block">'+a.sub+'</small></div><button class="btn ghost sm" data-stats="1">Invoeren</button></div></div>';
   }else if(a.kind==='teval'){
    ac+='<div class="tdact"><div class="tdact-h"><span class="wkdot" style="background:#854F0B"></span><div style="flex:1;min-width:0"><b>'+a.title+'</b><small class="muted" style="display:block">'+a.sub+'</small></div><button class="btn ghost sm"'+(a.tvId?' data-tevalv="'+a.tvId+'"':' data-teval="'+a.edId+'"')+'>'+(a.tvId?'Bekijk':'Invullen')+'</button></div></div>';
+  }else if(a.kind==='well'){
+   ac+='<div class="tdact"><div class="tdact-h"><span class="wkdot" style="background:#0ea5a3"></span><div style="flex:1;min-width:0"><b>'+a.title+'</b><small class="muted" style="display:block">'+a.sub+'</small></div><button class="btn ghost sm"'+(a.wId?' data-wellv="'+a.wId+'"':' data-well="1"')+'>'+(a.wId?'Bekijk':'Invullen')+'</button></div></div>';
   }else if(a.kind==='log'){
    ac+='<div class="tdact"><div class="tdact-h"><span class="wkdot" style="background:#c8791a"></span><div style="flex:1;min-width:0"><b>'+a.title+'</b><small class="muted" style="display:block">'+a.sub+'</small></div><button class="btn ghost sm" data-tlog="'+a.blkId+'" data-tld="'+a.date+'" data-tlt="'+a.blkType+'" data-tll="'+esc(a.blkLabel)+'"'+(a.ll?' data-tlv="'+a.ll.id+'"':'')+'>'+(a.ll?'Bekijk':'Invullen')+'</button></div></div>';
   }});
@@ -4691,6 +4823,8 @@ function renderToday(){var box=$("#todayBody");if(!box)return;
  box.querySelectorAll("[data-tlog]").forEach(function(b){b.onclick=function(){if(b.dataset.tlv)lessonLogDetail(b.dataset.tlv);else openLessonLog(pid,b.dataset.tld,b.dataset.tlog,b.dataset.tlt,b.dataset.tll);};});
  box.querySelectorAll("[data-teval]").forEach(function(b){b.onclick=function(){openTourEval(pid,b.dataset.teval);};});
  box.querySelectorAll("[data-tevalv]").forEach(function(b){b.onclick=function(){tourEvalDetail(b.dataset.tevalv);};});
+ box.querySelectorAll("[data-well]").forEach(function(b){b.onclick=function(){openWellness(pid,dt);};});
+ box.querySelectorAll("[data-wellv]").forEach(function(b){b.onclick=function(){wellnessDetail(b.dataset.wellv);};});
  box.querySelectorAll(".tdtodo[data-open]").forEach(function(r){r.onclick=function(e){if(e.target.closest("[data-chk]"))return;drillDetail(r.dataset.open,{mode:'plan',pid:pid,ws:ws});};});
  var _tph=$("#tdPhase");if(_tph&&_wk&&_wk.phase)_tph.onclick=function(){openPhaseInfo(_wk.phase);};
  box.querySelectorAll("[data-agblk]").forEach(function(r){r.onclick=function(){openRoosterBlock(pid,ws,r.dataset.agblk);};});
