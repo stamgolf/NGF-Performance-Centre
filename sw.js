@@ -1,4 +1,4 @@
-const CACHE = 'jo-ladder-v178';
+const CACHE = 'jo-ladder-v179';
 const ASSETS = [
   './',
   './index.html',
