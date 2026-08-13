@@ -866,7 +866,7 @@ const LIES={f:"Fairway",r:"Rough",s:"Sand",g:"Green"};const DLIES={f:"Fairway",r
 const LV=["PGA Tour"];
 function spread(min,max,n){if(n===1)return [Math.round((min+max)/2)];const a=[];for(let i=0;i<n;i++)a.push(Math.round(min+(max-min)*i/(n-1)));return a;}
 const NSIT=[3,6,9,12,15,18], NHOLE=[6,9,12,18];
-const APP_VERSION="v189";
+const APP_VERSION="v191";
 const TESTS={
 putt_3_5:{name:"Putt 3–5 ft",cat:"Putten",eng:"putt_cat",dists:[3,4,5],per:8,info:"24 putts (8× vanaf 3, 4 en 5 ft). Per afstand: holed, mis binnen 3 ft, mis buiten 3 ft. Output: SG + make%."},
 putt_6_10:{name:"Putt 6–10 ft",cat:"Putten",eng:"putt_cat",dists:[6,8,10],per:8,info:"24 putts (8× vanaf 6, 8 en 10 ft). Zelfde invoer als 3–5 ft."},
@@ -1220,7 +1220,7 @@ function spImportGo(){
  rehydrate();save();spCsvPrev=null;spImpTxt="";spTab="rondes";show("spelen");
  setTimeout(function(){toast(nDone+" ronde"+(nDone===1?"":"s")+" geïmporteerd ✓");},200);
 }
-/* ================= Baanstats: Upgame-snapshots (v189) ================= */
+/* ================= Baanstats: Upgame-snapshots (v189, uitgebreid v190) ================= */
 function upSnaps(pid){if(!state.upgame)state.upgame=[];return state.upgame.filter(function(s){return s.playerId===pid;}).sort(function(a,b){return String(b.gen||"").localeCompare(String(a.gen||""));});}
 function upLatest(pid){return upSnaps(pid)[0]||null;}
 function upBandLow(b){var m=String(b||"").match(/^(\d+)/);return m?+m[1]:null;}
@@ -1249,6 +1249,7 @@ function upSnapCard(s,prev){var sg=s.sg||{};var p=(prev&&prev.sg)||{};
  if(st.drivingDistance!=null)trad+='<div class="chip"><span class="muted">Drive</span><b>'+(+st.drivingDistance).toFixed(0)+' m</b></div>';
  if(st.ftHoledPerRound!=null)trad+='<div class="chip"><span class="muted">Ft geholed/rnd</span><b>'+(+st.ftHoledPerRound).toFixed(1)+'</b></div>';
  if(st.majorPenaltyPct!=null)trad+='<div class="chip"><span class="muted">Major/penalty</span><b>'+(+st.majorPenaltyPct).toFixed(1)+'%</b></div>';
+ if(s.rondes)trad+='<div class="chip"><span class="muted">Rondes</span><b>'+s.rondes+'</b></div>';
  var sc=s.scoring||{};var scoreTbl=(sc.overall||sc.par3)?'<div style="overflow-x:auto;margin-top:10px"><table class="kvtable" style="width:100%"><tr><th></th><th>t.o.v. par</th><th>SG</th><th>Birdies</th><th>Bogeys</th><th>Dubbel+</th></tr>'+upScoreRow("Totaal",sc.overall)+upScoreRow("Par 3",sc.par3)+upScoreRow("Par 4",sc.par4)+upScoreRow("Par 5",sc.par5)+'</table><div class="sx" style="margin-top:3px">Gemiddelden per ronde.</div></div>':"";
  var bands=upAllBands(s);bands.sort(function(a,b){return a.imp-b.imp;});
  var weakB=bands.slice(0,3).filter(function(b){return b.imp<0;});
@@ -1261,52 +1262,188 @@ function spRenderStats(box,pick){
  var list=upSnaps(spPlayer);
  var H=pick;
  if(!list.length){
-  H+='<div class="card"><h3 style="margin:0 0 6px">Baanstats via Upgame</h3><p class="muted" style="font-size:13px;margin:0">Importeer een Upgame-prestatierapport als snapshot: strokes gained per categorie, banden en scoring uit echte rondes. De snapshot telt automatisch mee in de zwakte-analyse en de weekplan-generator.</p><p class="muted" style="font-size:13px;margin:8px 0 0">Werkwijze: exporteer het PDF-rapport in Upgame, laat AI het omzetten met de vaste conversie-prompt (knop hieronder) en plak de JSON hier.</p></div>';
+  H+='<div class="card"><h3 style="margin:0 0 6px">Baanstats via Upgame</h3><p class="muted" style="font-size:13px;margin:0">Importeer een Upgame-prestatierapport als snapshot: strokes gained per categorie, banden en scoring uit echte rondes. De snapshot telt automatisch mee in de zwakte-analyse en de weekplan-generator.</p><p class="muted" style="font-size:13px;margin:8px 0 0">Werkwijze: exporteer het PDF-rapport in Upgame, laat AI het omzetten met de vaste conversie-prompt (knop hieronder) en plak de JSON hier. Meerdere snapshots tegelijk (JSON-lijst) kan ook.</p></div>';
  }else{
   var s=list[0];
-  H+='<div class="card"><div class="row spread" style="align-items:center;margin-bottom:8px"><h3 style="margin:0">Laatste snapshot</h3><span class="sx">'+esc(s.periode||"")+(s.gen?' · '+fmtDate(s.gen):'')+'</span></div>'+upSnapCard(s,list[1]||null)+'<button class="btn ghost block sm" data-updel="'+s.id+'" style="margin-top:12px;color:var(--bad)">Snapshot verwijderen</button></div>';
+  H+='<div class="card"><div class="row spread" style="align-items:center;margin-bottom:8px"><h3 style="margin:0">Laatste snapshot</h3><span class="sx">'+esc(s.periode||"")+(s.gen?' · '+fmtDate(s.gen):'')+'</span></div>'+upSnapCard(s,list[1]||null)+'<button class="btn block" data-uppdf="'+s.id+'" style="margin-top:12px">Rapport (PDF) downloaden</button><button class="btn ghost block sm" data-updel="'+s.id+'" style="margin-top:8px;color:var(--bad)">Snapshot verwijderen</button></div>';
   if(list.length>1){
    H+='<div class="card" style="padding:6px 14px">'+list.slice(1).map(function(x){var t=(x.sg&&x.sg.totaal!=null)?((x.sg.totaal>0?"+":"")+(+x.sg.totaal).toFixed(2)):"–";
     return '<div class="sprow" data-upopen="'+x.id+'"><div style="flex:1;min-width:0"><b style="font-size:14px">'+(x.gen?fmtDate(x.gen):"?")+'</b><small class="muted" style="display:block">'+esc(x.periode||"")+'</small></div><b>'+t+'</b><span class="chev">▶</span></div>';}).join("")+'</div>';
   }
  }
- H+='<button class="btn block blue" id="upImpB" style="margin-top:12px">+ Importeer snapshot</button><button class="btn block ghost" id="upPromptB" style="margin-top:8px">Kopieer conversie-prompt</button>';
+ H+='<button class="btn block blue" id="upImpB" style="margin-top:12px">+ Importeer snapshot(s)</button><button class="btn block ghost" id="upPromptB" style="margin-top:8px">Kopieer conversie-prompt</button>';
  box.innerHTML=H;
  var ib=$("#upImpB");if(ib)ib.onclick=function(){openUpImport();};
  var pb=$("#upPromptB");if(pb)pb.onclick=function(){upCopyPrompt();};
+ box.querySelectorAll("[data-uppdf]").forEach(function(b){b.onclick=function(){upPdf(b.dataset.uppdf);};});
  box.querySelectorAll("[data-updel]").forEach(function(b){b.onclick=function(){confirmDlg("Deze snapshot verwijderen?",function(){state.upgame=(state.upgame||[]).filter(function(x){return x.id!==b.dataset.updel;});save();renderSpelen();});};});
  box.querySelectorAll("[data-upopen]").forEach(function(r){r.onclick=function(){upSnapDetail(r.dataset.upopen);};});
 }
 function upSnapDetail(id){var s=(state.upgame||[]).find(function(x){return x.id===id;});if(!s)return;var sh=$("#sheet");
- sh.innerHTML='<div class="shead"><div><h2>Baanstats-snapshot</h2><div class="sx">'+esc(nameOf(s.playerId))+' · '+esc(s.periode||"")+(s.gen?' · '+fmtDate(s.gen):'')+'</div></div><div class="sheadact"><button class="xbtn xbtn-del" id="upDelB" title="Verwijder">'+TRASH_SVG+'</button><button class="xbtn" onclick="closeSheet()">×</button></div></div><div class="card">'+upSnapCard(s,null)+'</div>';
+ sh.innerHTML='<div class="shead"><div><h2>Baanstats-snapshot</h2><div class="sx">'+esc(nameOf(s.playerId))+' · '+esc(s.periode||"")+(s.gen?' · '+fmtDate(s.gen):'')+'</div></div><div class="sheadact"><button class="xbtn xbtn-del" id="upDelB" title="Verwijder">'+TRASH_SVG+'</button><button class="xbtn" onclick="closeSheet()">×</button></div></div><div class="card">'+upSnapCard(s,null)+'</div><button class="btn block" id="upPdfB" style="margin-top:4px">Rapport (PDF) downloaden</button>';
  openSheet(true);
+ $("#upPdfB").onclick=function(){upPdf(id);};
  $("#upDelB").onclick=function(){confirmDlg("Deze snapshot verwijderen?",function(){state.upgame=(state.upgame||[]).filter(function(x){return x.id!==id;});save();closeSheet();renderSpelen();});};}
-var UPGAME_PROMPT='Je krijgt een Upgame "Individual Performance Report" (PDF) van één golfer. Zet het rapport om naar EXACT dit JSON-formaat en geef ALLEEN de JSON terug, zonder toelichting of codeblok.\n\n{"upgame":1,"speler":"<naam van voorblad>","gegenereerd":"<JJJJ-MM-DD, Date Generated van voorblad>","periode":"<Duration van voorblad>",\n"sg":{"totaal":0.0,"tee":0.0,"approach":0.0,"shortgame":0.0,"putten":0.0},\n"stats":{"drivingAccuracy":0.0,"gir":0.0,"ftHoledPerRound":0.0,"drivingDistance":0.0,"majorPenaltyPct":0.0},\n"scoring":{"overall":{"tovPar":0.0,"sg":0.0,"birdies":0.0,"bogeys":0.0,"dubbel":0.0},"par3":{...},"par4":{...},"par5":{...}},\n"banden":{"tee":[{"band":"alle","ligging":"tee","sg":0.0,"slagen":0}],\n"approach":[{"band":"50-75","ligging":"fairway","sg":0.0,"slagen":0}],\n"shortgame":[{"band":"1-15","ligging":"rough","sg":0.0,"slagen":0}],\n"putten":[{"band":"0-3","sg":0.0,"slagen":0}]}}\n\nRegels:\n- "sg": de vijf Strokes Gained-waarden uit de Summary (per ronde; Short game kan positief zijn).\n- "stats": Driving Accuracy %, GIR %, Average Footage Holed Per Round, Driving Distance, Major/Penalty % (getallen zonder %-teken).\n- "scoring": de tabel "Stats per round" — rijen Overall, Par 3, Par 4, Par 5; kolommen +/- PAR → tovPar, SG, Birdie → birdies, Bogeys → bogeys, Double+ → dubbel.\n- "banden": uit de "Area Breakdown"-tabellen. Elke cel = SG per slag met (aantal slagen). "tee" = de cel Tee Shots/All. "approach": rijen TEE/FAIRWAY/SEMI → ligging "fairway", ROUGH → "rough", SAND → "sand"; band = afstandsklasse in meters (bv. "125-150"). "shortgame": zelfde liggingen, banden "1-15", "15-30", "30-50". "putten": banden in ft ("0-3","3-5","5-10","10-15","15-25","25-40","40+"). Sla lege cellen over.\n- Gebruik punten als decimaalteken. Negatief = slagen verliezen.';
+var UPGAME_PROMPT='Je krijgt een Upgame "Individual Performance Report" (PDF) van één golfer. Zet het rapport om naar EXACT dit JSON-formaat en geef ALLEEN de JSON terug, zonder toelichting of codeblok.\n\n{"upgame":1,"speler":"<naam van voorblad>","gegenereerd":"<JJJJ-MM-DD, Date Generated van voorblad>","periode":"<Duration van voorblad>","rondes":<aantal indien vermeld, anders weglaten>,\n"sg":{"totaal":0.0,"tee":0.0,"approach":0.0,"shortgame":0.0,"putten":0.0},\n"stats":{"drivingAccuracy":0.0,"gir":0.0,"ftHoledPerRound":0.0,"drivingDistance":0.0,"majorPenaltyPct":0.0},\n"scoring":{"overall":{"tovPar":0.0,"sg":0.0,"birdies":0.0,"bogeys":0.0,"dubbel":0.0},"par3":{...},"par4":{...},"par5":{...}},\n"banden":{"tee":[{"band":"alle","ligging":"tee","sg":0.0,"slagen":0}],\n"approach":[{"band":"50-75","ligging":"fairway","sg":0.0,"slagen":0}],\n"shortgame":[{"band":"1-15","ligging":"rough","sg":0.0,"slagen":0}],\n"putten":[{"band":"0-3","sg":0.0,"slagen":0}]},\n"clubs":[{"club":"DR","sg":0.0}],\n"teeDetail":{"inPlay":0.0,"zones":{"m25":0.0,"m45":0.0,"m65":0.0,"m65plus":0.0},"dispersie":{"l30":0.0,"l2030":0.0,"l1020":0.0,"l010":0.0,"target":0.0,"r010":0.0,"r1020":0.0,"r2030":0.0,"r30":0.0},"sgDriver":0.0},\n"apprDetail":{"hardPenalty":0.0,"girPerBand":[{"band":"125-150","pct":0.0}]},\n"shortDetail":{"scrambling":0.0,"sgMoeilijkheid":{"easy":0.0,"medium":0.0,"hard":0.0},"proximity":{"holed":0.0,"ft3":0.0,"ft6":0.0,"ft9":0.0,"ft15plus":0.0,"missGreen":0.0}},\n"puttingDetail":{"driePuttRonde":0.0,"conversie":[{"band":"0-3","pct":0.0}],"goodPutt":[{"band":"10-15","pct":0.0}],"driePutt":[{"band":"10-15","pct":0.0}],"breaks":{"rl10":0.0,"lr10":0.0,"rl1025":0.0,"lr1025":0.0,"rl25":0.0,"lr25":0.0}},\n"overig":{"advancingInPlay":0.0,"advancingMP":0.0,"recoveryInPlay":0.0,"recoveryMP":0.0}}\n\nRegels:\n- "sg": de vijf Strokes Gained-waarden uit de Summary (per ronde). "stats": percentages als getal zonder %-teken.\n- "scoring": tabel "Stats per round" (Overall/Par 3/Par 4/Par 5; +/- PAR → tovPar, Birdie → birdies, Double+ → dubbel).\n- "banden": uit de "Area Breakdown"-tabellen; SG per SLAG met (aantal). "tee" = cel Tee Shots/All. Liggingen: TEE/FAIRWAY/SEMI → "fairway", ROUGH → "rough", SAND → "sand". Approach-banden in m; shortgame "1-15"/"15-30"/"30-50"; putten in ft. Lege cellen overslaan.\n- "clubs": tabel Club Performance (SG/Shot). "teeDetail": Tee Shots-pagina (In Play %, Target Zones, dispersiestaafjes Driver links/rechts, SG driver). "apprDetail": GIR % per afstandsband. "shortDetail": Short game-tabel (SG easy/medium/hard = kolommen Easy/Medium/Hard; proximity = Holed/Inside 3ft/6ft/9ft/Outside 15ft/Miss green van kolom All). "puttingDetail": conversie per band, Good Putt %, Three Putt %, putt break (SG per richting). "overig": Recovery & Advancing (In Play % en Major/Penalty %).\n- Ontbreekt een blok in het rapport: laat het veld weg. Punten als decimaalteken.';
 function upCopyPrompt(){var t=UPGAME_PROMPT;
  function fb(){var ta=document.createElement("textarea");ta.value=t;document.body.appendChild(ta);ta.select();try{document.execCommand("copy");toast("Prompt gekopieerd ✓");}catch(e){toast("Kopiëren mislukt");}document.body.removeChild(ta);}
  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(function(){toast("Prompt gekopieerd ✓");},fb);else fb();}
 function upParse(txt){
  txt=String(txt||"").trim().replace(/^```(json)?/i,"").replace(/```$/,"").trim();
  var o;try{o=JSON.parse(txt);}catch(e){return {err:"Geen geldige JSON: "+e.message};}
- if(!o||o.upgame!==1)return {err:'Dit is geen Upgame-snapshot (veld "upgame":1 ontbreekt).'};
- if(!o.sg||o.sg.totaal==null)return {err:'Veld "sg" met "totaal" ontbreekt.'};
- return {snap:o};}
+ var arr=Array.isArray(o)?o:[o];
+ if(!arr.length)return {err:"Lege lijst."};
+ for(var i=0;i<arr.length;i++){var s=arr[i];
+  if(!s||s.upgame!==1)return {err:'Item '+(i+1)+' is geen Upgame-snapshot (veld "upgame":1 ontbreekt).'};
+  if(!s.sg||s.sg.totaal==null)return {err:'Item '+(i+1)+': veld "sg" met "totaal" ontbreekt.'};}
+ return {snaps:arr};}
+function upFindPlayerByName(nm){nm=String(nm||"").trim().toLowerCase();if(!nm)return null;
+ return (state.players||[]).find(function(p){return (p.name||"").trim().toLowerCase()===nm;})||null;}
+function upStoreSnap(o,pid){
+ var snap=JSON.parse(JSON.stringify(o));
+ snap.id=uid();snap.playerId=pid;snap.source=snap.source||"upgame-pdf";
+ snap.gen=o.gegenereerd||"";snap.periode=o.periode||"";
+ state.upgame=(state.upgame||[]).filter(function(x){return !(x.playerId===pid&&x.gen===snap.gen&&x.periode===snap.periode);});
+ state.upgame.push(snap);}
 function openUpImport(){var sh=$("#sheet");
- sh.innerHTML='<div class="shead"><div><h2>Upgame-snapshot importeren</h2><div class="sx">'+esc(nameOf(spPlayer))+'</div></div><button class="xbtn" onclick="closeSheet()">×</button></div>'
- +'<div class="card"><label class="fld">Plak de JSON van de conversie</label><textarea class="in" id="upTxt" rows="8" style="font-family:monospace;font-size:11.5px" placeholder=\'{"upgame":1, ...}\'></textarea><small class="note">PDF → AI met de vaste conversie-prompt → JSON hierheen. Later kan dit rechtstreeks via de Upgame-API.</small></div>'
+ sh.innerHTML='<div class="shead"><div><h2>Upgame-snapshot importeren</h2><div class="sx">'+esc(nameOf(spPlayer)||"")+'</div></div><button class="xbtn" onclick="closeSheet()">×</button></div>'
+ +'<div class="card"><label class="fld">Plak de JSON van de conversie</label><textarea class="in" id="upTxt" rows="8" style="font-family:monospace;font-size:11.5px" placeholder=\'{"upgame":1, ...} of [ {...}, {...} ]\'></textarea><input type="file" id="upFile" accept=".json,.txt,application/json" style="margin-top:8px"><small class="note">Plakken of een .json-bestand kiezen. Eén snapshot of een lijst (bulk). Bij een lijst worden spelers op naam gekoppeld; onbekende namen worden als nieuwe speler aangemaakt in het actieve team.</small></div>'
  +'<button class="btn block" id="upChk">Controleer</button><div id="upPrev" style="margin-top:12px"></div>';
  openSheet();
+ var _uf=$("#upFile");if(_uf)_uf.onchange=function(){var f=_uf.files&&_uf.files[0];if(!f)return;var rd=new FileReader();rd.onload=function(){$("#upTxt").value=String(rd.result||"");};rd.readAsText(f);};
  $("#upChk").onclick=function(){
   var r=upParse($("#upTxt").value);var box=$("#upPrev");
   if(r.err){box.innerHTML='<div class="card"><p style="margin:0;font-size:13px;color:var(--bad)">'+esc(r.err)+'</p></div>';return;}
-  var o=r.snap;var nb=0;["tee","approach","shortgame","putten"].forEach(function(k){nb+=((o.banden||{})[k]||[]).length;});
-  var dup=(state.upgame||[]).find(function(x){return x.playerId===spPlayer&&x.gen===(o.gegenereerd||"")&&x.periode===(o.periode||"");});
-  box.innerHTML='<div class="card"><div class="sx" style="margin-bottom:6px">'+(o.speler?('Rapport van <b>'+esc(o.speler)+'</b> · '):'')+esc(o.periode||"?")+(o.gegenereerd?' · '+esc(o.gegenereerd):'')+' · '+nb+' banden</div><div class="stats">'+upSgChip("SG totaal",o.sg.totaal)+upSgChip("Tee",o.sg.tee)+upSgChip("Approach",o.sg.approach)+upSgChip("Short game",o.sg.shortgame)+upSgChip("Putten",o.sg.putten)+'</div>'+(dup?'<p class="sx" style="margin:8px 0 0;color:#b45309">Er bestaat al een snapshot met deze datum en periode — die wordt vervangen.</p>':'')+'</div><button class="btn block blue" id="upGo">Opslaan als snapshot voor '+esc(nameOf(spPlayer))+'</button>';
+  var snaps=r.snaps;
+  if(snaps.length===1&&!upFindPlayerByName(snaps[0].speler)){
+   var o=snaps[0];var nb=0;["tee","approach","shortgame","putten"].forEach(function(k){nb+=((o.banden||{})[k]||[]).length;});
+   var dup=(state.upgame||[]).find(function(x){return x.playerId===spPlayer&&x.gen===(o.gegenereerd||"")&&x.periode===(o.periode||"");});
+   box.innerHTML='<div class="card"><div class="sx" style="margin-bottom:6px">'+(o.speler?('Rapport van <b>'+esc(o.speler)+'</b> · '):'')+esc(o.periode||"?")+(o.gegenereerd?' · '+esc(o.gegenereerd):'')+' · '+nb+' banden</div><div class="stats">'+upSgChip("SG totaal",o.sg.totaal)+upSgChip("Tee",o.sg.tee)+upSgChip("Approach",o.sg.approach)+upSgChip("Short game",o.sg.shortgame)+upSgChip("Putten",o.sg.putten)+'</div>'+(dup?'<p class="sx" style="margin:8px 0 0;color:#b45309">Er bestaat al een snapshot met deze datum en periode — die wordt vervangen.</p>':'')+'</div><button class="btn block blue" id="upGo">Opslaan als snapshot voor '+esc(nameOf(spPlayer))+'</button>';
+   $("#upGo").onclick=function(){upStoreSnap(snaps[0],spPlayer);save();closeSheet();spTab="stats";renderSpelen();toast("Snapshot geïmporteerd ✓");};
+   return;
+  }
+  var rows=snaps.map(function(o,i){var p=upFindPlayerByName(o.speler);
+   return '<div class="sprow" style="cursor:default"><div style="flex:1;min-width:0"><b style="font-size:13px">'+esc(o.speler||"?")+'</b><small class="muted" style="display:block">'+esc(o.periode||"?")+(o.gegenereerd?' · '+esc(o.gegenereerd):'')+'</small></div>'+(p?'<span class="tag done">bestaand</span>':'<span class="tag todo">nieuw</span>')+'</div>';}).join("");
+  var nNew={};snaps.forEach(function(o){if(!upFindPlayerByName(o.speler)&&o.speler)nNew[String(o.speler).trim()]=1;});
+  box.innerHTML='<div class="card" style="padding:6px 14px">'+rows+'</div>'+(Object.keys(nNew).length?'<p class="sx" style="margin:8px 2px">'+Object.keys(nNew).length+' nieuwe speler(s) worden aangemaakt in het actieve team.</p>':'')+'<button class="btn block blue" id="upGo">Importeer '+snaps.length+' snapshot'+(snaps.length===1?"":"s")+'</button>';
   $("#upGo").onclick=function(){
-   var snap={id:uid(),playerId:spPlayer,source:"upgame-pdf",gen:o.gegenereerd||"",periode:o.periode||"",sg:o.sg||{},stats:o.stats||{},scoring:o.scoring||{},banden:o.banden||{}};
-   state.upgame=(state.upgame||[]).filter(function(x){return !(x.playerId===spPlayer&&x.gen===snap.gen&&x.periode===snap.periode);});
-   state.upgame.push(snap);save();closeSheet();spTab="stats";renderSpelen();toast("Snapshot geïmporteerd ✓");};
+   var t=team();var made={};var n=0;
+   snaps.forEach(function(o){
+    var p=upFindPlayerByName(o.speler);
+    if(!p){var nm=String(o.speler||"Onbekend").trim();
+     if(made[nm.toLowerCase()])p=made[nm.toLowerCase()];
+     else{p={id:uid(),name:nm,birthYear:"",gender:""};state.players.push(p);made[nm.toLowerCase()]=p;
+      if(t){t.playerIds=t.playerIds||[];t.playerIds.push(p.id);}}}
+    upStoreSnap(o,p.id);n++;});
+   rehydrate();save();closeSheet();spTab="stats";renderSpelen();toast(n+" snapshot"+(n===1?"":"s")+" geïmporteerd ✓");};
  };}
+/* ---- Rapport-PDF in de stijl van Tom's Excel-rapportage ---- */
+function upPerShot(s){var out={};
+ if(s.sgSlag){out.tee=s.sgSlag.tee;out.approach=s.sgSlag.approach;out.shortgame=s.sgSlag.shortgame;out.putten=s.sgSlag.putten;}
+ var per=(function(){var per={};function add(k,arr){var sg=0,st=0;(arr||[]).forEach(function(b){if(b.sg==null||!b.slagen)return;sg+=b.sg*b.slagen;st+=+b.slagen;});if(st)per[k]={v:sg/st,n:st};}
+  var bd=s.banden||{};add("tee",bd.tee);add("putten",bd.putten);add("shortgame",bd.shortgame);add("approach",bd.approach);return per;})();
+ ["tee","approach","shortgame","putten"].forEach(function(k){if(out[k]==null&&per[k])out[k]=per[k].v;});
+ out.shots={tee:(per.tee||{}).n||null,approach:(per.approach||{}).n||null,shortgame:(per.shortgame||{}).n||null,putten:(per.putten||{}).n||null};
+ return out;}
+function upPdf(snapId){var s=(state.upgame||[]).find(function(x){return x.id===snapId;});if(!s){toast("Snapshot niet gevonden");return;}
+ toast("Rapport maken…");
+ loadPdfLib().then(function(PL){
+  var C={or:PL.rgb(0.93,0.49,0.19),orL:PL.rgb(0.98,0.90,0.82),red:PL.rgb(0.75,0,0),grn:PL.rgb(0.10,0.48,0.10),blu:PL.rgb(0.18,0.37,0.54),gry:PL.rgb(0.45,0.45,0.45),lg:PL.rgb(0.93,0.93,0.93),bk:PL.rgb(0.13,0.13,0.13),wt:PL.rgb(1,1,1)};
+  function nf(v,d){if(v==null)return "–";return (v>0?"+":"")+(+v).toFixed(d==null?2:d);}
+  function pf(v){return v==null?"–":Math.round(+v)+"%";}
+  PL.PDFDocument.create().then(function(doc){
+   var pg=doc.addPage([842,595]);
+   Promise.all([doc.embedFont(PL.StandardFonts.Helvetica),doc.embedFont(PL.StandardFonts.HelveticaBold),doc.embedFont(PL.StandardFonts.HelveticaOblique)]).then(function(fs){
+    var F=fs[0],FB=fs[1],FI=fs[2];
+    function T(t,x,y,sz,f,c){pg.drawText(String(t),{x:x,y:y,size:sz,font:f||F,color:c||C.bk});}
+    function TC(t,cx,y,sz,f,c){var w=(f||F).widthOfTextAtSize(String(t),sz);T(t,cx-w/2,y,sz,f,c);}
+    function R(x,y,w,h,c){pg.drawRectangle({x:x,y:y,width:w,height:h,color:c});}
+    function LN(x1,y1,x2,y2,th,c){pg.drawLine({start:{x:x1,y:y1},end:{x:x2,y:y2},thickness:th,color:c});}
+    function sgCol(v){return v==null?C.gry:(v<-0.02?C.red:(v>0.02?C.grn:C.gry));}
+    // banner
+    R(16,548,810,32,C.or);T("UPGAME BAANSTATISTIEKEN SUMMARY",26,557,20,FB,C.wt);
+    // gegevens links
+    var gx=16,gy=536;
+    R(gx,gy-12,170,12,C.or);T("GEGEVENS",gx+4,gy-9,7.5,FB,C.wt);
+    var rows=[["Naam",nameOf(s.playerId)],["Periode",(s.periodeVan&&s.periodeTot)?(fmtDate(s.periodeVan)+" – "+fmtDate(s.periodeTot)):(s.periode||"–")],["Datum rapportage",s.gen?fmtDate(s.gen):"–"],["SG Benchmark",s.benchmark||"PGA Tour"],["Aantal ronden",s.rondes!=null?String(s.rondes):"–"]];
+    var yy=gy-24;rows.forEach(function(r0,i){if(i%2===0)R(gx,yy-3,170,11,C.lg);T(r0[0],gx+4,yy,6.5,F,C.gry);T(String(r0[1]).slice(0,22),gx+72,yy,7,FB);yy-=11;});
+    var sr=s.sgRonde||{};
+    R(gx,yy-9,170,12,C.or);T("SG PER ROUND",gx+4,yy-6,7.5,FB,C.wt);yy-=21;
+    var cols=[["AV",(s.sg||{}).totaal],["R1",sr.r1],["R2",sr.r2],["R3",sr.r3],["R4",sr.r4]];
+    cols.forEach(function(c0,i){var cx=gx+17+i*34;TC(c0[0],cx,yy,6.5,FB,i===0?C.or:C.bk);TC(c0[1]==null?"–":(+c0[1]).toFixed(2),cx,yy-11,6.8,FB,sgCol(c0[1]));});
+    // radar midden
+    var ps=upPerShot(s);var cxr=330,cyr=330,RR=118;
+    var pts=[["OFF THE TEE","tee",0,-1],["APPROACH PLAY","approach",1,0],["SHORT GAME","shortgame",0,1],["PUTTING","putten",-1,0]];
+    [1,0.66,0.33].forEach(function(fr){var r0=RR*fr;var pl=[[cxr,cyr+r0],[cxr+r0,cyr],[cxr,cyr-r0],[cxr-r0,cyr]];
+     for(var i=0;i<4;i++){var a=pl[i],b=pl[(i+1)%4];LN(a[0],a[1],b[0],b[1],0.7,C.lg);}});
+    LN(cxr-RR,cyr,cxr+RR,cyr,0.7,C.lg);LN(cxr,cyr-RR,cxr,cyr+RR,0.7,C.lg);
+    function rOf(v){if(v==null)return 0.02;var f=( (+v)+0.30)/0.50;return RR*Math.max(0.04,Math.min(1,f));}
+    var poly=pts.map(function(p){var r0=rOf(ps[p[1]]);return [cxr+p[2]*r0,cyr-p[3]*r0];});
+    for(var i=0;i<4;i++){var a=poly[i],b=poly[(i+1)%4];LN(a[0],a[1],b[0],b[1],2,C.blu);}
+    poly.forEach(function(p){R(p[0]-2,p[1]-2,4,4,C.blu);});
+    T("+0.20",cxr+3,cyr+RR-8,5.5,F,C.gry);T("-0.30",cxr+3,cyr+3,5.5,F,C.gry);
+    pts.forEach(function(p,i){var lx=cxr+p[2]*(RR+14),ly=cyr-p[3]*(RR+14);
+     var v=ps[p[1]];var n=(ps.shots||{})[p[1]];
+     var anchor=(i===0)?[cxr,cyr+RR+40]:(i===1?[cxr+RR+62,cyr+16]:(i===2?[cxr,cyr-RR-22]:[cxr-RR-62,cyr+16]));
+     TC(p[0],anchor[0],anchor[1],9,FB);
+     TC(nf(v,3),anchor[0],anchor[1]-16,15,FB,sgCol(v));
+     if(n)TC(n+" shots",anchor[0],anchor[1]-27,6.5,FI,C.gry);});
+    // rechterkolom: 4 blokken
+    var bx=560,bw=266,bh=104,by0=540;
+    function block(bi,titel,rndV,tbl,bars,barPct){
+     var y0=by0-bi*(bh+7);
+     R(bx,y0-12,bw,12,C.or);T(titel,bx+5,y0-9,7.5,FB,C.wt);
+     R(bx,y0-30,90,14,C.lg);T("SG PER ROUND",bx+8,y0-26,6,F,C.gry);
+     T(nf(rndV,2),bx+4,y0-52,17,FB,sgCol(rndV));
+     var ty=y0-64;tbl.forEach(function(r0){if(r0[1]==null)return;T(r0[0],bx+4,ty,5.6,F,C.gry);T(String(r0[1]),bx+62,ty,5.8,FB);ty-=8;});
+     // mini-bars
+     var vals=bars.filter(function(b){return b[1]!=null;});
+     if(vals.length){var bwid=Math.min(16,(bw-140)/vals.length-4);var maxv=0;vals.forEach(function(b){maxv=Math.max(maxv,Math.abs(+b[1]));});if(!maxv)maxv=1;
+      var base=y0-58;var scale=26/maxv;
+      vals.forEach(function(b,i){var x0=bx+118+i*(bwid+4);var v=+b[1];var h=Math.max(1,Math.abs(v)*scale);
+       R(x0,v>=0?base:base-h,bwid,h,v>=0?(barPct?C.or:C.grn):C.red);
+       TC(barPct?Math.round(v)+"":nf(v,2).replace("+",""),x0+bwid/2,base+30,4.6,F,C.gry);
+       pg.drawText(String(b[0]),{x:x0+bwid/2+2,y:base-34,size:4.6,font:F,color:C.gry,rotate:PL.degrees(45)});});
+      LN(bx+114,base,bx+bw-4,base,0.6,C.gry);}
+    }
+    var td=s.teeDetail||{};var disp=td.dispersie||{};var st=s.stats||{};
+    block(0,"OFF THE TEE",(s.sg||{}).tee,
+     [["In play",td.inPlay!=null?pf(td.inPlay):null],["Fairway",st.drivingAccuracy!=null?pf(st.drivingAccuracy):null],["M/P",st.majorPenaltyPct!=null?pf(st.majorPenaltyPct):null],["SG driver",td.sgDriver!=null?nf(td.sgDriver,2):null],["Distance",st.drivingDistance!=null?Math.round(st.drivingDistance)+" m":null]],
+     [["L>30",disp.l30],["L20-30",disp.l2030],["L10-20",disp.l1020],["L0-10",disp.l010],["T",disp.target],["R0-10",disp.r010],["R10-20",disp.r1020],["R20-30",disp.r2030],["R>30",disp.r30]],true);
+    var ad=s.apprDetail||{};var gb={};(ad.girPerBand||[]).forEach(function(b){gb[b.band]=b.pct;});
+    var apF={};((s.banden||{}).approach||[]).forEach(function(b){if(b.ligging==="fairway")apF[b.band]=b.sg;});
+    block(1,"APPROACH PLAY",(s.sg||{}).approach,
+     [["GIR",st.gir!=null?pf(st.gir):null],["Hard/penalty",ad.hardPenalty!=null?pf(ad.hardPenalty):null],["GIR 100-125",gb["100-125"]!=null?pf(gb["100-125"]):null],["GIR 125-150",gb["125-150"]!=null?pf(gb["125-150"]):null],["GIR 150-175",gb["150-175"]!=null?pf(gb["150-175"]):null]],
+     [["50-75",apF["50-75"]],["75-100",apF["75-100"]],["100-125",apF["100-125"]],["125-150",apF["125-150"]],["150-175",apF["150-175"]],["175-200",apF["175-200"]],["200+",apF["200-225"]]],false);
+    var sd=s.shortDetail||{};var mo=sd.sgMoeilijkheid||{};var px=sd.proximity||{};
+    var sgB={};((s.banden||{}).shortgame||[]).forEach(function(b){var k=b.band+(b.ligging==="fairway"?" F":b.ligging==="rough"?" R":" S");sgB[k]=b.sg;});
+    block(2,"SHORT GAME",(s.sg||{}).shortgame,
+     [["Scrambling",sd.scrambling!=null?pf(sd.scrambling):null],["SG easy",mo.easy!=null?nf(mo.easy,2):null],["SG medium",mo.medium!=null?nf(mo.medium,2):null],["SG hard",mo.hard!=null?nf(mo.hard,2):null],["Prox <6ft",px.ft6!=null?pf(px.ft6):null]],
+     [["1-15 F",sgB["1-15 F"]],["15-30 F",sgB["15-30 F"]],["30-50 F",sgB["30-50 F"]],["1-15 R",sgB["1-15 R"]],["15-30 R",sgB["15-30 R"]],["1-15 S",sgB["1-15 S"]],["15-30 S",sgB["15-30 S"]]],false);
+    var pd=s.puttingDetail||{};var cv={};(pd.conversie||[]).forEach(function(b){cv[b.band]=b.pct;});
+    var puB={};((s.banden||{}).putten||[]).forEach(function(b){puB[b.band]=b.sg;});
+    block(3,"PUTTING",(s.sg||{}).putten,
+     [["3-putts/ronde",pd.driePuttRonde!=null?(+pd.driePuttRonde).toFixed(2):null],["Conv. 0-3ft",cv["0-3"]!=null?pf(cv["0-3"]):null],["Conv. 3-5ft",cv["3-5"]!=null?pf(cv["3-5"]):null],["Conv. 5-10ft",cv["5-10"]!=null?pf(cv["5-10"]):null],["Conv. 10-15ft",cv["10-15"]!=null?pf(cv["10-15"]):null]],
+     [["0-3",puB["0-3"]],["3-5",puB["3-5"]],["5-10",puB["5-10"]],["10-15",puB["10-15"]],["15-25",puB["15-25"]],["25-40",puB["25-40"]],["40+",puB["40+"]]],false);
+    // shot distribution onderaan
+    R(16,118,528,12,C.or);T("SHOT DISTRIBUTION",20,121,7.5,FB,C.wt);
+    var dist=[];
+    ((s.banden||{}).putten||[]).forEach(function(b){dist.push(["G "+b.band,b.slagen,C.grn]);});
+    ((s.banden||{}).approach||[]).forEach(function(b){if(b.ligging==="fairway")dist.push(["F "+b.band,b.slagen,C.blu]);});
+    ((s.banden||{}).approach||[]).forEach(function(b){if(b.ligging==="rough")dist.push(["R "+b.band,b.slagen,C.or]);});
+    ((s.banden||{}).shortgame||[]).forEach(function(b){dist.push(["S "+b.band+" "+(b.ligging||"").charAt(0).toUpperCase(),b.slagen,C.red]);});
+    var mx=1;dist.forEach(function(d0){mx=Math.max(mx,d0[1]||0);});
+    var n0=dist.length||1;var bw2=Math.min(14,(520/n0)-3);
+    dist.forEach(function(d0,i){var x0=20+i*(bw2+3);var h=Math.max(1,(d0[1]||0)/mx*62);
+     R(x0,40,bw2,h,d0[2]);TC(String(d0[1]||0),x0+bw2/2,44+h,4.6,F,C.gry);
+     pg.drawText(d0[0],{x:x0+bw2/2+2,y:36,size:4.4,font:F,color:C.gry,rotate:PL.degrees(-60)});});
+    T("© TOM STAM",770,10,7,FB,C.gry);
+    doc.save().then(function(bytes){
+     downloadBlob(new Blob([bytes],{type:"application/pdf"}),"Baanstats "+nameOf(s.playerId)+" "+(s.gen||todayISO())+".pdf");
+    });
+   });
+  });
+ }).catch(function(e){toast("PDF maken mislukt");});}
 /* ================= Trainen: oefeningen-database ================= */
 /* ===== Trainen 2.0 — taxonomie, helpers & migratie ===== */
 function DRILLTAX_DEFAULT(){return [
