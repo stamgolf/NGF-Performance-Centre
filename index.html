@@ -768,6 +768,19 @@ input.in.tesg{width:96px;max-width:96px;flex:0 0 96px;text-align:right;font-vari
 .gprogsub{font-size:10px;color:#94a3b8;margin-top:2px;white-space:normal;text-align:right;line-height:1.2}
 .kvk{color:#6b7280;padding:4px 10px 4px 0;white-space:nowrap;vertical-align:top;font-size:12.5px}
 .kvv{padding:4px 0;font-size:12.5px;color:#111827}
+/* ---- v199 ---- */
+.bmtbl td,.bmtbl th{white-space:nowrap}
+.bmtbl td{text-align:center}
+.bmin{height:34px;padding:4px 6px;font-size:13px;text-align:center;width:88px;margin:2px auto}
+.scchart .gl2{stroke:#eef1f5;stroke-width:1}
+.scchart .gl2.z{stroke:#c2ccd6;stroke-width:1.2}
+.scchart .yl2,.scchart .xl2{font-size:9.5px;fill:#a6b1bd;font-weight:600}
+.scchart .bmz{stroke:#E8520A;stroke-width:1.3;opacity:.65}
+.scchart .bml2{stroke:#E8520A;stroke-width:1.4;stroke-dasharray:5 4}
+.scchart .pt{cursor:pointer;stroke:none}
+.scchart .pt.sel{stroke:#16202B;stroke-width:2.4}
+.chleg i.zoneleg{width:16px;height:9px;border-radius:2px;background:rgba(232,82,10,.18);border-top:1.5px solid #E8520A}
+.dsplab{font-size:9px;letter-spacing:-.2px;color:#a6b1bd}
 /* ---- v198 ---- */
 .scchart svg{width:100%;height:auto}
 .scchart .bml{stroke:#E8520A;stroke-width:1.6;stroke-linecap:round}
@@ -777,7 +790,8 @@ input.in.tesg{width:96px;max-width:96px;flex:0 0 96px;text-align:right;font-vari
 .dcar{display:inline-block;font-style:normal;font-size:9px;color:var(--muted);width:12px;transition:transform .15s}
 .dcar.op{transform:rotate(90deg)}
 .dcar.dnone{opacity:0}
-.yrngs::before{content:"";position:absolute;left:0;right:0;top:10px;height:4px;background:#e2e8f0;border-radius:2px}
+.yrngs::before{content:"";position:absolute;left:0;right:0;top:10px;height:4px;background:#e2e8f0;border-radius:2px;z-index:0}
+.yrngs input[type=range]{z-index:1}
 .yrngs input[type=range]::-webkit-slider-runnable-track{background:transparent}
 .yrngs input[type=range]::-moz-range-track{background:transparent}
 .msel{position:relative;display:inline-block}
@@ -790,7 +804,8 @@ input.in.tesg{width:96px;max-width:96px;flex:0 0 96px;text-align:right;font-vari
 /* ---- v197 ---- */
 .cardhd{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:8px}
 .cardhd h3{margin:0}
-.hdnote{font-size:11px;color:var(--muted);font-weight:600;white-space:nowrap}
+.hdnote{font-size:12.5px;color:var(--muted);font-weight:400;white-space:nowrap}
+.hdnote b{font-weight:700;color:var(--ink)}
 .fbtn{background:#fff;border:1.5px solid var(--line);color:var(--muted);border-radius:9px;padding:7px 13px;font-size:12.5px;font-weight:700;cursor:pointer}
 .fbtn.on{background:var(--blue);border-color:var(--blue);color:#fff}
 .evpick{margin-top:8px;max-height:230px;overflow:auto;border:1.5px solid var(--line);border-radius:10px;padding:6px 10px}
@@ -906,7 +921,7 @@ input.in.tesg{width:96px;max-width:96px;flex:0 0 96px;text-align:right;font-vari
 <nav class="tabs" id="tabs">
 <button data-v="today" class="active"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>Vandaag</button>
 <button data-v="planning"><svg viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg>Planning</button>
-<button data-v="progress"><svg viewBox="0 0 24 24"><path d="M4 4v16h16M8 14l3-4 3 2.5L20 8"/></svg>Voortgang</button>
+<button data-v="scoring"><svg viewBox="0 0 24 24"><path d="M4 4v16h16M8 14l3-4 3 2.5L20 8"/></svg>Voortgang</button>
 <button data-v="goals"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2"/></svg>Doelen</button>
 <button data-v="spelen"><svg viewBox="0 0 24 24"><path d="M8 20V4M8 4l8 2.5-8 2.5"/><path d="M4 20.5h9"/></svg>Spelen</button><button data-v="new"><svg viewBox="0 0 24 24"><path d="M5 21V4M5 4h11l-2 3.5L16 11H5"/></svg>Challenge</button>
 <button data-v="home"><svg viewBox="0 0 24 24"><path d="M7 4h10v4a5 5 0 0 1-10 0V4Z"/><path d="M5 5H3v1a3 3 0 0 0 3 3M19 5h2v1a3 3 0 0 1-3 3M9 20h6M12 16v4"/></svg>Klassement</button></nav></header>
@@ -997,7 +1012,7 @@ const LIES={f:"Fairway",r:"Rough",s:"Sand",g:"Green"};const DLIES={f:"Fairway",r
 const LV=["PGA Tour"];
 function spread(min,max,n){if(n===1)return [Math.round((min+max)/2)];const a=[];for(let i=0;i<n;i++)a.push(Math.round(min+(max-min)*i/(n-1)));return a;}
 const NSIT=[3,6,9,12,15,18], NHOLE=[6,9,12,18];
-const APP_VERSION="v198";
+const APP_VERSION="v199";
 const TESTS={
 putt_3_5:{name:"Putt 3–5 ft",cat:"Putten",eng:"putt_cat",dists:[3,4,5],per:8,info:"24 putts (8× vanaf 3, 4 en 5 ft). Per afstand: holed, mis binnen 3 ft, mis buiten 3 ft. Output: SG + make%."},
 putt_6_10:{name:"Putt 6–10 ft",cat:"Putten",eng:"putt_cat",dists:[6,8,10],per:8,info:"24 putts (8× vanaf 6, 8 en 10 ft). Zelfde invoer als 3–5 ft."},
@@ -1092,7 +1107,7 @@ function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");se
 function sortTeams(){if(!state.teams)return;var before=state.teams.map(function(t){return t.id;}).join();state.teams.sort(function(a,b){return (a.name||"").localeCompare(b.name||"","nl");});if(state.teams.map(function(t){return t.id;}).join()!==before)save();}
 let activeView="today";
 function acAttach(input,items,labelOf,onPick){if(!input||input._ac)return;input._ac=1;var wrap=input.closest(".acwrap")||input.parentElement;if(getComputedStyle(wrap).position==="static")wrap.style.position="relative";var box=document.createElement("div");box.className="acbox";box.style.display="none";wrap.appendChild(box);function hide(){box.style.display="none";}function draw(){var q=(input.value||"").trim().toLowerCase();if(!q){hide();return;}var list=items.filter(function(it){return labelOf(it).toLowerCase().indexOf(q)===0;}).slice(0,10);if(!list.length){hide();return;}box.innerHTML="";list.forEach(function(it){var el=document.createElement("div");el.className="acitem";el.textContent=labelOf(it);el.addEventListener("mousedown",function(ev){ev.preventDefault();input.value=labelOf(it);hide();onPick(it);});box.appendChild(el);});box.style.display="block";}input.addEventListener("input",draw);input.addEventListener("focus",function(){if(input.select)input.select();draw();});input.addEventListener("blur",function(){setTimeout(hide,180);});}
-function show(v){var _prev=activeView;activeView=v;sortTeams();if(_prev!==v){goalCardOpen={};countsProgOpen=false;recentProgOpen=false;progFiltOpen=false;ovOpen={};Object.keys(progOpen).forEach(function(k){delete progOpen[k];});recentHomeOpen=false;countsHomeOpen=false;coursesOpen=false;backupOpen=false;teamOpen={};pickOpen={};teamLbOpen={};libTourOpen={};tlMonthOpen={};tlEventsOpen=false;tlShowPast=false;}document.querySelectorAll(".view").forEach(x=>x.classList.remove("active"));$("#v-"+v).classList.add("active");var _navV=(v==="teaminsight"||v==="logbook"||v==="scoring"||v==="baanstats"||v==="wellness")?"progress":v;document.querySelectorAll("#tabs button").forEach(b=>b.classList.toggle("active",b.dataset.v===_navV));
+function show(v){var _prev=activeView;activeView=v;sortTeams();if(_prev!==v){goalCardOpen={};countsProgOpen=false;recentProgOpen=false;progFiltOpen=false;ovOpen={};Object.keys(progOpen).forEach(function(k){delete progOpen[k];});recentHomeOpen=false;countsHomeOpen=false;coursesOpen=false;backupOpen=false;teamOpen={};pickOpen={};teamLbOpen={};libTourOpen={};tlMonthOpen={};tlEventsOpen=false;tlShowPast=false;}document.querySelectorAll(".view").forEach(x=>x.classList.remove("active"));$("#v-"+v).classList.add("active");var _navV=(v==="teaminsight"||v==="logbook"||v==="progress"||v==="baanstats"||v==="wellness")?"scoring":v;document.querySelectorAll("#tabs button").forEach(b=>b.classList.toggle("active",b.dataset.v===_navV));
 if(v==="home")renderHome();if(v==="new")renderNew();if(v==="progress")renderProgress();if(v==="teams")renderTeams();if(v==="teaminsight")renderTeamInsight();if(v==="logbook")renderLogbook();if(v==="scoring")renderScoring();if(v==="baanstats")renderBaanstats();if(v==="wellness")renderWellnessTab();if(v==="trainen")renderTrain();if(v==="today")renderToday();if(v==="planning")renderPlanning();if(v==="goals")renderGoals();if(v==="spelen")renderSpelen();window.scrollTo(0,0);}
 document.querySelectorAll("#tabs button").forEach(b=>b.onclick=()=>show(b.dataset.v));
 function teamSwitch(id,withAll,allActive){if(state.teams.length===0)return "";var opts=(withAll?'<option value="__all__" '+(allActive?'selected':'')+'>\u2605 Alle teams (totaal)</option>':'')+state.teams.map(t=>'<option value="'+t.id+'" '+((!allActive&&t.id===state.activeTeamId)?'selected':'')+'>'+esc(t.name)+'</option>').join("");return '<div class="teamswitch"><select id="'+id+'">'+opts+'</select></div>';}
@@ -1916,7 +1931,17 @@ var SC_GROUPS=[["PRO",{"pro nl":1,"pro d1":1,"pro d2":1,"pro d3":1,"major":1}],[
 function scGroup(tp){var k=String(tp||"").toLowerCase();for(var i=0;i<SC_GROUPS.length;i++){var g=SC_GROUPS[i];if(g[1]&&g[1][k])return g[0];}return "Overige wedstrijden";}
 var SC_BENCH={j:{10:5,11:5,12:4,13:3,14:2,15:1,16:0,17:-1},m:{10:8,11:8,12:8,13:6.5,14:4.5,15:3.5,16:2.5,17:1.5,18:0.5,19:0}};
 function scBenchDefault(pid,yr){var p=registryPlayer(pid);if(!p||!p.birthYear)return null;var age=(+yr)-(+p.birthYear);if(!isFinite(age))return null;var fem=(p.gender==="meisje");var t=fem?SC_BENCH.m:SC_BENCH.j;if(age<10)age=10;if(t[age]!=null)return t[age];return fem?-0.5:-2;}
-function scBench(pid,yr){var p=registryPlayer(pid);if(p&&p.scBench!=null&&p.scBench!==""&&!isNaN(+p.scBench))return +p.scBench;return scBenchDefault(pid,yr);}
+function scBenchYears(pid){var p=registryPlayer(pid);if(!p)return {};if(!p.scBenchY)p.scBenchY={};return p.scBenchY;}
+function scBenchSgDefault(pid,yr){var d=scBenchDefault(pid,yr);return (d==null)?null:-d;}
+function scBench(pid,yr){
+ var y=scBenchYears(pid)[String(yr)];
+ if(y&&y.tp!=null&&y.tp!==""&&!isNaN(+y.tp))return +y.tp;
+ var p=registryPlayer(pid);if(p&&p.scBench!=null&&p.scBench!==""&&!isNaN(+p.scBench))return +p.scBench;
+ return scBenchDefault(pid,yr);}
+function scBenchSg(pid,yr){
+ var y=scBenchYears(pid)[String(yr)];
+ if(y&&y.sg!=null&&y.sg!==""&&!isNaN(+y.sg))return +y.sg;
+ return scBenchSgDefault(pid,yr);}
 function scCounts(holes,pars){var c={ea:0,bi:0,pa:0,bo:0,db:0,wo:0};if(!holes||!pars)return c;for(var i=0;i<Math.min(holes.length,pars.length);i++){var d=holes[i]-pars[i];if(d<=-2)c.ea++;else if(d===-1)c.bi++;else if(d===0)c.pa++;else if(d===1)c.bo++;else if(d===2)c.db++;else c.wo++;}return c;}
 /* Genormaliseerde 18-holes scorerondes van een speler */
 function scNorm(pid){var out=[];
@@ -1947,7 +1972,7 @@ function scNorm(pid){var out=[];
   out.push(o);});
  out.sort(function(a,b){return a.date<b.date?-1:1;});
  var byT={};
- out.forEach(function(r){r.bench=scBench(pid,r.y);
+ out.forEach(function(r){r.bench=scBench(pid,r.y);r.benchSg=scBenchSg(pid,r.y);
   if(!r.tkey)return;(byT[r.tkey]=byT[r.tkey]||[]).push(r);});
  Object.keys(byT).forEach(function(k){
   var mc=byT[k].some(function(r){return r.finish==="MC";});
@@ -1971,7 +1996,7 @@ function scFiltApply(all,f,skipPeriod){
  var L=all.slice();
  if(!skipPeriod){
   if(f.mode==="year"&&f.year)L=L.filter(function(r){return r.y===+f.year;});
-  else if(f.mode==="m3"||f.mode==="m6"){var cut=scMonthsAgo(f.mode==="m3"?3:6);L=L.filter(function(r){return r.date>=cut;});}
+  else if(f.mode==="m3"||f.mode==="m6"||f.mode==="m12"||f.mode==="m60"){var _mm={m3:3,m6:6,m12:12,m60:60}[f.mode];var cut=scMonthsAgo(_mm);L=L.filter(function(r){return r.date>=cut;});}
   else if(f.mode==="period"){if(f.from)L=L.filter(function(r){return r.date>=f.from;});if(f.to)L=L.filter(function(r){return r.date<=f.to;});}
  }
  if(f.rt)L=L.filter(function(r){return r.rt===f.rt;});
@@ -1980,15 +2005,19 @@ function scFiltApply(all,f,skipPeriod){
  if(f.kl)L=L.filter(function(r){return String(r.kl||"").toUpperCase()===String(f.kl).toUpperCase();});
  if(f.evs&&f.evs.length)L=L.filter(function(r){return f.evs.indexOf(r.ev||"")>=0;});
  return L;}
+function scDispBucket(t){
+ if(t>=-1&&t<=1)return {k:0,lo:-1,hi:1,lbl:"-1 t/m 1",v:0};
+ if(t>1){var k=Math.floor((t-2)/3);return {k:k+1,lo:2+k*3,hi:4+k*3,lbl:(2+k*3)+" t/m "+(4+k*3),v:3+k*3};}
+ var j=Math.floor((-t-2)/3);return {k:-(j+1),lo:-(4+j*3),hi:-(2+j*3),lbl:"-"+(4+j*3)+" t/m -"+(2+j*3),v:-(3+j*3)};}
 function scDisp(L){var tps=L.map(function(r){return r.tp;});if(!tps.length)return [];
- var mn=Math.min.apply(null,tps),mx=Math.max.apply(null,tps);
- var lo=Math.max(Math.floor(mn),-6),hi=Math.min(Math.ceil(mx),24);if(hi<lo)hi=lo;
- var step=((hi-lo)>17)?2:1;
+ var m={},mnk=0,mxk=0;
+ tps.forEach(function(t){var b=scDispBucket(t);m[b.k]=m[b.k]||{k:b.k,lbl:b.lbl,v:b.v,n:0};m[b.k].n++;
+  if(b.k<mnk)mnk=b.k;if(b.k>mxk)mxk=b.k;});
  var out=[];
- for(var v=lo;v<=hi;v+=step){
-  var lbl=(step===2)?(((v>0?"+":"")+v)+"/"+(((v+1)>0?"+":"")+(v+1))):((v>0?"+":"")+v);
-  out.push({v:v,lbl:lbl,n:0});}
- tps.forEach(function(t){var c=Math.min(Math.max(t,lo),hi);var i=Math.floor((c-lo)/step);if(i<0)i=0;if(i>=out.length)i=out.length-1;out[i].n++;});
+ for(var k=mnk;k<=mxk;k++){
+  if(m[k]){out.push(m[k]);continue;}
+  var proto=(k===0)?{lbl:"-1 t/m 1",v:0}:((k>0)?{lbl:(2+(k-1)*3)+" t/m "+(4+(k-1)*3),v:3+(k-1)*3}:{lbl:"-"+(4+(-k-1)*3)+" t/m -"+(2+(-k-1)*3),v:-(3+(-k-1)*3)});
+  out.push({k:k,lbl:proto.lbl,v:proto.v,n:0});}
  return out;}
 function scData(pid,filt){var all=scNorm(pid);var f=scFiltNorm(filt);
  var years={};all.forEach(function(r){years[r.y]=1;});
@@ -2054,12 +2083,14 @@ function scF(v,d){if(v==null||isNaN(v))return "–";var x=+v;return (x>0?"+":"")
 /* ---- Scoring: weergave ---- */
 var scFilt={mode:"all",year:"",from:"",to:"",rt:"",main:"",types:[],kl:"",evs:[]};
 var scMetric="score", scVerMetric="score", scVerCut=false, scParMetric="par";
-var scYrFrom=null, scYrTo=null, scSelPt=null, scDiffOpen={}, scSgMode="year", scOpenList=null;
+var scYrFrom=null, scYrTo=null, scSelPt=null, scDiffOpen={}, scSgMode="year", scOpenList=null, _scFocus=null, scScKind="dot", scYrMetric="score";
 function scRefYear(){return (scFilt.mode==="year"&&scFilt.year)?+scFilt.year:(+todayISO().slice(0,4));}
 function scFiltLabel(f){f=f||scFilt;
  if(f.mode==="year"&&f.year)return String(f.year);
  if(f.mode==="m3")return "laatste 3 maanden";
  if(f.mode==="m6")return "laatste 6 maanden";
+ if(f.mode==="m12")return "laatste jaar";
+ if(f.mode==="m60")return "laatste 5 jaar";
  if(f.mode==="period")return (f.from?fmtDate(f.from):"begin")+" t/m "+(f.to?fmtDate(f.to):"nu");
  return "alle jaren";}
 function scFiltSub(f){f=f||scFilt;var a=[];
@@ -2092,12 +2123,14 @@ function renderScoring(){var box=$("#scBody");if(!box)return;
    +'<tr><td>Par of beter</td><td style="text-align:right"><b>'+S.parN+'</b></td><td style="text-align:right">'+(S.n?Math.round(S.parN/S.n*100)+"%":"–")+'</td></tr></table></div>'
    +'<div class="row spread" style="align-items:center;margin-top:10px"><span class="muted" style="font-size:12.5px">Benchmark: <b>'+(bch!=null?scF(bch):"–")+'</b>'+(registryPlayer(spPlayer)&&registryPlayer(spPlayer).scBench!=null&&registryPlayer(spPlayer).scBench!==""?' (eigen)':' (o.b.v. leeftijd)')+'</span><a href="#" id="scBchE" style="font-size:12.5px">aanpassen</a></div></div>';
   var hasSg=D.list.some(function(r){return r.sg!=null;});
-  H+='<div class="card"><div class="cardhd"><h3>Scoreverloop</h3>'
-   +(hasSg?'<div class="seg tlmini" id="scScMet" style="max-width:200px;margin:0"><button data-m="score" class="'+(scMetric==="sg"?"":"on")+'">t.o.v. par</button><button data-m="sg" class="'+(scMetric==="sg"?"on":"")+'">SG</button></div>':'')+'</div>'
+  H+='<div class="card"><div class="cardhd"><h3>Scoreverloop</h3><div class="row" style="gap:8px;flex-wrap:wrap">'
+   +'<div class="seg tlmini" id="scScKind" style="max-width:170px;margin:0"><button data-k="dot" class="'+(scScKind==="dot"?"on":"")+'">Dotplot</button><button data-k="bar" class="'+(scScKind==="bar"?"on":"")+'">Staaf</button></div>'
+   +(hasSg?'<div class="seg tlmini" id="scScMet" style="max-width:180px;margin:0"><button data-m="score" class="'+(scMetric==="sg"?"":"on")+'">Score</button><button data-m="sg" class="'+(scMetric==="sg"?"on":"")+'">SG</button></div>':'')+'</div></div>'
    +'<div id="scScat"></div></div>';
   if(D.disp.length)H+='<div class="card"><div class="cardhd"><h3>Dispersion t.o.v. par</h3><span class="hdnote">'+D.list.length+' rondes</span></div>'+scDispHtml(D.disp)+'</div>';
-  if(D.perYear.length)H+='<div class="card"><div class="cardhd"><h3>Gemiddelde score per jaar</h3><span class="hdnote" id="scYrLbl"></span></div><div id="scYrChart"></div>'+scYearRangeHtml(D)+'</div>';
-  if(D.sgYear.length)H+='<div class="card"><div class="cardhd"><h3>Strokes gained per ronde</h3><div class="seg tlmini" id="scSgMode" style="max-width:210px;margin:0"><button data-m="year" class="'+(scSgMode==="year"?"on":"")+'">Per jaar</button><button data-m="rounds" class="'+(scSgMode==="rounds"?"on":"")+'">Alle rondes</button></div></div>'+(scSgMode==="rounds"?scSgRoundsHtml(D):scSgYearHtml(D))+'</div>';
+  if(D.perYear.length)H+='<div class="card"><div class="cardhd"><h3>Gemiddelde per jaar</h3>'
+   +(D.sgYear.length?'<div class="seg tlmini" id="scYrMet" style="max-width:190px;margin:0"><button data-m="score" class="'+(scYrMetric==="sg"?"":"on")+'">Score</button><button data-m="sg" class="'+(scYrMetric==="sg"?"on":"")+'">SG</button></div>':'<span class="hdnote" id="scYrLbl"></span>')
+   +'</div><div id="scYrChart"></div>'+scYearRangeHtml(D)+'<div class="sx" id="scYrLbl2" style="margin-top:4px"></div></div>';
   if(D.parY.length)H+='<div class="card"><div class="cardhd"><h3>'+(scParMetric==="bench"?"Benchmark of beter":"Par of beter")+'</h3>'
    +'<div class="seg tlmini" id="scParMet" style="max-width:230px;margin:0"><button data-m="par" class="'+(scParMetric==="par"?"on":"")+'">Par of beter</button><button data-m="bench" class="'+(scParMetric==="bench"?"on":"")+'">Benchmark of beter</button></div></div>'+scParYearHtml(D)+'</div>';
   var wlRows=D.wl.filter(function(w){return w.n;});
@@ -2121,7 +2154,8 @@ function renderScoring(){var box=$("#scBody");if(!box)return;
  var cb=$("#scCutTog");if(cb)cb.onchange=function(){scVerCut=cb.checked;renderScoring();};
  var sm=$("#scScMet");if(sm)sm.querySelectorAll("[data-m]").forEach(function(b){b.onclick=function(){scMetric=b.dataset.m;scSelPt=null;renderScoring();};});
  var pm=$("#scParMet");if(pm)pm.querySelectorAll("[data-m]").forEach(function(b){b.onclick=function(){scParMetric=b.dataset.m;renderScoring();};});
- var sgm=$("#scSgMode");if(sgm)sgm.querySelectorAll("[data-m]").forEach(function(b){b.onclick=function(){scSgMode=b.dataset.m;renderScoring();};});
+ var ym=$("#scYrMet");if(ym)ym.querySelectorAll("[data-m]").forEach(function(b){b.onclick=function(){scYrMetric=b.dataset.m;renderScoring();};});
+ var sk=$("#scScKind");if(sk)sk.querySelectorAll("[data-k]").forEach(function(b){b.onclick=function(){scScKind=b.dataset.k;renderScoring();};});
  document.querySelectorAll("[data-dg]").forEach(function(tr){tr.onclick=function(){var k=tr.dataset.dg;scDiffOpen[k]=!scDiffOpen[k];renderScoring();};});
  scYearBind(D);
  var scat=$("#scScat");if(scat&&D.list.length)scat.innerHTML=scScatterSvg(D);
@@ -2135,9 +2169,11 @@ function scFiltHtml(D){
  var f=scFilt;
  var modeOpts='<option value="all"'+(f.mode==="all"?" selected":"")+'>Alle rondes</option>'
   +'<option value="m3"'+(f.mode==="m3"?" selected":"")+'>Laatste 3 maanden</option>'
-  +'<option value="m6"'+(f.mode==="m6"?" selected":"")+'>Laatste 6 maanden</option>';
+  +'<option value="m6"'+(f.mode==="m6"?" selected":"")+'>Laatste 6 maanden</option>'
+  +'<option value="m12"'+(f.mode==="m12"?" selected":"")+'>Laatste jaar</option>'
+  +'<option value="m60"'+(f.mode==="m60"?" selected":"")+'>Laatste 5 jaar</option>'
+  +'<option value="period"'+(f.mode==="period"?" selected":"")+'>Periode (van–tot)…</option>';
  if(D.years.length)modeOpts+='<optgroup label="Jaar">'+D.years.slice().reverse().map(function(y){return '<option value="y'+y+'"'+((f.mode==="year"&&String(f.year)===String(y))?" selected":"")+'>'+y+'</option>';}).join("")+'</optgroup>';
- modeOpts+='<option value="period"'+(f.mode==="period"?" selected":"")+'>Periode (van–tot)…</option>';
  var H='<div class="card"><div class="row" style="gap:8px;flex-wrap:wrap">'
   +'<select class="in" id="scFMode" style="flex:1;min-width:150px">'+modeOpts+'</select>'
   +'<select class="in" id="scFRt" style="flex:1;min-width:140px"><option value="">Oefen + wedstrijd</option><option value="wedstrijd"'+(f.rt==="wedstrijd"?" selected":"")+'>Wedstrijdrondes</option><option value="oefen"'+(f.rt==="oefen"?" selected":"")+'>Oefenrondes</option></select>'
@@ -2156,8 +2192,9 @@ function scFiltBind(D){
  var m=$("#scFMode");if(m)m.onchange=function(){var v=m.value;if(v.charAt(0)==="y"&&!isNaN(+v.slice(1))){scFilt.mode="year";scFilt.year=+v.slice(1);}else{scFilt.mode=v;scFilt.year="";}renderScoring();};
  var rt=$("#scFRt");if(rt)rt.onchange=function(){scFilt.rt=rt.value;renderScoring();};
  var mn=$("#scFMain");if(mn)mn.onchange=function(){scFilt.main=mn.value;scFilt.types=[];scFilt.evs=[];renderScoring();};
- var a=$("#scFA");if(a)a.onchange=function(){scFilt.from=a.value;renderScoring();};
- var b=$("#scFB");if(b)b.onchange=function(){scFilt.to=b.value;renderScoring();};
+ var a=$("#scFA");if(a)a.onchange=function(){scFilt.from=a.value;_scFocus="scFA";renderScoring();};
+ var b=$("#scFB");if(b)b.onchange=function(){scFilt.to=b.value;_scFocus="scFB";renderScoring();};
+ if(_scFocus){var _f=$("#"+_scFocus);_scFocus=null;if(_f)setTimeout(function(){try{_f.focus();}catch(e){}},0);}
  var ka=$("#scFKlA");if(ka)ka.onclick=function(){scFilt.kl=(scFilt.kl==="A")?"":"A";renderScoring();};
  var eb=$("#scFEvB");if(eb)eb.onclick=function(){scOpenList=(scOpenList==="ev")?null:"ev";renderScoring();};
  var tb=$("#scFTyB");if(tb)tb.onclick=function(){scOpenList=(scOpenList==="type")?null:"type";renderScoring();};
@@ -2179,7 +2216,7 @@ function scDispCol(v){
 function scDispHtml(disp){
  var mx=0;disp.forEach(function(b){if(b.n>mx)mx=b.n;});if(!mx)return "";
  return '<div class="barchart" style="min-height:120px">'+disp.map(function(b){var h=Math.max(3,Math.round(b.n/mx*104));
-  return '<div class="barcol"><span class="barpct">'+(b.n||"")+'</span><span class="barfill" style="height:'+h+'px;background:'+scDispCol(b.v)+'"></span><span class="barlab">'+b.lbl+'</span></div>';}).join("")+'</div>';}
+  return '<div class="barcol"><span class="barpct">'+(b.n||"")+'</span><span class="barfill" style="height:'+h+'px;background:'+scDispCol(b.v)+'"></span><span class="barlab dsplab">'+b.lbl+'</span></div>';}).join("")+'</div>';}
 function scOpbHtml(ov){
  var lbls=[["ea","Eagles of beter"],["bi","Birdies"],["pa","Parren"],["bo","Bogeys"],["db","Double bogeys"],["wo","Triple of erger"]];
  return '<table class="opbtbl">'+lbls.map(function(l){var v=ov[l[0]];var pc=ov.tot?(v/ov.tot*100):0;
@@ -2232,13 +2269,14 @@ function scVerloopHtml(D){
  }
  return H+'</div>';}
 /* ---- jaargrafieken ---- */
-function scYearSel(D){
+function scYearSel(D,arr){
+ arr=arr||D.perYear;
  var ys=D.perYear.map(function(p){return p.y;});
  if(!ys.length)return [];
  var a=(scYrFrom!=null&&ys.indexOf(scYrFrom)>=0)?scYrFrom:ys[0];
  var b=(scYrTo!=null&&ys.indexOf(scYrTo)>=0)?scYrTo:ys[ys.length-1];
  if(a>b){var t=a;a=b;b=t;}
- return D.perYear.filter(function(p){return p.y>=a&&p.y<=b;});}
+ return arr.filter(function(p){return p.y>=a&&p.y<=b;});}
 function scYearRangeHtml(D){
  var ys=D.perYear.map(function(p){return p.y;});
  if(ys.length<2)return "";
@@ -2249,10 +2287,13 @@ function scYearRangeHtml(D){
   +'<input type="range" id="scYrB" min="'+ys[0]+'" max="'+ys[ys.length-1]+'" step="1" value="'+b+'"></div>'
   +'<span class="sx">'+ys[ys.length-1]+'</span></div>';}
 function scYearBind(D){
- var lbl=$("#scYrLbl");var ch=$("#scYrChart");
- function draw(){var P=scYearSel(D);
-  if(lbl)lbl.textContent=P.length?(P[0].y+(P.length>1?(" – "+P[P.length-1].y):"")):"";
-  if(ch)ch.innerHTML=P.length?scYearLineSvg(P,D.bench):'<p class="muted" style="margin:0;font-size:13px">Geen jaren in dit bereik.</p>';}
+ var lbl=$("#scYrLbl"),lbl2=$("#scYrLbl2");var ch=$("#scYrChart");
+ function draw(){
+  var P=(scYrMetric==="sg")?scYearSel(D,D.sgYear):scYearSel(D);
+  var txt=P.length?(P[0].y+(P.length>1?(" – "+P[P.length-1].y):"")):"";
+  if(lbl)lbl.textContent=txt;
+  if(lbl2)lbl2.textContent=txt?((scYrMetric==="sg"?"Strokes gained":"Score t.o.v. par")+" · "+txt):"";
+  if(ch)ch.innerHTML=P.length?scYearLineSvg(P,(scYrMetric==="sg")?null:D.bench,scYrMetric==="sg"):'<p class="muted" style="margin:0;font-size:13px">Geen jaren in dit bereik.</p>';}
  var A=$("#scYrA"),B=$("#scYrB");
  if(A)A.oninput=function(){scYrFrom=+A.value;draw();};
  if(B)B.oninput=function(){scYrTo=+B.value;draw();};
@@ -2309,9 +2350,9 @@ function scParYearHtml(D){
   s+='<text x="'+cx.toFixed(1)+'" y="'+(Hh-14)+'" font-size="10" fill="#64748b" text-anchor="middle">'+p.y+'</text>';
   s+='<text x="'+cx.toFixed(1)+'" y="'+(Hh-4)+'" font-size="8.5" fill="#94a3b8" text-anchor="middle">'+v+' van '+p.n+'</text>';});
  return s+'</svg>';}
-function scYearLineSvg(P,bench){
+function scYearLineSvg(P,bench,isSg){
  if(!P.length)return "";
- var W=600,Hh=200,padL=38,padR=38,padT=18,padB=30;
+ var W=600,Hh=200,padL=44,padR=44,padT=18,padB=30;
  var vals=P.map(function(p){return p.avg;});
  var mn=Math.min.apply(null,vals),mx=Math.max.apply(null,vals);
  if(bench!=null){mn=Math.min(mn,bench);mx=Math.max(mx,bench);}
@@ -2327,12 +2368,11 @@ function scYearLineSvg(P,bench){
  var pts=P.map(function(p,i){return X(i).toFixed(1)+","+Y(p.avg).toFixed(1);});
  if(P.length>1)s+='<polyline points="'+pts.join(" ")+'" fill="none" stroke="#E8520A" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>';
  P.forEach(function(p,i){var x=X(i),y=Y(p.avg);
-  var an=(P.length>1&&i===0)?"start":((P.length>1&&i===P.length-1)?"end":"middle");
-  var lx=(an==="start")?(x-6):((an==="end")?(x+6):x);
+  var an="middle",lx=x;
   var ly=(y-10),lx2=lx,an2=an;
-  if(y<(padT+20)){ly=y+16;if(an==="start"){lx2=x+9;}}
+  if(y<(padT+20))ly=y+16;
   s+='<circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="4.5" fill="#fff" stroke="#E8520A" stroke-width="2.4"/>';
-  s+='<text x="'+lx2.toFixed(1)+'" y="'+ly.toFixed(1)+'" font-size="10.5" font-weight="800" fill="#E8520A" text-anchor="'+an2+'">'+scF(p.avg)+'</text>';
+  s+='<text x="'+lx2.toFixed(1)+'" y="'+ly.toFixed(1)+'" font-size="10.5" font-weight="800" fill="#E8520A" text-anchor="'+an2+'">'+scF(p.avg,isSg?2:1)+'</text>';
   s+='<text x="'+x.toFixed(1)+'" y="'+(Hh-12)+'" font-size="10" fill="#64748b" text-anchor="middle">'+p.y+'</text>';
   s+='<text x="'+x.toFixed(1)+'" y="'+(Hh-2)+'" font-size="8" fill="#94a3b8" text-anchor="middle">'+p.n+' rondes</text>';});
  return s+'</svg>';}
@@ -2346,64 +2386,131 @@ function scSmoothPath(P){
   var c2x=p2[0]-(p3[0]-p1[0])/6, c2y=p2[1]-(p3[1]-p1[1])/6;
   d+=" C"+c1x.toFixed(1)+" "+c1y.toFixed(1)+","+c2x.toFixed(1)+" "+c2y.toFixed(1)+","+p2[0].toFixed(1)+" "+p2[1].toFixed(1);}
  return d;}
+function scAxisTicks(mn,mx){
+ var lo=Math.floor(mn/2)*2, hi=Math.ceil(mx/2)*2;
+ var out=[];for(var v=lo;v<=hi;v+=2)out.push(v);
+ if(out.indexOf(0)<0)out.push(0);
+ out.sort(function(x,y){return x-y;});
+ return out;}
+function scPtColor(v,sg){
+ if(sg)return (v>0.05)?"var(--good)":((v<-0.05)?"var(--bad)":"#9aa5b1");
+ return (v<0)?"var(--bad)":"#9aa5b1";}
 function scScatterSvg(D){
  var L2=D.list;if(!L2.length)return "";
  var sg=(scMetric==="sg");
+ var bar=(scScKind==="bar");
  var pts=[];L2.forEach(function(r){var v=sg?r.sg:r.tp;if(v==null)return;pts.push({r:r,v:v});});
  if(!pts.length)return '<p class="muted" style="margin:0;font-size:13px">Geen strokes-gained data in deze selectie.</p>';
- var W=620,H=250,Lp=38,R=14,T=14,B=28,pw=W-Lp-R,ph=H-T-B;
+ var W=620,H=250,Lp=34,R=14,T=14,B=28,pw=W-Lp-R,ph=H-T-B;
  var ds=pts.map(function(p){return new Date(p.r.date+"T12:00:00").getTime();});
  var x0=Math.min.apply(null,ds),x1=Math.max.apply(null,ds);if(x1<=x0)x1=x0+864e5;
  var vs=pts.map(function(p){return p.v;});
  var mn=Math.min.apply(null,vs),mx=Math.max.apply(null,vs);
- if(!sg){var bs=pts.map(function(p){return p.r.bench;}).filter(function(b){return b!=null;});
-  if(bs.length){mn=Math.min(mn,Math.min.apply(null,bs));mx=Math.max(mx,Math.max.apply(null,bs));}}
+ var benchOf=function(p){return sg?(p.r.benchSg!=null?p.r.benchSg:null):p.r.bench;};
+ var bs=pts.map(benchOf).filter(function(x){return x!=null;});
+ if(bs.length){mn=Math.min(mn,Math.min.apply(null,bs));mx=Math.max(mx,Math.max.apply(null,bs));}
  mn=Math.min(mn,0);mx=Math.max(mx,0);
- var pad=(mx-mn)*0.15||1;mn-=pad;mx+=pad;
- function X(t){return Lp+(t-x0)/(x1-x0)*pw;}
+ var pad=(mx-mn)*0.12||1;mn-=pad;mx+=pad;
+ function X(i,t){return bar?(Lp+(i+0.5)/pts.length*pw):(Lp+(t-x0)/(x1-x0)*pw);}
  function Y(v){return T+ph-((v-mn)/(mx-mn))*ph;}
  var s2='<svg viewBox="0 0 '+W+' '+H+'" width="'+W+'" height="'+H+'" preserveAspectRatio="xMidYMid meet">';
- var ticks=niceTicks(mn,mx,4);
- ticks.forEach(function(tv){var y=Y(tv);
-  s2+='<line class="gl" x1="'+Lp+'" y1="'+y.toFixed(1)+'" x2="'+(W-R)+'" y2="'+y.toFixed(1)+'"/>'
-   +'<text class="yl" x="'+(Lp-6)+'" y="'+(y+3.7).toFixed(1)+'" text-anchor="end">'+((tv>0?"+":"")+(Math.abs(tv)<10?tv.toFixed(sg?1:0):Math.round(tv)))+'</text>';});
- if(mn<0&&mx>0)s2+='<line class="zl" x1="'+Lp+'" y1="'+Y(0).toFixed(1)+'" x2="'+(W-R)+'" y2="'+Y(0).toFixed(1)+'"/>';
- if(!sg){
+ /* benchmark: zone (dotplot) of doorlopende stippellijn (staaf) */
+ if(bs.length){
   var seg=[],cur=null;
-  pts.forEach(function(p,k){var b=p.r.bench;
-   if(b==null){if(cur){seg.push(cur);cur=null;}return;}
-   if(!cur||cur.b!==b){if(cur)seg.push(cur);cur={b:b,x0:X(ds[k]),x1:X(ds[k])};}else cur.x1=X(ds[k]);});
-  if(cur)seg.push(cur);
-  seg.forEach(function(g2,k){var yb=Y(g2.b);
-   var xa=(k===0)?Lp:(g2.x0-4), xb=(k===seg.length-1)?(W-R):(g2.x1+4);
-   s2+='<line class="bml" x1="'+xa.toFixed(1)+'" y1="'+yb.toFixed(1)+'" x2="'+xb.toFixed(1)+'" y2="'+yb.toFixed(1)+'"/>';});
+  pts.forEach(function(p,k){var bv=benchOf(p);
+   var xx=X(k,ds[k]);
+   if(bv==null){if(cur){seg.push(cur);cur=null;}return;}
+   if(!cur||cur.b!==bv){if(cur){cur.x1=xx;seg.push(cur);}cur={b:bv,x0:(cur?cur.x1:Lp),x1:xx};}else cur.x1=xx;});
+  if(cur){cur.x1=W-R;seg.push(cur);}
+  if(seg.length)seg[0].x0=Lp;
+  if(!bar){
+   var d="M"+Lp+" "+(T+ph).toFixed(1);
+   seg.forEach(function(g2){d+=" L"+g2.x0.toFixed(1)+" "+Y(g2.b).toFixed(1)+" L"+g2.x1.toFixed(1)+" "+Y(g2.b).toFixed(1);});
+   d+=" L"+(W-R)+" "+(T+ph).toFixed(1)+" Z";
+   s2+='<path d="'+d+'" fill="#E8520A" opacity="0.10"/>';
+   seg.forEach(function(g2){s2+='<line class="bmz" x1="'+g2.x0.toFixed(1)+'" y1="'+Y(g2.b).toFixed(1)+'" x2="'+g2.x1.toFixed(1)+'" y2="'+Y(g2.b).toFixed(1)+'"/>';});
+  }else{
+   var dd="";
+   seg.forEach(function(g2,k){dd+=(k?" L":"M")+g2.x0.toFixed(1)+" "+Y(g2.b).toFixed(1)+" L"+g2.x1.toFixed(1)+" "+Y(g2.b).toFixed(1);});
+   s2+='<path d="'+dd+'" fill="none" class="bml2"/>';
+  }
  }
- if(pts.length>=6){
-  var win=Math.max(5,Math.round(pts.length/6));
-  var LP=[];
-  for(var i2=0;i2<pts.length;i2++){var a=Math.max(0,i2-win+1);var sub=pts.slice(a,i2+1);
-   var m=sub.reduce(function(x,p){return x+p.v;},0)/sub.length;
-   LP.push([X(ds[i2]),Y(m)]);}
-  s2+='<path class="ln" d="'+scSmoothPath(LP)+'"/>';
+ var ticks=scAxisTicks(mn,mx);
+ ticks.forEach(function(tv){if(tv<mn||tv>mx)return;var y=Y(tv);
+  s2+='<line class="gl2'+(tv===0?" z":"")+'" x1="'+Lp+'" y1="'+y.toFixed(1)+'" x2="'+(W-R)+'" y2="'+y.toFixed(1)+'"/>'
+   +'<text class="yl2" x="'+(Lp-5)+'" y="'+(y+3.4).toFixed(1)+'" text-anchor="end">'+((tv>0?"+":"")+tv)+'</text>';});
+ if(bar){
+  var bw=Math.max(2.5,Math.min(18,pw/pts.length*0.72));
+  pts.forEach(function(p,k){
+   var cx=X(k,ds[k]);var y0=Y(0),y1=Y(p.v);
+   var lbl=fmtDate(p.r.date)+" · "+((p.r.ev||p.r.baan||"ronde").slice(0,22))+(p.r.rnd?(" R"+p.r.rnd):"")+" · "+(sg?("SG "+scF(p.v,2)):((p.v>0?"+":"")+p.v));
+   s2+='<rect class="pt" x="'+(cx-bw/2).toFixed(1)+'" y="'+Math.min(y0,y1).toFixed(1)+'" width="'+bw.toFixed(1)+'" height="'+Math.max(1.5,Math.abs(y1-y0)).toFixed(1)+'" rx="2" fill="'+scPtColor(p.v,sg)+'" data-lbl="'+esc(lbl)+'" data-x="'+cx.toFixed(1)+'" data-y="'+Math.min(y0,y1).toFixed(1)+'" onclick="scSelPtFn(this)"/>';});
+  var yrs={};pts.forEach(function(p,k){if(yrs[p.r.y]==null)yrs[p.r.y]=k;});
+  Object.keys(yrs).forEach(function(y){var cx=X(yrs[y],0);
+   s2+='<text class="xl2" x="'+cx.toFixed(1)+'" y="'+(H-8)+'" text-anchor="middle">'+y+'</text>';});
+ }else{
+  if(pts.length>=5){
+   var win=Math.max(6,Math.round(pts.length/5));
+   var raw=[];
+   for(var i2=0;i2<pts.length;i2++){var a2=Math.max(0,i2-win+1);var sub=pts.slice(a2,i2+1);
+    raw.push(sub.reduce(function(x,p){return x+p.v;},0)/sub.length);}
+   var sm=raw.map(function(v,i3){var a3=Math.max(0,i3-2),b3=Math.min(raw.length-1,i3+2);var t=0,n=0;
+    for(var j=a3;j<=b3;j++){t+=raw[j];n++;}return t/n;});
+   var LP=sm.map(function(v,i4){return [X(i4,ds[i4]),Y(v)];});
+   s2+='<path class="ln" d="'+scSmoothPath(LP)+'"/>';}
+  pts.forEach(function(p,k){
+   var xx=X(k,ds[k]),yy=Y(p.v);
+   var lbl=fmtDate(p.r.date)+" · "+((p.r.ev||p.r.baan||"ronde").slice(0,22))+(p.r.rnd?(" R"+p.r.rnd):"")+" · "+(sg?("SG "+scF(p.v,2)):((p.v>0?"+":"")+p.v));
+   s2+='<circle class="pt" cx="'+xx.toFixed(1)+'" cy="'+yy.toFixed(1)+'" r="4.5" fill="'+scPtColor(p.v,sg)+'" data-lbl="'+esc(lbl)+'" data-x="'+xx.toFixed(1)+'" data-y="'+yy.toFixed(1)+'" onclick="scSelPtFn(this)"/>';});
+  var y0f=new Date(x0).getFullYear(),y1f=new Date(x1).getFullYear();
+  for(var yr=y0f;yr<=y1f;yr++){var t2=new Date(yr+"-01-01T12:00:00").getTime();if(t2<x0||t2>x1)continue;
+   s2+='<text class="xl2" x="'+(X(0,t2)+2).toFixed(1)+'" y="'+(H-8)+'" text-anchor="start">'+yr+'</text>';}
  }
- pts.forEach(function(p,k){
-  var col=sg?((p.v>0.05)?"var(--good)":((p.v<-0.05)?"var(--bad)":"#9aa5b1")):((p.v<0)?"var(--bad)":"#9aa5b1");
-  var lbl=fmtDate(p.r.date)+" · "+((p.r.ev||p.r.baan||"ronde").slice(0,22))+(p.r.rnd?(" R"+p.r.rnd):"")+" · "+(sg?("SG "+scF(p.v,2)):((p.v>0?"+":"")+p.v));
-  var x=X(ds[k]),y=Y(p.v);
-  s2+='<circle class="pt" cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="4.5" fill="'+col+'" stroke="#fff" stroke-width="1.5" data-lbl="'+esc(lbl)+'" data-x="'+x.toFixed(1)+'" data-y="'+y.toFixed(1)+'" onclick="cpt(this)"/>';});
- var y0f=new Date(x0).getFullYear(),y1f=new Date(x1).getFullYear();
- for(var yr=y0f;yr<=y1f;yr++){var t2=new Date(yr+"-01-01T12:00:00").getTime();if(t2<x0||t2>x1)continue;
-  s2+='<text class="xl" x="'+(X(t2)+2).toFixed(1)+'" y="'+(H-9)+'" text-anchor="start">'+yr+'</text>';}
  s2+='<g class="tip" style="display:none"><rect x="0" y="0" width="0" height="17" rx="5"/><text x="0" y="0"></text></g></svg>';
- var leg='<div class="chleg"><span><i class="lineleg"></i>voortschrijdend gemiddelde</span>'+(sg?"":'<span><i class="benchleg"></i>benchmark</span>')+'</div>';
+ var leg='<div class="chleg">'+(bar?'':'<span><i class="lineleg"></i>trendlijn</span>')
+  +(bs.length?('<span><i class="'+(bar?"benchleg":"zoneleg")+'"></i>benchmark'+(bar?"":"zone")+'</span>'):'')+'</div>';
  return '<div class="chartwrap scchart">'+s2+'</div>'+leg;}
-function openScBench(){var p=registryPlayer(spPlayer);if(!p)return;var sh=$("#sheet");
- var def=scBenchDefault(spPlayer,scRefYear());
- sh.innerHTML='<div class="shead"><div><h2>Benchmark</h2><div class="sx">'+esc(p.name)+'</div></div><button class="xbtn" onclick="closeSheet()">×</button></div>'
- +'<div class="card"><p class="muted" style="font-size:13px;margin:0 0 10px">De benchmark is de richtscore (t.o.v. par) waarmee alle scoringscijfers vergeleken worden. Standaard volgt hij uit leeftijd en geslacht'+(def!=null?' (nu: <b>'+scF(def)+'</b>)':' (geboortejaar ontbreekt)')+'. Vul een eigen waarde in om dit te overschrijven.</p><label class="fld">Eigen benchmark (t.o.v. par)</label><input class="in" type="number" step="0.5" id="scBchIn" value="'+(p.scBench!=null?esc(String(p.scBench)):"")+'" placeholder="bv. -1"><small class="note">Leeg laten = automatisch o.b.v. leeftijd.</small></div>'
- +'<button class="btn block blue" id="scBchSv">Opslaan</button>';
- openSheet();
- $("#scBchSv").onclick=function(){var v=$("#scBchIn").value;p.scBench=(v===""?null:+v);save();closeSheet();renderScoring();};}
+function scSelPtFn(el){
+ var svg=el.closest("svg");
+ svg.querySelectorAll(".pt.sel").forEach(function(x){x.classList.remove("sel");});
+ el.classList.add("sel");
+ cpt(el);}
+function openScBench(){
+ var p=registryPlayer(spPlayer);if(!p)return;
+ var sh=$("#sheet");
+ var D=scData(spPlayer,scFilt);
+ var ys=D.years.slice();
+ var cy=+todayISO().slice(0,4);
+ if(ys.indexOf(cy)<0)ys.push(cy);
+ ys.sort(function(a,b){return a-b;});
+ function draw(){
+  var by=scBenchYears(spPlayer);
+  var rows=ys.map(function(y){
+   var age=p.birthYear?(y-(+p.birthYear)):null;
+   var advT=scBenchDefault(spPlayer,y),advS=scBenchSgDefault(spPlayer,y);
+   var cur=by[String(y)]||{};
+   return '<tr><td><b>'+y+'</b></td><td style="text-align:center">'+(age!=null?age:"–")+'</td>'
+    +'<td style="text-align:center;color:var(--muted)">'+(advT!=null?scF(advT):"–")+'</td>'
+    +'<td style="text-align:center;color:var(--muted)">'+(advS!=null?scF(advS,2):"–")+'</td>'
+    +'<td><input class="in bmin" type="number" step="0.5" data-neg data-by="'+y+'" value="'+esc(cur.tp!=null?String(cur.tp):"")+'" placeholder="'+(advT!=null?scF(advT):"–")+'"></td>'
+    +'<td><input class="in bmin" type="number" step="0.05" data-neg data-bs="'+y+'" value="'+esc(cur.sg!=null?String(cur.sg):"")+'" placeholder="'+(advS!=null?scF(advS,2):"–")+'"></td></tr>';}).join("");
+  sh.innerHTML='<div class="shead"><div><h2>Benchmark</h2><div class="sx">'+esc(p.name)+'</div></div><button class="xbtn" onclick="closeSheet()">×</button></div>'
+   +'<div class="card"><p class="muted" style="font-size:13px;margin:0 0 10px">De benchmark is de richtwaarde waarmee alle scoringscijfers vergeleken worden. Het <b>advies</b> volgt uit leeftijd en geslacht; de SG-adviesnorm is daarvan afgeleid (spiegelbeeld t.o.v. par). Vul per jaar een eigen waarde in om het advies te overschrijven — leeg laten betekent: advies aanhouden.</p>'
+   +'<div style="overflow-x:auto"><table class="kvtable bmtbl" style="width:100%"><tr><th>Jaar</th><th style="text-align:center">Leeftijd</th><th style="text-align:center">Advies t.o.v. par</th><th style="text-align:center">Advies SG</th><th style="text-align:center">Eigen t.o.v. par</th><th style="text-align:center">Eigen SG</th></tr>'+rows+'</table></div>'
+   +'<div class="row" style="gap:8px;margin-top:12px"><button class="btn ghost sm" id="bmClr">Alles op advies zetten</button></div></div>'
+   +'<button class="btn block blue" id="scBchSv">Opslaan</button>';
+  openSheet();
+  function harvest(){
+   var b2={};
+   sh.querySelectorAll("[data-by]").forEach(function(i){var v=String(i.value).trim();if(v===""||isNaN(+v))return;var y=i.dataset.by;b2[y]=b2[y]||{};b2[y].tp=+v;});
+   sh.querySelectorAll("[data-bs]").forEach(function(i){var v=String(i.value).trim();if(v===""||isNaN(+v))return;var y=i.dataset.bs;b2[y]=b2[y]||{};b2[y].sg=+v;});
+   return b2;}
+  $("#bmClr").onclick=function(){p.scBenchY={};p.scBench=null;save();draw();};
+  $("#scBchSv").onclick=function(){
+   p.scBenchY=harvest();p.scBench=null;
+   save();closeSheet();renderScoring();toast("Benchmark opgeslagen ✓");};
+ }
+ draw();}
 /* ---- Scores-import (JSON) ---- */
 function scParseImport(txt){txt=String(txt||"").trim().replace(/^```(json)?/i,"").replace(/```$/,"").trim();
  var o;try{o=JSON.parse(txt);}catch(e){return {err:"Geen geldige JSON: "+e.message};}
@@ -2481,98 +2588,302 @@ function scImportGo(rows){
  if(activeView==="scoring")renderScoring();else show("scoring");
  setTimeout(function(){toast(n+" rondes geïmporteerd ✓");},200);}
 /* ---- Scoringsoverzicht PDF (stijl Tom's Excel) ---- */
-function scPdf(pid,filt){var _fl=scFiltLabel(filt);var year=(filt&&filt.mode==="year"&&filt.year)?+filt.year:null;var D=scData(pid,filt);if(!D.all.length){toast("Geen rondes");return;}
- var p=registryPlayer(pid)||{};toast("Rapport maken…");
+/* ================= Scoringsrapport (PDF) ================= */
+function scPdfCtx(doc,PL,F,FB,LNGF,LTNL,footerName,st){
+ var rgb=PL.rgb;
+ var C={OR:rgb(0.91,0.32,0.04),ORL:rgb(0.98,0.90,0.84),BL:rgb(0.09,0.37,0.65),INK:rgb(0.09,0.13,0.17),
+  MUT:rgb(0.42,0.47,0.52),LINE:rgb(0.88,0.90,0.92),PANEL:rgb(0.957,0.969,0.976),GOOD:rgb(0.12,0.62,0.34),
+  BAD:rgb(0.75,0.14,0.14),GREY:rgb(0.60,0.65,0.69),GREYL:rgb(0.83,0.86,0.89),WHITE:rgb(1,1,1)};
+ var W=841.89,H=595.28,M=38;
+ var o={PL:PL,doc:doc,F:F,FB:FB,C:C,W:W,H:H,M:M,page:null};
+ o.tw=function(t,f,s){return f.widthOfTextAtSize(pz(String(t)),s);};
+ o.dt=function(t,x,y,s,f,c){o.page.drawText(pz(String(t)),{x:x,y:y,size:s,font:f||F,color:c||C.INK});};
+ o.dtR=function(t,x,y,s,f,c){o.dt(t,x-o.tw(t,f||F,s),y,s,f,c);};
+ o.dtC=function(t,cx,y,s,f,c){o.dt(t,cx-o.tw(t,f||F,s)/2,y,s,f,c);};
+ o.box=function(x,y,w,h,c){o.page.drawRectangle({x:x,y:y,width:w,height:h,color:c});};
+ o.line=function(x1,y1,x2,y2,th,c,dash){var op={start:{x:x1,y:y1},end:{x:x2,y:y2},thickness:th||0.8,color:c||C.LINE};if(dash)op.dashArray=dash;o.page.drawLine(op);};
+ o.newPage=function(sub){st.no++;o.page=doc.addPage([W,H]);
+  o.box(0,H-8,W,8,C.OR);
+  var lh=26,lw=LNGF.width/LNGF.height*lh;o.page.drawImage(LNGF,{x:M,y:H-8-14-lh,width:lw,height:lh});
+  var tw2=LTNL.width/LTNL.height*lh;o.page.drawImage(LTNL,{x:W-M-tw2,y:H-8-14-lh,width:tw2,height:lh});
+  o.dtC(sub||"",W/2,H-8-14-lh+9,9,FB,C.MUT);
+  o.line(M,H-8-14-lh-10,W-M,H-8-14-lh-10,0.8,C.LINE);
+  o.box(M,26,W-2*M,0.8,C.LINE);
+  o.dt(footerName,M,14,8,F,C.MUT);
+  o.dtR("Pagina "+st.no,W-M,14,8,F,C.MUT);
+  return H-8-14-lh-28;};
+ o.sect=function(t,x,y,w){o.dt(String(t).toUpperCase(),x,y,11,FB,C.OR);o.line(x,y-6,x+w,y-6,1.2,C.OR);return y-20;};
+ o.note=function(t,x,y,w){o.dt(t,x,y,8,F,C.MUT);return y-12;};
+ o.panel=function(x,y,w,h){o.box(x,y,w,h,C.PANEL);};
+ return o;}
+function scFmt(v,d){if(v==null||isNaN(v))return "–";var x=+v;return (x>0?"+":"")+x.toFixed(d==null?1:d);}
+/* --- tabel --- */
+function scPdfTable(o,x,y,w,cols,rows,opt){
+ opt=opt||{};var C=o.C,rh=opt.rh||14;
+ o.box(x,y-11,w,14,C.PANEL);
+ var cx=x+6;
+ cols.forEach(function(c,i){
+  if(c.align==="right")o.dtR(c.t,x+c.x+c.w-6,y-8,7.5,o.FB,C.MUT);
+  else o.dt(c.t,x+c.x+6,y-8,7.5,o.FB,C.MUT);});
+ y-=18;
+ rows.forEach(function(r,ri){
+  if(r._sep){o.line(x,y+9,x+w,y+9,0.8,C.LINE);}
+  if(ri%2===1&&!opt.nozebra)o.box(x,y-4,w,rh,PLrgba(o,0.985));
+  cols.forEach(function(c,i){
+   var v=r[i];var txt=(v&&v.t!=null)?v.t:(v==null?"–":String(v));
+   var f=(v&&v.b)?o.FB:o.F;var col=(v&&v.c)?v.c:(r._sub?C.MUT:C.INK);
+   var sz=(r._sub?7.5:8.5);
+   if(c.align==="right")o.dtR(txt,x+c.x+c.w-6,y,sz,f,col);
+   else o.dt(txt,x+c.x+6+(r._sub?10:0),y,sz,f,col);});
+  y-=rh;});
+ return y-4;}
+function PLrgba(o,v){return o.PL.rgb(v,v,v);}
+/* --- staafdiagram (verticaal, met nullijn) --- */
+function scPdfBars(o,x,y,w,h,items,opt){
+ opt=opt||{};var C=o.C;
+ var mx=0,mn=0;
+ items.forEach(function(it){mx=Math.max(mx,it.v);mn=Math.min(mn,it.v);});
+ if(mx===0&&mn===0)mx=1;
+ var pad=(mx-mn)*0.18||1;var hi=mx+pad,lo=(mn<0?mn-pad:0);
+ function Y(v){return y-h+((v-lo)/(hi-lo))*h;}
+ var zy=Y(0);
+ o.line(x,zy,x+w,zy,0.9,C.GREYL);
+ var bw=Math.min(opt.bw||34,w/Math.max(1,items.length)*0.62);
+ items.forEach(function(it,i){
+  var cx=x+(i+0.5)/items.length*w;
+  var vy=Y(it.v);
+  var top=Math.max(vy,zy),bot=Math.min(vy,zy);
+  o.box(cx-bw/2,bot,bw,Math.max(1,top-bot),it.c||C.OR);
+  if(opt.val!==false)o.dtC(it.lab!=null?it.lab:scFmt(it.v,opt.dec),cx,(it.v>=0?top+4:bot-9),7.5,o.FB,it.c||C.OR);
+  if(it.x1)o.dtC(it.x1,cx,y-h-10,7.5,o.F,C.MUT);
+  if(it.x2)o.dtC(it.x2,cx,y-h-19,6.5,o.F,C.GREY);});
+ return y-h-32;}
+/* --- lijn/scatter --- */
+function scPdfLine(o,x,y,w,h,pts,opt){
+ opt=opt||{};var C=o.C;
+ var vs=pts.map(function(p){return p.v;});
+ var mn=Math.min.apply(null,vs),mx=Math.max.apply(null,vs);
+ if(opt.bench!=null){mn=Math.min(mn,opt.bench);mx=Math.max(mx,opt.bench);}
+ mn=Math.min(mn,0);mx=Math.max(mx,0);
+ var pad=(mx-mn)*0.16||1;mn-=pad;mx+=pad;
+ function X(i){return pts.length===1?(x+w/2):(x+i/(pts.length-1)*w);}
+ function Y(v){return y-h+((v-mn)/(mx-mn))*h;}
+ var lo=Math.floor(mn/2)*2;
+ for(var g=lo;g<=mx;g+=2){if(g<mn)continue;var gy=Y(g);
+  o.line(x,gy,x+w,gy,(g===0?1:0.6),(g===0?C.GREYL:C.LINE));
+  o.dtR((g>0?"+":"")+g,x-4,gy-2.5,6.5,o.F,C.GREY);}
+ if(opt.bench!=null){var by=Y(opt.bench);o.line(x,by,x+w,by,1,C.OR,[4,3]);}
+ var prev=null;
+ pts.forEach(function(p,i){var px=X(i),py=Y(p.v);
+  if(prev)o.line(prev[0],prev[1],px,py,1.8,C.OR);
+  prev=[px,py];});
+ pts.forEach(function(p,i){var px=X(i),py=Y(p.v);
+  o.page.drawCircle({x:px,y:py,size:3.2,color:C.WHITE,borderColor:C.OR,borderWidth:1.8});
+  o.dtC(scFmt(p.v,opt.dec),px,py+8,7,o.FB,C.OR);
+  if(p.x1)o.dtC(p.x1,px,y-h-10,7.5,o.F,C.MUT);
+  if(p.x2)o.dtC(p.x2,px,y-h-19,6.5,o.F,C.GREY);});
+ return y-h-32;}
+/* --- dotplot met benchmarkzone --- */
+function scPdfScatter(o,x,y,w,h,list,opt){
+ opt=opt||{};var C=o.C;
+ var sg=!!opt.sg;
+ var pts=[];list.forEach(function(r){var v=sg?r.sg:r.tp;if(v==null)return;pts.push({r:r,v:v});});
+ if(!pts.length)return y-h-10;
+ var ds=pts.map(function(p){return new Date(p.r.date+"T12:00:00").getTime();});
+ var x0=Math.min.apply(null,ds),x1=Math.max.apply(null,ds);if(x1<=x0)x1=x0+864e5;
+ var vs=pts.map(function(p){return p.v;});
+ var mn=Math.min.apply(null,vs),mx=Math.max.apply(null,vs);
+ var bs=pts.map(function(p){return sg?p.r.benchSg:p.r.bench;}).filter(function(b){return b!=null;});
+ if(bs.length){mn=Math.min(mn,Math.min.apply(null,bs));mx=Math.max(mx,Math.max.apply(null,bs));}
+ mn=Math.min(mn,0);mx=Math.max(mx,0);
+ var pad=(mx-mn)*0.12||1;mn-=pad;mx+=pad;
+ function X(t){return x+(t-x0)/(x1-x0)*w;}
+ function Y(v){return y-h+((v-mn)/(mx-mn))*h;}
+ /* benchmarkzone */
+ if(bs.length){
+  var seg=[],cur=null;
+  pts.forEach(function(p,k){var bv=sg?p.r.benchSg:p.r.bench;var xx=X(ds[k]);
+   if(bv==null){if(cur){seg.push(cur);cur=null;}return;}
+   if(!cur||cur.b!==bv){if(cur){cur.x1=xx;seg.push(cur);}cur={b:bv,x0:(cur?cur.x1:x),x1:xx};}else cur.x1=xx;});
+  if(cur){cur.x1=x+w;seg.push(cur);}
+  if(seg.length)seg[0].x0=x;
+  seg.forEach(function(g2){
+   var by=Y(g2.b);
+   o.box(g2.x0,y-h,Math.max(0,g2.x1-g2.x0),Math.max(0,by-(y-h)),C.ORL);
+   o.line(g2.x0,by,g2.x1,by,1,C.OR);});
+ }
+ var lo=Math.floor(mn/2)*2;
+ for(var g=lo;g<=mx;g+=2){if(g<mn)continue;var gy=Y(g);
+  o.line(x,gy,x+w,gy,(g===0?1:0.5),(g===0?C.GREYL:C.LINE));
+  o.dtR((g>0?"+":"")+g,x-4,gy-2.5,6.5,o.F,C.GREY);}
+ /* trendlijn */
+ if(pts.length>=5){
+  var win=Math.max(6,Math.round(pts.length/5));
+  var prev=null;
+  for(var i=0;i<pts.length;i++){var a=Math.max(0,i-win+1);var sub=pts.slice(a,i+1);
+   var m=sub.reduce(function(t,p){return t+p.v;},0)/sub.length;
+   var px=X(ds[i]),py=Y(m);
+   if(prev)o.line(prev[0],prev[1],px,py,1.5,o.PL.rgb(0.06,0.46,0.43));
+   prev=[px,py];}}
+ pts.forEach(function(p,k){
+  var col=sg?((p.v>0.05)?C.GOOD:((p.v<-0.05)?C.BAD:C.GREY)):((p.v<0)?C.BAD:C.GREY);
+  o.page.drawCircle({x:X(ds[k]),y:Y(p.v),size:2.4,color:col});});
+ var y0f=new Date(x0).getFullYear(),y1f=new Date(x1).getFullYear();
+ for(var yr=y0f;yr<=y1f;yr++){var t2=new Date(yr+"-01-01T12:00:00").getTime();if(t2<x0||t2>x1)continue;
+  o.dt(String(yr),X(t2)+2,y-h-10,7,o.F,C.MUT);}
+ return y-h-22;}
+/* ================= rapportpagina's ================= */
+function scPdfPages(doc,PL,F,FB,LNGF,LTNL,pid,filt,st){
+ var D=scData(pid,filt);
+ var p=registryPlayer(pid)||{};
+ var teamName=(function(){var t=(state.teams||[]).find(function(t){return (t.playerIds||[]).indexOf(pid)>=0;});return t?t.name:"";})();
+ var o=scPdfCtx(doc,PL,F,FB,LNGF,LTNL,nameOf(pid)+(teamName?"  ·  "+teamName:""),st);
+ var C=o.C,W=o.W,M=o.M;
+ var CW=(W-2*M-26)/2, C2=M+CW+26;
+ var flab=scFiltLabel(filt)+(scFiltSub(filt)?(" · "+scFiltSub(filt)):"");
+ if(!D.list.length){
+  var y0=o.newPage("Scoringsoverzicht");
+  y0=o.sect("Scoringsoverzicht",M,y0,W-2*M);
+  o.dt("Geen rondes in deze selectie ("+flab+").",M,y0,10,F,C.MUT);
+  return;}
+ /* ---------- pagina 1 ---------- */
+ var y=o.newPage("Scoringsoverzicht");
+ var yTop=y;
+ y=o.sect("Scoringsoverzicht",M,y,CW);
+ var age=(p.birthYear?D.refY-(+p.birthYear):null);
+ var meta=[["Speler",nameOf(pid)],["Team",teamName||"–"],["Periode",flab],
+  ["Rondes",String(D.list.length)+" van "+D.all.length],["Leeftijd per 31/12",age!=null?String(age):"–"],
+  ["Benchmark",D.bench!=null?scFmt(D.bench):"–"]];
+ var my=y;
+ meta.forEach(function(r,i){if(i%2===0)o.box(M,my-3.5,CW,12,C.PANEL);
+  o.dt(r[0],M+5,my,7.5,F,C.MUT);o.dt(String(r[1]).slice(0,44),M+108,my,8,FB,C.INK);my-=12;});
+ y=my-10;
+ var S=D.sc,bch=D.bench;
+ var cols=[{t:"",x:0,w:150},{t:"Score",x:150,w:75,align:"right"},{t:"vs benchmark",x:225,w:CW-225,align:"right"}];
+ function bRow(lbl,v){var d=(v!=null&&bch!=null)?(v-bch):null;
+  return [lbl,{t:scFmt(v),b:1},{t:d==null?"–":scFmt(d),c:(d==null?C.MUT:(d<=0?C.GOOD:C.BAD))}];}
+ var rows=[bRow("Scoringsgemiddelde",S.avg),bRow("80% gemiddelde",S.avg80),bRow("Mediaan",S.med),
+  bRow("Gemiddelde beste 5",S.b5),bRow("Gemiddelde beste 7",S.b7),bRow("Gemiddelde beste 10",S.b10),
+  ["Benchmark of beter",{t:(S.benchN!=null?String(S.benchN):"–"),b:1},{t:(S.benchN!=null&&S.n?Math.round(S.benchN/S.n*100)+"%":"–")}],
+  ["Par of beter",{t:String(S.parN),b:1},{t:(S.n?Math.round(S.parN/S.n*100)+"%":"–")}]];
+ y=scPdfTable(o,M,y,CW,cols,rows);
+ o.dt("Benchmark "+(D.bench!=null?scFmt(D.bench):"–")+" — richtwaarde t.o.v. par voor dit jaar.",M,y-2,7.5,F,C.MUT);
+ /* rechterkolom: scoreverloop */
+ var ry=o.sect("Scoreverloop",C2,yTop,CW);
+ ry=scPdfScatter(o,C2+18,ry-6,CW-24,150,D.list,{});
+ o.dt("Elke stip is een ronde. Oranje vlak = benchmark of beter. Groene lijn = voortschrijdend gemiddelde.",C2,ry-2,7,F,C.MUT);
+ ry-=16;
+ if(D.disp.length){
+  ry=o.sect("Dispersion t.o.v. par",C2,ry,CW);
+  var mxn=0;D.disp.forEach(function(b){mxn=Math.max(mxn,b.n);});
+  ry=scPdfBars(o,C2+16,ry-6,CW-22,96,D.disp.map(function(b){
+   return {v:b.n,lab:(b.n||""),x1:b.lbl,c:(b.v===0?C.GREY:(b.v<0?C.BAD:C.BL))};}),{dec:0,bw:26});}
+ /* ---------- pagina 2 ---------- */
+ y=o.newPage("Scoringsoverzicht");
+ yTop=y;
+ var Pyr=D.perYear;
+ if(Pyr.length){
+  y=o.sect("Gemiddelde per jaar",M,y,CW);
+  y=scPdfLine(o,M+20,y-8,CW-26,112,Pyr.map(function(x2){return {v:x2.avg,x1:String(x2.y),x2:x2.n+" rondes"};}),{bench:D.bench,dec:1});
+  y-=10;}
+ if(D.sgYear.length){
+  y=o.sect("Strokes gained per jaar",M,y,CW);
+  y=scPdfBars(o,M+20,y-8,CW-26,100,D.sgYear.map(function(x2){
+   return {v:x2.avg,x1:String(x2.y),x2:x2.n+" rondes",c:(x2.avg>=0?C.GOOD:C.BAD)};}),{dec:2,bw:30});
+  y-=10;}
+ var wlRows=D.wl.filter(function(w){return w.n;});
+ if(wlRows.length){
+  y=o.sect("Slagen gewonnen vs verloren",M,y,CW);
+  var items=[];
+  wlRows.forEach(function(w){items.push({v:w.lost,lab:"+"+w.lost.toFixed(1),x1:String(w.y),c:C.GREYL});
+   items.push({v:-w.won,lab:"-"+w.won.toFixed(1),x1:"",c:C.OR});});
+  y=scPdfBars(o,M+20,y-8,CW-26,100,items,{dec:1,bw:16});
+  o.dt("Per jaar: verloren slagen boven de lijn, gewonnen slagen eronder — gemiddeld per ronde.",M,y-2,7,F,C.MUT);}
+ /* rechterkolom */
+ var ry2=yTop;
+ if(D.parY.length){
+  ry2=o.sect("Par of beter / benchmark of beter",C2,ry2,CW);
+  ry2=scPdfBars(o,C2+20,ry2-8,CW-26,100,D.parY.map(function(x2){
+   var pct=x2.n?Math.round(x2.par/x2.n*100):0;
+   return {v:pct,lab:pct+"%",x1:String(x2.y),x2:x2.par+" van "+x2.n,c:C.OR};}),{dec:0,bw:30});
+  var withB=D.parY.filter(function(x2){return x2.bench!=null;});
+  if(withB.length){
+   ry2=scPdfBars(o,C2+20,ry2-10,CW-26,100,withB.map(function(x2){
+    var pct=x2.n?Math.round(x2.bench/x2.n*100):0;
+    return {v:pct,lab:pct+"%",x1:String(x2.y),x2:x2.bench+" van "+x2.n,c:C.GOOD};}),{dec:0,bw:30});
+   o.dt("Boven: par of beter (oranje). Onder: benchmark of beter (groen).",C2,ry2-2,7,F,C.MUT);ry2-=10;}}
+ if(D.diff.length){
+  ry2=o.sect("Score differentiatie",C2,ry2-18,CW);
+  var dcols=[{t:"",x:0,w:170},{t:"Rondes",x:170,w:60,align:"right"},{t:"Score",x:230,w:60,align:"right"},{t:"vs bench",x:290,w:CW-290,align:"right"}];
+  var drows=[];
+  D.diff.forEach(function(g){
+   var d=(g.avg!=null&&bch!=null)?(g.avg-bch):null;
+   drows.push([{t:g.name,b:1},{t:String(g.n),b:1},{t:scFmt(g.avg),b:1},{t:d==null?"–":scFmt(d),c:(d==null?C.MUT:(d<=0?C.GOOD:C.BAD))}]);
+   g.subs.forEach(function(x2){var d2=(x2.avg!=null&&bch!=null)?(x2.avg-bch):null;
+    var r2=[x2.name,String(x2.n),scFmt(x2.avg),{t:d2==null?"–":scFmt(d2),c:(d2==null?C.MUT:(d2<=0?C.GOOD:C.BAD))}];r2._sub=1;drows.push(r2);});});
+  ry2=scPdfTable(o,C2,ry2,CW,dcols,drows,{rh:12});}
+ /* ---------- pagina 3 ---------- */
+ y=o.newPage("Scoringsoverzicht");
+ yTop=y;
+ var ov=D.opb["OVERALL"];
+ if(ov&&ov.tot){
+  y=o.sect("Score opbouw",M,y,CW);
+  var lbls=[["ea","Eagles of beter",PL.rgb(0.95,0.76,0)],["bi","Birdies",C.BAD],["pa","Parren",C.GREY],
+   ["bo","Bogeys",PL.rgb(0.56,0.77,0.92)],["db","Double bogeys",PL.rgb(0.12,0.31,0.47)],["wo","Triple of erger",PL.rgb(0.08,0.09,0.11)]];
+  var by2=y;
+  lbls.forEach(function(l){
+   var v=ov[l[0]];var pc=ov.tot?(v/ov.tot*100):0;
+   o.page.drawCircle({x:M+4,y:by2+3,size:3.4,color:l[2]});
+   o.dt(l[1],M+14,by2,8.5,F,C.INK);
+   o.dtR(String(v),M+CW-70,by2,8.5,FB,C.INK);
+   o.dtR(pc.toFixed(1)+"%",M+CW-24,by2,8,F,C.MUT);
+   o.box(M+14,by2-8,CW-38,3.5,C.PANEL);
+   o.box(M+14,by2-8,(CW-38)*pc/100,3.5,l[2]);
+   by2-=20;});
+  o.dtR(ov.tot+" holes",M+CW,y+20,7.5,F,C.MUT);
+  y=by2-6;}
+ var rN=D.rnds.filter(function(r){return r.n;});
+ if(rN.length||D.per6[0]!=null){
+  y=o.sect("Scoreverloop binnen het toernooi",M,y,CW);
+  var vcols=[{t:"",x:0,w:150},{t:"Rondes",x:150,w:70,align:"right"},{t:"t.o.v. par",x:220,w:CW-220,align:"right"}];
+  var vrows=[];
+  rN.forEach(function(r){vrows.push(["R"+r.rnd,String(r.n),{t:scFmt(r.avg),b:1,c:(r.avg<=0?C.GOOD:C.BAD)}]);});
+  if(D.per6[0]!=null){
+   [["Hole 1-6",D.per6[0]],["Hole 7-12",D.per6[1]],["Hole 13-18",D.per6[2]]].forEach(function(x2,i){
+    var r2=[x2[0],"",{t:scFmt(x2[1]),b:1,c:(x2[1]<=0?C.GOOD:C.BAD)}];if(i===0)r2._sep=1;vrows.push(r2);});}
+  y=scPdfTable(o,M,y,CW,vcols,vrows,{rh:13});}
+ var ry3=yTop;
+ if(D.finishes.n){
+  ry3=o.sect("Finishes",C2,ry3,CW);
+  var fcols=[{t:"",x:0,w:170},{t:"Aantal",x:170,w:70,align:"right"},{t:"Aandeel",x:240,w:CW-240,align:"right"}];
+  var frows=[["Wins",{t:String(D.finishes.wins),b:1},Math.round(D.finishes.wins/D.finishes.n*100)+"%"],
+   ["Top-5",{t:String(D.finishes.top5),b:1},Math.round(D.finishes.top5/D.finishes.n*100)+"%"],
+   ["Top-10",{t:String(D.finishes.top10),b:1},Math.round(D.finishes.top10/D.finishes.n*100)+"%"],
+   ["Top-20",{t:String(D.finishes.top20),b:1},Math.round(D.finishes.top20/D.finishes.n*100)+"%"],
+   ["Missed cut",{t:String(D.finishes.mc),b:1},Math.round(D.finishes.mc/D.finishes.n*100)+"%"]];
+  o.dtR(D.finishes.n+" rondes met finish",C2+CW,ry3+20,7.5,F,C.MUT);
+  ry3=scPdfTable(o,C2,ry3,CW,fcols,frows,{rh:13});
+  ry3-=8;}
+ if(D.lowest.length){
+  ry3=o.sect("Laagste rondes",C2,ry3,CW);
+  var lcols=[{t:"Datum",x:0,w:70},{t:"Wedstrijd",x:70,w:150},{t:"Score",x:220,w:55,align:"right"},{t:"t.o.v. par",x:275,w:CW-275,align:"right"}];
+  var lrows=D.lowest.map(function(r){
+   return [fmtDate(r.date),String(r.ev||r.baan||"–").slice(0,30),(r.gross!=null?String(r.gross):"–"),
+    {t:scFmt(r.tp,0),b:1,c:(r.tp<=0?C.GOOD:C.INK)}];});
+  ry3=scPdfTable(o,C2,ry3,CW,lcols,lrows,{rh:12});}
+}
+function scPdf(pid,filt){
+ var D=scData(pid,filt);
+ if(!D.all.length){toast("Geen rondes");return;}
+ toast("Rapport maken…");
  loadPdfLib().then(function(PL){
-  var C={or:PL.rgb(0.93,0.49,0.19),orL:PL.rgb(0.98,0.90,0.82),red:PL.rgb(0.75,0,0),grn:PL.rgb(0.10,0.48,0.10),blu:PL.rgb(0.18,0.37,0.54),gry:PL.rgb(0.45,0.45,0.45),lg:PL.rgb(0.93,0.93,0.93),bk:PL.rgb(0.13,0.13,0.13),wt:PL.rgb(1,1,1),teal:PL.rgb(0.06,0.46,0.43)};
-  function nf(v,d){if(v==null||isNaN(v))return "–";return ((+v)>0?"+":"")+(+v).toFixed(d==null?1:d);}
-  PL.PDFDocument.create().then(function(doc){
-   var pg=doc.addPage([842,595]);
-   Promise.all([doc.embedFont(PL.StandardFonts.Helvetica),doc.embedFont(PL.StandardFonts.HelveticaBold),doc.embedFont(PL.StandardFonts.HelveticaOblique)]).then(function(fs){
-    var F=fs[0],FB=fs[1],FI=fs[2];
-    function T(t,x,y,sz,f,c){pg.drawText(String(t),{x:x,y:y,size:sz,font:f||F,color:c||C.bk});}
-    function TR(t,xr,y,sz,f,c){var w=(f||F).widthOfTextAtSize(String(t),sz);T(t,xr-w,y,sz,f,c);}
-    function TC(t,cx,y,sz,f,c){var w=(f||F).widthOfTextAtSize(String(t),sz);T(t,cx-w/2,y,sz,f,c);}
-    function R(x,y,w,h,c){pg.drawRectangle({x:x,y:y,width:w,height:h,color:c});}
-    function LN(x1,y1,x2,y2,th,c){pg.drawLine({start:{x:x1,y:y1},end:{x:x2,y:y2},thickness:th,color:c});}
-    function vCol(v){return v==null?C.gry:(v<=0?C.grn:C.bk);}
-    R(16,548,810,32,C.or);T("SCORINGSOVERZICHT",26,557,20,FB,C.wt);
-    TR(nameOf(pid)+" · "+_fl+(scFiltSub(filt)?" · "+scFiltSub(filt):""),816,557,12,FB,C.wt);
-    /* linkerkolom: persoonsgegevens + scoring */
-    var gx=16,gw=230,gy=536;
-    R(gx,gy-12,gw,12,C.or);T("PERSOONSGEGEVENS",gx+4,gy-9,7.5,FB,C.wt);
-    var age=(p.birthYear?D.refY-(+p.birthYear):null);
-    var rows=[["Naam",nameOf(pid)],["Geboortejaar",p.birthYear||"–"],["Periode",_fl],["Leeftijd per 31/12",age!=null?age:"–"],["Benchmark",D.bench!=null?nf(D.bench):"–"]];
-    var yy=gy-24;rows.forEach(function(r0,i){if(i%2===0)R(gx,yy-3,gw,11,C.lg);T(r0[0],gx+4,yy,6.5,F,C.gry);T(String(r0[1]).slice(0,26),gx+92,yy,7,FB);yy-=11;});
-    yy-=8;R(gx,yy-12,gw,12,C.or);T("SCORING",gx+4,yy-9,7.5,FB,C.wt);
-    T("RONDES: "+D.sc.n,gx+150,yy-9,6.5,FB,C.wt);yy-=24;
-    T("",gx,yy,6,F);TR("SCORE",gx+gw-58,yy,6,FB,C.gry);TR("BENCHMARK",gx+gw-4,yy,6,FB,C.gry);yy-=10;
-    var S=D.sc;var bch=D.bench;
-    var srows=[["Scoringsgemiddelde",S.avg],["80% gemiddelde",S.avg80],["Mediaan",S.med],["Gemiddelde beste 5",S.b5],["Gemiddelde beste 7",S.b7],["Gemiddelde beste 10",S.b10]];
-    srows.forEach(function(r0,i){if(i%2===0)R(gx,yy-3,gw,11,C.lg);T(r0[0],gx+4,yy,6.5,F);TR(nf(r0[1]),gx+gw-58,yy,7,FB,vCol(r0[1]));TR((r0[1]!=null&&bch!=null)?nf(r0[1]-bch):"–",gx+gw-4,yy,7,FB,(r0[1]!=null&&bch!=null&&r0[1]-bch<=0)?C.grn:C.red);yy-=11;});
-    [["Benchmark of beter",S.benchN,S.benchN!=null&&S.n?Math.round(S.benchN/S.n*100)+"%":"–"],["Par of beter",S.parN,S.n?Math.round(S.parN/S.n*100)+"%":"–"]].forEach(function(r0,i){if(i%2===0)R(gx,yy-3,gw,11,C.lg);T(r0[0],gx+4,yy,6.5,F);TR(r0[1]==null?"–":r0[1],gx+gw-58,yy,7,FB);TR(r0[2],gx+gw-4,yy,7,FB,C.gry);yy-=11;});
-    /* differentiatie */
-    yy-=8;R(gx,yy-12,gw,12,C.or);T("SCORE DIFFERENTIATIE",gx+4,yy-9,7.5,FB,C.wt);yy-=22;
-    TR("RONDES",gx+gw-96,yy,5.6,FB,C.gry);TR("SCORE",gx+gw-52,yy,5.6,FB,C.gry);TR("BENCHM.",gx+gw-4,yy,5.6,FB,C.gry);yy-=9;
-    D.groups.forEach(function(g,i){if(i%2===0)R(gx,yy-3,gw,10.5,C.lg);T(g.grp,gx+4,yy,6,F);TR(g.n||"–",gx+gw-96,yy,6.5,FB);TR(nf(g.avg),gx+gw-52,yy,6.5,FB,vCol(g.avg));TR((g.avg!=null&&bch!=null)?nf(g.avg-bch):"–",gx+gw-4,yy,6.5,FB,(g.avg!=null&&bch!=null&&g.avg-bch<=0)?C.grn:C.red);yy-=10.5;});
-    /* middenkolom: score opbouw + per jaar */
-    var mx=262,mw=270,my=536;
-    R(mx,my-12,mw,12,C.or);T("SCORE OPBOUW",mx+4,my-9,7.5,FB,C.wt);
-    var ov=D.opb["OVERALL"];var lbls=[["ea","Eagles"],["bi","Birdies"],["pa","Parren"],["bo","Bogeys"],["db","D. bogeys"],["wo","Worse"]];
-    var oy=my-26;
-    if(ov&&ov.tot){lbls.forEach(function(l,i){var v=ov[l[0]];var pct=v/ov.tot;
-     T(l[1],mx+4,oy,6.5,F);TR(String(v),mx+92,oy,6.5,FB);
-     R(mx+98,oy-1,120,7,C.lg);R(mx+98,oy-1,Math.max(1,120*pct),7,C.or);
-     TR((pct*100).toFixed(1)+"%",mx+mw-4,oy,6.5,FB,C.gry);oy-=12;});}
-    else{T("Geen hole-scores beschikbaar",mx+4,oy,6.5,FI,C.gry);oy-=12;}
-    oy-=10;R(mx,oy-12,mw,12,C.or);T("GEMIDDELDE SCORE PER JAAR",mx+4,oy-9,7.5,FB,C.wt);oy-=20;
-    var ch={x:mx+26,y:oy-120,w:mw-34,h:110};
-    var pys=D.perYear;var vmax=Math.max.apply(null,pys.map(function(x){return x.avg;}).concat([1])),vmin=Math.min.apply(null,pys.map(function(x){return x.avg;}).concat([0]));
-    vmax=Math.ceil(vmax+1);vmin=Math.floor(vmin);
-    function chY(v){return ch.y+(v-vmin)/(vmax-vmin)*ch.h;}
-    for(var gg=vmin;gg<=vmax;gg+=Math.max(1,Math.ceil((vmax-vmin)/5))){LN(ch.x,chY(gg),ch.x+ch.w,chY(gg),gg===0?1:0.5,gg===0?C.gry:C.lg);TR(nf(gg,0),ch.x-3,chY(gg)-2,5.5,F,C.gry);}
-    var bw=Math.min(34,ch.w/Math.max(1,pys.length)-8);
-    pys.forEach(function(x,i){var cx0=ch.x+8+i*(ch.w/Math.max(1,pys.length));var h0=chY(x.avg)-chY(0);
-     R(cx0,h0>=0?chY(0):chY(x.avg),bw,Math.max(1,Math.abs(h0)),x.avg<=0?C.grn:C.or);
-     TC(nf(x.avg),cx0+bw/2,chY(x.avg)+(x.avg>=0?4:-9),6,FB);
-     TC(String(x.y),cx0+bw/2,ch.y-10,6,F,C.gry);TC("("+x.n+")",cx0+bw/2,ch.y-18,5,F,C.gry);});
-    /* won/lost */
-    var wy=oy-160;
-    R(mx,wy-12,mw,12,C.or);T("SLAGEN GEWONNEN VS VERLOREN P/RONDE",mx+4,wy-9,7.5,FB,C.wt);wy-=22;
-    TR("GEWONNEN",mx+mw-104,wy,5.6,FB,C.gry);TR("VERLOREN",mx+mw-56,wy,5.6,FB,C.gry);TR("NETTO",mx+mw-4,wy,5.6,FB,C.gry);wy-=9;
-    D.wl.filter(function(w){return w.n;}).slice(-8).forEach(function(w,i){if(i%2===0)R(mx,wy-3,mw,10.5,C.lg);T(String(w.y),mx+4,wy,6.5,F);TR(w.won.toFixed(1),mx+mw-104,wy,6.5,FB,C.grn);TR(w.lost.toFixed(1),mx+mw-56,wy,6.5,FB,C.red);TR(nf(w.won-w.lost),mx+mw-4,wy,6.5,FB);wy-=10.5;});
-    /* rechterkolom: verloop & finishes + laagste rondes */
-    var rx=548,rw=278,ry=536;
-    R(rx,ry-12,rw,12,C.or);T("SCOREVERLOOP & FINISHES",rx+4,ry-9,7.5,FB,C.wt);
-    var vy=ry-26;
-    T("Gem. score per ronde",rx+4,vy,6.5,FB,C.gry);vy-=13;
-    [1,2,3,4].forEach(function(k,i){var r0=D.rnds[i];var cx0=rx+30+i*62;TC("R"+k,cx0,vy,6.5,FB);TC(r0.n?nf(r0.avg):"–",cx0,vy-11,8,FB,vCol(r0.n?r0.avg:null));TC(r0.n?("("+r0.n+")"):"",cx0,vy-20,5,F,C.gry);});
-    vy-=32;T("Gem. score per 6 holes",rx+4,vy,6.5,FB,C.gry);vy-=13;
-    [["HOLE 1-6",D.per6[0]],["HOLE 7-12",D.per6[1]],["HOLE 13-18",D.per6[2]]].forEach(function(x,i){var cx0=rx+46+i*84;TC(x[0],cx0,vy,6.5,FB);TC(x[1]!=null?nf(x[1]):"–",cx0,vy-11,8,FB,vCol(x[1]));});
-    vy-=26;T("Finishes",rx+4,vy,6.5,FB,C.gry);vy-=13;
-    [["WINS",D.finishes.wins],["TOP-5",D.finishes.top5],["TOP-10",D.finishes.top10],["TOP-20",D.finishes.top20],["MC",D.finishes.mc]].forEach(function(x,i){var cx0=rx+28+i*56;TC(x[0],cx0,vy,6,FB);R(cx0-14,vy-16,28,12,i===0?C.or:C.lg);TC(String(x[1]),cx0,vy-13,7.5,FB,i===0?C.wt:C.bk);});
-    vy-=34;R(rx,vy-12,rw,12,C.or);T("LAAGSTE RONDES",rx+4,vy-9,7.5,FB,C.wt);vy-=22;
-    TR("SCORE",rx+rw-42,vy,5.6,FB,C.gry);TR("TP",rx+rw-4,vy,5.6,FB,C.gry);vy-=9;
-    D.lowest.slice(0,10).forEach(function(r0,i){if(i%2===0)R(rx,vy-3,rw,10.5,C.lg);T(fmtDate(r0.date),rx+4,vy,6,F);T(String(r0.ev||r0.baan||"–").slice(0,26),rx+62,vy,6,F);TR(r0.gross!=null?r0.gross:"–",rx+rw-42,vy,6.5,FB);TR(nf(r0.tp,0),rx+rw-4,vy,6.5,FB,vCol(r0.tp));vy-=10.5;});
-    /* scatter onderaan links */
-    var sx0=16,sy0=30,sw=516,shh=100;
-    R(sx0,sy0+shh+4,sw,12,C.or);T("SCOREVERLOOP OVER TIJD",sx0+4,sy0+shh+7,7.5,FB,C.wt);
-    var L=D.list;var ds=L.map(function(r){return new Date(r.date+"T12:00:00").getTime();});
-    var tx0=Math.min.apply(null,ds),tx1=Math.max.apply(null,ds);if(tx1<=tx0)tx1=tx0+864e5;
-    var tps=L.map(function(r){return r.tp;});var tyMin=Math.floor(Math.min.apply(null,tps.concat([0]))),tyMax=Math.ceil(Math.max.apply(null,tps)+1);
-    function SX(t){return sx0+28+(t-tx0)/(tx1-tx0)*(sw-36);}
-    function SY(v){return sy0+ (tyMax-v)/(tyMax-tyMin)*shh*-1+shh;}
-    for(var g2=tyMin;g2<=tyMax;g2+=Math.max(1,Math.ceil((tyMax-tyMin)/5))){var yg=SY(g2);LN(sx0+28,yg,sx0+sw-8,yg,g2===0?0.9:0.4,g2===0?C.gry:C.lg);TR(nf(g2,0),sx0+25,yg-2,5.5,F,C.gry);}
-    if(bch!=null){var yb=SY(bch);LN(sx0+28,yb,sx0+sw-8,yb,0.9,C.or);T("benchmark "+nf(bch,1),sx0+32,yb+2,5,FI,C.or);}
-    L.forEach(function(r0,i){R(SX(ds[i])-1.4,SY(r0.tp)-1.4,2.8,2.8,r0.tp<=0?C.grn:C.or);});
-    var yr0=new Date(tx0).getFullYear(),yr1=new Date(tx1).getFullYear();
-    for(var yrr=yr0;yrr<=yr1;yrr++){var tt2=new Date(yrr+"-01-01T12:00:00").getTime();if(tt2<tx0||tt2>tx1)continue;T(String(yrr),SX(tt2)+1,sy0-8,5.5,F,C.gry);}
-    T("© TOM STAM",770,10,7,FB,C.gry);
-    doc.save().then(function(bytes){
-     downloadBlob(new Blob([bytes],{type:"application/pdf"}),"Scoringsoverzicht "+nameOf(pid)+(year?" "+year:"")+".pdf");
-    });
-   });
-  });
+  return PL.PDFDocument.create().then(function(doc){
+   return Promise.all([doc.embedFont(PL.StandardFonts.Helvetica),doc.embedFont(PL.StandardFonts.HelveticaBold),
+    doc.embedPng(b64ToBytes(LOGO_NGF)),doc.embedPng(b64ToBytes(LOGO_TNL))]).then(function(a){
+    var st={no:0};
+    scPdfPages(doc,PL,a[0],a[1],a[2],a[3],pid,filt,st);
+    return doc.save();}).then(function(bytes){
+     downloadBlob(new Blob([bytes],{type:"application/pdf"}),"Scoringsoverzicht "+nameOf(pid)+".pdf");});});
  }).catch(function(e){toast("PDF maken mislukt");});}
 /* ================= Trainen: oefeningen-database ================= */
 /* ===== Trainen 2.0 — taxonomie, helpers & migratie ===== */
@@ -4286,6 +4597,14 @@ loadPdfLib().then(function(PL){
      });
     }
 
+    /* ---------- scoringsoverzicht ---------- */
+    if(e.scoring&&e.scoring.on){
+     try{
+      var _sf={mode:e.scoring.mode||"all",year:e.scoring.year||"",rt:e.scoring.rt||"",main:e.scoring.main||"",types:[],evs:[],kl:"",from:"",to:""};
+      scPdfPages(doc,PL,F,FB,LNGF,LTNL,e.playerId,_sf,{no:pageNo});
+      pageNo+=3;
+     }catch(_e){}
+    }
     /* ---------- bijlagen ---------- */
     var atts=(e.attachments||[]);var chain=Promise.resolve();
     atts.forEach(function(at){chain=chain.then(function(){return evalAttGet(at.id).then(function(bytes){if(!bytes)return;var u8=(bytes instanceof Uint8Array)?bytes:new Uint8Array(bytes);
@@ -4299,7 +4618,7 @@ loadPdfLib().then(function(PL){
  });
 }).catch(function(err){toast("PDF mislukt: "+(err&&err.message||"onbekend"));});}
 function openEvalForm(pid,evalId){var ev=evalId?(state.evaluations||[]).find(function(e){return e.id===evalId;}):null;var isEdit=!!ev;var today=new Date().toISOString().slice(0,10);var groups=evalGroups(pid);var prev={};if(ev)(ev.snapshot||[]).forEach(function(r){prev[r.goalId]=r;});
-var st={win:ev?(ev.trainWin||"season"):"season",date:ev?ev.date:today,baan:{},atts:(ev&&ev.attachments?ev.attachments.slice():[]),newAtts:{},gedrag:(ev&&ev.gedrag)?JSON.parse(JSON.stringify(ev.gedrag)):{},gedragOn:!!(ev&&ev.gedragOn)};
+var st={win:ev?(ev.trainWin||"season"):"season",date:ev?ev.date:today,baan:{},atts:(ev&&ev.attachments?ev.attachments.slice():[]),newAtts:{},gedrag:(ev&&ev.gedrag)?JSON.parse(JSON.stringify(ev.gedrag)):{},gedragOn:!!(ev&&ev.gedragOn),scoring:(ev&&ev.scoring)?JSON.parse(JSON.stringify(ev.scoring)):{on:false,mode:"all"}};
 groups.forEach(function(gr){gr.goals.forEach(function(g){var dec=goalDec(g);var bv=(ev&&prev[g.id])?prev[g.id].currentBaan:gnum(g.current);st.baan[g.id]=(bv==null)?"":(+bv).toFixed(dec);});});
 var sh=$("#sheet");var WINS=[["all","Alle"],["10","Laatste 10"],["5","Laatste 5"],["season","Seizoen"]];
 function cap(){var d=$("#evDate");if(d)st.date=d.value;groups.forEach(function(gr){gr.goals.forEach(function(g){var e=$("#evgb_"+g.id);if(e)st.baan[g.id]=e.value;});});rubCats().forEach(function(c){var ta=$("#rubt_"+c.key);if(ta){st.gedrag[c.key]=st.gedrag[c.key]||{};st.gedrag[c.key].toelichting=ta.value;}});}
@@ -4324,10 +4643,28 @@ H+='<div class="card"><label class="evdlbl">Bijlagen (PDF)</label><div id="evAtt
     H+='</div><div class="rubsplit-r"><label class="evdlbl">Toelichting</label><textarea class="in" rows="5" id="rubt_'+c.key+'" style="background:#fff">'+esc(st2.toelichting||"")+'</textarea></div></div></div>';});
   }
   H+='</div>';})();
+(function(){var sc=st.scoring||{};
+ var yrs=(function(){var m={};scNorm(pid).forEach(function(r){m[r.y]=1;});return Object.keys(m).map(Number).sort(function(a,b){return b-a;});})();
+ H+='<div class="card"><label class="rubtoggle"><input type="checkbox" id="evScOn"'+(sc.on?" checked":"")+'><span><b>Scoring meenemen</b> — voeg het scoringsoverzicht van deze speler toe aan het PDF-rapport.</span></label>';
+ if(sc.on){
+  H+='<div class="row" style="gap:8px;flex-wrap:wrap;margin-top:10px">'
+   +'<select class="in" id="evScMode" style="flex:1;min-width:150px">'
+   +[["all","Alle rondes"],["m3","Laatste 3 maanden"],["m6","Laatste 6 maanden"],["m12","Laatste jaar"],["m60","Laatste 5 jaar"]].map(function(o){return '<option value="'+o[0]+'"'+((sc.mode||"all")===o[0]?" selected":"")+'>'+o[1]+'</option>';}).join("")
+   +(yrs.length?('<optgroup label="Jaar">'+yrs.map(function(y){return '<option value="y'+y+'"'+((sc.mode==="year"&&+sc.year===y)?" selected":"")+'>'+y+'</option>';}).join("")+'</optgroup>'):'')
+   +'</select>'
+   +'<select class="in" id="evScRt" style="flex:1;min-width:150px"><option value="">Oefen + wedstrijd</option><option value="wedstrijd"'+(sc.rt==="wedstrijd"?" selected":"")+'>Wedstrijdrondes</option><option value="oefen"'+(sc.rt==="oefen"?" selected":"")+'>Oefenrondes</option></select>'
+   +'<select class="in" id="evScMain" style="flex:1;min-width:150px"><option value="">Alle hoofdcategorieën</option>'+tourCatTree().map(function(g){return '<option value="'+esc(g.n)+'"'+(sc.main===g.n?" selected":"")+'>'+esc(g.n)+'</option>';}).join("")+'</select></div>'
+   +'<div class="sx" style="margin-top:7px">'+(function(){try{var D=scData(pid,{mode:sc.mode||"all",year:sc.year||"",rt:sc.rt||"",main:sc.main||""});return D.list.length+" van "+D.all.length+" rondes in het rapport";}catch(e){return "";}})()+'</div>';
+ }
+ H+='</div>';})();
 H+='<button class="btn block blue" id="evSave" style="margin-top:4px">'+(isEdit?"Wijzigingen opslaan":"Evaluatie opslaan")+'</button>';
 sh.innerHTML=H;
 $("#evWin").querySelectorAll("button").forEach(function(b){b.onclick=function(){cap();st.win=b.dataset.w;draw();};});
 var _ro=$("#rubOn");if(_ro)_ro.onchange=function(){cap();st.gedragOn=_ro.checked;draw();};
+var _so=$("#evScOn");if(_so)_so.onchange=function(){cap();st.scoring=st.scoring||{};st.scoring.on=_so.checked;draw();};
+var _sm=$("#evScMode");if(_sm)_sm.onchange=function(){cap();st.scoring=st.scoring||{};var v=_sm.value;if(v.charAt(0)==="y"&&!isNaN(+v.slice(1))){st.scoring.mode="year";st.scoring.year=+v.slice(1);}else{st.scoring.mode=v;st.scoring.year="";}draw();};
+var _sr=$("#evScRt");if(_sr)_sr.onchange=function(){cap();st.scoring=st.scoring||{};st.scoring.rt=_sr.value;draw();};
+var _sc2=$("#evScMain");if(_sc2)_sc2.onchange=function(){cap();st.scoring=st.scoring||{};st.scoring.main=_sc2.value;draw();};
 sh.querySelectorAll("[data-rubseg]").forEach(function(seg){var parts=seg.dataset.rubseg.split("|");var ck=parts[0],ix=+parts[1];seg.querySelectorAll("button").forEach(function(b){b.onclick=function(){cap();st.gedrag[ck]=st.gedrag[ck]||{};st.gedrag[ck].items=st.gedrag[ck].items||{};var L=+b.dataset.l;if(st.gedrag[ck].items[ix]===L)delete st.gedrag[ck].items[ix];else st.gedrag[ck].items[ix]=L;draw();};});});
 var _af=$("#evAttFile"),_ab=$("#evAttBtn");if(_ab)_ab.onclick=function(){_af.click();};
 if(_af)_af.onchange=function(){var f=_af.files&&_af.files[0];if(!f)return;if(f.type!=="application/pdf"){toast("Alleen PDF");return;}var rd=new FileReader();rd.onload=function(){cap();var aid=uid();st.newAtts[aid]=new Uint8Array(rd.result);st.atts.push({id:aid,name:f.name,size:f.size});draw();};rd.readAsArrayBuffer(f);};
@@ -4337,7 +4674,7 @@ snapshot.forEach(function(r){var g=goalById(r.goalId);if(g){var cur=(r.currentBa
 var duiding={};(state.evalDomains||[]).forEach(function(d){duiding[d.key]={goed:($("#edgoed_"+d.key)||{}).value||"",ontwikkel:($("#edontw_"+d.key)||{}).value||""};});
 var summary=($("#evSummary")||{}).value||"";var focus=($("#evFocus")||{}).value||"";
 Object.keys(st.newAtts).forEach(function(aid){evalAttPut(aid,st.newAtts[aid]);});
-if(isEdit){ev.date=st.date;ev.trainWin=st.win;ev.snapshot=snapshot;ev.duiding=duiding;ev.summary=summary;ev.focus=focus;ev.attachments=st.atts;ev.gedrag=st.gedrag;ev.gedragOn=st.gedragOn;delete ev.general;}else{state.evaluations.push({id:uid(),playerId:pid,date:st.date,trainWin:st.win,snapshot:snapshot,duiding:duiding,summary:summary,focus:focus,attachments:st.atts,gedrag:st.gedrag,gedragOn:st.gedragOn,createdAt:Date.now()});}
+if(isEdit){ev.date=st.date;ev.trainWin=st.win;ev.snapshot=snapshot;ev.duiding=duiding;ev.summary=summary;ev.focus=focus;ev.attachments=st.atts;ev.gedrag=st.gedrag;ev.gedragOn=st.gedragOn;ev.scoring=st.scoring||null;delete ev.general;}else{state.evaluations.push({id:uid(),playerId:pid,date:st.date,trainWin:st.win,snapshot:snapshot,duiding:duiding,summary:summary,focus:focus,attachments:st.atts,gedrag:st.gedrag,gedragOn:st.gedragOn,scoring:st.scoring||null,createdAt:Date.now()});}
 save();closeSheet();renderGoals();toast("Evaluatie opgeslagen \u2713");};}
 draw();openSheet();}
 function evalDetail(id){var e=(state.evaluations||[]).find(function(x){return x.id===id;});if(!e)return;var sh=$("#sheet");
