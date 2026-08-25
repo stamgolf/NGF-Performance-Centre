@@ -640,6 +640,17 @@ input.in.tesg{width:96px;max-width:96px;flex:0 0 96px;text-align:right;font-vari
 .wlstat span{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
 .wlstat b{font-size:15px;font-variant-numeric:tabular-nums}
 .scchart .wlrow{font-size:10px;fill:#5a6673;font-weight:700}
+.wico{width:17px;height:17px;flex:0 0 auto}
+.wlic{display:inline-flex;align-items:center;color:var(--muted)}
+.wlic svg{width:18px;height:18px}
+.wdrow{display:flex;align-items:center;gap:9px}
+.wdrow .wico{color:var(--muted)}
+.wdnote{display:flex;gap:9px;align-items:flex-start;padding:6px 0;border-bottom:1px solid rgba(4,18,33,.07)}
+.wdnote .wico{color:var(--muted);margin-top:1px}
+.wdnv{display:block;font-size:12.5px;line-height:1.5;color:var(--ink)}
+.wdlist{display:flex;flex-direction:column;gap:4px;margin:2px 0 10px}
+.wdlist span{font-size:13px;font-weight:600;color:var(--ink);display:flex;align-items:center;gap:7px}
+.wdlist i{width:7px;height:7px;border-radius:50%;background:#c2383a;flex:0 0 auto}
 .witems{display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:12px}
 .witem{display:flex;align-items:center;gap:5px}
 .wilbl{font-size:12px;font-weight:600}
@@ -1004,7 +1015,7 @@ function holeOrder(co,start){const n=co.holes.length;const s=(start===10&&n>=10)
 function cSground(t,sess,inp,lv){let sg=0,strokes=0,n=0,toPar=0;const ph=[];(inp.holes||[]).forEach(h=>{if(h.score===""||h.score==null)return;const sc=+h.score;const yd=(+h.len||0)*1.09361;const e=expTee(yd);const s=e-sc;sg+=s;strokes+=sc;toPar+=(sc-(+h.par||0));n++;ph.push({hole:h.hole,par:h.par,len:+h.len||0,score:sc,sg:s});});
 const hasLen=(inp.holes||[]).some(h=>+h.len>0);
 if(sess&&sess.playMode==="stroke")return {metric:toPar,sg:-toPar,headline:(toPar>0?"+":"")+toPar,completion:[n,(inp.holes||[]).length||1],stats:[["Score",(toPar>0?"+":"")+toPar],["Holes",String(n)],["Slagen",String(strokes)]],detail:{kind:"sground",play:"stroke",sgTotal:hasLen?sg:0,strokes:hasLen?strokes:0,holes:n,toPar:toPar,totalStrokes:strokes,courseName:inp.courseName,tee:inp.teeName,perHole:ph},rankDir:"low"};
-return {metric:sg,sg:sg,headline:(sg>0?"+":"")+sg.toFixed(1),completion:[n,(inp.holes||[]).length||1],stats:[["SG",(sg>0?"+":"")+sg.toFixed(1),"sg"],["Holes",String(n)],["Slagen",String(strokes)]],detail:{kind:"sground",sgTotal:sg,strokes:strokes,holes:n,toPar:toPar,totalStrokes:strokes,courseName:inp.courseName,tee:inp.teeName,perHole:ph},rankDir:"high"};}
+return {metric:sg,sg:sg,headline:(sg>0?"+":"")+sg.toFixed(1),completion:[n,(inp.holes||[]).length||1],stats:[["SG",(sg>0?"+":"")+sg.toFixed(1),"sg"],["Holes",String(n)],["Slagen",String(strokes)],["t.o.v. par",(toPar>0?"+":"")+toPar]],detail:{kind:"sground",sgTotal:sg,strokes:strokes,holes:n,toPar:toPar,totalStrokes:strokes,courseName:inp.courseName,tee:inp.teeName,perHole:ph},rankDir:"high"};}
 function cDriveBaan(t,sess,inp,lv){let sg=0,n=0;const shots=[];
 (inp.holes||[]).forEach(h=>{const holeYd=M2YD(+h.len||0);if(!(holeYd>0))return;const teeE=E("t",holeYd,0);
 (h.balls||[]).forEach(b=>{if(b.rest===""||b.rest==null||!b.lie)return;const restYd=M2YD(+b.rest||0);
@@ -1035,7 +1046,7 @@ const LIES={f:"Fairway",r:"Rough",s:"Sand",g:"Green"};const DLIES={f:"Fairway",r
 const LV=["PGA Tour"];
 function spread(min,max,n){if(n===1)return [Math.round((min+max)/2)];const a=[];for(let i=0;i<n;i++)a.push(Math.round(min+(max-min)*i/(n-1)));return a;}
 const NSIT=[3,6,9,12,15,18], NHOLE=[6,9,12,18];
-const APP_VERSION="v202";
+const APP_VERSION="v204";
 const TESTS={
 putt_3_5:{name:"Putt 3–5 ft",cat:"Putten",eng:"putt_cat",dists:[3,4,5],per:8,info:"24 putts (8× vanaf 3, 4 en 5 ft). Per afstand: holed, mis binnen 3 ft, mis buiten 3 ft. Output: SG + make%."},
 putt_6_10:{name:"Putt 6–10 ft",cat:"Putten",eng:"putt_cat",dists:[6,8,10],per:8,info:"24 putts (8× vanaf 6, 8 en 10 ft). Zelfde invoer als 3–5 ft."},
@@ -1194,8 +1205,8 @@ function spRenderRondes(box,pick){
  if(n){
   sum='<div class="card"><div class="row spread" style="align-items:center;margin-bottom:9px"><h3 style="margin:0">Samenvatting</h3><span class="sx">'+(spYear||"alle jaren")+'</span></div>'
    +'<div class="sumgrid">'+spSumCell("Rondes",n)+spSumCell("Wedstrijdrondes",nW)+spSumCell("Oefenrondes",nO)
-   +((avg18!=null)?spSumCell("Gem. t.o.v. par /18",(avg18>0?"+":"")+avg18.toFixed(1),avg18<=0?"var(--good)":""):"")
-   +((best!=null)?spSumCell("Beste ronde",(best>0?"+":"")+best,best<=0?"var(--good)":""):"")+'</div>'
+   +((avg18!=null)?spSumCell("Gem. t.o.v. par /18",(avg18>0?"+":"")+avg18.toFixed(1),parColor(avg18)):"")
+   +((best!=null)?spSumCell("Beste ronde",(best>0?"+":"")+best,parColor(best)):"")+'</div>'
    +(catN?'<div class="trlbl" style="margin-top:14px">Verdeling per categorie</div><div class="cntlist" style="padding:6px 0 0">'+catKeys.map(function(k){return '<div class="cntrow"><span class="cntc">'+esc(k)+'</span><span class="cntbar"><span class="cntbarf" style="width:'+Math.round(cats[k]/catN*100)+'%"></span></span><span class="cntn">'+cats[k]+'</span></div>';}).join("")+'</div>':"")
    +'</div>';
  }else{
@@ -1211,7 +1222,7 @@ function spRenderRondes(box,pick){
   var right=(tp!=null)?((tp>0?"+":"")+tp):"–";
   var sub=(sc.gross!=null)?(sc.gross+" slagen"):((s.testId==="sg_round"&&d.sgTotal!=null)?("SG "+(d.sgTotal>0?"+":"")+d.sgTotal.toFixed(2)):"");
   var kind=spRoundCat(s);var kc=spCatColor(kind);
-  return '<div class="sprow tlrow clickable" data-spr="'+s.id+'"><div class="tlrl"><b>'+esc(head)+'</b><div class="muted" style="font-size:11.5px">'+fmtDate(s.date)+' · '+esc(meta.join(" · "))+'</div></div><div class="tlru"><span class="tlkind" style="color:'+kc+';border-color:'+kc+';margin:0 8px 0 0;display:inline-block;min-width:104px;text-align:center;box-sizing:border-box">'+esc(kind)+'</span><span style="text-align:right;min-width:52px"><b style="font-size:16px;color:'+((tp!=null&&tp<=0)?"var(--good)":"inherit")+'">'+right+'</b>'+(sub?'<small class="muted" style="display:block">'+esc(sub)+'</small>':"")+'</span></div><span class="chev">▶</span></div>';}).join("");
+  return '<div class="sprow tlrow clickable" data-spr="'+s.id+'"><div class="tlrl"><b>'+esc(head)+'</b><div class="muted" style="font-size:11.5px">'+fmtDate(s.date)+' · '+esc(meta.join(" · "))+'</div></div><div class="tlru"><span class="tlkind" style="color:'+kc+';border-color:'+kc+';margin:0 8px 0 0;display:inline-block;min-width:104px;text-align:center;box-sizing:border-box">'+esc(kind)+'</span><span style="text-align:right;min-width:52px"><b style="font-size:16px;color:'+parColor(tp)+'">'+right+'</b>'+(sub?'<small class="muted" style="display:block">'+esc(sub)+'</small>':"")+'</span></div><span class="chev">▶</span></div>';}).join("");
  box.innerHTML=pick+sum
   +'<div class="card" style="padding:6px 14px;margin-top:12px"><div class="sphdr"><b style="font-size:14px">Rondes <span class="muted" style="font-weight:600">· '+list.length+'</span></b><span style="flex:1"></span>'+ysel+'<button class="iconadd" id="spNewR" title="Ronde toevoegen">+</button></div>'
   +(rows||'<p class="muted" style="margin:10px 0">Geen rondes in deze selectie.</p>')+'</div>';
@@ -1357,7 +1368,7 @@ function spRoundScores(){
    el2.textContent=any?t:"–";});
   var sgt=null;if(cnt){try{var rr=compute(TESTS["sg_round"],null,inp);if(rr&&rr.detail&&rr.detail.sgTotal!=null&&inp.holes.some(function(h){return h.len;}))sgt=rr.detail.sgTotal;}catch(e){}}
   var dif=g-p;
-  $("#spLive").innerHTML='<div class="livrow"><span>Holes <b>'+cnt+'/'+n+'</b></span><span>Bruto <b>'+(cnt?g:"–")+'</b></span><span>t.o.v. par <b style="color:'+(cnt?(dif<0?"var(--good)":(dif>0?"var(--bad)":"inherit")):"inherit")+'">'+(cnt?((dif>0?"+":"")+dif):"–")+'</b></span>'+((sgt!=null)?'<span>SG <b style="color:'+_sgc(sgt)+'">'+(sgt>0?"+":"")+sgt.toFixed(2)+'</b></span>':"")+'</div>';}
+  $("#spLive").innerHTML='<div class="livrow"><span>Holes <b>'+cnt+'/'+n+'</b></span><span>Bruto <b>'+(cnt?g:"–")+'</b></span><span>t.o.v. par <b style="color:'+(cnt?parColor(dif):"inherit")+'">'+(cnt?((dif>0?"+":"")+dif):"–")+'</b></span>'+((sgt!=null)?'<span>SG <b style="color:'+_sgc(sgt)+'">'+(sgt>0?"+":"")+sgt.toFixed(2)+'</b></span>':"")+'</div>';}
  sh.querySelectorAll("[data-sph]").forEach(function(n2){
   n2.addEventListener("wheel",function(){n2.blur();},{passive:true});
   n2.oninput=function(){var v=n2.value;if(v!==""){var num=parseInt(v,10);if(isNaN(num)){v="";}else{if(num<1)num=1;if(num>20)num=20;v=String(num);}if(n2.value!==v)n2.value=v;}inp.holes[+n2.dataset.sph].score=v;upd();};});
@@ -1514,8 +1525,8 @@ function spRoundDetail(id){
  if(A.n){
   cells+=spSumCell(multi?"Bruto totaal":"Bruto",A.gross);
   cells+=spSumCell("Par",A.par);
-  cells+=spSumCell("t.o.v. par",(A.tp>0?"+":"")+A.tp,A.tp<0?"var(--good)":(A.tp>0?"var(--bad)":""));
-  if(multi)cells+=spSumCell("Gem. per ronde",scF(A.tp/A.n),(A.tp/A.n)<0?"var(--good)":((A.tp/A.n)>0?"var(--bad)":""));
+  cells+=spSumCell("t.o.v. par",(A.tp>0?"+":"")+A.tp,parColor(A.tp));
+  if(multi)cells+=spSumCell("Gem. per ronde",scF(A.tp/A.n),parColor(A.tp/A.n));
   if(!multi&&o.finish!=null)cells+=spSumCell("Finish",(o.finish==="MC"?"MC":o.finish));
   if(A.anySg)cells+=spSumCell(multi?"SG totaal":"SG totaal",(A.sg>0?"+":"")+A.sg.toFixed(2),_sgc(A.sg));
  }
@@ -1525,7 +1536,7 @@ function spRoundDetail(id){
   var grp={};
   for(var i=0;i<A.holes.length;i++){var p=A.pars[i];if(!grp[p])grp[p]={n:0,s:0};grp[p].n++;grp[p].s+=A.holes[i]-p;}
   var ks=Object.keys(grp).map(Number).sort(function(x,y){return x-y;});
-  byPar='<div class="trlbl" style="margin-top:14px">Gemiddeld t.o.v. par</div><div class="sumgrid">'+ks.map(function(p){var av=grp[p].s/grp[p].n;return spSumCell("Par "+p+" ("+grp[p].n+")",(av>0?"+":"")+av.toFixed(2),av<0?"var(--good)":(av>0?"var(--bad)":""));}).join("")+'</div>';}
+  byPar='<div class="trlbl" style="margin-top:14px">Gemiddeld t.o.v. par</div><div class="sumgrid">'+ks.map(function(p){var av=grp[p].s/grp[p].n;return spSumCell("Par "+p+" ("+grp[p].n+")",(av>0?"+":"")+av.toFixed(2),parColor(av));}).join("")+'</div>';}
  var opb="";
  if(A.holes.length&&A.pars.length){var c2=scCounts(A.holes,A.pars);
   opb='<div class="trlbl" style="margin-top:14px">Score-opbouw</div><div class="opbline">'+SC_DOTLBL.map(function(x){return '<span class="opbi"><i class="dotc '+x[0]+'"></i>'+x[1]+' <b>'+c2[x[0]]+'</b></span>';}).join("")+'</div>';}
@@ -2116,6 +2127,7 @@ function scData(pid,filt){var all=scNorm(pid);var f=scFiltNorm(filt);
  var sgYear=ys.map(function(y){var yy=base.filter(function(r){return r.y===y&&r.sg!=null;});
   return {y:y,n:yy.length,avg:scAvg(yy.map(function(r){return r.sg;}))};}).filter(function(p){return p.n;});
  return {all:all,list:L,years:ys,types:types,subOpts:subOpts,mains:mains,evs:evs,anyKl:anyKl,refY:refY,bench:bench,sc:sc,perYear:perYear,parY:parY,sgYear:sgYear,wl:wl,groups:groups,diff:diff,opb:opb,rnds:rnds,rndsCut:rndsCut,sgRnds:sgRnds,sgPer6:sgPer6,per6:per6,finishes:finishes,lowest:lowest,disp:scDisp(L)};}
+function parColor(v){return (v==null||isNaN(v))?"var(--muted)":((v<0)?"var(--bad)":"var(--muted)");}
 function scF(v,d){if(v==null||isNaN(v))return "–";var x=+v;return (x>0?"+":"")+x.toFixed(d==null?1:d);}
 /* ---- Scoring: weergave ---- */
 var scFilt={mode:"all",year:"",from:"",to:"",rt:"",main:"",types:[],kl:"",evs:[]};
@@ -2177,7 +2189,7 @@ function renderScoring(){var box=$("#scBody");if(!box)return;
   if(ov&&ov.tot)H+='<div class="card"><div class="cardhd"><h3>Score opbouw</h3><span class="hdnote">'+ov.tot+' holes</span></div>'+scOpbHtml(ov)+'</div>';
   H+=scVerloopHtml(D);
   if(D.finishes.n)H+='<div class="card"><div class="cardhd"><h3>Finishes</h3><span class="hdnote">'+D.finishes.n+' rondes met finish</span></div><div style="overflow-x:auto"><table class="kvtable" style="width:100%"><tr><th></th><th style="text-align:right">Aantal</th><th style="text-align:right">Aandeel</th></tr>'+[["Wins",D.finishes.wins],["Top-5",D.finishes.top5],["Top-10",D.finishes.top10],["Top-20",D.finishes.top20],["Missed cut",D.finishes.mc]].map(function(x){return '<tr><td>'+x[0]+'</td><td style="text-align:right"><b>'+x[1]+'</b></td><td style="text-align:right">'+Math.round(x[1]/D.finishes.n*100)+'%</td></tr>';}).join("")+'</table></div></div>';
-  if(D.lowest.length)H+='<div class="card"><div class="cardhd"><h3>Laagste rondes</h3><span class="hdnote">top '+D.lowest.length+' · '+esc(scFiltLabel())+'</span></div><div style="overflow-x:auto"><table class="kvtable" style="width:100%"><tr><th>Datum</th><th>Wedstrijd</th><th style="text-align:right">Score</th><th style="text-align:right">t.o.v. par</th></tr>'+D.lowest.map(function(r){return '<tr><td>'+fmtDate(r.date)+'</td><td>'+esc(r.ev||r.baan||"–")+'</td><td style="text-align:right">'+(r.gross!=null?r.gross:"–")+'</td><td style="text-align:right"><b style="color:'+(r.tp<=0?"var(--good)":"inherit")+'">'+scF(r.tp,0)+'</b></td></tr>';}).join("")+'</table></div></div>';
+  if(D.lowest.length)H+='<div class="card"><div class="cardhd"><h3>Laagste rondes</h3><span class="hdnote">top '+D.lowest.length+' · '+esc(scFiltLabel())+'</span></div><div style="overflow-x:auto"><table class="kvtable" style="width:100%"><tr><th>Datum</th><th>Wedstrijd</th><th style="text-align:right">Score</th><th style="text-align:right">t.o.v. par</th></tr>'+D.lowest.map(function(r){return '<tr><td>'+fmtDate(r.date)+'</td><td>'+esc(r.ev||r.baan||"–")+'</td><td style="text-align:right">'+(r.gross!=null?r.gross:"–")+'</td><td style="text-align:right"><b style="color:'+parColor(r.tp)+'">'+scF(r.tp,0)+'</b></td></tr>';}).join("")+'</table></div></div>';
   H+='<button class="btn block" id="scPdfB" style="margin-top:12px">Scoringsoverzicht (PDF) downloaden</button>';
  }
  H+='<button class="btn block blue" id="scImpB" style="margin-top:'+(D.all.length?'8':'12')+'px">+ Scores importeren (JSON)</button>';
@@ -2301,9 +2313,9 @@ function scVerloopHtml(D){
  }else{
   H+=cutTog;
   if(!rN.length&&D.per6[0]==null){H+='<p class="muted" style="margin:0;font-size:13px">Nog geen rondenummers of hole-scores in deze selectie.</p></div>';return H;}
-  if(rN.length)H+='<div class="trlbl">Gemiddelde score per ronde</div><div style="overflow-x:auto"><table class="kvtable" style="width:100%"><tr><th></th><th style="text-align:right">Rondes</th><th style="text-align:right">t.o.v. par</th></tr>'+rN.map(function(r){return '<tr><td>R'+r.rnd+'</td><td style="text-align:right">'+r.n+'</td><td style="text-align:right"><b style="color:'+(r.avg<=0?"var(--good)":"var(--bad)")+'">'+scF(r.avg)+'</b></td></tr>';}).join("")+'</table></div>';
+  if(rN.length)H+='<div class="trlbl">Gemiddelde score per ronde</div><div style="overflow-x:auto"><table class="kvtable" style="width:100%"><tr><th></th><th style="text-align:right">Rondes</th><th style="text-align:right">t.o.v. par</th></tr>'+rN.map(function(r){return '<tr><td>R'+r.rnd+'</td><td style="text-align:right">'+r.n+'</td><td style="text-align:right"><b style="color:'+parColor(r.avg)+'">'+scF(r.avg)+'</b></td></tr>';}).join("")+'</table></div>';
   else H+='<p class="muted" style="margin:0;font-size:13px">Geen rondes met een rondenummer in deze selectie.</p>';
-  if(D.per6[0]!=null)H+='<div class="trlbl" style="margin-top:10px">Gemiddelde score per 6 holes</div><div style="overflow-x:auto"><table class="kvtable" style="width:100%"><tr><th></th><th style="text-align:right">t.o.v. par</th></tr>'+[["Hole 1-6",D.per6[0]],["Hole 7-12",D.per6[1]],["Hole 13-18",D.per6[2]]].map(function(x){return '<tr><td>'+x[0]+'</td><td style="text-align:right"><b style="color:'+(x[1]<=0?"var(--good)":"var(--bad)")+'">'+scF(x[1])+'</b></td></tr>';}).join("")+'</table></div>';
+  if(D.per6[0]!=null)H+='<div class="trlbl" style="margin-top:10px">Gemiddelde score per 6 holes</div><div style="overflow-x:auto"><table class="kvtable" style="width:100%"><tr><th></th><th style="text-align:right">t.o.v. par</th></tr>'+[["Hole 1-6",D.per6[0]],["Hole 7-12",D.per6[1]],["Hole 13-18",D.per6[2]]].map(function(x){return '<tr><td>'+x[0]+'</td><td style="text-align:right"><b style="color:'+parColor(x[1])+'">'+scF(x[1])+'</b></td></tr>';}).join("")+'</table></div>';
  }
  return H+'</div>';}
 /* ---- jaargrafieken ---- */
@@ -3541,7 +3553,7 @@ const vals=SUMCATS.map(c=>ss[c].st?ss[c].sg/ss[c].st:null);
 const allV=vals.filter(v=>v!=null).slice();SUMCATS.forEach(c=>(segs[c]||[]).forEach(s=>{if(s.st)allV.push(s.sg/s.st);}));
 const maxAbs=Math.max(0.05,...allV.map(v=>Math.abs(v)));
 const barOf=v=>{if(v==null)return '<div class="ovbarwrap"><div class="ovzero"></div></div>';const frac=Math.min(Math.abs(v)/maxAbs,1);const w=(frac*50).toFixed(1);const pos=v>=0;return '<div class="ovbarwrap"><div class="ovzero"></div><div class="ovbar '+(pos?'pos':'neg')+'" style="'+(pos?'left:50%':'right:50%')+';width:'+w+'%"></div></div>';};
-const ntag=n=>'<span class="ovn">n '+n+'</span>';
+const ntag=n=>'<span class="ovn">'+n+' shots</span>';
 const darrOf=c=>{const cv=cur[c].st?cur[c].sg/cur[c].st:null;const pv=prev[c].st?prev[c].sg/prev[c].st:null;if(cv==null||pv==null)return '';const d=cv-pv;if(Math.abs(d)<0.0005)return '<div class="trend">\u2192 0.000</div>';const up=d>0;return '<div class="trend '+(up?'up':'down')+'">'+(up?'\u25b2':'\u25bc')+' '+Math.abs(d).toFixed(3)+'</div>';};
 const rows=SUMCATS.map((c,i)=>{const v=vals[i];const st=ss[c].st||0;const da=darrOf(c);const seg=segs[c]||[];const canExp=seg.length>0;const op=!!ovOpen[c];const relc=st<=0?"":(st<15?" reldim-low":(st<30?" reldim-mid":""));
 const lab='<div class="ovlab">'+(canExp?'<svg class="ovchev'+(op?' op':'')+'" viewBox="0 0 10 10"><path d="M3 1l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> ':'')+c+'</div>';
@@ -3772,7 +3784,7 @@ function startChallenge(id){const t=TESTS[id];
  draft={testId:id,level:0,date:todayISO(),counts:true,holes:9,nsit:9,rankMode:"sg",stations:null,
   mode:"team",teamId:tm0?tm0.id:null,players:tm0?teamPlayersOf(tm0.id).map(function(p){return p.id;}):[],
   inputs:{},dvHoles:9,dvBalls:1,dvShots:10,dvOptDist:true,dvOptSpr:true,dvOptChs:false,dvOptBs:false,
-  playMode:"sg",entryMode:"hole",holeN:null,holeSel:null};
+  playMode:"sg",entryMode:"hole",holeN:18,holeSel:null};
  draft._teamId=draft.teamId;
  draft.courseDists=Array.from({length:18},()=>"");draft.loopIds=[];draft.courseId=null;draft.teeName=null;
  if(t.eng==="sit")buildStations(t);
@@ -3807,10 +3819,11 @@ function openConfig(){const t=TESTS[draft.testId];const sh=$("#sheet");let cfg="
  if(t.eng==="course")cfg+='<div class="card"><h3>Aantal holes</h3><div class="seg" id="nholeSeg">'+NHOLE.map(h=>'<button class="'+(h===draft.holes?'on':'')+'" data-h="'+h+'">'+h+'</button>').join("")+'</div></div><div class="card"><h3>Startafstanden (ft) — optioneel</h3><small class="note" style="margin-top:0;margin-bottom:10px">Vul vooraf in, of laat leeg en vul ze bij de invoer in.</small><div id="courseDistCfg"></div></div>';
  if(sgHole){
   if(!state.courses.length){cfg+='<div class="card"><h3>Baan</h3><p class="muted" style="font-size:13px;margin:6px 0 0">Nog geen banen. Voeg eerst een baan toe via <b>Instellingen → Banen</b>.</p></div>';}
-  else cfg+='<div class="card"><h3>Baan</h3><input class="in" id="courseSearch" autocomplete="off" placeholder="Zoek baan (min. 2 letters)…" style="margin-bottom:8px"><div id="courseList" class="courselist"></div>'
-   +'<h3 style="margin-top:14px">Lussen (speelvolgorde)</h3><div id="loopPick"></div>'
-   +'<h3 style="margin-top:14px">Tee</h3><div id="teeSeg" class="trchips sm"></div>'
-   +'<h3 style="margin-top:14px">Holes</h3><div id="holeCfg"></div></div>';
+  else cfg+='<div class="card"><h3>Baan</h3><span class="acwrap" style="display:block"><input class="in" id="courseSearch" autocomplete="off" placeholder="Zoek baan…"></span><div id="courseSel" style="margin-top:8px"></div>'
+   +'<h3 style="margin-top:14px">Aantal holes</h3><div id="holeNCfg"></div>'
+   +'<h3 style="margin-top:14px" id="loopHd">Lussen</h3><div id="loopPick"></div>'
+   +'<div id="holeCfg"></div>'
+   +'<h3 style="margin-top:14px">Tee</h3><div id="teeSeg" class="trchips sm"></div></div>';
  }
  if(t.eng==="sit"){cfg+='<div class="card"><h3>Aantal situaties</h3><div class="seg" id="nsitSeg">'+NSIT.map(h=>'<button class="'+(h===draft.nsit?'on':'')+'" data-n="'+h+'">'+h+'</button>').join("")+'</div></div>';
  cfg+='<div class="card"><h3>Situaties instellen</h3><small class="note" style="margin-top:0;margin-bottom:10px">Geldt voor alle spelers. Spelers vullen straks alleen hun resultaat in.</small><div id="stationCfg"></div></div>';}
@@ -3823,7 +3836,7 @@ function openConfig(){const t=TESTS[draft.testId];const sh=$("#sheet");let cfg="
  $("#cfgDate").onchange=e=>{draft.date=e.target.value;};
  $("#modeSeg").querySelectorAll("button").forEach(b=>b.onclick=()=>{
   draft.mode=b.dataset.md;segOn("#modeSeg",b);_whoQ="";
-  if(draft.mode==="solo"){draft.counts=false;draft.players=draft.players.slice(0,1);}
+  if(draft.mode==="solo"){draft.counts=false;draft.players=[];}
   else{if(!draft.teamId)draft.teamId=((state.teams||[])[0]||{}).id||null;draft._teamId=draft.teamId;draft.players=teamPlayersOf(draft.teamId).map(p=>p.id);}
   renderWho();});
  if($("#pmSeg"))$("#pmSeg").querySelectorAll("button").forEach(b=>b.onclick=()=>{draft.playMode=b.dataset.pm;if(draft.playMode!=="stroke")draft.entryMode="hole";openConfig();});
@@ -3839,8 +3852,7 @@ function openConfig(){const t=TESTS[draft.testId];const sh=$("#sheet");let cfg="
  sh.querySelectorAll("[data-dvtile]").forEach(b=>b.onclick=()=>{const k=b.dataset.dvtile;draft[k]=!draft[k];b.classList.toggle("on");});
  if(t.eng==="sit")renderStationCfg(t);
  if(t.eng==="course")renderCourseDists();
- if(sgHole&&state.courses.length){renderCourseList("");renderLoopPick();renderTeeSeg();renderHoleCfg();
-  $("#courseSearch").oninput=e=>renderCourseList(e.target.value);}
+ if(sgHole&&state.courses.length)bindCourseCfg();
  renderWho();
  $("#toEntry").onclick=()=>{
   if(draft.players.length<1){toast(draft.mode==="solo"?"Kies een speler":"Selecteer minstens 1 speler");return;}
@@ -3849,8 +3861,10 @@ function openConfig(){const t=TESTS[draft.testId];const sh=$("#sheet");let cfg="
    if(!draft.loopIds||!draft.loopIds.length){toast("Kies minstens 1 lus");return;}
    if(!draft.teeName){toast("Kies een tee");return;}
    var _all=courseHoleList();
+   if(!_all.length){toast("Kies minstens 1 lus");return;}
+   if((draft.holeN||_all.length)>_all.length){toast("Kies genoeg lussen voor "+draft.holeN+" holes");return;}
    if(!draft.holeSel||!draft.holeSel.length){toast("Kies welke holes je speelt");return;}
-   if(draft.holeN&&draft.holeSel.length!==draft.holeN){toast("Kies precies "+draft.holeN+" holes");return;}
+   if(draft.holeN&&draft.holeSel.length!==Math.min(draft.holeN,_all.length)){toast("Kies precies "+draft.holeN+" holes");return;}
    draft.holes=draft.holeSel.length;
   }
   if(sgTotal)draft.testId="spelen";else if(TESTS[draft.testId].eng==="spelen"&&draft.playMode)draft.testId="sg_round";
@@ -3858,18 +3872,17 @@ function openConfig(){const t=TESTS[draft.testId];const sh=$("#sheet");let cfg="
 function renderWho(){
  var box=$("#whoBody");if(!box)return;
  if(draft.mode==="solo"){
-  var q=(_whoQ||"").toLowerCase().trim();
-  var list=allPlayers().slice().sort(function(a,b){return (a.name||"").localeCompare(b.name||"","nl");})
-   .filter(function(p){return !q||(p.name||"").toLowerCase().indexOf(q)>=0;});
-  box.innerHTML='<input class="in" id="whoQ" autocomplete="off" placeholder="Zoek speler…" value="'+esc(_whoQ)+'">'
-   +'<div class="bkplist" style="margin-top:8px">'+(list.length?list.map(function(p){return '<button class="bkpitem'+(draft.players[0]===p.id?" on":"")+'" data-solop="'+p.id+'">'+esc(p.name)+'</button>';}).join(""):'<p class="muted" style="font-size:13px;margin:4px 2px">Geen speler gevonden.</p>')+'</div>'
+  box.innerHTML='<span class="acwrap" style="display:block"><input class="in" id="whoQ" autocomplete="off" placeholder="Zoek speler…" value="'+esc(draft.players[0]?nameOf(draft.players[0]):"")+'"></span>'
+   +(draft.players[0]?'<div class="sx" style="margin-top:6px"><b>'+esc(nameOf(draft.players[0]))+'</b> · <a href="#" id="whoClr">wissen</a></div>':'<div class="sx" style="margin-top:6px">Typ om te zoeken en kies een speler.</div>')
    +'<small class="note">Individuele challenge · telt niet mee voor het klassement.</small>';
-  var qi=$("#whoQ");if(qi)qi.oninput=function(){_whoQ=qi.value;renderWho();var f=$("#whoQ");if(f){f.focus();try{f.setSelectionRange(f.value.length,f.value.length);}catch(e){}}};
-  box.querySelectorAll("[data-solop]").forEach(function(b){b.onclick=function(){
-   var pid=b.dataset.solop;draft.players=[pid];draft.counts=false;
-   var pt=(state.teams||[]).filter(function(tt){return (tt.playerIds||[]).indexOf(pid)>=0;});
-   draft.teamId=pt.some(function(tt){return tt.id===state.activeTeamId;})?state.activeTeamId:((pt[0]||{}).id||state.activeTeamId);
-   draft._teamId=draft.teamId;renderWho();};});
+  var qi=$("#whoQ");
+  if(qi){qi.onfocus=function(){var e2=this;setTimeout(function(){try{e2.select();}catch(_){}},0);};
+   acAttach(qi,allPlayers().slice().sort(function(a,b){return (a.name||"").localeCompare(b.name||"","nl");}),function(p){return p.name;},function(p){
+    draft.players=[p.id];draft.counts=false;
+    var pt=(state.teams||[]).filter(function(tt){return (tt.playerIds||[]).indexOf(p.id)>=0;});
+    draft.teamId=pt.some(function(tt){return tt.id===state.activeTeamId;})?state.activeTeamId:((pt[0]||{}).id||state.activeTeamId);
+    draft._teamId=draft.teamId;renderWho();});}
+  var wc=$("#whoClr");if(wc)wc.onclick=function(e2){e2.preventDefault();draft.players=[];renderWho();};
  }else{
   var tms=(state.teams||[]);
   if(!draft.teamId||!tms.some(function(x){return x.id===draft.teamId;}))draft.teamId=(tms[0]||{}).id||null;
@@ -3885,24 +3898,20 @@ function renderWho(){
  updateCountLock();}
 function renderHoleCfg(){
  var box=$("#holeCfg");if(!box)return;
- var all=courseHoleList();var N=all.length;
- if(!N){box.innerHTML='<p class="muted" style="font-size:12.5px;margin:4px 2px">Kies eerst één of meer lussen.</p>';draft.holeSel=null;draft.holeN=null;return;}
- var opts=[6,9,12,18].filter(function(x){return x<N;});opts.push(N);
- if(!draft.holeN||opts.indexOf(draft.holeN)<0)draft.holeN=N;
- var valid=draft.holeSel&&draft.holeSel.length===draft.holeN&&draft.holeSel.every(function(h){return h>=1&&h<=N;});
- if(!valid)draft.holeSel=all.slice(0,draft.holeN).map(function(h){return h.hole;});
- var segH='<div class="trchips sm" id="holeNSeg">'+opts.map(function(x){return '<button data-hn="'+x+'" class="'+(draft.holeN===x?"on":"")+'">'+x+(x===N?" (alle)":"")+'</button>';}).join("")+'</div>';
- var pick='';
- if(draft.holeN<N){
-  pick='<div class="sx" style="margin:10px 0 4px">Welke holes speel je? <b>'+draft.holeSel.length+'</b> van '+draft.holeN+' geselecteerd (van de '+N+' holes op de baan)</div>'
-   +'<div class="trchips sm" id="holePick">'+all.map(function(h){return '<button data-hp="'+h.hole+'" class="'+(draft.holeSel.indexOf(h.hole)>=0?"on":"")+'">'+h.hole+'</button>';}).join("")+'</div>';}
- box.innerHTML=segH+pick;
- box.querySelectorAll("[data-hn]").forEach(function(b){b.onclick=function(){draft.holeN=+b.dataset.hn;draft.holeSel=null;renderHoleCfg();};});
+ var all=courseHoleList();var N=all.length;var want=draft.holeN||N;
+ if(!N||want>=N){box.innerHTML="";
+  if(N)draft.holeSel=all.map(function(h){return h.hole;});else draft.holeSel=null;
+  return;}
+ var valid=draft.holeSel&&draft.holeSel.length===want&&draft.holeSel.every(function(h){return h>=1&&h<=N;});
+ if(!valid)draft.holeSel=all.slice(0,want).map(function(h){return h.hole;});
+ box.innerHTML='<h3 style="margin-top:14px">Welke holes</h3>'
+  +'<div class="sx" style="margin:0 0 6px"><b>'+draft.holeSel.length+'</b> van '+want+' geselecteerd · '+N+' holes beschikbaar</div>'
+  +'<div class="trchips sm" id="holePick">'+all.map(function(h){return '<button data-hp="'+h.hole+'" class="'+(draft.holeSel.indexOf(h.hole)>=0?"on":"")+'">'+h.hole+'</button>';}).join("")+'</div>';
  box.querySelectorAll("[data-hp]").forEach(function(b){b.onclick=function(){
   var h=+b.dataset.hp;var i=draft.holeSel.indexOf(h);
   if(i>=0)draft.holeSel.splice(i,1);
   else{draft.holeSel.push(h);draft.holeSel.sort(function(x,y){return x-y;});
-   while(draft.holeSel.length>draft.holeN)draft.holeSel.shift();}
+   while(draft.holeSel.length>want)draft.holeSel.shift();}
   renderHoleCfg();};});}
 function renderStationCfg(t){const box=$("#stationCfg");if(!box)return;box.innerHTML="";
 draft.stations.forEach((st,i)=>{const c=el("div","station");let pinHtml="";
@@ -3917,25 +3926,70 @@ if(t.hasPin){c.querySelectorAll("[data-pd]").forEach(btn=>btn.onclick=()=>{st.pi
 box.appendChild(c);});}
 function renderCourseDists(){const box=$("#courseDistCfg");if(!box)return;let h="";for(let i=0;i<draft.holes;i++)h+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="font-size:12px;color:var(--muted);width:52px">Hole '+(i+1)+'</span><input class="in" type="number" inputmode="decimal" data-cd="'+i+'" value="'+(draft.courseDists[i]||"")+'" placeholder="ft"></div>';box.innerHTML=h;
 box.querySelectorAll("[data-cd]").forEach(n=>n.oninput=()=>{draft.courseDists[+n.dataset.cd]=n.value;});}
-function renderCourseList(q){const box=$("#courseList");if(!box)return;q=(q||"").toLowerCase().trim();
- const sel=getCourse(draft.courseId);
- const head=sel?('<div class="clsel"><div style="flex:1;min-width:0"><b>'+esc(sel.name)+'</b><small>'+sel.loops.length+' lus(sen) \u00b7 '+courseHoleCount(sel)+' holes</small></div><button class="link" id="clClr">wissen</button></div>'):'';
- let body;
- if(q.length<2)body='<p class="muted" style="font-size:12.5px;margin:6px 2px">'+(sel?'Typ minimaal 2 letters om een andere baan te zoeken.':'Typ minimaal 2 letters om banen te zoeken.')+'</p>';
- else{const list=(state.courses||[]).slice().sort((a,b)=>a.name.localeCompare(b.name)).filter(c=>c.name.toLowerCase().indexOf(q)>=0);
-  body=list.length?list.map(c=>'<button class="clbtn'+(c.id===draft.courseId?' on':'')+'" data-cid="'+c.id+'">'+esc(c.name)+'<small>'+c.loops.length+' lus(sen) \u00b7 '+courseHoleCount(c)+' holes</small></button>').join(''):'<p class="muted" style="font-size:12.5px;margin:6px 2px">Geen baan gevonden</p>';}
- box.innerHTML=head+body;
- const cl=$("#clClr");if(cl)cl.onclick=()=>{draft.courseId=null;draft.loopIds=[];draft.teeName=null;draft.holeSel=null;draft.holeN=null;renderCourseList(q);renderLoopPick();renderTeeSeg();renderHoleCfg();};
- box.querySelectorAll("[data-cid]").forEach(b=>b.onclick=()=>{draft.courseId=b.dataset.cid;draft.loopIds=[];draft.teeName=null;draft.holeSel=null;draft.holeN=null;
-  const si=$("#courseSearch");if(si)si.value="";renderCourseList("");renderLoopPick();renderTeeSeg();renderHoleCfg();});}
-function renderLoopPick(){const box=$("#loopPick");if(!box)return;const co=getCourse(draft.courseId);if(!co){box.innerHTML="";return;}
-box.innerHTML='<div style="display:flex;flex-wrap:wrap;gap:6px">'+co.loops.map(lp=>{const ord=(draft.loopIds||[]).indexOf(lp.id);const on=ord>=0;return '<button class="looptog'+(on?' on':'')+'" data-loop="'+lp.id+'">'+(on?(ord+1)+'. ':'')+esc(lp.name)+'</button>';}).join('')+'</div><small class="muted" style="font-size:11.5px;display:block;margin-top:6px">Tik in speelvolgorde. '+((draft.loopIds&&draft.loopIds.length)?(draft.loopIds.length*9+' holes geselecteerd'):'Kies 1 of meer lussen')+'</small>';
-box.querySelectorAll("[data-loop]").forEach(b=>b.onclick=()=>{const id=b.dataset.loop;const i=(draft.loopIds||[]).indexOf(id);if(i>=0)draft.loopIds.splice(i,1);else draft.loopIds.push(id);draft.holeSel=null;draft.holeN=null;renderLoopPick();renderTeeSeg();renderHoleCfg();});}
+function bindCourseCfg(){
+ var q=$("#courseSearch");
+ if(q){q.onfocus=function(){var e=this;setTimeout(function(){try{e.select();}catch(_){}},0);};
+  acAttach(q,(state.courses||[]).slice().sort(function(a,b){return a.name.localeCompare(b.name,"nl");}),function(c){return c.name;},function(c){
+   draft.courseId=c.id;draft.loopIds=[];draft.teeName=null;draft.holeSel=null;
+   renderCourseSel();renderHoleN();renderLoopPick();renderTeeSeg();renderHoleCfg();});}
+ renderCourseSel();renderHoleN();renderLoopPick();renderTeeSeg();renderHoleCfg();}
+function renderCourseSel(){
+ var box=$("#courseSel");if(!box)return;
+ var sel=getCourse(draft.courseId);
+ if(!sel){box.innerHTML='<p class="muted" style="font-size:12.5px;margin:2px 2px">Typ om te zoeken en kies een baan.</p>';return;}
+ box.innerHTML='<div class="clsel"><div style="flex:1;min-width:0"><b>'+esc(sel.name)+'</b><small>'+sel.loops.length+' lus(sen) · '+courseHoleCount(sel)+' holes</small></div><button class="link" id="clClr">wissen</button></div>';
+ var cl=$("#clClr");if(cl)cl.onclick=function(){draft.courseId=null;draft.loopIds=[];draft.teeName=null;draft.holeSel=null;
+  var q=$("#courseSearch");if(q)q.value="";renderCourseSel();renderHoleN();renderLoopPick();renderTeeSeg();renderHoleCfg();};}
+function courseLoopMax(){var co=getCourse(draft.courseId);if(!co)return 18;
+ return co.loops.reduce(function(a,lp){return a+lp.holes.length;},0);}
+function loopAutoFill(){
+ var co=getCourse(draft.courseId);if(!co||!co.loops.length){draft.loopIds=[];return;}
+ var need=Math.max(1,Math.ceil((draft.holeN||18)/9));
+ var cur=(draft.loopIds||[]).filter(function(id){return co.loops.some(function(l){return l.id===id;});});
+ while(cur.length>need)cur.pop();
+ while(cur.length<need)cur.push(co.loops[cur.length%co.loops.length].id);
+ draft.loopIds=cur;}
+function renderHoleN(){
+ var box=$("#holeNCfg");if(!box)return;
+ var co=getCourse(draft.courseId);
+ if(!co){box.innerHTML='<p class="muted" style="font-size:12.5px;margin:2px 2px">Kies eerst een baan.</p>';return;}
+ var maxH=courseLoopMax()*4;
+ if(!draft.holeN)draft.holeN=Math.min(18,courseLoopMax());
+ var std=(draft.holeN===9||draft.holeN===18);
+ box.innerHTML='<div class="trchips sm" id="holeNSeg"><button data-hn="9" class="'+(draft.holeN===9?"on":"")+'">9</button><button data-hn="18" class="'+(draft.holeN===18?"on":"")+'">18</button><button data-hn="x" class="'+(std?"":"on")+'">Anders</button></div>'
+  +(std?'':'<div class="row" style="gap:8px;align-items:center;margin-top:8px"><input class="in" type="number" inputmode="numeric" min="1" max="'+maxH+'" id="holeNIn" value="'+draft.holeN+'" style="max-width:110px"><span class="sx">holes</span></div>');
+ box.querySelectorAll("[data-hn]").forEach(function(b){b.onclick=function(){
+  if(b.dataset.hn==="x"){if(draft.holeN===9||draft.holeN===18)draft.holeN=27;}
+  else draft.holeN=+b.dataset.hn;
+  draft.holeSel=null;loopAutoFill();renderHoleN();renderLoopPick();renderTeeSeg();renderHoleCfg();};});
+ var inn=$("#holeNIn");if(inn)inn.onchange=function(){
+  var v=parseInt(inn.value,10);if(isNaN(v)||v<1)v=1;if(v>maxH)v=maxH;
+  draft.holeN=v;inn.value=v;draft.holeSel=null;loopAutoFill();renderLoopPick();renderTeeSeg();renderHoleCfg();};}
+function renderLoopPick(){const box=$("#loopPick");if(!box)return;const co=getCourse(draft.courseId);
+ const hd=$("#loopHd");
+ if(!co){box.innerHTML="";if(hd)hd.textContent="Lussen";return;}
+ const many=(draft.holeN||18)>9;
+ if(hd)hd.textContent=many?"Lussen (speelvolgorde)":"Welke lus";
+ if(!draft.loopIds||!draft.loopIds.length)loopAutoFill();
+ if(many){
+  const need=Math.max(1,Math.ceil((draft.holeN||18)/9));
+  const chosen=(draft.loopIds||[]).map(function(id,i){const lp=co.loops.find(l=>l.id===id);
+   return '<button class="looptog on" data-loopdel="'+i+'">'+(i+1)+'. '+esc(lp?lp.name:"?")+' <i style="font-style:normal;opacity:.7">×</i></button>';}).join("");
+  box.innerHTML='<div style="display:flex;flex-wrap:wrap;gap:6px">'+co.loops.map(lp=>'<button class="looptog" data-loopadd="'+lp.id+'">+ '+esc(lp.name)+'</button>').join("")+'</div>'
+   +(chosen?'<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px">'+chosen+'</div>':'')
+   +'<small class="muted" style="font-size:11.5px;display:block;margin-top:6px">Tik in speelvolgorde · '+(draft.loopIds||[]).length+' van '+need+' lussen · '+courseHoleList().length+' holes beschikbaar</small>';
+  box.querySelectorAll("[data-loopadd]").forEach(b=>b.onclick=()=>{draft.loopIds=draft.loopIds||[];draft.loopIds.push(b.dataset.loopadd);draft.holeSel=null;renderLoopPick();renderTeeSeg();renderHoleCfg();});
+  box.querySelectorAll("[data-loopdel]").forEach(b=>b.onclick=()=>{draft.loopIds.splice(+b.dataset.loopdel,1);draft.holeSel=null;renderLoopPick();renderTeeSeg();renderHoleCfg();});
+ }else{
+  box.innerHTML='<div style="display:flex;flex-wrap:wrap;gap:6px">'+co.loops.map(lp=>'<button class="looptog'+((draft.loopIds||[])[0]===lp.id?' on':'')+'" data-loop="'+lp.id+'">'+esc(lp.name)+'</button>').join("")+'</div>'
+   +'<small class="muted" style="font-size:11.5px;display:block;margin-top:6px">'+courseHoleList().length+' holes beschikbaar</small>';
+  box.querySelectorAll("[data-loop]").forEach(b=>b.onclick=()=>{draft.loopIds=[b.dataset.loop];draft.holeSel=null;renderLoopPick();renderTeeSeg();renderHoleCfg();});
+ }}
 function renderTeeSeg(){const box=$("#teeSeg");if(!box)return;const co=getCourse(draft.courseId);const av=(draft.loopIds&&draft.loopIds.length)?courseLoopTees(co,draft.loopIds):(co?courseTees(co):[]);
  if(!av.length){box.innerHTML='<span class="muted" style="font-size:12.5px;padding:4px 2px">'+((draft.loopIds&&draft.loopIds.length)?'Geen tee-lengtes voor deze lussen':'Kies eerst lussen')+'</span>';draft.teeName=null;return;}
  if(!draft.teeName||!av.find(t=>t[0]===draft.teeName))draft.teeName=av[0][0];
  box.innerHTML=av.map(t=>'<button data-tee="'+t[0]+'" class="'+(t[0]===draft.teeName?'on':'')+'">'+t[1]+'</button>').join('');
- box.querySelectorAll("[data-tee]").forEach(b=>b.onclick=()=>{draft.teeName=b.dataset.tee;box.querySelectorAll("[data-tee]").forEach(x=>x.classList.toggle("on",x===b));renderHoleCfg();});}
+ box.querySelectorAll("[data-tee]").forEach(b=>b.onclick=()=>{draft.teeName=b.dataset.tee;box.querySelectorAll("[data-tee]").forEach(x=>x.classList.toggle("on",x===b));});}
 function updateCountLock(){const seg=$("#countSeg");if(!seg)return;const lock=draft.players.length<2;if(lock)draft.counts=false;const ja=seg.querySelector('[data-c="1"]');const nee=seg.querySelector('[data-c="0"]');if(ja){ja.disabled=lock;ja.classList.toggle("on",draft.counts&&!lock);}if(nee)nee.classList.toggle("on",!draft.counts||lock);}
 function renderPlayerPick(){const box=$("#playerPick");if(!box)return;box.innerHTML="";
  const list=teamPlayersOf(draft.teamId);
@@ -3953,7 +4007,7 @@ openSheet();renderEntryList();renderLive();const _ed=$("#entryDate");if(_ed)_ed.
 function metricLabel(){const t=TESTS[draft.testId];if(t.eng==="spelen")return "Score t.o.v. par";if(t.eng==="sground"&&draft.playMode==="stroke")return "Score t.o.v. par";if(t.eng==="sit"&&t.measure==="score"&&draft.rankMode==="score")return "Gem. score";return "Strokes Gained";}
 function renderEntryList(){const t=TESTS[draft.testId];const box=$("#entryList");box.innerHTML="";
 draft.players.forEach(pid=>{const inp=draft.inputs[pid];let sub="Nog niet ingevoerd",comp=[0,1];
-if(inp){const r=compute(t,draft,inp);comp=r.completion;sub=r.stats.slice(0,2).map(s=>s[0]+" "+s[1]).join(" · ");}
+if(inp){const r=compute(t,draft,inp);comp=r.completion;sub=r.stats.slice(0,2).map(s=>{var c=statColor(s[0],s[1]);return s[0]+" "+(c?'<b style="color:'+c+'">'+s[1]+'</b>':s[1]);}).join(" · ");}
 const done=comp[0]>=comp[1]&&comp[1]>0;
 const tagH=!inp?'<span class="tag todo">Invoeren</span>':done?'<span class="tag done">✓ Klaar</span>':'<span class="tag part">'+comp[0]+'/'+comp[1]+'</span>';
 const c=el("div","pcard");c.style.cursor="pointer";
@@ -3964,7 +4018,8 @@ function renderLive(){const t=TESTS[draft.testId];const board=$("#liveBoard");$(
 const entered=draft.players.filter(p=>draft.inputs[p]).map(pid=>{const r=compute(t,draft,draft.inputs[pid]);return {playerId:pid,metric:r.metric,val:r.headline,dir:r.rankDir};});
 const dir=entered.length?(entered[0].dir||dirOf(t)):dirOf(t);const ranked=award(entered,dir);
 const prev={};board.querySelectorAll(".sbrow").forEach(r=>prev[r.dataset.pid]=r.getBoundingClientRect().top);board.innerHTML="";
-ranked.forEach((r,i)=>{const row=el("div","sbrow"+(i===0?" lead":""));row.dataset.pid=r.playerId;row.innerHTML='<div class="rk">'+(i+1)+'</div><div class="who">'+esc(nameOf(r.playerId))+'</div><div class="val">'+r.val+'</div><div class="pp">+'+fmtPts(r.points)+'</div>';board.appendChild(row);});
+ranked.forEach((r,i)=>{const row=el("div","sbrow"+(i===0?" lead":""));row.dataset.pid=r.playerId;var _vc=statColor(metricLabel().indexOf("Strokes Gained")===0?"SG":"",r.val);
+ row.innerHTML='<div class="rk">'+(i+1)+'</div><div class="who">'+esc(nameOf(r.playerId))+'</div><div class="val"'+(_vc?' style="color:'+_vc+'"':'')+'>'+r.val+'</div><div class="pp">+'+fmtPts(r.points)+'</div>';board.appendChild(row);});
 draft.players.filter(p=>!draft.inputs[p]).forEach(pid=>{const row=el("div","sbrow pending");row.dataset.pid=pid;row.innerHTML='<div class="rk">·</div><div class="who">'+esc(nameOf(pid))+'</div><div class="val">wacht…</div><div class="pp"></div>';board.appendChild(row);});
 board.querySelectorAll(".sbrow").forEach(r=>{const p=prev[r.dataset.pid];if(p!=null){const d=p-r.getBoundingClientRect().top;if(d){r.style.transform="translateY("+d+"px)";r.style.transition="none";requestAnimationFrame(()=>{r.style.transition="";r.style.transform="";});}}});
 if(entered.length===0)board.insertAdjacentHTML("afterbegin",'<div style="opacity:.6;font-size:12.5px;text-align:center;padding:6px">Voer een eerste resultaat in ⛳</div>');}
@@ -3995,7 +4050,19 @@ let fields='<div><label class="fld">Proximity (ft)</label><input class="in" type
 if(t.hasScore)fields+='<div><label class="fld">Score</label><input class="in" type="number" inputmode="numeric" data-i="'+i+'" data-s="score" value="'+(r.score||"")+'"></div>';
 return '<div class="station"><div class="sh"><b>Situatie '+(i+1)+'</b><span class="muted" style="font-size:12px">'+st.dist+' m · '+LIES[st.lie]+' · '+DIFF[st.diff]+pinTxt+'</span></div><div class="'+(t.hasScore?'grid3':'grid2')+'">'+fields+'</div></div>';}).join("");}
 function fSpelen(t,inp){return '<div class="card"><label class="fld">Score t.o.v. par ('+draft.holes+' holes)</label><input class="in" type="number" inputmode="numeric" data-spelen="1" data-neg value="'+inp.toPar+'" placeholder="bv. -2 of 3"><small class="note">Lager is beter.</small></div>';}
-function fSground(t,inp){if(!inp.holes||!inp.holes.length)return '<div class="card"><p class="muted">Geen baan/tee geselecteerd.</p></div>';return '<div class="card" style="padding:11px 13px"><small class="muted">'+esc(inp.courseName||"")+(inp.teeName?' \u00b7 '+inp.teeName:'')+(inp.loopNames&&inp.loopNames.length?' \u00b7 '+inp.loopNames.join(" + "):'')+'</small></div>'+inp.holes.map((h,i)=>'<div class="station"><div class="sh"><b>Hole '+h.hole+'</b><span class="muted" style="font-size:12px">'+(h.loopName?esc(h.loopName)+' \u00b7 ':'')+'par '+h.par+(h.len?' \u00b7 '+h.len+' m':'')+'</span></div><div class="grid2"><div><label class="fld">Score</label><input class="in" type="number" inputmode="numeric" min="1" max="20" onwheel="this.blur()" data-sg="'+i+'" value="'+(h.score)+'"></div><div style="align-self:end;font-size:11.5px;color:var(--muted);padding-bottom:9px">'+((draft.playMode==="stroke")?('par '+h.par):(h.len?('verw. '+expTee(h.len*1.09361).toFixed(2)+' slagen'):'\u2013'))+'</div></div></div>').join("");}
+function fSground(t,inp){
+ if(!inp.holes||!inp.holes.length)return '<div class="card"><p class="muted">Geen baan/tee geselecteerd.</p></div>';
+ var n=inp.holes.length;var half=(n>=18)?Math.ceil(n/2):n;
+ function tbl(a,b,lbl){
+  var HH=inp.holes.slice(a,b);
+  var anyLen=HH.some(function(h){return h.len;});
+  var t2='<table class="hentry"><tr><th>Hole</th>'+HH.map(function(h){return '<td>'+h.hole+'</td>';}).join("")+'<th class="hsum">'+lbl+'</th></tr>';
+  t2+='<tr class="hepar"><th>Par</th>'+HH.map(function(h){return '<td>'+h.par+'</td>';}).join("")+'<td class="hsum">'+HH.reduce(function(x,h){return x+(+h.par||0);},0)+'</td></tr>';
+  if(anyLen)t2+='<tr class="helen"><th>Afstand</th>'+HH.map(function(h){return '<td>'+(h.len||"–")+'</td>';}).join("")+'<td class="hsum">'+HH.reduce(function(x,h){return x+(+h.len||0);},0)+'</td></tr>';
+  t2+='<tr class="hesc"><th>Score</th>'+HH.map(function(h,i){return '<td><input class="hin2" type="number" inputmode="numeric" min="1" max="20" onwheel="this.blur()" data-sg="'+(a+i)+'" value="'+h.score+'"></td>';}).join("")+'<td class="hsum" data-tot="'+a+'">–</td></tr>';
+  return t2+'</table>';}
+ return '<div class="card" style="padding:11px 13px"><small class="muted">'+esc(inp.courseName||"")+(inp.teeName?' · '+inp.teeName:'')+(inp.loopNames&&inp.loopNames.length?' · '+inp.loopNames.join(" + "):'')+'</small></div>'
+  +'<div class="card" style="padding:10px 12px"><div class="hwrap">'+tbl(0,half,(n>half)?"Uit":"Totaal")+(n>half?('<div style="height:12px"></div>'+tbl(half,n,"In")):'')+'</div></div>';}
 function fDriveBaan(t,inp){return inp.holes.map((h,hi)=>{let balls=h.balls.map((b,bi)=>{
 let f='<div class="dvball"><div class="dvbh">Bal '+(bi+1)+'</div><div class="grid2"><div><label class="fld">Club</label><select class="in" data-dvb="'+hi+'_'+bi+'_club">'+Object.keys(DCLUBS).map(c=>'<option value="'+c+'" '+(c===b.club?'selected':'')+'>'+DCLUBS[c]+'</option>').join("")+'</select></div><div><label class="fld">Restafstand (m)</label><input class="in" type="number" inputmode="decimal" data-dvb="'+hi+'_'+bi+'_rest" value="'+b.rest+'"></div></div>';
 f+='<div class="grid2" style="margin-top:8px"><div><label class="fld">Restligging</label><select class="in" data-dvb="'+hi+'_'+bi+'_lie">'+Object.keys(DLIES).map(l=>'<option value="'+l+'" '+(l===b.lie?'selected':'')+'>'+DLIES[l]+'</option>').join("")+'</select></div>'+(draft.dvOptDist?'<div><label class="fld">Afstand (m)</label><input class="in" type="number" inputmode="decimal" data-dvb="'+hi+'_'+bi+'_dist" value="'+b.dist+'"></div>':'<div></div>')+'</div>';
@@ -4024,7 +4091,24 @@ updateSums(t,inp);
 $("#savePlayer").onclick=()=>{const r=compute(t,draft,inp);if(r.completion[0]===0){toast("Voer minstens één resultaat in");return;}draft.inputs[pid]=inp;saveDraft();openEntry();};}
 function renderEntryListSilent(){}
 function updateSums(t,inp){if(t.eng==="putt_cat")document.querySelectorAll("[data-sum]").forEach(s=>{const i=+s.dataset.sum,b=inp.blocks[i];const sum=t.eng==="putt_cat"?(b.holed+b.in3+b.out3):(b.holed+b.three);s.textContent=sum+'/'+t.per;s.classList.toggle("bad",sum>t.per);});}
-function liveStats(t,inp){const box=$("#liveStats");if(!box)return;const r=compute(t,draft,inp);box.innerHTML='<div class="stats">'+r.stats.map(s=>'<div class="chip '+(s[2]||'')+'"><span class="muted">'+s[0]+'</span><b>'+s[1]+'</b></div>').join("")+'</div>';}
+function statColor(lbl,val){
+ var L=String(lbl);
+ var sg=(L.indexOf("SG")===0);
+ var par=(L==="t.o.v. par"||L==="Score");
+ if(!sg&&!par)return "";
+ var v=parseFloat(String(val).replace(",",".").replace("+",""));
+ if(isNaN(v))return "";
+ if(par)return parColor(v);
+ return (v>0.0005)?"var(--good)":((v<-0.0005)?"var(--bad)":"var(--muted)");}
+function liveStats(t,inp){const box=$("#liveStats");if(!box)return;const r=compute(t,draft,inp);
+ box.innerHTML='<div class="stats">'+r.stats.map(s=>{var c=statColor(s[0],s[1]);
+  return '<div class="chip '+(s[2]||'')+'"><span class="muted">'+s[0]+'</span><b'+(c?' style="color:'+c+'"':'')+'>'+s[1]+'</b></div>';}).join("")+'</div>';
+ var sh=$("#sheet");
+ if(sh&&inp&&inp.holes)sh.querySelectorAll("[data-tot]").forEach(function(td){
+  var a=+td.dataset.tot,hs=inp.holes,n=hs.length,half=(n>=18)?Math.ceil(n/2):n;
+  var b=(a===0)?half:n,tt=0,any=false;
+  for(var i=a;i<b;i++){var v=hs[i]&&hs[i].score;if(v!==""&&v!=null){tt+=+v;any=true;}}
+  td.textContent=any?tt:"\u2013";});}
 function finishChallenge(){const t=TESTS[draft.testId];const entered=draft.players.filter(p=>draft.inputs[p]);if(!entered.length){toast("Geen resultaten");return;}
 const results=entered.map(pid=>{const r=compute(t,draft,draft.inputs[pid]);return {playerId:pid,metric:r.metric,sg:r.sg,stats:r.stats,detail:r.detail,rankDir:r.rankDir};});
 const dir=results[0].rankDir||dirOf(t);const ranked=award(results,dir);
@@ -4086,7 +4170,7 @@ let gMetric=(t.eng==='spelen')?'sg':(putt?(chartMake?'make':'sg'):((t.eng==='sit
 let tArr='';{let tc,tp;if(progCompare==='season'){tc=all;tp=_S.prevId?allRaw.filter(x=>x.seasonId===_S.prevId):[];}else{tc=trendCur(all);tp=trendPrev(all);}const poolHN=arr=>{if(!arr.length)return null;if(t.eng==='spelen')return arr.reduce((a,h)=>a+(h.detail.toPar||0),0)/arr.length;const a=arr.reduce((x,h)=>({sg:x.sg+(h.detail.sgTotal||0),st:x.st+(h.detail.strokes||0)}),{sg:0,st:0});return a.st?a.sg/a.st:null;};const cHN=poolHN(tc),pHN=poolHN(tp);if(cHN!=null&&pHN!=null){const d=cHN-pHN;const better=(t.eng==='spelen')?(d<0):(d>0);const dd=Math.abs(d)<0.0005;const dec=(t.eng==='spelen')?1:3;tArr='<span class="trend '+(dd?'':(better?'up':'down'))+'">'+(dd?'\u2192':(better?'\u25b2':'\u25bc'))+' '+Math.abs(d).toFixed(dec)+'</span>';}}
 
 const wrap=el("div","ptest"+(open?" open":""));
-wrap.innerHTML='<div class="ph"><div><b>'+t.name+'</b><br><small class="muted">'+all.length+' meting'+(all.length===1?'':'en')+' · laatste '+fmtDate(all[all.length-1].date)+'</small></div><div style="text-align:right"><div class="lv'+(totN?(totN<15?' reldim-low':(totN<30?' reldim-mid':'')):'')+'">'+headv+'</div><div class="phn">n '+totN+'</div>'+(tArr?'<div style="margin-top:1px">'+tArr+'</div>':'')+goalLab+'<span class="chev">▶</span></div></div><div class="pbody">'+(putt?'<div class="seg" style="margin:0 0 8px"><button class="'+(pm==='sg'?'on':'')+'" data-tid="'+tid+'" data-pm="sg">SG/stroke</button><button class="'+(pm==='make'?'on':'')+'" data-tid="'+tid+'" data-pm="make">'+(t.eng==='putt_prox'?'Good %':'Make %')+'</button></div>':(t.eng==='sit'?'<div class="seg" style="margin:0 0 8px"><button class="'+(pm==='sg'?'on':'')+'" data-tid="'+tid+'" data-pm="sg">SG/stroke</button><button class="'+(pm==='prox'?'on':'')+'" data-tid="'+tid+'" data-pm="prox">Prox (ft)</button>'+((t.cat==="Wedge play"||t.cat==="Approach play")?'<button class="'+(pm==='green'?'on':'')+'" data-tid="'+tid+'" data-pm="green">Green %</button>':'')+'</div>':((t.eng==='drivebaan'||t.eng==='driverange')?'<div class="seg" style="margin:0 0 8px"><button class="'+(pm==='sg'?'on':'')+'" data-tid="'+tid+'" data-pm="sg">SG/slag</button><button class="'+(pm==='dist'?'on':'')+'" data-tid="'+tid+'" data-pm="dist">Driver afst.</button><button class="'+(pm==='inplay'?'on':'')+'" data-tid="'+tid+'" data-pm="inplay">In play %</button></div>':'')))+chart(pts,ctype,'ch_'+tid,tgChartV)+progDetail(t,hist,tid)+'</div>';
+wrap.innerHTML='<div class="ph"><div><b>'+t.name+'</b><br><small class="muted">'+all.length+' meting'+(all.length===1?'':'en')+' · laatste '+fmtDate(all[all.length-1].date)+'</small></div><div style="text-align:right"><div class="lv'+(totN?(totN<15?' reldim-low':(totN<30?' reldim-mid':'')):'')+'">'+headv+'</div><div class="phn">'+totN+' shots</div>'+(tArr?'<div style="margin-top:1px">'+tArr+'</div>':'')+goalLab+'<span class="chev">▶</span></div></div><div class="pbody">'+(putt?'<div class="seg" style="margin:0 0 8px"><button class="'+(pm==='sg'?'on':'')+'" data-tid="'+tid+'" data-pm="sg">SG/stroke</button><button class="'+(pm==='make'?'on':'')+'" data-tid="'+tid+'" data-pm="make">'+(t.eng==='putt_prox'?'Good %':'Make %')+'</button></div>':(t.eng==='sit'?'<div class="seg" style="margin:0 0 8px"><button class="'+(pm==='sg'?'on':'')+'" data-tid="'+tid+'" data-pm="sg">SG/stroke</button><button class="'+(pm==='prox'?'on':'')+'" data-tid="'+tid+'" data-pm="prox">Prox (ft)</button>'+((t.cat==="Wedge play"||t.cat==="Approach play")?'<button class="'+(pm==='green'?'on':'')+'" data-tid="'+tid+'" data-pm="green">Green %</button>':'')+'</div>':((t.eng==='drivebaan'||t.eng==='driverange')?'<div class="seg" style="margin:0 0 8px"><button class="'+(pm==='sg'?'on':'')+'" data-tid="'+tid+'" data-pm="sg">SG/slag</button><button class="'+(pm==='dist'?'on':'')+'" data-tid="'+tid+'" data-pm="dist">Driver afst.</button><button class="'+(pm==='inplay'?'on':'')+'" data-tid="'+tid+'" data-pm="inplay">In play %</button></div>':'')))+chart(pts,ctype,'ch_'+tid,tgChartV)+progDetail(t,hist,tid)+'</div>';
 wrap.querySelector(".ph").onclick=()=>{progOpen[tid]=!progOpen[tid];renderProgress();};
 if(!_tgrp[t.cat]){_tgrp[t.cat]=[];_tgOrd.push(t.cat);}
 _tgrp[t.cat].push(wrap);});
@@ -6661,6 +6745,17 @@ function openWeekEditor(pid,ws,mode){var isTpl=(mode==='tpl');
 /* ===== Vandaag ===== */
 var todayPlayer=null, todayDate=null, tdActOpen={};
 /* ===== v174: bulk-labelen, toernooi-evaluatie 2.0, Vandaag-vensters ===== */
+function _wi(d,extra){return '<svg class="wico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">'+d+(extra||"")+'</svg>';}
+const WELL_ICONS={
+ mood:_wi('<circle cx="12" cy="12" r="9"/><path d="M8.5 14.5q3.5 3 7 0"/><path d="M9 9.5h.01M15 9.5h.01"/>'),
+ sleepQ:_wi('<path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/>'),
+ fatigue:_wi('<rect x="2" y="8" width="16" height="9" rx="2"/><path d="M21 11.5v2"/><path d="M5 12.5h3"/>'),
+ physFit:_wi('<path d="M4 9v6M20 9v6M7 7v10M17 7v10M7 12h10"/>'),
+ mentFit:_wi('<path d="M15.5 3.5A5 5 0 0 0 7 6.2 4 4 0 0 0 5.5 13a4.5 4.5 0 0 0 3 7.3A4 4 0 0 0 15 19V3.5Z"/><path d="M18 8.5a3.5 3.5 0 1 1 0 7"/>'),
+ stress:_wi('<path d="M13.5 2.5 4 13.5h6.5L9.5 21.5 19 10.5h-6.5Z"/>'),
+ motivation:_wi('<path d="M12 2.5s5.5 4.5 5.5 9.5a5.5 5.5 0 0 1-11 0c0-2 1-3.6 2-5 .4 1.2 1.2 2 2 2 0-2.5.8-5 1.5-6.5Z"/>'),
+ confidence:_wi('<path d="M12 2.8 20 6v6c0 4.6-3.3 8.2-8 9.2-4.7-1-8-4.6-8-9.2V6Z"/><path d="M9 12.2l2.2 2.2L15.5 10"/>')};
+function wellIcon(k){return WELL_ICONS[k]||_wi('<circle cx="12" cy="12" r="9"/>');}
 const MOOD_COLORS=["#d64550","#e2812e","#e0b13c","#a3c14a","#2fae72","#2e78e8"];
 function moodFace(lv,size){var m=["M8 16.6q4-4.4 8 0","M8 16.2q4-2.6 8 0","M8.3 15.6h7.4","M8 14.9q4 2.6 8 0","M8 14.4q4 4.4 8 0","M8 14.4q4 4.4 8 0"][lv-1]||"";
  var eyes=(lv===6)?'<path d="M9 8.8 9.62 10.08 10.9 10.7 9.62 11.32 9 12.6 8.38 11.32 7.1 10.7 8.38 10.08 Z" fill="currentColor" stroke="none"/><path d="M15 8.8 15.62 10.08 16.9 10.7 15.62 11.32 15 12.6 14.38 11.32 13.1 10.7 14.38 10.08 Z" fill="currentColor" stroke="none"/>':'<circle cx="9" cy="10.7" r=".95" fill="currentColor" stroke="none"/><circle cx="15" cy="10.7" r=".95" fill="currentColor" stroke="none"/>';
@@ -6849,11 +6944,11 @@ function wellnessDetail(id){var w=wellnessById(id);if(!w)return;var sh=$("#sheet
  var notes=w.itemNotes||{};
  var scored=WELL_ITEMS.filter(function(it){return (+w[it[0]]||0)||String(notes[it[0]]||"").trim();});
  var rows=scored.map(function(it){var v=+w[it[0]]||0;
-  return '<div class="tepartv"><span class="tepvl" style="text-transform:none;font-size:13px">'+it[1]
+  return '<div class="tepartv"><span class="tepvl" style="text-transform:none;font-size:13px"><span class="wdrow">'+wellIcon(it[0])+'<span>'+it[1]
    +((it[0]==="sleepQ"&&w.sleepH!==""&&w.sleepH!=null)?' <span class="sx">('+String(w.sleepH).replace(".",",")+' u)</span>':'')
-   +'</span><span class="tepe2"'+(v?' style="color:'+MOOD_COLORS[v-1]+'"':'')+'>'+(v?moodFace(v,20):'<span class="sx">–</span>')+'</span></div>';}).join("");
+   +'</span></span></span><span class="tepe2"'+(v?' style="color:'+MOOD_COLORS[v-1]+'"':'')+'>'+(v?moodFace(v,20):'<span class="sx">–</span>')+'</span></div>';}).join("");
  var noteList=scored.filter(function(it){return String(notes[it[0]]||"").trim();})
-  .map(function(it){return '<div class="wdnote"><span class="wdnk">'+esc(it[2]||it[1])+'</span><span class="wdnv">'+esc(String(notes[it[0]]).trim())+'</span></div>';}).join("");
+  .map(function(it){return '<div class="wdnote">'+wellIcon(it[0])+'<span class="wdnv">'+esc(String(notes[it[0]]).trim())+'</span></div>';}).join("");
  var bp=(w.bodyParts||[]).map(bodyPartName);
  var rcol=(r==null)?"var(--muted)":(r<50?"var(--bad)":(r<65?"#e2812e":"var(--good)"));
  sh.innerHTML='<div class="shead"><div><h2>Wellness check</h2><div class="sx">'+fmtDate(w.date)+' · '+esc(nameOf(w.playerId))+'</div></div><div class="sheadact"><button class="xbtn" id="wdEdit" title="Bewerk">✎</button><button class="xbtn xbtn-del" id="wdDel" title="Verwijder">'+TRASH_SVG+'</button><button class="xbtn" onclick="closeSheet()">×</button></div></div>'
@@ -6862,7 +6957,7 @@ function wellnessDetail(id){var w=wellnessById(id);if(!w)return;var sh=$("#sheet
    +'<div class="rubsplit-r"><div class="evdlbl">Toelichting</div>'
    +(noteList||'<p class="muted" style="margin:0;font-size:12.5px">Geen toelichting bij deze check.</p>')
    +'</div></div></div>'):'')
- +((bp.length||w.illness)?'<div class="card">'+(bp.length?'<div class="lldrow"><div class="lldlbl">Lichamelijke klachten</div><div class="bmrow">'+bmHtml("f",bmGender(w.playerId))+bmHtml("b",bmGender(w.playerId))+'</div><div class="wdchips">'+bp.map(function(x){return '<span class="wdchip">'+esc(x)+'</span>';}).join("")+'</div></div>':'')+(w.illness?'<div class="lldrow"><div class="lldlbl">Ziek / niet fit</div><div class="lldval">'+esc(w.illNote||"Ja")+'</div></div>':'')+'</div>':'')
+ +((bp.length||w.illness)?'<div class="card">'+(bp.length?'<div class="lldrow"><div class="lldlbl">Lichamelijke klachten</div><div class="wdlist">'+bp.map(function(x){return '<span><i></i>'+esc(x)+'</span>';}).join("")+'</div><div class="bmrow">'+bmHtml("f",bmGender(w.playerId))+bmHtml("b",bmGender(w.playerId))+'</div></div>':'')+(w.illness?'<div class="lldrow"><div class="lldlbl">Ziek / niet fit</div><div class="lldval">'+esc(w.illNote||"Ja")+'</div></div>':'')+'</div>':'')
  +((w.note||"").trim()?'<div class="card"><div class="lldrow"><div class="lldlbl">Overige opmerkingen</div><div class="lldval">'+esc(w.note)+'</div></div></div>':'');
  openSheet();
  if(bp.length)sh.querySelectorAll(".bmcv").forEach(function(cv){bmRender(cv,cv.dataset.bmside,cv.dataset.bmg,w.bodyParts||[]);});
@@ -6914,17 +7009,19 @@ function wellnessCardInto(box,pid){if(!pid)return;var list=wellness().filter(fun
  card.querySelectorAll("[data-wid]").forEach(function(b){b.onclick=function(e){e.stopPropagation();wellnessDetail(b.dataset.wid);};});
 }
 /* ================= Wellness-tab (v202) ================= */
-var wlFilt={mode:"m6",year:"",from:"",to:""};
+var wlFilt={mode:"m3",year:"",from:"",to:""};
+var wlChecksOpen=false;
 var wlMetric="mood";
 function wlAll(pid){return wellness().filter(function(w){return w.playerId===pid;}).sort(function(a,b){return String(a.date).localeCompare(String(b.date));});}
 function wlApply(all,f){
  var L=all.slice();
  if(f.mode==="year"&&f.year)L=L.filter(function(w){return +String(w.date).slice(0,4)===+f.year;});
- else if(f.mode==="m3"||f.mode==="m6"||f.mode==="m12"||f.mode==="m60"){var cut=scMonthsAgo({m3:3,m6:6,m12:12,m60:60}[f.mode]);L=L.filter(function(w){return w.date>=cut;});}
+ else if(f.mode==="m1"||f.mode==="m3"||f.mode==="m6"||f.mode==="m12"||f.mode==="m60"){var cut=scMonthsAgo({m1:1,m3:3,m6:6,m12:12,m60:60}[f.mode]);L=L.filter(function(w){return w.date>=cut;});}
  else if(f.mode==="period"){if(f.from)L=L.filter(function(w){return w.date>=f.from;});if(f.to)L=L.filter(function(w){return w.date<=f.to;});}
  return L;}
 function wlFiltLabel(f){f=f||wlFilt;
  if(f.mode==="year"&&f.year)return String(f.year);
+ if(f.mode==="m1")return "laatste maand";
  if(f.mode==="m3")return "laatste 3 maanden";
  if(f.mode==="m6")return "laatste 6 maanden";
  if(f.mode==="m12")return "laatste jaar";
@@ -6934,6 +7031,7 @@ function wlFiltLabel(f){f=f||wlFilt;
 function wlFiltHtml(years,nSel,nTot){
  var f=wlFilt;
  var opts='<option value="all"'+(f.mode==="all"?" selected":"")+'>Alle checks</option>'
+  +'<option value="m1"'+(f.mode==="m1"?" selected":"")+'>Laatste maand</option>'
   +'<option value="m3"'+(f.mode==="m3"?" selected":"")+'>Laatste 3 maanden</option>'
   +'<option value="m6"'+(f.mode==="m6"?" selected":"")+'>Laatste 6 maanden</option>'
   +'<option value="m12"'+(f.mode==="m12"?" selected":"")+'>Laatste jaar</option>'
@@ -6943,7 +7041,7 @@ function wlFiltHtml(years,nSel,nTot){
  var dates=(f.mode==="period")?('<div class="row" style="gap:8px;margin-top:8px"><input class="in" type="date" id="wlFA" value="'+esc(f.from||"")+'" style="flex:1"><input class="in" type="date" id="wlFB" value="'+esc(f.to||"")+'" style="flex:1"></div>'):'';
  return '<div class="card"><div class="row" style="gap:8px;flex-wrap:wrap"><select class="in" id="wlFMode" style="flex:1;min-width:170px">'+opts+'</select></div>'+dates
   +'<div class="row spread" style="margin-top:8px;align-items:baseline"><span class="fnote">'+nSel+' van '+nTot+' checks · '+esc(wlFiltLabel())+'</span>'
-  +(f.mode!=="all"?'<a href="#" id="wlFClr" class="fnote" style="text-decoration:underline">filter wissen</a>':'')+'</div></div>';}
+  +(f.mode!=="m3"?'<a href="#" id="wlFClr" class="fnote" style="text-decoration:underline">standaard</a>':'')+'</div></div>';}
 function wlFiltBind(redraw){
  var m=$("#wlFMode");if(m)m.onchange=function(){var v=m.value;
   if(v.charAt(0)==="y"&&!isNaN(+v.slice(1))){wlFilt.mode="year";wlFilt.year=+v.slice(1);}
@@ -6952,7 +7050,7 @@ function wlFiltBind(redraw){
   redraw();};
  var a=$("#wlFA");if(a)a.onchange=function(){wlFilt.from=a.value;redraw();};
  var b=$("#wlFB");if(b)b.onchange=function(){wlFilt.to=b.value;redraw();};
- var c=$("#wlFClr");if(c)c.onclick=function(e){e.preventDefault();wlFilt={mode:"all",year:"",from:"",to:""};redraw();};}
+ var c=$("#wlFClr");if(c)c.onclick=function(e){e.preventDefault();wlFilt={mode:"m3",year:"",from:"",to:""};redraw();};}
 function wlGrad(t){
  var C=[[214,69,80],[226,129,46],[224,177,60],[163,193,74],[47,174,114]];
  t=Math.max(0,Math.min(1,(isNaN(t)?0:t)));
@@ -6969,60 +7067,67 @@ function wlAxis(L){
   out.push({i:i,lab:(span>400)?key:(WL_MON[+String(w.date).slice(5,7)-1]+(out.length===0||String(w.date).slice(5,7)==="01"?" ’"+String(w.date).slice(2,4):""))});});
  if(out.length>13){var step=Math.ceil(out.length/13);out=out.filter(function(x,i){return i%step===0;});}
  return out;}
+function wlPct(v){return (v==null||isNaN(v))?null:Math.round((v-1)/5*100);}
 function wlAvg(L,key){var s2=0,n=0;L.forEach(function(w){var v=+w[key]||0;if(v){s2+=v;n++;}});return n?s2/n:null;}
-function wlReadySvg(L){
- if(!L.length)return '<p class="muted" style="margin:0;font-size:13px">Geen checks in deze periode.</p>';
- var W=640,H=210,Lp=34,R=12,T=14,B=28,pw=W-Lp-R,ph=H-T-B;
- function Y(v){return T+ph-(v/100)*ph;}
+function wlTs(w){return new Date(w.date+"T12:00:00").getTime();}
+function wlAxisT(L){
+ if(!L.length)return [];
+ var span=dDiffDays(L[0].date,L[L.length-1].date);
+ var out=[],seen={};
+ L.forEach(function(w){
+  var key=(span>400)?String(w.date).slice(0,4):String(w.date).slice(0,7);
+  if(seen[key])return;seen[key]=1;
+  out.push({t:wlTs(w),lab:(span>400)?key:(WL_MON[+String(w.date).slice(5,7)-1]+((out.length===0||String(w.date).slice(5,7)==="01")?" ’"+String(w.date).slice(2,4):""))});});
+ if(out.length>13){var step=Math.ceil(out.length/13);out=out.filter(function(x,i){return i%step===0;});}
+ return out;}
+function wlBarSvg(L,o){
+ var pts=[];L.forEach(function(w){var v=o.get(w);if(v==null||isNaN(v))return;pts.push({w:w,v:v});});
+ if(!pts.length)return '<p class="muted" style="margin:0;font-size:13px">'+(o.empty||"Geen data in deze periode.")+'</p>';
+ var W=640,H=o.h||200,Lp=34,R=12,T=14,B=28,pw=W-Lp-R,ph=H-T-B;
+ var lo=o.min,hi=o.max;
+ if(hi==null){hi=Math.max.apply(null,pts.map(function(p){return p.v;}));hi=Math.max(lo+1,Math.ceil(hi));}
+ var t0=wlTs(L[0]),t1=wlTs(L[L.length-1]);if(t1<=t0)t1=t0+864e5;
+ function X(t){return Lp+(t-t0)/(t1-t0)*pw;}
+ function Y(v){return T+ph-((v-lo)/(hi-lo))*ph;}
  var s2='<svg viewBox="0 0 '+W+' '+H+'" width="'+W+'" height="'+H+'" preserveAspectRatio="xMidYMid meet">';
- [0,25,50,75,100].forEach(function(g){var y=Y(g);
-  s2+='<line class="'+(g===0?"gzero":"gmaj")+'" x1="'+Lp+'" y1="'+y.toFixed(1)+'" x2="'+(W-R)+'" y2="'+y.toFixed(1)+'"/>'
-   +'<text class="axv" x="'+(Lp-8)+'" y="'+(y+3.2).toFixed(1)+'" text-anchor="end">'+g+'</text>';});
- var bw=Math.max(2.5,Math.min(20,pw/L.length*0.72));
- L.forEach(function(w,i){var r=wellReadiness(w);if(r==null)return;
-  var cx=Lp+(i+0.5)/L.length*pw,y=Y(r);
-  s2+='<rect class="pt" x="'+(cx-bw/2).toFixed(1)+'" y="'+y.toFixed(1)+'" width="'+bw.toFixed(1)+'" height="'+Math.max(1.5,(T+ph)-y).toFixed(1)+'" rx="2" fill="'+wlGrad(r/100)+'" data-wid="'+w.id+'"><title>'+fmtDate(w.date)+' · '+r+'%</title></rect>';});
- wlAxis(L).forEach(function(t){s2+='<text class="axd" x="'+(Lp+(t.i+0.5)/L.length*pw).toFixed(1)+'" y="'+(H-9)+'" text-anchor="middle">'+t.lab+'</text>';});
- s2+='</svg>';
- return '<div class="chartwrap scchart">'+s2+'</div><div class="wlleg"><span>totaal niet fit</span><i class="wlgrad"></i><span>superfit</span></div>';}
-function wlScaleSvg(L,key){
- var pts=[];L.forEach(function(w,i){var v=+w[key]||0;if(v)pts.push({i:i,v:v,w:w});});
- if(!pts.length)return '<p class="muted" style="margin:0;font-size:13px">Geen antwoorden op dit onderdeel in deze periode.</p>';
- var W=640,H=205,Lp=34,R=12,T=14,B=28,pw=W-Lp-R,ph=H-T-B;
- var LAB=["heel laag","laag","matig","redelijk","goed","top"];
- function X(i){return Lp+(i+0.5)/L.length*pw;}
- function Y(v){return T+ph-((v-1)/5)*ph;}
- var s2='<svg viewBox="0 0 '+W+' '+H+'" width="'+W+'" height="'+H+'" preserveAspectRatio="xMidYMid meet">';
- for(var g=1;g<=6;g++){var y=Y(g);
-  s2+='<line class="'+(g===1?"gzero":"gmaj")+'" x1="'+Lp+'" y1="'+y.toFixed(1)+'" x2="'+(W-R)+'" y2="'+y.toFixed(1)+'"/>'
-   +'<text class="axv" x="'+(Lp-8)+'" y="'+(y+3.2).toFixed(1)+'" text-anchor="end">'+g+'</text>';}
- if(pts.length>2){var TP=scTrendPoints(pts.map(function(p){return X(p.i);}),pts.map(function(p){return p.v;}),Y);
+ (o.ticks||[]).forEach(function(g){var y=Y(g);
+  s2+='<line class="'+(g===lo?"gzero":"gmaj")+'" x1="'+Lp+'" y1="'+y.toFixed(1)+'" x2="'+(W-R)+'" y2="'+y.toFixed(1)+'"/>'
+   +'<text class="axv" x="'+(Lp-8)+'" y="'+(y+3.2).toFixed(1)+'" text-anchor="end">'+(o.tickLab?o.tickLab(g):g)+'</text>';});
+ var xs=pts.map(function(p){return X(wlTs(p.w));});
+ var gap=pw;for(var i=1;i<xs.length;i++){var d=xs[i]-xs[i-1];if(d>0.2&&d<gap)gap=d;}
+ var bw=Math.max(1.8,Math.min(18,gap*0.78));
+ var base=T+ph;
+ pts.forEach(function(p,i){var y=Y(p.v);
+  s2+='<rect class="pt" x="'+(xs[i]-bw/2).toFixed(1)+'" y="'+y.toFixed(1)+'" width="'+bw.toFixed(1)+'" height="'+Math.max(1.8,base-y).toFixed(1)+'" rx="2" fill="'+o.col(p.v)+'" data-wid="'+p.w.id+'"><title>'+fmtDate(p.w.date)+' · '+(o.fmt?o.fmt(p.v):p.v)+'</title></rect>';});
+ if(o.avg!=null){var ay=Y(o.avg);
+  s2+='<path d="M'+Lp+' '+ay.toFixed(1)+' L'+(W-R)+' '+ay.toFixed(1)+'" fill="none" class="bml2"/>'
+   +'<text class="axd" x="'+(Lp+4)+'" y="'+(ay-4).toFixed(1)+'" text-anchor="start" style="fill:#E8520A">'+(o.avgLab||"")+'</text>';}
+ if(o.trend!==false&&pts.length>2){
+  var TP=scTrendPoints(xs,pts.map(function(p){return p.v;}),Y);
   if(TP.length>1)s2+='<path class="ln" d="'+scTrendPath(TP)+'"/>';}
- pts.forEach(function(p){
-  s2+='<circle class="pt" cx="'+X(p.i).toFixed(1)+'" cy="'+Y(p.v).toFixed(1)+'" r="4.2" fill="'+MOOD_COLORS[p.v-1]+'" data-wid="'+p.w.id+'"><title>'+fmtDate(p.w.date)+' · '+LAB[p.v-1]+'</title></circle>';});
- wlAxis(L).forEach(function(t){s2+='<text class="axd" x="'+X(t.i).toFixed(1)+'" y="'+(H-9)+'" text-anchor="middle">'+t.lab+'</text>';});
+ wlAxisT(L).forEach(function(t){s2+='<text class="axd" x="'+X(t.t).toFixed(1)+'" y="'+(H-9)+'" text-anchor="middle">'+t.lab+'</text>';});
  s2+='</svg>';
  return '<div class="chartwrap scchart">'+s2+'</div>';}
+function wlReadySvg(L){
+ return wlBarSvg(L,{get:function(w){return wellReadiness(w);},min:0,max:100,ticks:[0,25,50,75,100],
+  col:function(v){return wlGrad(v/100);},fmt:function(v){return v+"%";},h:210,
+  empty:"Geen checks in deze periode."})
+  +'<div class="wlleg"><span class="wlic" title="totaal niet fit">'+WL_ICO_BAT+'</span><i class="wlgrad"></i><span class="wlic" title="superfit">'+WL_ICO_ROCKET+'</span></div>';}
+const WL_ICO_BAT='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7.5" width="16" height="10" rx="2.5"/><path d="M21 11v2"/><rect x="4.5" y="10" width="2.6" height="5" rx="1" fill="currentColor" stroke="none"/></svg>';
+const WL_ICO_ROCKET='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5c3 2 5 5.6 5 9.5 0 2.2-.6 4.2-1.6 6H8.6C7.6 16.2 7 14.2 7 12c0-3.9 2-7.5 5-9.5Z"/><circle cx="12" cy="10" r="1.9"/><path d="M8.6 18 6 21l3-.6M15.4 18 18 21l-3-.6"/></svg>';
+function wlScaleSvg(L,key){
+ return wlBarSvg(L,{get:function(w){return (+w[key]||0)||null;},min:1,max:6,ticks:[1,2,3,4,5,6],
+  col:function(v){return MOOD_COLORS[v-1];},fmt:function(v){return ["heel laag","laag","matig","redelijk","goed","top"][v-1];},h:200,
+  empty:"Geen antwoorden op dit onderdeel in deze periode."});}
 function wlHoursSvg(L){
- var pts=[];L.forEach(function(w,i){var v=(w.sleepH===""||w.sleepH==null)?null:+w.sleepH;if(v)pts.push({i:i,v:v,w:w});});
- if(!pts.length)return '<p class="muted" style="margin:0;font-size:13px">Nog geen slaapuren ingevuld in deze periode.</p>';
- var vs=pts.map(function(p){return p.v;});
- var mx=Math.max(10,Math.ceil(Math.max.apply(null,vs)));
- var W=640,H=190,Lp=34,R=12,T=14,B=28,pw=W-Lp-R,ph=H-T-B;
- function Y(v){return T+ph-(v/mx)*ph;}
- var av=vs.reduce(function(a,b){return a+b;},0)/vs.length;
- var s2='<svg viewBox="0 0 '+W+' '+H+'" width="'+W+'" height="'+H+'" preserveAspectRatio="xMidYMid meet">';
- for(var g=0;g<=mx;g+=2){var y=Y(g);
-  s2+='<line class="'+(g===0?"gzero":"gmaj")+'" x1="'+Lp+'" y1="'+y.toFixed(1)+'" x2="'+(W-R)+'" y2="'+y.toFixed(1)+'"/>'
-   +'<text class="axv" x="'+(Lp-8)+'" y="'+(y+3.2).toFixed(1)+'" text-anchor="end">'+g+'</text>';}
- var bw=Math.max(2.5,Math.min(20,pw/L.length*0.72));
- pts.forEach(function(p){var cx=Lp+(p.i+0.5)/L.length*pw,y=Y(p.v);
-  s2+='<rect class="pt" x="'+(cx-bw/2).toFixed(1)+'" y="'+y.toFixed(1)+'" width="'+bw.toFixed(1)+'" height="'+Math.max(1.5,(T+ph)-y).toFixed(1)+'" rx="2" fill="'+(p.v>=8?"#2fae72":(p.v>=7?"#a3c14a":(p.v>=6?"#e0b13c":"#d64550")))+'" data-wid="'+p.w.id+'"><title>'+fmtDate(p.w.date)+' · '+String(p.v).replace(".",",")+' u</title></rect>';});
- s2+='<path d="M'+Lp+' '+Y(av).toFixed(1)+' L'+(W-R)+' '+Y(av).toFixed(1)+'" fill="none" class="bml2"/>'
-  +'<text class="axd" x="'+(Lp+4)+'" y="'+(Y(av)-4).toFixed(1)+'" text-anchor="start" style="fill:#E8520A">gem. '+av.toFixed(1).replace(".",",")+' u</text>';
- wlAxis(L).forEach(function(t){s2+='<text class="axd" x="'+(Lp+(t.i+0.5)/L.length*pw).toFixed(1)+'" y="'+(H-9)+'" text-anchor="middle">'+t.lab+'</text>';});
- s2+='</svg>';
- return '<div class="chartwrap scchart">'+s2+'</div>';}
+ var hs=L.map(function(w){return (w.sleepH===""||w.sleepH==null)?null:+w.sleepH;}).filter(function(v){return v;});
+ if(!hs.length)return '<p class="muted" style="margin:0;font-size:13px">Nog geen slaapuren ingevuld in deze periode.</p>';
+ var av=hs.reduce(function(a,b){return a+b;},0)/hs.length;
+ var mx=Math.max(10,Math.ceil(Math.max.apply(null,hs)));
+ var ticks=[];for(var g=0;g<=mx;g+=2)ticks.push(g);
+ return wlBarSvg(L,{get:function(w){return (w.sleepH===""||w.sleepH==null)?null:(+w.sleepH||null);},min:0,max:mx,ticks:ticks,
+  col:function(v){return v>=8?"#2fae72":(v>=7?"#a3c14a":(v>=6?"#e0b13c":"#d64550"));},
+  fmt:function(v){return String(v).replace(".",",")+" u";},h:190,avg:av,avgLab:"gem. "+av.toFixed(1).replace(".",",")+" u",trend:false});}
 function wlComplaintSvg(L){
  var cnt={},order=[];
  L.forEach(function(w){(w.bodyParts||[]).forEach(function(k){if(!cnt[k]){cnt[k]=0;order.push(k);}cnt[k]++;});});
@@ -7079,7 +7184,7 @@ function renderWellnessTab(){
   H+='<div class="card"><div class="cardhd"><h3>Slaap</h3><span class="hdnote">'+(sh2.length?sh2.length+' nachten met uren':'geen uren ingevuld')+'</span></div>'
    +'<div class="row" style="gap:10px;flex-wrap:wrap;margin-bottom:6px">'
    +'<span class="wlstat"><span>Gem. uren</span><b>'+(sh2.length?(sh2.reduce(function(a,w){return a+(+w.sleepH||0);},0)/sh2.length).toFixed(1).replace(".",","):"–")+'</b></span>'
-   +'<span class="wlstat"><span>Gem. kwaliteit</span><b style="color:'+(sq==null?"var(--muted)":MOOD_COLORS[Math.max(0,Math.round(sq)-1)])+'">'+(sq!=null?sq.toFixed(1).replace(".",",")+" / 6":"–")+'</b></span></div>'
+   +'<span class="wlstat"><span>Gem. kwaliteit</span><b style="color:'+(sq==null?"var(--muted)":MOOD_COLORS[Math.max(0,Math.round(sq)-1)])+'">'+(sq!=null?wlPct(sq)+"%":"–")+'</b></span></div>'
    +wlHoursSvg(L)
    +'<div class="trlbl" style="margin-top:12px">Slaapkwaliteit</div>'+wlScaleSvg(L,"sleepQ")+'</div>';
   var fa=wlAvg(L,"fatigue");
@@ -7095,12 +7200,13 @@ function renderWellnessTab(){
    var col=(r==null)?"var(--muted)":wlGrad(r/100);
    var tags=[];if(w.illness)tags.push("ziek");if((w.bodyParts||[]).length)tags.push((w.bodyParts||[]).length+" klacht"+((w.bodyParts||[]).length===1?"":"en"));
    return '<div class="sprow" data-wd="'+w.id+'"><div style="flex:1;min-width:0"><b style="font-size:13.5px">'+fmtDate(w.date)+'</b>'+(tags.length?'<small class="muted" style="display:block">'+esc(tags.join(" · "))+'</small>':'')+'</div><b style="color:'+col+'">'+(r!=null?r+"%":"–")+'</b><span class="chev">▶</span></div>';}).join("");
-  H+='<div class="card" style="padding:6px 14px"><div class="sphdr"><b style="font-size:14px">Checks <span class="muted" style="font-weight:600">· '+L.length+'</span></b></div>'+rowsH+'</div>';
+  H+='<div class="collap'+(wlChecksOpen?' open':'')+'"><div class="ch" id="wlChH"><b>Checks <span class="muted" style="font-weight:600">· '+L.length+'</span></b><span class="chev">▶</span></div><div class="cb">'+rowsH+'</div></div>';
  }
  box.innerHTML=H;
  scPickBind("wl",renderWellnessTab);
  wlFiltBind(renderWellnessTab);
  var mt=$("#wlMet");if(mt)mt.querySelectorAll("[data-wm]").forEach(function(b){b.onclick=function(){wlMetric=b.dataset.wm;renderWellnessTab();};});
+ var wch=$("#wlChH");if(wch)wch.onclick=function(){wlChecksOpen=!wlChecksOpen;renderWellnessTab();};
  box.querySelectorAll("[data-wd]").forEach(function(b){b.onclick=function(){wellnessDetail(b.dataset.wd);};});
  box.querySelectorAll("[data-wid]").forEach(function(b){b.style.cursor="pointer";b.onclick=function(){wellnessDetail(b.dataset.wid);};});
 }
