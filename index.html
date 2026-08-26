@@ -286,6 +286,19 @@ small.note{display:block;color:var(--muted);font-size:11.5px;line-height:1.5;mar
 .szsc{flex:0 0 auto;text-align:right;white-space:nowrap}
 .szsc b{display:block;font-size:16px;line-height:1.15}
 .szsc small{display:block;font-size:9.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;margin-top:1px}
+.szrow{cursor:pointer}
+.szchev{font-size:10px;color:var(--muted);margin-left:6px;font-weight:400}
+.szranks{margin-top:5px}
+.szrank{border:none;cursor:pointer;font-size:10.5px;font-weight:800;border-radius:7px;padding:2px 8px;background:#1d5fa8;color:#fff;letter-spacing:.02em}
+.szrank.leeg{background:#eef1f4;color:var(--muted);font-weight:700}
+.szdet{margin-top:8px;padding:8px 0 2px;border-top:1px solid #eef1f4}
+.szdlbl{font-size:10.5px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;margin-bottom:3px}
+.szrnd{display:flex;align-items:baseline;gap:9px;padding:3px 0;font-size:12.5px}
+.szrnd.tot{border-top:1px solid #eef1f4;margin-top:3px;padding-top:5px;font-weight:700}
+.szrn{flex:0 0 auto;width:22px;font-weight:800;font-size:11px;color:var(--muted)}
+.szrd{flex:1 1 auto;min-width:0;color:var(--muted)}
+.szrv{flex:0 0 auto;font-weight:800;width:44px;text-align:right}
+.szrg{flex:0 0 auto;width:34px;text-align:right;color:var(--muted);font-size:11.5px}
 .mprow .mpt{flex:1 1 auto;min-width:0}
 .mprow b{display:block;font-size:13.5px;line-height:1.3}
 .mprow small{display:block;font-size:12.5px;color:var(--muted);margin-top:1px}
@@ -1078,10 +1091,10 @@ input.in.tesg{width:96px;max-width:96px;flex:0 0 96px;text-align:right;font-vari
 <main>
 <section class="view" id="v-home"><div id="homeSwitch"></div><div id="seasonBar"></div><h1 class="title" style="margin-bottom:10px">Klassement</h1><div id="seasonLadder"></div><div id="teamDash"></div><div id="recentSessions"></div></section>
 <section class="view" id="v-new"><div id="newSwitch"></div><div id="newPlayerPick"></div><h1 class="title">Kies een test</h1><div id="testPicker"></div></section>
-<section class="view" id="v-progress"><div id="progSwitch"></div><div class="seg tlmini ptabs" style="margin:0 0 10px"><button onclick="show('scoring')">Scoring</button><button onclick="show('baanstats')">Baanstats</button><button class="on">Training</button><button onclick="show('wellness')">Wellness</button><button onclick="show('teaminsight')">Team</button><button onclick="show('logbook')">Logboek</button></div><h1 class="title">Voortgang</h1><div id="progressBody"></div></section>
-<section class="view" id="v-wellness"><div class="seg tlmini ptabs" style="margin:0 0 10px"><button onclick="show('scoring')">Scoring</button><button onclick="show('baanstats')">Baanstats</button><button onclick="show('progress')">Training</button><button class="on">Wellness</button><button onclick="show('teaminsight')">Team</button><button onclick="show('logbook')">Logboek</button></div><h1 class="title" style="margin-bottom:2px">Wellness</h1><p class="plansub">Dagelijkse fitheid-check en readiness</p><div id="wlBody"></div></section>
+<section class="view" id="v-progress"><div id="progSwitch"></div><div class="seg tlmini ptabs" style="margin:0 0 10px"></div><h1 class="title">Voortgang</h1><div id="progressBody"></div></section>
+<section class="view" id="v-kansen"><div id="kansenSwitch"></div><div class="seg tlmini ptabs" style="margin:0 0 10px"></div><h1 class="title" style="margin-bottom:2px">Kansen</h1><p class="plansub">Waar levert trainen het meeste op, en klopt je wedstrijdmix?</p><div id="kansenBody"></div></section><section class="view" id="v-wellness"><div class="seg tlmini ptabs" style="margin:0 0 10px"></div><h1 class="title" style="margin-bottom:2px">Wellness</h1><p class="plansub">Dagelijkse fitheid-check en readiness</p><div id="wlBody"></div></section>
 <section class="view" id="v-teams"><p class="eyebrow">Groepen</p><h1 class="title">Teams</h1><div id="teamsBody"></div></section>
-<section class="view" id="v-teaminsight"><div id="teamSwitchTI"></div><div class="seg tlmini ptabs" style="margin:0 0 10px"><button onclick="show('scoring')">Scoring</button><button onclick="show('baanstats')">Baanstats</button><button onclick="show('progress')">Training</button><button onclick="show('wellness')">Wellness</button><button class="on">Team</button><button onclick="show('logbook')">Logboek</button></div><h1 class="title">Teamprestaties</h1><div id="teamInsightBody"></div></section><section class="view" id="v-logbook"><div class="seg tlmini ptabs" style="margin:0 0 10px"><button onclick="show('scoring')">Scoring</button><button onclick="show('baanstats')">Baanstats</button><button onclick="show('progress')">Training</button><button onclick="show('wellness')">Wellness</button><button onclick="show('teaminsight')">Team</button><button class="on">Logboek</button></div><h1 class="title" style="margin-bottom:2px">Logboek</h1><p class="plansub">Alle voltooide acties van de speler</p><div id="logbookBody"></div></section><section class="view" id="v-scoring"><div class="seg tlmini ptabs" style="margin:0 0 10px"><button class="on">Scoring</button><button onclick="show('baanstats')">Baanstats</button><button onclick="show('progress')">Training</button><button onclick="show('wellness')">Wellness</button><button onclick="show('teaminsight')">Team</button><button onclick="show('logbook')">Logboek</button></div><h1 class="title" style="margin-bottom:2px">Scoring</h1><p class="plansub">Scoreverloop en scoringsoverzicht per speler</p><div id="scBody"></div></section><section class="view" id="v-baanstats"><div class="seg tlmini ptabs" style="margin:0 0 10px"><button onclick="show('scoring')">Scoring</button><button class="on">Baanstats</button><button onclick="show('progress')">Training</button><button onclick="show('wellness')">Wellness</button><button onclick="show('teaminsight')">Team</button><button onclick="show('logbook')">Logboek</button></div><h1 class="title" style="margin-bottom:2px">Baanstats</h1><p class="plansub">Upgame-snapshots en strokes gained</p><div id="bsBody"></div></section><section class="view" id="v-trainen"><button class="bkbtn" onclick="openSettings()" style="margin:0 0 8px;display:inline-block">‹ Instellingen</button><h1 class="title" style="margin-bottom:2px">Oefeningen-database</h1><p class="plansub">Oefeningen, testen en challenges</p><div id="trainBody"></div></section><section class="view active" id="v-today"><h1 class="title" style="margin-bottom:2px">Vandaag</h1><p class="plansub" id="todaySub"></p><div id="todayBody"></div></section><section class="view" id="v-planning"><div id="planSwitch"></div><h1 class="title" style="margin-bottom:2px">Planning</h1><p class="plansub" id="planSub"></p><div id="planBody"></div></section><section class="view" id="v-goals"><div id="goalScope"></div><h1 class="title">Doelen</h1><div id="goalsBody"></div></section><section class="view" id="v-spelen"><div id="spTop"></div><h1 class="title" style="margin-bottom:2px">Spelen</h1><p class="plansub">Rondeoverzicht en score-invoer per speler</p><div id="spBody"></div></section>
+<section class="view" id="v-teaminsight"><div id="teamSwitchTI"></div><div class="seg tlmini ptabs" style="margin:0 0 10px"></div><h1 class="title">Teamprestaties</h1><div id="teamInsightBody"></div></section><section class="view" id="v-logbook"><div class="seg tlmini ptabs" style="margin:0 0 10px"></div><h1 class="title" style="margin-bottom:2px">Logboek</h1><p class="plansub">Alle voltooide acties van de speler</p><div id="logbookBody"></div></section><section class="view" id="v-scoring"><div class="seg tlmini ptabs" style="margin:0 0 10px"></div><h1 class="title" style="margin-bottom:2px">Scoring</h1><p class="plansub">Scoreverloop en scoringsoverzicht per speler</p><div id="scBody"></div></section><section class="view" id="v-baanstats"><div class="seg tlmini ptabs" style="margin:0 0 10px"></div><h1 class="title" style="margin-bottom:2px">Baanstats</h1><p class="plansub">Upgame-snapshots en strokes gained</p><div id="bsBody"></div></section><section class="view" id="v-trainen"><button class="bkbtn" onclick="openSettings()" style="margin:0 0 8px;display:inline-block">‹ Instellingen</button><h1 class="title" style="margin-bottom:2px">Oefeningen-database</h1><p class="plansub">Oefeningen, testen en challenges</p><div id="trainBody"></div></section><section class="view active" id="v-today"><h1 class="title" style="margin-bottom:2px">Vandaag</h1><p class="plansub" id="todaySub"></p><div id="todayBody"></div></section><section class="view" id="v-planning"><div id="planSwitch"></div><h1 class="title" style="margin-bottom:2px">Planning</h1><p class="plansub" id="planSub"></p><div id="planBody"></div></section><section class="view" id="v-goals"><div id="goalScope"></div><h1 class="title">Doelen</h1><div id="goalsBody"></div></section><section class="view" id="v-spelen"><div id="spTop"></div><h1 class="title" style="margin-bottom:2px">Spelen</h1><p class="plansub">Rondeoverzicht en score-invoer per speler</p><div id="spBody"></div></section>
 </main></div>
 <div class="scrim" id="scrim"><div class="sheet" id="sheet"></div></div>
 <div class="toast" id="toast"></div>
@@ -1164,7 +1177,7 @@ const LIES={f:"Fairway",r:"Rough",s:"Sand",g:"Green"};const DLIES={f:"Fairway",r
 const LV=["PGA Tour"];
 function spread(min,max,n){if(n===1)return [Math.round((min+max)/2)];const a=[];for(let i=0;i<n;i++)a.push(Math.round(min+(max-min)*i/(n-1)));return a;}
 const NSIT=[3,6,9,12,15,18], NHOLE=[6,9,12,18];
-const APP_VERSION="v213";
+const APP_VERSION="v214";
 const TESTS={
 putt_3_5:{name:"Putt 3–5 ft",cat:"Putten",eng:"putt_cat",dists:[3,4,5],per:8,info:"24 putts (8× vanaf 3, 4 en 5 ft). Per afstand: holed, mis binnen 3 ft, mis buiten 3 ft. Output: SG + make%."},
 putt_6_10:{name:"Putt 6–10 ft",cat:"Putten",eng:"putt_cat",dists:[6,8,10],per:8,info:"24 putts (8× vanaf 6, 8 en 10 ft). Zelfde invoer als 3–5 ft."},
@@ -1260,7 +1273,7 @@ function sortTeams(){if(!state.teams)return;var before=state.teams.map(function(
 let activeView="today";
 function acAttach(input,items,labelOf,onPick){if(!input||input._ac)return;input._ac=1;var wrap=input.closest(".acwrap")||input.parentElement;if(getComputedStyle(wrap).position==="static")wrap.style.position="relative";var box=document.createElement("div");box.className="acbox";box.style.display="none";wrap.appendChild(box);function hide(){box.style.display="none";}function draw(){var q=(input.value||"").trim().toLowerCase();if(!q){hide();return;}var list=items.filter(function(it){return labelOf(it).toLowerCase().indexOf(q)===0;}).slice(0,10);if(!list.length){hide();return;}box.innerHTML="";list.forEach(function(it){var el=document.createElement("div");el.className="acitem";el.textContent=labelOf(it);el.addEventListener("mousedown",function(ev){ev.preventDefault();input.value=labelOf(it);hide();onPick(it);});box.appendChild(el);});box.style.display="block";}input.addEventListener("input",draw);input.addEventListener("focus",function(){if(input.select)input.select();draw();});input.addEventListener("blur",function(){setTimeout(hide,180);});}
 function show(v){var _prev=activeView;activeView=v;sortTeams();if(_prev!==v){goalCardOpen={};countsProgOpen=false;recentProgOpen=false;progFiltOpen=false;ovOpen={};Object.keys(progOpen).forEach(function(k){delete progOpen[k];});recentHomeOpen=false;countsHomeOpen=false;coursesOpen=false;backupOpen=false;teamOpen={};pickOpen={};teamLbOpen={};libTourOpen={};tlMonthOpen={};tlEventsOpen=false;tlShowPast=false;}document.querySelectorAll(".view").forEach(x=>x.classList.remove("active"));$("#v-"+v).classList.add("active");var _navV=(v==="teaminsight"||v==="logbook"||v==="progress"||v==="baanstats"||v==="wellness")?"scoring":v;document.querySelectorAll("#tabs button").forEach(b=>b.classList.toggle("active",b.dataset.v===_navV));
-if(v==="home")renderHome();if(v==="new")renderNew();if(v==="progress")renderProgress();if(v==="teams")renderTeams();if(v==="teaminsight")renderTeamInsight();if(v==="logbook")renderLogbook();if(v==="scoring")renderScoring();if(v==="baanstats")renderBaanstats();if(v==="wellness")renderWellnessTab();if(v==="trainen")renderTrain();if(v==="today")renderToday();if(v==="planning")renderPlanning();if(v==="goals")renderGoals();if(v==="spelen")renderSpelen();window.scrollTo(0,0);}
+if(v==="home")renderHome();if(v==="new")renderNew();if(v==="progress")renderProgress();if(v==="teams")renderTeams();if(v==="teaminsight")renderTeamInsight();if(v==="logbook")renderLogbook();if(v==="scoring")renderScoring();if(v==="kansen")renderKansen();if(v==="baanstats")renderBaanstats();if(v==="wellness")renderWellnessTab();if(v==="trainen")renderTrain();if(v==="today")renderToday();if(v==="planning")renderPlanning();if(v==="goals")renderGoals();if(v==="spelen")renderSpelen();try{renderProgTabs();}catch(e){}window.scrollTo(0,0);}
 document.querySelectorAll("#tabs button").forEach(b=>b.onclick=()=>show(b.dataset.v));
 function teamSwitch(id,withAll,allActive){if(state.teams.length===0)return "";var opts=(withAll?'<option value="__all__" '+(allActive?'selected':'')+'>\u2605 Alle teams (totaal)</option>':'')+state.teams.map(t=>'<option value="'+t.id+'" '+((!allActive&&t.id===state.activeTeamId)?'selected':'')+'>'+esc(t.name)+'</option>').join("");return '<div class="teamswitch"><select id="'+id+'">'+opts+'</select></div>';}
 function bindSwitch(id,onAll){const s=$("#"+id);if(!s)return;s.onchange=()=>{if(onAll&&s.value==="__all__"){onAll(true);}else{if(onAll)onAll(false);state.activeTeamId=s.value;save();show(activeView);}};}
@@ -2298,28 +2311,21 @@ function scFiltSub(f){f=f||scFilt;var a=[];
  if(f.kl)a.push("klasse "+f.kl);
  if((f.evs||[]).length)a.push((f.evs.length===1)?f.evs[0]:(f.evs.length+" toernooien"));
  return a.join(" · ");}
-function renderScoring(){var box=$("#scBody");if(!box)return;
+const PROG_TABS=[["scoring","Scoring"],["kansen","Kansen"],["baanstats","Baanstats"],
+ ["progress","Training"],["wellness","Wellness"],["teaminsight","Team"],["logbook","Logboek"]];
+function renderProgTabs(){
+ var v=activeView;
+ var html=PROG_TABS.map(function(t){
+  return '<button'+((t[0]===v)?' class="on"':' onclick="show(\''+t[0]+'\')"')+'>'+t[1]+'</button>';}).join("");
+ document.querySelectorAll(".seg.tlmini.ptabs").forEach(function(el){el.innerHTML=html;});}
+function renderKansen(){
+ var box=$("#kansenBody");if(!box)return;
  if(spPlayer&&!registryPlayer(spPlayer))spPlayer=null;
  if(!spPlayer&&typeof selPlayer!=="undefined"&&selPlayer&&registryPlayer(selPlayer))spPlayer=selPlayer;
  if(!spPlayer&&(state.players||[]).length===1)spPlayer=state.players[0].id;
- var pick=scPickHtml("sc",spPlayer);
- if(!spPlayer){box.innerHTML=pick+'<div class="card"><p class="muted" style="margin:0">Kies een speler om het scoringsoverzicht te bekijken.</p></div><button class="btn block blue" id="scImpB" style="margin-top:12px">+ Scores importeren (JSON)</button>';scPickBind("sc",renderScoring);var b0=$("#scImpB");if(b0)b0.onclick=openScImport;return;}
- var D=scData(spPlayer,scFilt);
- var H=pick+scFiltHtml(D);
- if(!D.all.length){
-  H+='<div class="card"><p class="muted" style="margin:0;font-size:13px">Nog geen 18-holes rondes voor deze speler. Voeg rondes toe via <b>Spelen</b> of importeer een scorebestand.</p></div>';
- }else if(!D.list.length){
-  H+='<div class="card"><p class="muted" style="margin:0;font-size:13px">Geen rondes in deze selectie. Pas het filter aan.</p></div>';
- }else{
-  var S=D.sc;var bch=D.bench;
-  function bRow(lbl,v,b){return '<tr><td>'+lbl+'</td><td style="text-align:right"><b>'+scF(v)+'</b></td><td style="text-align:right;color:'+((v!=null&&b!=null)?(v-b<=0?"var(--good)":"var(--bad)"):"var(--muted)")+'">'+((v!=null&&b!=null)?scF(v-b):"–")+'</td></tr>';}
-  H+='<div class="card"><div class="cardhd"><h3>Scoring</h3><span class="hdnote">'+S.n+' rondes · '+esc(scFiltLabel())+'</span></div>'
-   +'<div style="overflow-x:auto"><table class="kvtable" style="width:100%"><tr><th></th><th style="text-align:right">Score (t.o.v. par)</th><th style="text-align:right">vs benchmark</th></tr>'
-   +bRow("Scoringsgemiddelde",S.avg,bch)+bRow(S.cfg.pct+"% gemiddelde",S.avgPct,bch)+bRow("Mediaan",S.med,bch)
-   +bRow("Gemiddelde beste "+S.cfg.best1,S.best1,bch)+bRow("Gemiddelde beste "+S.cfg.best2,S.best2,bch)
-   +'<tr><td>Benchmark of beter</td><td style="text-align:right"><b>'+(S.benchN!=null?S.benchN:"–")+'</b></td><td style="text-align:right">'+(S.benchN!=null&&S.n?Math.round(S.benchN/S.n*100)+"%":"–")+'</td></tr>'
-   +'<tr><td>Par of beter</td><td style="text-align:right"><b>'+S.parN+'</b></td><td style="text-align:right">'+(S.n?Math.round(S.parN/S.n*100)+"%":"–")+'</td></tr></table></div>'
-   +'<div class="row spread" style="align-items:center;margin-top:10px"><span class="muted" style="font-size:12.5px">Benchmark: <b>'+(bch!=null?scF(bch):"–")+'</b>'+(registryPlayer(spPlayer)&&registryPlayer(spPlayer).scBench!=null&&registryPlayer(spPlayer).scBench!==""?' (eigen)':' (o.b.v. leeftijd)')+'</span><a href="#" id="scBchE" style="font-size:12.5px">aanpassen</a></div></div>';
+ var pick=scPickHtml("kn",spPlayer);
+ if(!spPlayer){box.innerHTML=pick+'<div class="card"><p class="muted" style="margin:0">Kies een speler om de kansenanalyse te bekijken.</p></div>';scPickBind("kn",renderKansen);return;}
+ var H=pick;
   var OPS=[];try{OPS=opportunities(spPlayer);}catch(e){}
   var _oPh="ond";try{var _om=perMicro(spPlayer,+todayISO().slice(0,4)),_ows=weekStart(todayISO());var _ow=_om.find(function(w){return w.start===_ows;});if(_ow&&_ow.phase)_oPh=_ow.phase;}catch(e){}
   var _oMix=oppMixFor(spPlayer,_oPh);
@@ -2349,6 +2355,34 @@ function renderScoring(){var box=$("#scBody");if(!box)return;
     +(MX.tel.onbekend?('<p class="muted" style="margin:7px 0 0;font-size:12px">'+MX.tel.onbekend+' wedstrijd'+(MX.tel.onbekend===1?"":"en")+' nog niet ingedeeld in de MJOP-ladder.</p>'):"")
     +_oor.map(function(o){return '<div class="txwarn"><span class="b"></span><span>'+esc(o.txt)+'</span></div>';}).join("")
     +'</div>';}
+ H+='<button class="btn block ghost" id="knToSc" style="margin-top:4px">Naar het scoringsoverzicht</button>';
+ box.innerHTML=H;
+ scPickBind("kn",renderKansen);
+ var s2p=$("#scToPlan");if(s2p)s2p.onclick=function(){show("planning");};
+ var t2s=$("#knToSc");if(t2s)t2s.onclick=function(){show("scoring");};
+}
+function renderScoring(){var box=$("#scBody");if(!box)return;
+ if(spPlayer&&!registryPlayer(spPlayer))spPlayer=null;
+ if(!spPlayer&&typeof selPlayer!=="undefined"&&selPlayer&&registryPlayer(selPlayer))spPlayer=selPlayer;
+ if(!spPlayer&&(state.players||[]).length===1)spPlayer=state.players[0].id;
+ var pick=scPickHtml("sc",spPlayer);
+ if(!spPlayer){box.innerHTML=pick+'<div class="card"><p class="muted" style="margin:0">Kies een speler om het scoringsoverzicht te bekijken.</p></div><button class="btn block blue" id="scImpB" style="margin-top:12px">+ Scores importeren (JSON)</button>';scPickBind("sc",renderScoring);var b0=$("#scImpB");if(b0)b0.onclick=openScImport;return;}
+ var D=scData(spPlayer,scFilt);
+ var H=pick+scFiltHtml(D);
+ if(!D.all.length){
+  H+='<div class="card"><p class="muted" style="margin:0;font-size:13px">Nog geen 18-holes rondes voor deze speler. Voeg rondes toe via <b>Spelen</b> of importeer een scorebestand.</p></div>';
+ }else if(!D.list.length){
+  H+='<div class="card"><p class="muted" style="margin:0;font-size:13px">Geen rondes in deze selectie. Pas het filter aan.</p></div>';
+ }else{
+  var S=D.sc;var bch=D.bench;
+  function bRow(lbl,v,b){return '<tr><td>'+lbl+'</td><td style="text-align:right"><b>'+scF(v)+'</b></td><td style="text-align:right;color:'+((v!=null&&b!=null)?(v-b<=0?"var(--good)":"var(--bad)"):"var(--muted)")+'">'+((v!=null&&b!=null)?scF(v-b):"–")+'</td></tr>';}
+  H+='<div class="card"><div class="cardhd"><h3>Scoring</h3><span class="hdnote">'+S.n+' rondes · '+esc(scFiltLabel())+'</span></div>'
+   +'<div style="overflow-x:auto"><table class="kvtable" style="width:100%"><tr><th></th><th style="text-align:right">Score (t.o.v. par)</th><th style="text-align:right">vs benchmark</th></tr>'
+   +bRow("Scoringsgemiddelde",S.avg,bch)+bRow(S.cfg.pct+"% gemiddelde",S.avgPct,bch)+bRow("Mediaan",S.med,bch)
+   +bRow("Gemiddelde beste "+S.cfg.best1,S.best1,bch)+bRow("Gemiddelde beste "+S.cfg.best2,S.best2,bch)
+   +'<tr><td>Benchmark of beter</td><td style="text-align:right"><b>'+(S.benchN!=null?S.benchN:"–")+'</b></td><td style="text-align:right">'+(S.benchN!=null&&S.n?Math.round(S.benchN/S.n*100)+"%":"–")+'</td></tr>'
+   +'<tr><td>Par of beter</td><td style="text-align:right"><b>'+S.parN+'</b></td><td style="text-align:right">'+(S.n?Math.round(S.parN/S.n*100)+"%":"–")+'</td></tr></table></div>'
+   +'<div class="row spread" style="align-items:center;margin-top:10px"><span class="muted" style="font-size:12.5px">Benchmark: <b>'+(bch!=null?scF(bch):"–")+'</b>'+(registryPlayer(spPlayer)&&registryPlayer(spPlayer).scBench!=null&&registryPlayer(spPlayer).scBench!==""?' (eigen)':' (o.b.v. leeftijd)')+'</span><a href="#" id="scBchE" style="font-size:12.5px">aanpassen</a></div></div>';
   var MP=null,_mpPer="";
   try{
    var _fn=scFiltNorm(scFilt),_v="",_t="";
@@ -2379,31 +2413,6 @@ function renderScoring(){var box=$("#scBody");if(!box)return;
       return '<div class="mprow"><span class="mpdot" style="background:'+((x.soort==="tie")?"#1d5fa8":(x.res&&x.res.gewonnen?"#17a05c":(x.res&&x.res.klaar?"var(--orange)":"#1d5fa8")))+'"></span>'
        +'<div class="mpt"><b>'+esc(x.naam)+'</b><small>'+esc(x.res?x.res.txt:"\u2013")+(x.res&&x.res.pos?(' \u00b7 '+esc(x.res.pos)):'')+(x.datum?(' \u00b7 '+fmtDate(x.datum)):'')+'</small></div></div>';}).join("")
     +'</div>';}
-  var SZ=null;
-  try{
-   var _sv="",_st2="";
-   var _fz=scFiltNorm(scFilt);
-   if(_fz.mode==="year"&&_fz.year){_sv=_fz.year+"-01-01";_st2=_fz.year+"-12-31";}
-   else if(_fz.mode==="m3")_sv=scMonthsAgo(3);
-   else if(_fz.mode==="m12")_sv=scMonthsAgo(12);
-   else if(_fz.from||_fz.to){_sv=_fz.from||"";_st2=_fz.to||"";}
-   SZ=seizoenLijst(spPlayer,_sv,_st2);
-  }catch(e){}
-  if(SZ&&SZ.length){
-   var _sz=seizoenSamenvatting(SZ);
-   H+='<div class="card"><div class="cardhd"><h3>Mijn seizoen</h3><span class="hdnote">'+_sz.toernooien+' toernooi'+(_sz.toernooien===1?"":"en")+(_mpPer?(' \u00b7 '+_mpPer):'')+'</span></div>'
-    +'<p class="muted" style="margin:0 0 4px;font-size:12.5px;line-height:1.5">Alle uitslagen op een rij, van nieuw naar oud \u2014 strokeplaytotalen en matchplayresultaten door elkaar, zoals je seizoen werkelijk verliep.</p>'
-    +SZ.map(function(x){
-      var col=x.code?((taxLaag(taxSubOf(x.cat).l)||{}).kleur||"var(--muted)"):"var(--muted)";
-      var tot=(x.tot!=null)?('<b style="color:'+parColor(x.tot)+'">'+scFmt(x.tot,0)+'</b><small>'+x.n+' ronde'+(x.n===1?"":"n")+'</small>')
-        :(x.mp?('<b style="font-size:12.5px;color:'+((x.mp.gewonnen)?"#17a05c":((x.mp.klaar)?"var(--orange)":"#1d5fa8"))+'">'+esc(x.mp.pos||"\u2013")+'</b><small>'+(x.mpN||0)+' partij'+((x.mpN||0)===1?"":"en")+'</small>'):'');
-      return '<div class="szrow" style="--sz:'+col+'"><span class="szbar"></span>'
-       +'<div class="szt"><b>'+esc(x.naam)+'</b>'
-       +'<small>'+esc(seizoenUitslag(x))+'</small>'
-       +'<span class="szmeta">'+esc(seizoenPeriode(x))+(x.cat?(' \u00b7 '+esc(x.cat)):'')+(x.vorm&&x.vorm!=="sp"?(' \u00b7 '+esc(taxVormKort(x.vorm))):'')+'</span></div>'
-       +'<div class="szsc">'+tot+'</div></div>';}).join("")
-    +'<p class="muted" style="margin:9px 0 0;font-size:12px;line-height:1.5">'+_sz.rondes+' strokeplayronde'+(_sz.rondes===1?"":"s")+(_sz.mp?(' \u00b7 '+_sz.mp+' matchplaypartij'+(_sz.mp===1?"":"en")):'')+(_sz.best!=null?(' \u00b7 beste ronde '+scFmt(_sz.best,0)):'')+'.</p>'
-    +'</div>';}
   var hasSg=D.list.some(function(r){return r.sg!=null;});
   H+='<div class="card"><div class="cardhd"><h3>Scoreverloop</h3><div class="row" style="gap:8px;flex-wrap:wrap">'
    +'<div class="seg tlmini" id="scScKind" style="max-width:170px;margin:0"><button data-k="dot" class="'+(scScKind==="dot"?"on":"")+'">Dotplot</button><button data-k="bar" class="'+(scScKind==="bar"?"on":"")+'">Staaf</button></div>'
@@ -2423,6 +2432,25 @@ function renderScoring(){var box=$("#scBody");if(!box)return;
   H+=scVerloopHtml(D);
   if(D.finishes.n)H+='<div class="card"><div class="cardhd"><h3>Finishes</h3><span class="hdnote">'+D.finishes.n+' rondes met finish</span></div><div style="overflow-x:auto"><table class="kvtable" style="width:100%"><tr><th></th><th style="text-align:right">Aantal</th><th style="text-align:right">Aandeel</th></tr>'+[["Wins",D.finishes.wins],["Top-5",D.finishes.top5],["Top-10",D.finishes.top10],["Top-20",D.finishes.top20],["Missed cut",D.finishes.mc]].map(function(x){return '<tr><td>'+x[0]+'</td><td style="text-align:right"><b>'+x[1]+'</b></td><td style="text-align:right">'+Math.round(x[1]/D.finishes.n*100)+'%</td></tr>';}).join("")+'</table></div></div>';
   if(D.lowest.length)H+='<div class="card"><div class="cardhd"><h3>Laagste rondes</h3><span class="hdnote">top '+D.lowest.length+' · '+esc(scFiltLabel())+'</span></div><div style="overflow-x:auto"><table class="kvtable" style="width:100%"><tr><th>Datum</th><th>Wedstrijd</th><th style="text-align:right">Score</th><th style="text-align:right">t.o.v. par</th></tr>'+D.lowest.map(function(r){return '<tr><td>'+fmtDate(r.date)+'</td><td>'+esc(r.ev||r.baan||"–")+'</td><td style="text-align:right">'+(r.gross!=null?r.gross:"–")+'</td><td style="text-align:right"><b style="color:'+parColor(r.tp)+'">'+scF(r.tp,0)+'</b></td></tr>';}).join("")+'</table></div></div>';
+  var SZ=null;
+  try{
+   var _sv="",_st2="";
+   var _fz=scFiltNorm(scFilt);
+   if(_fz.mode==="year"&&_fz.year){_sv=_fz.year+"-01-01";_st2=_fz.year+"-12-31";}
+   else if(_fz.mode==="m3")_sv=scMonthsAgo(3);
+   else if(_fz.mode==="m12")_sv=scMonthsAgo(12);
+   else if(_fz.from||_fz.to){_sv=_fz.from||"";_st2=_fz.to||"";}
+   SZ=seizoenLijst(spPlayer,_sv,_st2);
+  }catch(e){}
+  if(SZ&&SZ.length){
+   var _sz=seizoenSamenvatting(SZ);
+   H+='<div class="card"><div class="collap'+(szOpen?' open':'')+'"><div class="ch" id="szH">'
+    +'<b>Mijn seizoen <span class="sx">\u00b7 '+_sz.toernooien+' toernooi'+(_sz.toernooien===1?"":"en")+'</span></b><span class="chev">\u25b6</span></div>'
+    +'<div class="cb">'
+    +'<p class="muted" style="margin:0 0 4px;font-size:12.5px;line-height:1.5">Alle uitslagen op een rij, van nieuw naar oud. Tik een toernooi aan om de losse rondes te zien.</p>'
+    +SZ.map(seizoenRowHtml).join("")
+    +'<p class="muted" style="margin:9px 0 0;font-size:12px;line-height:1.5">'+_sz.rondes+' strokeplayronde'+(_sz.rondes===1?"":"s")+(_sz.mp?(' \u00b7 '+_sz.mp+' matchplaypartij'+(_sz.mp===1?"":"en")):'')+(_sz.best!=null?(' \u00b7 beste ronde '+scFmt(_sz.best,0)):'')+'.</p>'
+    +'</div></div></div>';}
   H+='<button class="btn block" id="scPdfB" style="margin-top:12px">Scoringsoverzicht (PDF) downloaden</button>';
  }
  H+='<button class="btn block blue" id="scImpB" style="margin-top:'+(D.all.length?'8':'12')+'px">+ Scores importeren (JSON)</button>';
@@ -2430,6 +2458,16 @@ function renderScoring(){var box=$("#scBody");if(!box)return;
  scPickBind("sc",renderScoring);
  scFiltBind(D);
  var ib=$("#scImpB");if(ib)ib.onclick=openScImport;
+ var _szh=$("#szH");if(_szh)_szh.onclick=function(){szOpen=!szOpen;renderScoring();};
+ box.querySelectorAll("[data-szk]").forEach(function(r2){r2.onclick=function(ev){
+  if(ev.target.closest("[data-szrank]"))return;
+  var k=r2.dataset.szk;szRowOpen[k]=!szRowOpen[k];renderScoring();};});
+ box.querySelectorAll("[data-szrank]").forEach(function(b2){b2.onclick=function(ev){
+  ev.stopPropagation();ev.preventDefault();
+  var k=b2.dataset.szrank;
+  var it=(SZ||[]).find(function(x){return x.key===k;});if(!it)return;
+  promptDlg("Klassering","bijv. T12, 3e, MC",it.rank||"",function(v){
+   seizoenRankZet(k,spPlayer,it.ed,v);save();renderScoring();});};});
  var pb=$("#scPdfB");if(pb)pb.onclick=function(){scPdf(spPlayer,scFilt);};
  var s2p=$("#scToPlan");if(s2p)s2p.onclick=function(){show("planning");};
  var be=$("#scBchE");if(be)be.onclick=function(e){e.preventDefault();openScBench();};
@@ -3163,6 +3201,60 @@ function scPdfScatter(o,x,y,w,h,list,opt){
 /* ===== v213: Mijn seizoen =====
    Chronologische lijst van toernooiuitslagen: strokeplayrondes gebundeld per toernooi,
    matchplay- en competitieresultaten ernaast. Niet analytisch \u2014 dit is de terugblik. */
+var szOpen=false, szRowOpen={};
+/* Klassering: van de deelname, anders uit de toernooi-evaluatie, anders handmatig bewaard. */
+function seizoenRank(key,pid,ed){
+ if(ed){
+  var pp=(ed.participants||{})[pid]||{};
+  if(pp.rank)return pp.rank;
+  var tv=null;try{tv=tourEvalFor(pid,ed.id);}catch(e){}
+  if(tv&&tv.ranking)return tv.ranking;}
+ return ((state.szRank||{})[pid+"|"+key])||"";}
+function seizoenRankZet(key,pid,ed,val){
+ val=String(val==null?"":val).trim();
+ if(ed){
+  ed.participants=ed.participants||{};
+  ed.participants[pid]=ed.participants[pid]||{};
+  if(val)ed.participants[pid].rank=val;else delete ed.participants[pid].rank;
+  return;}
+ state.szRank=state.szRank||{};
+ if(val)state.szRank[pid+"|"+key]=val;else delete state.szRank[pid+"|"+key];}
+function seizoenRowHtml(x){
+ var col=x.code?(((taxLaag((taxSubOf(x.cat)||{}).l)||{}).kleur)||"var(--muted)"):"var(--muted)";
+ var open=!!szRowOpen[x.key];
+ var rechts=(x.tot!=null)
+  ?('<b style="color:'+parColor(x.tot)+'">'+scFmt(x.tot,0)+'</b><small>'+x.n+' ronde'+(x.n===1?"":"s")+'</small>')
+  :(x.mp?('<b style="font-size:12.5px;color:'+(x.mp.gewonnen?"#17a05c":(x.mp.klaar?"var(--orange)":"#1d5fa8"))+'">'+esc(x.mp.pos||"\u2013")+'</b><small>'+(x.mpN||0)+' partij'+((x.mpN||0)===1?"":"en")+'</small>'):'');
+ var rankChip=x.rank
+  ?('<button class="szrank" data-szrank="'+esc(x.key)+'">'+esc(x.rank)+'</button>')
+  :('<button class="szrank leeg" data-szrank="'+esc(x.key)+'">+ klassering</button>');
+ var det="";
+ if(open){
+  var rr=(x.rondes||[]).slice().sort(function(a,b){return String(a.date).localeCompare(String(b.date));});
+  det='<div class="szdet">';
+  if(rr.length){
+   det+='<div class="szdlbl">Rondes</div>'
+    +rr.map(function(r,i){
+      return '<div class="szrnd"><span class="szrn">R'+(i+1)+'</span>'
+       +'<span class="szrd">'+fmtDate(r.date)+(r.baan?(' \u00b7 '+esc(r.baan)):'')+'</span>'
+       +'<span class="szrv" style="color:'+parColor(r.tp)+'">'+scFmt(r.tp,0)+'</span>'
+       +(r.gross!=null?('<span class="szrg">'+r.gross+'</span>'):'<span class="szrg"></span>')+'</div>';}).join("")
+    +(x.gem!=null?('<div class="szrnd tot"><span class="szrn"></span><span class="szrd">Gemiddeld per ronde</span><span class="szrv" style="color:'+parColor(x.gem)+'">'+scFmt(x.gem,1)+'</span><span class="szrg"></span></div>'):'');}
+  if(x.mp&&(x.mpN||0)){
+   var _ml=[];try{_ml=mpSorteer(mpLijst(x.ed,spPlayer));}catch(e){}
+   det+='<div class="szdlbl" style="margin-top:8px">Partijen</div>'
+    +_ml.map(function(m){
+      return '<div class="szrnd"><span class="szrn" style="color:'+mpUitKleur(m.uit)+'">'+(m.uit==="w"?"W":(m.uit==="v"?"V":"\u00bd"))+'</span>'
+       +'<span class="szrd">'+esc(mpPartijLabel(m))+'</span>'
+       +'<span class="szrv" style="font-size:12px;color:var(--muted)">'+esc(mpUitslagLabel(m))+'</span><span class="szrg"></span></div>';}).join("");}
+  det+='</div>';}
+ return '<div class="szrow'+(open?' open':'')+'" style="--sz:'+col+'" data-szk="'+esc(x.key)+'"><span class="szbar"></span>'
+  +'<div class="szt"><b>'+esc(x.naam)+'<span class="szchev">'+(open?"\u25be":"\u25b8")+'</span></b>'
+  +'<small>'+esc(seizoenUitslag(x))+'</small>'
+  +'<span class="szmeta">'+esc(seizoenPeriode(x))+(x.cat?(' \u00b7 '+esc(x.cat)):'')+(x.vorm&&x.vorm!=="sp"?(' \u00b7 '+esc(taxVormKort(x.vorm))):'')+'</span>'
+  +'<div class="szranks">'+rankChip+'</div>'
+  +det+'</div>'
+  +'<div class="szsc">'+rechts+'</div></div>';}
 function seizoenLijst(pid,van,tot){
  var per={};
  function bucket(key,o){
@@ -3215,6 +3307,7 @@ function seizoenLijst(pid,van,tot){
    b.gem=tps.length?(b.tot/tps.length):null;
   }else{b.n=0;b.tot=null;b.best=null;b.gem=null;}
   return b;});
+ out.forEach(function(b){b.rank=seizoenRank(b.key,pid,b.ed);});
  out.sort(function(a,b){return String(b.datum||"").localeCompare(String(a.datum||""));});
  return out;}
 function seizoenPeriode(x){
@@ -3225,7 +3318,7 @@ function seizoenPeriode(x){
 function seizoenUitslag(x){
  var d=[];
  if(x.tot!=null)d.push(scFmt(x.tot,0)+" over "+x.n+" ronde"+(x.n===1?"":"s"));
- if(x.mp)d.push(x.mp.txt+(x.mp.pos?(" \u00b7 "+x.mp.pos):""));
+ if(x.mp)d.push(x.mp.pos||x.mp.txt);
  return d.join(" \u00b7 ")||"\u2013";}
 function seizoenSamenvatting(L){
  var t={toernooien:L.length,rondes:0,mp:0,best:null};
@@ -3399,11 +3492,12 @@ function scPdfPages(doc,PL,F,FB,LNGF,LTNL,pid,filt,st){
    o.dt("Alle toernooiuitslagen chronologisch, van nieuw naar oud. Strokeplaytotalen en matchplayresultaten door elkaar.",M,y5,8,F,C.MUT);
    y5-=16;
    var _zx=function(f){return Math.round(FW*f);};
-   var zcols=[{t:"Datum",x:0,w:_zx(0.11)},
-              {t:"Toernooi",x:_zx(0.11),w:_zx(0.28)},
-              {t:"Niveau",x:_zx(0.39),w:_zx(0.23)},
-              {t:"Rondes",x:_zx(0.62),w:_zx(0.11),align:"right"},
-              {t:"Uitslag",x:_zx(0.73),w:FW-_zx(0.73),align:"right"}];
+   var zcols=[{t:"Datum",x:0,w:_zx(0.10)},
+              {t:"Toernooi",x:_zx(0.10),w:_zx(0.26)},
+              {t:"Niveau",x:_zx(0.36),w:_zx(0.21)},
+              {t:"Rondes",x:_zx(0.57),w:_zx(0.10),align:"right"},
+              {t:"Klassering",x:_zx(0.67),w:_zx(0.12),align:"right"},
+              {t:"Uitslag",x:_zx(0.79),w:FW-_zx(0.79),align:"right"}];
    var zrows=SZ.map(function(x){
     var _mpTxt=x.mp?(x.mp.pos||x.mp.txt):"";
     var uit=(x.tot!=null)
@@ -3412,9 +3506,10 @@ function scPdfPages(doc,PL,F,FB,LNGF,LTNL,pid,filt,st){
     var _rn=[];
     if(x.n)_rn.push(String(x.n));
     if(x.mpN)_rn.push(x.mpN+"\u00d7 mp");
-    return [fmtDate(x.datum||""),String(x.naam||"").slice(0,38),
-            String(x.cat||"\u2013").slice(0,30),
-            (_rn.join(" + ")||"\u2013"),uit];});
+    return [fmtDate(x.datum||""),String(x.naam||"").slice(0,36),
+            String(x.cat||"\u2013").slice(0,28),
+            (_rn.join(" + ")||"\u2013"),
+            {t:(x.rank||"\u2013"),b:!!x.rank},uit];});
    y5=scPdfTable(o,M,y5,FW,zcols,zrows,{rh:15});
    var _zs=seizoenSamenvatting(SZ);
    o.dt(_zs.toernooien+" toernooien \u00b7 "+_zs.rondes+" strokeplayrondes"+(_zs.mp?(" \u00b7 "+_zs.mp+" matchplaypartijen"):"")
@@ -6802,14 +6897,16 @@ function taxCatCheckTxt(chk){
    toernooi, \u00e9\u00e9n verlies bepaalt het eindresultaat. Vaak worden meerdere partijen op
    dezelfde dag gespeeld, dus de partijen hangen niet aan een datum maar aan een ronde.
    Opslag: ed.participants[pid].mp = [{r,tegen,uit,marge,datum,holes}] */
+/* res = het toernooiresultaat als je in deze ronde verliest. In golf rapporteer je
+   de bereikte ronde, niet een klasseringsbereik. */
 const TAX_MP_RONDES=[
- {k:"vr", n:"Voorronde",     pos:null},
- {k:"r64",n:"Laatste 64",    pos:"gedeeld 33e\u201364e"},
- {k:"r32",n:"Laatste 32",    pos:"gedeeld 17e\u201332e"},
- {k:"r16",n:"Laatste 16",    pos:"gedeeld 9e\u201316e"},
- {k:"qf", n:"Kwartfinale",   pos:"gedeeld 5e\u20138e"},
- {k:"hf", n:"Halve finale",  pos:"3e/4e"},
- {k:"fin",n:"Finale",        pos:"2e"}];
+ {k:"vr", n:"Voorronde",     res:"Voorronde"},
+ {k:"r64",n:"Laatste 64",    res:"Laatste 64"},
+ {k:"r32",n:"Laatste 32",    res:"Laatste 32"},
+ {k:"r16",n:"Laatste 16",    res:"Laatste 16"},
+ {k:"qf", n:"Kwartfinale",   res:"Kwartfinale"},
+ {k:"hf", n:"Halve finale",  res:"Halve finale"},
+ {k:"fin",n:"Finale",        res:"2de"}];
 function mpRonde(k){return TAX_MP_RONDES.find(function(x){return x.k===k;})||null;}
 function mpRondeNaam(k){var r=mpRonde(k);return r?r.n:(k||"");}
 function mpIdx(k){for(var i=0;i<TAX_MP_RONDES.length;i++)if(TAX_MP_RONDES[i].k===k)return i;return -1;}
@@ -6868,11 +6965,11 @@ function mpResultaat(list,soort){
   var r=mpRonde(verlies.r);
   return {soort:"ko",klaar:true,gewonnen:false,ronde:verlies.r,
    txt:"Verloren in de "+mpRondeNaam(verlies.r).toLowerCase(),
-   pos:(r&&r.pos)||null,
+   pos:(r&&r.res)||null,
    n:L.length};}
  var laatste=L[L.length-1];
  if(laatste.r==="fin"&&laatste.uit==="w")
-  return {soort:"ko",klaar:true,gewonnen:true,ronde:"fin",txt:"Toernooi gewonnen",pos:"1e",n:L.length};
+  return {soort:"ko",klaar:true,gewonnen:true,ronde:"fin",txt:"Toernooi gewonnen",pos:"Winnaar",n:L.length};
  return {soort:"ko",klaar:false,gewonnen:false,ronde:laatste.r,
   txt:"Nog in het toernooi \u2014 "+L.length+" partij"+(L.length===1?"":"en")+" gewonnen",
   volgende:mpVolgende(L),pos:null,n:L.length};}
@@ -9684,7 +9781,7 @@ show("today");
 function rerenderActive(){var v=activeView;try{
  if(v==="home")renderHome();else if(v==="new")renderNew();else if(v==="progress")renderProgress();
  else if(v==="teams")renderTeams();else if(v==="teaminsight")renderTeamInsight();else if(v==="logbook")renderLogbook();
- else if(v==="scoring")renderScoring();else if(v==="baanstats")renderBaanstats();else if(v==="wellness")renderWellnessTab();
+ else if(v==="scoring")renderScoring();else if(v==="kansen")renderKansen();else if(v==="baanstats")renderBaanstats();else if(v==="wellness")renderWellnessTab();
  else if(v==="trainen")renderTrain();else if(v==="today")renderToday();else if(v==="planning")renderPlanning();
  else if(v==="goals")renderGoals();else if(v==="spelen")renderSpelen();
 }catch(e){}}
