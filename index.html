@@ -1239,6 +1239,24 @@ body.toon-jeugd main{font-size:15px}
 .fpmk.doel{width:4px;height:19px;border-radius:2px;background:#0f9e73}
 .tvals2{display:flex;justify-content:space-between;font-size:11px;color:#7b8794;margin-top:4px;font-variant-numeric:tabular-nums}
 .tvals2 b{color:#16202B;font-size:12.5px}
+
+/* v239 */
+nav.tabs button:focus,nav.tabs button:focus-visible{outline:none}
+.fpsplit{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+@media(max-width:560px){.fpsplit{grid-template-columns:1fr}}
+.fpricht{border-radius:12px;padding:11px 13px}
+.fprrow{display:flex;justify-content:space-between;gap:10px;font-size:12.5px;padding:4px 0;align-items:baseline}
+.fprrow span{color:#5b6b7a;font-weight:600;flex:0 0 auto}
+.fprrow b{text-align:right;font-size:12.5px;min-width:0}
+.fpst{flex:0 0 auto;width:17px;height:17px;border-radius:50%;border:1.6px solid #c6cfd7;display:inline-flex;align-items:center;justify-content:center;font-size:10.5px;color:#fff;font-weight:800;margin-top:1px}
+.fpst.on{background:#17a05c;border-color:#17a05c}
+.fpst.half{background:#d8a013;border-color:#d8a013;font-size:15px;line-height:1}
+.gkans{padding:9px 0;border-bottom:1px solid #f2f5f7}
+.gkans:last-child{border-bottom:0}
+.gkanstop{display:flex;align-items:center;gap:8px}
+.gkanstop b{flex:1;min-width:0;font-size:13.5px}
+.gkdom{flex:0 0 auto;font-size:10px;font-weight:800;color:#0F6E56;background:#e7f3ee;border-radius:6px;padding:2px 7px;letter-spacing:.03em}
+.gkanstxt{font-size:12px;color:#5b6b7a;line-height:1.5;margin-top:3px}
 </style>
 </head>
 <body>
@@ -1471,7 +1489,7 @@ const LIES={f:"Fairway",r:"Rough",s:"Sand",g:"Green"};const DLIES={f:"Fairway",r
 const LV=["PGA Tour"];
 function spread(min,max,n){if(n===1)return [Math.round((min+max)/2)];const a=[];for(let i=0;i<n;i++)a.push(Math.round(min+(max-min)*i/(n-1)));return a;}
 const NSIT=[3,6,9,12,15,18], NHOLE=[6,9,12,18];
-const APP_VERSION="v238";
+const APP_VERSION="v239";
 const TESTS={
 putt_3_5:{name:"Putt 3–5 ft",cat:"Putten",eng:"putt_cat",dists:[3,4,5],per:8,info:"24 putts (8× vanaf 3, 4 en 5 ft). Per afstand: holed, mis binnen 3 ft, mis buiten 3 ft. Output: SG + make%."},
 putt_6_10:{name:"Putt 6–10 ft",cat:"Putten",eng:"putt_cat",dists:[6,8,10],per:8,info:"24 putts (8× vanaf 6, 8 en 10 ft). Zelfde invoer als 3–5 ft."},
@@ -1571,7 +1589,14 @@ function show(v){if(rolIsSpeler()&&(v==="teaminsight"||v==="teams"))v="today";
  if(rolIsSpeler()&&v==="home"&&!homeZichtbaar())v="today";
  rolPas();var _prev=activeView;activeView=v;sortTeams();if(_prev!==v){goalCardOpen={};countsProgOpen=false;recentProgOpen=false;progFiltOpen=false;ovOpen={};Object.keys(progOpen).forEach(function(k){delete progOpen[k];});recentHomeOpen=false;countsHomeOpen=false;coursesOpen=false;backupOpen=false;teamOpen={};pickOpen={};teamLbOpen={};libTourOpen={};tlMonthOpen={};tlEventsOpen=false;tlShowPast=false;}document.querySelectorAll(".view").forEach(x=>x.classList.remove("active"));$("#v-"+v).classList.add("active");var _navV=(v==="teaminsight"||v==="logbook"||v==="progress"||v==="baanstats"||v==="wellness")?"scoring":v;document.querySelectorAll("#tabs button").forEach(b=>b.classList.toggle("active",b.dataset.v===_navV));
 if(v==="home")renderHome();if(v==="new")renderNew();if(v==="progress")renderProgress();if(v==="teams")renderTeams();if(v==="teaminsight")renderTeamInsight();if(v==="logbook")renderLogbook();if(v==="scoring")renderScoring();if(v==="kansen")renderKansen();if(v==="baanstats")renderBaanstats();if(v==="wellness")renderWellnessTab();if(v==="trainen")renderTrain();if(v==="today")renderToday();if(v==="planning")renderPlanning();if(v==="goals")renderGoals();if(v==="spelen")renderSpelen();try{renderProgTabs();}catch(e){}window.scrollTo(0,0);}
-document.querySelectorAll("#tabs button").forEach(b=>b.onclick=()=>{document.querySelectorAll("#tabs button").forEach(x=>x.classList.toggle("active",x===b));setTimeout(()=>show(b.dataset.v),0);});
+document.querySelectorAll("#tabs button").forEach(b=>b.onclick=()=>{b.blur();
+ var tv=b.dataset.v;
+ try{if(rolIsSpeler()&&typeof modusToont==="function"&&!modusToont(rolSpelerId(),tv))tv="today";}catch(e){}
+ var navV=(tv==="teaminsight"||tv==="logbook"||tv==="progress"||tv==="baanstats"||tv==="wellness")?"scoring":tv;
+ document.querySelectorAll("#tabs button").forEach(x=>x.classList.toggle("active",x.dataset.v===navV));
+ document.querySelectorAll(".view").forEach(x=>x.classList.remove("active"));
+ var _tg=document.querySelector("#v-"+tv);if(_tg)_tg.classList.add("active");
+ requestAnimationFrame(()=>requestAnimationFrame(()=>show(b.dataset.v)));});
 function teamSwitch(id,withAll,allActive){if(state.teams.length===0)return "";var opts=(withAll?'<option value="__all__" '+(allActive?'selected':'')+'>\u2605 Alle teams (totaal)</option>':'')+state.teams.map(t=>'<option value="'+t.id+'" '+((!allActive&&t.id===state.activeTeamId)?'selected':'')+'>'+esc(t.name)+'</option>').join("");return '<div class="teamswitch"><select id="'+id+'">'+opts+'</select></div>';}
 function bindSwitch(id,onAll){const s=$("#"+id);if(!s)return;s.onchange=()=>{if(onAll&&s.value==="__all__"){onAll(true);}else{if(onAll)onAll(false);state.activeTeamId=s.value;save();show(activeView);}};}
 let progCatOpen={};
@@ -4901,9 +4926,9 @@ function focusSummary(pid,ws){
   Object.keys(ctx.goalReasons).forEach(function(sub){var r=ctx.goalReasons[sub];parts.push(taxSubLabel("golfskills",sub)+" (doel"+(r.behind?", loopt achter":"")+")");});
  }
  (ctx.scoreSigs||[]).slice(0,2).forEach(function(sg){parts.push(sg.label+" (scores)");});
- var tp=phaseType(phase);var form=(tp.perf>=tp.tech&&tp.perf>=tp.skill)?"performance":((tp.tech>=tp.skill)?"techniek":"skill");
+ if(wk&&wk.phase){var tp=phaseType(phase);var form=(tp.perf>=tp.tech&&tp.perf>=tp.skill)?"performance":((tp.tech>=tp.skill)?"techniek":"skill");
  var pd=(typeof phaseDef==="function")?phaseDef(phase):null;
- parts.push((pd?pd[1]:phase)+" → "+form+" (fase)");
+ parts.push((pd?pd[1]:phase)+" → "+form+" (fase)");}
  return parts;
 }
 function genWeekPlan(pid,ws){var year=+dAddDays(ws,3).slice(0,4);var micro=[];try{micro=perMicro(pid,year);}catch(e){}
@@ -6529,7 +6554,7 @@ function renderGoals(){
   body.innerHTML="";
   var _gtSet=null;try{_gtSet=goalTypesToon(goalPlayer);}catch(e){}
   function _gtOK(k){return !_gtSet||_gtSet.indexOf(k)>=0;}
-  (function(){if(!_gtOK("droom"))return;var vp=registryPlayer(goalPlayer)||{};var vis=vp.vision;if(typeof vis==="string")vis={identity:vis,future:""};vis=vis||{};var has=(vis.identity||"").trim()||(vis.future||"").trim();var inner=has?((vis.identity?'<div class="sx" style="font-weight:700;color:var(--orange);margin-top:2px">Sportieve identiteit \u00b7 Wie wil ik zijn?</div><div style="white-space:pre-wrap;font-size:14px;line-height:1.6;margin-bottom:10px">'+esc(vis.identity)+'</div>':"")+(vis.future?'<div class="sx" style="font-weight:700;color:var(--orange)">Toekomst \u00b7 Waar wil ik heen?</div><div style="white-space:pre-wrap;font-size:14px;line-height:1.6">'+esc(vis.future)+'</div>':"")):'<div class="muted" style="font-size:13px">Nog geen visie beschreven.</div>';var vc=el("div","card");vc.innerHTML='<div class="ch" id="visHead" style="cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0"><div style="display:flex;align-items:center;gap:8px"><span class="chev'+(visOpen?" open":"")+'">\u25b6</span><h3 style="margin:0;color:var(--orange)">Visie</h3></div><button class="xbtn" id="visEdit" title="Bewerk">\u270e</button></div>'+(visOpen?'<div style="margin-top:8px">'+inner+'</div>':"");body.appendChild(vc);var vh=$("#visHead");if(vh)vh.onclick=function(ev){if(ev.target.closest("#visEdit"))return;visOpen=!visOpen;renderGoals();};var ve=$("#visEdit");if(ve)ve.onclick=function(ev){ev.stopPropagation();openVisionForm(goalPlayer);};})();
+  var _visieKaart=function(){if(!_gtOK("droom"))return;if(!visieVanafT2(goalPlayer))return;var vp=registryPlayer(goalPlayer)||{};var vis=vp.vision;if(typeof vis==="string")vis={identity:vis,future:""};vis=vis||{};var has=(vis.identity||"").trim()||(vis.future||"").trim();var inner=has?((vis.identity?'<div class="sx" style="font-weight:700;color:var(--orange);margin-top:2px">Sportieve identiteit \u00b7 Wie wil ik zijn?</div><div style="white-space:pre-wrap;font-size:14px;line-height:1.6;margin-bottom:10px">'+esc(vis.identity)+'</div>':"")+(vis.future?'<div class="sx" style="font-weight:700;color:var(--orange)">Toekomst \u00b7 Waar wil ik heen?</div><div style="white-space:pre-wrap;font-size:14px;line-height:1.6">'+esc(vis.future)+'</div>':"")):'<div class="muted" style="font-size:13px">Nog geen visie beschreven.</div>';var vc=el("div","card");vc.innerHTML='<div class="ch" id="visHead" style="cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0"><div style="display:flex;align-items:center;gap:8px"><span class="chev'+(visOpen?" open":"")+'">\u25b6</span><h3 style="margin:0;color:var(--orange)">Visie</h3></div><button class="xbtn" id="visEdit" title="Bewerk">\u270e</button></div>'+(visOpen?'<div style="margin-top:8px">'+inner+'</div>':"");body.appendChild(vc);var vh=$("#visHead");if(vh)vh.onclick=function(ev){if(ev.target.closest("#visEdit"))return;visOpen=!visOpen;renderGoals();};var ve=$("#visEdit");if(ve)ve.onclick=function(ev){ev.stopPropagation();openVisionForm(goalPlayer);};};
   (function(){/* v238: Fasepaspoort + Fasedoelen (vervangt de v234-fasedoelkaart) */
    var pF=registryPlayer(goalPlayer)||{};
    var fase=pF.mjopPhase||null;
@@ -6538,6 +6563,7 @@ function renderGoals(){
    if(!fase||!FASE_DOELEN[fase])return;
    try{fasePasInto(body,goalPlayer,fase);}catch(e){}
   })();
+  try{_visieKaart();}catch(e){}
   (function(){/* v225: grootste kansen zonder doel */
    if(rolIsSpeler()&&!modusToont(goalPlayer,"kansdoel"))return;
    var OPS=[];try{OPS=opportunities(goalPlayer)||[];}catch(e){}
@@ -6546,7 +6572,7 @@ function renderGoals(){
    var card=el("div","card gcard");
    card.innerHTML='<div class="glevhead"><span class="gdot" style="background:#0F6E56"></span><span class="glevname" style="color:#0F6E56">Grootste kansen</span><button class="gadd" id="knAlle" title="Naar de kansenanalyse" aria-label="Naar de kansenanalyse">\u203a</button></div>'
     +'<p class="muted" style="font-size:12.5px;margin:0 0 6px">Uit de kansenanalyse \u2014 nog zonder doel. Maak er een doel van om er gericht aan te werken.</p>'
-    +top.map(function(o){return '<div class="grow"><div class="growtop"><span class="gtitle">'+esc(o.label)+'</span><button class="oppbtn doel" data-gkdoel="'+esc(o.key)+'" style="margin-top:0">Als doel</button></div><div class="sx" style="white-space:normal">'+esc(o.txt)+'</div></div>';}).join("");
+    +top.map(function(o){var _dm="";try{_dm=oppDomLabel(o.dom)||"";}catch(e){}return '<div class="gkans"><div class="gkanstop"><b>'+esc(o.label)+'</b>'+(_dm?'<span class="gkdom">'+esc(_dm)+'</span>':'')+'<button class="oppbtn doel" data-gkdoel="'+esc(o.key)+'" style="margin-top:0;flex:0 0 auto">Als doel</button></div><div class="gkanstxt">'+esc(o.txt)+'</div></div>';}).join("");
    body.appendChild(card);
    var ka=card.querySelector("#knAlle");if(ka)ka.onclick=function(){spPlayer=goalPlayer;show("kansen");};
    card.querySelectorAll("[data-gkdoel]").forEach(function(b){b.onclick=function(){oppNaarDoel(goalPlayer,b.dataset.gkdoel);};});
@@ -6560,7 +6586,7 @@ function renderGoals(){
   ["leer","proces"].forEach(function(tk){if(!_gtOK(tk))return;var tp=goalTypeMeta(tk);var all=active.filter(function(g){return g.type===tk;});var card=el("div","card gcard");var inner=levHead(tp,tk);var any=false;(state.goalDomains||[]).forEach(function(dm){var lg=all.filter(function(g){return (g.domain||"")===dm.key;}).sort(sortG);if(!lg.length)return;any=true;inner+='<div class="gcatgrp"><div class="gcatgrp-h">'+esc(dm.label)+'</div><div class="glist" data-level="'+tk+'" data-domain="'+esc(dm.key)+'">'+lg.map(function(g,i){return goalRowHtml(g,i,lg.length);}).join("")+'</div></div>';});var domKeys=(state.goalDomains||[]).map(function(d){return d.key;});var rest=all.filter(function(g){return domKeys.indexOf(g.domain||"")<0;}).sort(sortG);if(rest.length){any=true;inner+='<div class="gcatgrp"><div class="gcatgrp-h">Overig</div><div class="glist" data-level="'+tk+'" data-domain="__none__">'+rest.map(function(g,i){return goalRowHtml(g,i,rest.length);}).join("")+'</div></div>';}if(!any)inner+='<p class="muted" style="font-size:13px;margin:2px 2px 6px">Nog geen '+esc(tp[1].toLowerCase())+'.</p>';inner+=goalAddRowHtml(tp);card.innerHTML=inner;body.appendChild(card);});
   var arch=gs.filter(function(g){return !goalActive(g);}).sort(function(a,b){return (new Date(goalCloseDate(b)||0))-(new Date(goalCloseDate(a)||0));});
   if(arch.length){var tc=el("div","card gcard");tc.innerHTML='<div class="glevhead"><span class="gdot" style="background:#94a3b8"></span><span class="glevname" style="color:#64748b">Tijdlijn</span></div>'+arch.map(goalArchRowHtml).join("");body.appendChild(tc);}
-  (function(){var evs=(state.evaluations||[]).filter(function(e){return e.playerId===goalPlayer;}).sort(function(a,b){return (b.date||"").localeCompare(a.date||"");});var card=el("div","card gcard");var rows=evs.length?evs.map(function(e){return '<div class="grow clickable" data-evopen="'+e.id+'"><div class="growtop"><span class="gtitle">Evaluatie '+fmtDate(e.date)+'</span><span class="thcount">'+(e.snapshot||[]).length+' doelen</span></div></div>';}).join(""):'<p class="muted" style="font-size:13px;margin:2px 2px 6px">Nog geen evaluaties.</p>';var _du=evalDue(goalPlayer);var _duH=(_du&&_du.due)?'<span class="duechip">evaluatie is toe'+(_du.weeks!=null?' \u00b7 '+_du.weeks+' wk':'')+'</span>':'';
+  (function(){if(rolIsSpeler()&&!modusToont(goalPlayer,"evals"))return;var evs=(state.evaluations||[]).filter(function(e){return e.playerId===goalPlayer;}).sort(function(a,b){return (b.date||"").localeCompare(a.date||"");});var card=el("div","card gcard");var rows=evs.length?evs.map(function(e){return '<div class="grow clickable" data-evopen="'+e.id+'"><div class="growtop"><span class="gtitle">Evaluatie '+fmtDate(e.date)+'</span><span class="thcount">'+(e.snapshot||[]).length+' doelen</span></div></div>';}).join(""):'<p class="muted" style="font-size:13px;margin:2px 2px 6px">Nog geen evaluaties.</p>';var _du=evalDue(goalPlayer);var _duH=(_du&&_du.due)?'<span class="duechip">evaluatie is toe'+(_du.weeks!=null?' \u00b7 '+_du.weeks+' wk':'')+'</span>':'';
   card.innerHTML='<div class="glevhead"><span class="gdot" style="background:#E85210"></span><span class="glevname" style="color:#E85210">Evaluaties</span>'+_duH+'<button class="gadd" id="evAdd" aria-label="Toevoegen">+</button></div>'+rows;body.appendChild(card);var ea=$("#evAdd");if(ea)ea.onclick=function(){openEvalForm(goalPlayer);};card.querySelectorAll("[data-evopen]").forEach(function(r){r.onclick=function(){evalDetail(r.dataset.evopen);};});})();
   body.querySelectorAll("[data-gadd]").forEach(function(b){b.onclick=function(){openGoalForm(null,b.dataset.gadd);};});body.querySelectorAll("[data-thadd]").forEach(function(b){b.onclick=function(){openThemeForm(null);};});body.querySelectorAll("[data-thopen]").forEach(function(b){b.onclick=function(){openThemeDetail(b.dataset.thopen);};});(function(){var tai=body.querySelector(".thaddinput");var tab=body.querySelector(".thaddbtn");if(tab)tab.onclick=function(){var v=(tai.value||"").trim();if(!v){tai.focus();return;}var t={id:uid(),playerId:goalPlayer,name:v,goalIds:[]};state.goalThemes.push(t);save();openThemeForm(t.id);};if(tai)tai.onkeydown=function(e){if(e.key==="Enter"){e.preventDefault();if(tab)tab.onclick();}};})();
   body.querySelectorAll("[data-gedit]").forEach(function(b){b.onclick=function(){openGoalDetail(b.dataset.gedit);};});
@@ -7704,7 +7730,7 @@ function renderTimeline(host){
   var _listRows=_actsF.length?_actsF.map(function(r){var kc=r.kind==="Toernooi"?"var(--orange)":(r.kind==="Anders"?"#64748b":"#2563eb");return '<div class="tlrow clickable'+(r.s<_today?" past":"")+'" data-actid="'+esc(r.id)+'" data-actkind="'+r.akind+'"><div class="tlpkcol">'+(peakNum(r.peak)?'<span class="tlpk" style="background:'+peakColor(r.peak)+';color:'+(peakNum(r.peak)>=4?"#fff":"#16202B")+'">P'+peakNum(r.peak)+'</span>':'')+'</div><div class="tlrl"><b>'+esc(r.name)+'</b><div class="muted" style="font-size:11.5px">'+r.date+'</div></div><div class="tlru"><span class="tlkind" style="color:'+kc+';border-color:'+kc+';margin-left:0;margin-right:6px;display:inline-block;width:98px;text-align:center;box-sizing:border-box">'+esc(r.kind)+'</span><span class="tldu">'+duLabel(r.s)+'</span></div></div>';}).join(""):'<p class="muted" style="margin:0">Geen activiteiten.</p>';
   var _listSeg='<div class="seg tlmini" id="tlListSeg" style="max-width:150px"><button data-lm="komend" class="'+(tlListMode==="komend"?"on":"")+'">Komend</button><button data-lm="geweest" class="'+(tlListMode==="geweest"?"on":"")+'">Geweest</button></div>';
   var _fltChips='<div class="trchips sm" id="tlListFiltRow">'+[["","Alles"],["wedstrijd","Wedstrijd"],["training","Training"],["vakantie","Vakantie"],["anders","Anders"]].map(function(o){return '<button data-fc="'+o[0]+'" class="'+(tlListFilt===o[0]?"on":"")+'">'+o[1]+'</button>';}).join("")+'</div>';
-  var _listCard='<div class="card"><div class="collap'+(tlListOpen?' open':'')+'"><div class="ch" id="tlListH"><b>Activiteiten (lijst)</b><span class="chev">▶</span></div><div class="cb"><div class="row" style="margin-bottom:8px;gap:8px;flex-wrap:wrap;align-items:center">'+_listSeg+_fltChips+'</div><div class="scrollbox" style="max-height:360px">'+_listRows+'</div></div></div></div>';
+  var _listCard='<div class="card"><div class="collap'+(tlListOpen?' open':'')+'"><div class="ch" id="tlListH"><b>Activiteiten (lijst)</b><span class="chev">▶</span></div><div class="cb"><div class="row" style="margin-bottom:8px;gap:8px;flex-wrap:wrap;align-items:center">'+_fltChips+'<span style="flex:1"></span>'+_listSeg+'</div><div class="scrollbox" style="max-height:360px">'+_listRows+'</div></div></div></div>';
   wrap.insertAdjacentHTML("beforeend",(_modTl==="foundation"?"":_summaryCard+_nextCard)+_listCard);
   var tl=el("div","card");tl.style.padding="10px 12px";
   var _tY=(new Date()).getFullYear(),_tM=(new Date()).getMonth(),_tD=(new Date()).getDate();
@@ -9922,7 +9948,7 @@ function fillTodoTab(box){ if(!box)return; if(!tpPlayer){box.innerHTML='<div cla
   if(!tpTodoCat)tpTodoCat="golfskills";
   var _et=execTotals(plan.items);
   var pct=_et.t?Math.round(100*_et.d/_et.t):0;
-  var progRow='<div class="tdprog"><div class="tdbar"><i style="width:'+pct+'%"></i></div><span class="tdpct">'+pct+'%</span><span class="sx">'+_et.d+'/'+_et.t+'</span></div>';
+  var progRow=(!rolIsSpeler()||modusToont(pid,"wk_voortgang"))?('<div class="tdprog"><div class="tdbar"><i style="width:'+pct+'%"></i></div><span class="tdpct">'+pct+'%</span><span class="sx">'+_et.d+'/'+_et.t+'</span></div>'):'';
   var catRows=TODOCATS.map(function(c){var arr=itemsOf(c[0]);var e2=execTotals(arr.map(function(o){return o.it;}));var p2=e2.t?Math.round(100*e2.d/e2.t):0;
    return '<div class="tdcatrow clickable" data-copen="'+c[0]+'"><span class="plicon tdc" style="--cc:'+mcAccent(c[0])+'">'+TODOICONS[c[0]]+'</span><span class="tdcrname">'+c[1]+'</span><div class="tdbar"><i style="width:'+p2+'%;background:'+mcAccent(c[0])+'"></i></div><span class="tdpct">'+p2+'%</span><span class="tdcrn sx">'+e2.d+'/'+e2.t+'</span><span class="chev">▶</span></div>';}).join("");
   body='<div class="card"><div class="row spread" style="align-items:center"><h3 style="margin:0">To-do deze week'+(plan.edited?' <span class="sx">(aangepast)</span>':'')+'</h3><button class="xbtn sm" id="tpRegen" title="Opnieuw genereren">↻</button></div>'+progRow+'<div class="tdcatlist">'+catRows+'</div></div>';
@@ -9949,6 +9975,7 @@ function fillTodoTab(box){ if(!box)return; if(!tpPlayer){box.innerHTML='<div cla
  var _fsum2=[];try{_fsum2=focusSummary(pid,ws);}catch(e){}
  var focusSum=_fsum2.length?'<div class="tdfocus" style="margin:0 0 12px"><b>Focus:</b> '+_fsum2.slice(0,4).map(esc).join(" · ")+'</div>':'';
  var focusCard='<div class="card"><div class="collap'+(tpFocusOpen?' open':'')+'"><div class="ch" id="tpFocusH"><b>Trainingsfocus'+(focus.length?' · '+focus.length:'')+'</b><span class="chev">▶</span></div><div class="cb">'+focusSum+'<div class="trlbl" style="margin-top:0">Handmatige focus</div><div class="sx" style="margin:1px 0 5px">Kies accenten — deze tellen het zwaarst in het weekplan.</div>'+focusChips+(deepRows?'<div class="trlbl" style="margin-top:14px">Verfijning</div>'+deepRows:'')+'<div class="trdivider"></div><div class="trlbl" style="margin-top:0">Automatische accenten</div><div class="sx" style="margin:1px 0 8px">'+weakTxt+'</div>'+sigBlock+goalTog+'</div></div></div>';
+ if(rolIsSpeler()&&!modusToont(pid,"plan_training")){focusCard="";if(!plan)body="";}
  var gsCards="";try{var _gsw2=gsWeekItems(pid,ws);var _pool9=allDrills();
  _gsw2.forEach(function(o){var rows9=(o.inh.drillIds||[]).map(function(did){var d9=_pool9.find(function(z){return z.id===did;});var on9=gsTicked(pid,ws,o.s.id,did);
   return '<div class="tdcatrow"><span style="flex:1;min-width:0;display:block"><b>'+esc(d9?d9.title:"Oefening")+'</b></span><button class="infobtn" data-gsinfo="'+did+'">i</button><button class="tpchk'+(on9?' on':'')+'" data-gstick="'+o.s.id+'|'+did+'">'+(on9?'\u2713':'')+'</button></div>';}).join("");
@@ -10690,7 +10717,7 @@ var MODUS_FEATS={
  goals:{f:1,a:1,p:1}, spelen:{f:{F1:0,F2:1,F3:1},a:1,p:1},
  planning:{f:1,a:1,p:1},
  plan_tours:{f:0,a:0,p:1}, plan_timeline:{f:1,a:1,p:1}, plan_period:{f:0,a:0,p:1}, plan_training:{f:0,a:1,p:1},
- kansdoel:{f:0,a:0,p:1}, sg_detail:{f:0,a:0,p:1}, sc_toernooi:{f:0,a:0,p:1}, evals:{f:0,a:1,p:1}};
+ kansdoel:{f:0,a:0,p:1}, sg_detail:{f:0,a:0,p:1}, sc_toernooi:{f:0,a:0,p:1}, evals:{f:0,a:1,p:1}, wk_voortgang:{f:0,a:1,p:1}};
 var FASE_DOELEN={
  F1:{doel:"Plezier in golf",oms:"Starten en ontdekken (U6/U8): vrij bewegen, spelvormen en plezier staan voorop.",richt:["Doe elke week een spelvorm of mini-challenge","Leer de basisregels: veilig en eerlijk spelen","Probeer alle soorten slagen: putten, chippen, slaan"]},
  F2:{doel:"Op naar handicap 54",oms:"Fundament (U8/U10): skills ontwikkelen om 9 holes te kunnen spelen.",richt:["Speel je eerste 9 holes op de club","Werk aan je skills-levels in de Challenge Ladder","Oefen 2\u00d7 per week een half uur"]},
@@ -11082,12 +11109,27 @@ function openSpelerProfiel(pid){var p=registryPlayer(pid);if(!p)return;var sh=$(
  if(_mi.m)rows+=_drow("Weergave",esc(modusLabel(_mi.m))+(playerTred(pid)?' <span class="sx">('+playerTred(pid)+')</span>':''));
  var cat="";try{cat=p.tourCat||taxCatVoorLeeftijd(p.birthYear,+todayISO().slice(0,4));}catch(_e){}
  if(cat){try{rows+=_drow("Wedstrijdcategorie",esc(taxCatName(cat)));}catch(_e){}}
- sh.innerHTML='<div class="shead"><div><h2>'+esc(p.name)+'</h2><div class="sx">Mijn profiel</div></div><button class="xbtn" onclick="closeSheet()">×</button></div>'
+ sh.innerHTML='<div class="shead"><div><h2>'+esc(p.name)+'</h2><div class="sx">Mijn profiel</div></div><div class="sheadact"><button class="xbtn" id="spfEdit" title="Profiel bewerken">✎</button><button class="xbtn" onclick="closeSheet()">×</button></div></div>' 
  +'<div class="card" style="text-align:center">'+(p.photo?'<div style="width:74px;height:74px;margin:0 auto 8px;border-radius:50%;overflow:hidden"><img src="'+p.photo+'" alt="" style="width:100%;height:100%;object-fit:cover"></div>':'<div class="av" style="width:74px;height:74px;margin:0 auto 8px;font-size:24px;display:flex;align-items:center;justify-content:center">'+initials(p.name)+'</div>')+'<b style="font-size:16px">'+esc(p.name)+'</b>'+(ph?'<div class="sx" style="margin-top:2px">'+esc(faseLabelKort(pid))+'</div>':'')+'</div>'
  +'<div class="card">'+(rows||'<p class="muted" style="margin:0">Nog geen profielgegevens.</p>')+'</div>'
  +'<div class="card"><label class="fld">Handicap</label><div class="row" style="gap:8px"><input class="in" id="spfHcp" type="text" inputmode="decimal" placeholder="bijv. 28,4 of +2,4" value="'+(p.hcp!=null&&p.hcp!==""?hcpFmt(p.hcp):"")+'" style="flex:1"><button class="btn sm" id="spfHcpSave">Opslaan</button></div>'+((p.hcpLog||[]).length>1?'<div class="hcplog">'+(p.hcpLog||[]).slice(-6).reverse().map(function(e){return '<span>'+fmtDate(e.d)+' <b>'+hcpFmt(e.v)+'</b></span>';}).join("")+'</div>':'')+'</div>';
  openSheet();
- var hb=$("#spfHcpSave");if(hb)hb.onclick=function(){var v=hcpParse(($("#spfHcp").value||"").trim());if(v==null){toast("Vul een geldige handicap in");return;}hcpSet(pid,v);stempel(p);save();toast("Handicap bijgewerkt ✓");try{rolPas();}catch(_e){}openSpelerProfiel(pid);};}
+ var hb=$("#spfHcpSave");if(hb)hb.onclick=function(){var v=hcpParse(($("#spfHcp").value||"").trim());if(v==null){toast("Vul een geldige handicap in");return;}hcpSet(pid,v);stempel(p);save();toast("Handicap bijgewerkt ✓");try{rolPas();}catch(_e){}openSpelerProfiel(pid);};
+ var eb=$("#spfEdit");if(eb)eb.onclick=function(){openSpelerProfielEdit(pid);};}
+function openSpelerProfielEdit(pid){var p=registryPlayer(pid);if(!p)return;var sh=$("#sheet");
+ sh.innerHTML='<div class="shead"><button class="bkbtn" id="speBack">‹ Terug</button><div><h2>Profiel bewerken</h2><div class="sx">'+esc(p.name)+'</div></div><button class="xbtn" onclick="closeSheet()">×</button></div>'
+ +'<div class="card"><label class="fld">Naam</label><input class="in" id="speNaam" value="'+esc(p.name||"")+'">'
+ +'<label class="fld" style="margin-top:10px">Geboortejaar</label><input class="in" id="speJaar" type="number" inputmode="numeric" maxlength="4" oninput="this.value=this.value.slice(0,4)" value="'+esc(p.birthYear||"")+'" placeholder="bijv. 2012">'
+ +'<label class="fld" style="margin-top:10px">Handicap <span class="sx">(plus-handicap met een + ervoor)</span></label><input class="in" id="speHcp" type="text" inputmode="decimal" value="'+(p.hcp!=null&&p.hcp!==""?hcpFmt(p.hcp):"")+'" placeholder="bijv. 28,4 of +2,4">'
+ +'<div class="sx" style="margin-top:10px">Je MJOP-fase en weergavemodus stelt je coach in.</div></div>'
+ +'<button class="btn block blue" id="speSave">Opslaan</button>';
+ openSheet();
+ $("#speBack").onclick=function(){openSpelerProfiel(pid);};
+ $("#speSave").onclick=function(){var nm=($("#speNaam").value||"").trim();if(nm)p.name=nm;
+  p.birthYear=($("#speJaar").value||"").trim();
+  var hv=($("#speHcp").value||"").trim();
+  if(hv){var v=hcpParse(hv);if(v==null){toast("Vul een geldige handicap in");return;}if(v!==p.hcp)hcpSet(pid,v);}
+  stempel(p);try{rehydrate();}catch(e){}save();toast("Profiel bijgewerkt ✓");try{rolPas();}catch(e){}openSpelerProfiel(pid);};}
 /* ===== v238: Fasepaspoort + Fasedoelen (Toms keuze, variant A) =====
    Content per fase op basis van het MJOP Roadmap-overzicht — ter redactie
    (zie claude/fasepaspoort-content.md). Thermometers: start seizoen = grijs
@@ -11197,11 +11239,12 @@ function fasePasInto(body,pid,fase){
  var head='<div class="glevhead"'+(isPro?' style="cursor:pointer" id="fpHead"':'')+'><span class="phbadge sm" style="background:'+kl+'">'+esc(fase)+'</span><span class="glevname" style="color:'+kl+'">Fasepaspoort</span><span class="hdnote">'+esc(sub)+'</span>'+(isPro?'<span class="chev" style="margin-left:auto;display:inline-block;transform:rotate('+(open?90:0)+'deg)">▶</span>':'')+'</div>';
  var rest="";
  if(open){
-  if((FP.leer||[]).length)rest+='<div class="fplbl">Wat leer ik in deze fase</div><ul class="fplist">'+FP.leer.map(function(x){return '<li>'+esc(x)+'</li>';}).join("")+'</ul>';
-  rest+='<div class="fplbl">Richtlijnen</div><div class="fptiles">'
-   +'<div class="fptile"><div class="v">'+esc(FP.uren||"–")+'</div><div class="l">Training</div></div>'
-   +'<div class="fptile"><div class="v">'+esc(FP.niv||FI.doel||"–")+'</div><div class="l">Niveau</div></div>'
-   +'<div class="fptile"><div class="v">'+esc(FP.wed||"–")+'</div><div class="l">Wedstrijden</div></div></div>';
+  var leerH='<div>'+((FP.leer||[]).length?('<div class="fplbl" style="margin-top:0">Wat leer ik in deze fase</div><ul class="fplist">'+FP.leer.map(function(x){return '<li>'+esc(x)+'</li>';}).join("")+'</ul>'):'')+'</div>';
+  var richtH='<div class="fpricht" style="background:'+kl+'14;border:1px solid '+kl+'2e"><div class="fplbl" style="margin-top:0;color:'+kl+'">Richtlijnen</div>'
+   +'<div class="fprrow"><span>Training</span><b>'+esc(FP.uren||"–")+'</b></div>'
+   +'<div class="fprrow"><span>Niveau</span><b>'+esc(FP.niv||FI.doel||"–")+'</b></div>'
+   +'<div class="fprrow"><span>Wedstrijden</span><b>'+esc(FP.wed||"–")+'</b></div></div>';
+  rest='<div class="fpsplit">'+leerH+richtH+'</div>';
  }
  var c1=el("div","card gcard fasedoel");
  c1.innerHTML=head+'<div style="font-weight:800;font-size:14.5px;margin:2px 0 4px">'+esc(FI.doel||"")+'</div>'
@@ -11220,19 +11263,29 @@ function fasePasInto(body,pid,fase){
  }
  if(FP.parR!=null){var nP=0;try{nP=parScoresSeizoen(pid);}catch(e){}
   thermos+=thermoHtml("Scores ≤ par",0,FP.parR,0,nP,function(v){return String(Math.round(v));},"dit seizoen");}
- var cd=FP.cdoelen||[];var done=0;
- var dts=cd.map(function(d,i){var k=pid+"|"+fase+"|"+i;var on=!!((state.faseTicks||{})[k]);if(on)done++;
-  return '<div class="fpdoel"><span style="flex:1;min-width:0;display:block;font-size:13px">'+esc(d)+'</span><button class="tpchk'+(on?' on':'')+'" data-fpt="'+i+'">'+(on?'✓':'')+'</button></div>';}).join("");
+ var cd=FP.cdoelen||[];var done=0;var magOordeel=!rolIsSpeler();
+ var dts=cd.map(function(d,i){var k=pid+"|"+fase+"|"+i;var t=(state.faseTicks||{})[k];var st=t?(t.st||"done"):null;
+  if(st==="done")done++;
+  var dot=(st==="done")?'<span class="fpst on">✓</span>':((st==="bezig")?'<span class="fpst half">·</span>':'<span class="fpst"></span>');
+  return '<div class="fpdoel'+(magOordeel?' clickable':'')+'"'+(magOordeel?' data-fpt="'+i+'" style="cursor:pointer"':'')+'>'+dot+'<span style="flex:1;min-width:0;display:block;font-size:13px'+(st==="done"?';color:#7b8794':'')+'">'+esc(d)+'</span></div>';}).join("");
  if(!thermos&&!dts)return;
  var c2=el("div","card gcard fasedoelen");
  c2.innerHTML='<div class="glevhead"><span class="gdot" style="background:'+kl+'"></span><span class="glevname" style="color:'+kl+'">Fasedoelen'+(cd.length?' · '+done+'/'+cd.length:'')+'</span></div>'
-  +thermos+(dts?'<div class="fplbl" style="margin-top:'+(thermos?'12':'2')+'px">Concrete doelen</div>'+dts:'');
+  +thermos+(dts?'<div class="fplbl" style="margin-top:'+(thermos?'12':'2')+'px">Concrete doelen</div><div class="sx" style="margin:0 0 4px">Worden automatisch of door de coach als behaald gemarkeerd.</div>'+dts:'');
  body.appendChild(c2);
- c2.querySelectorAll("[data-fpt]").forEach(function(b){b.onclick=function(){if(!state.faseTicks)state.faseTicks={};
-  var k=pid+"|"+fase+"|"+b.dataset.fpt;
-  if(state.faseTicks[k])delete state.faseTicks[k];else{var o={date:todayISO()};stempel(o,true);state.faseTicks[k]=o;}
+ c2.querySelectorAll("[data-fpt]").forEach(function(b){b.onclick=function(){if(rolIsSpeler())return;if(!state.faseTicks)state.faseTicks={};
+  var k=pid+"|"+fase+"|"+b.dataset.fpt;var t=state.faseTicks[k];var st=t?(t.st||"done"):null;
+  if(st==null){var o={st:"bezig",date:todayISO()};stempel(o,true);state.faseTicks[k]=o;}
+  else if(st==="bezig"){t.st="done";stempel(t);}
+  else delete state.faseTicks[k];
   save();renderGoals();};});
 }
+/* ===== v239: visie vanaf T2 ===== */
+function visieVanafT2(pid){var p=registryPlayer(pid)||{};var fase=p.mjopPhase||null;
+ if(!fase&&modusNu(pid)==="foundation")fase=playerTred(pid);
+ if(!fase&&p.birthYear)fase=mjopSuggest(p.birthYear);
+ if(fase)return mjopIdx(fase)>=mjopIdx("T2");
+ return modusNu(pid)==="pro";}
 function seedDemoData(){
  if(demoAanwezig())return;
  var yr=(new Date()).getFullYear(),vandaag=todayISO(),tid="dteam";
@@ -11551,8 +11604,12 @@ function renderToday(){var box=$("#todayBody");if(!box)return;
  if(todayPlayer&&!registryPlayer(todayPlayer))todayPlayer=null;
  if(!todayDate)todayDate=todayISO();
  var sub=$("#todaySub");if(sub)sub.textContent=new Date(todayDate+"T12:00:00").toLocaleDateString("nl-NL",{weekday:"long",day:"numeric",month:"long"});
- var _fx="";try{_fx=todayPlayer?faseLabelKort(todayPlayer):"";}catch(_e){}
- var html=startKaartHtml()+'<div class="card"><label class="fld">Speler</label><div class="row" style="gap:10px;align-items:center"><span class="acwrap" style="display:block;flex:1;min-width:0"><input class="in" id="tdQ" autocomplete="off" placeholder="Zoek speler…" value="'+esc(todayPlayer?nameOf(todayPlayer):"")+'"></span>'+(_fx?'<span class="sx" id="tdFase" style="flex:0 0 auto;font-weight:700;text-align:right">'+esc(_fx)+'</span>':'')+'</div></div>';
+ var _fxH="",_fxS="",_fxKl="#5b6b7a";
+ try{if(todayPlayer){var _pf9=registryPlayer(todayPlayer)||{};var _fxF=_pf9.mjopPhase||null;
+  if(!_fxF&&modusNu(todayPlayer)==="foundation")_fxF=playerTred(todayPlayer);
+  if(_fxF){_fxH=mjopHoofdfase(_fxF);var _mi9=mjopIdx(_fxF);_fxS=_fxF+(_mi9>=0?" · "+MJOP_PHASES[_mi9][1]:"");_fxKl=fasePasKleur(_fxF);}
+  else{var _m9=playerModus(todayPlayer);if(_m9){_fxH=modusLabel(_m9);_fxKl=(_m9==="foundation")?"#0f9e73":(_m9==="advanced")?"#c8791a":"#1B4F9C";}}}}catch(_e){}
+ var html=startKaartHtml()+'<div class="card"><label class="fld">Speler</label><div class="row" style="gap:10px;align-items:center"><span class="acwrap" style="display:block;flex:1;min-width:0"><input class="in" id="tdQ" autocomplete="off" placeholder="Zoek speler…" value="'+esc(todayPlayer?nameOf(todayPlayer):"")+'"></span>'+(_fxH?('<span id="tdFase" style="flex:0 0 auto;text-align:right;line-height:1.25"><b style="display:block;font-size:13.5px;letter-spacing:-.01em;color:'+_fxKl+'">'+esc(_fxH)+'</b>'+(_fxS?'<small style="font-size:11px;font-weight:700;color:'+_fxKl+';opacity:.72">'+esc(_fxS)+'</small>':'')+'</span>'):'')+'</div></div>';
  if(!todayPlayer){box.innerHTML=html+'<div class="card"><p class="muted" style="margin:0">Kies een speler om het dagprogramma te zien.</p></div>';bindTodayTop();return;}
  if(rolIsSpeler()&&playerModus(todayPlayer)==null)html+='<div class="card" id="modusIntakeKaart"><b>Stel je weergave in</b><p class="muted" style="font-size:13px;margin:6px 0 8px">Een paar korte vragen zodat de app past bij waar jij nu staat.</p><button class="btn blue sm" onclick="openModusIntake(\''+todayPlayer+'\')">Beantwoord 3 vragen</button></div>';
  var pid=todayPlayer,dt=todayDate,ws=weekStart(dt),di=dDiffDays(ws,dt);
@@ -11569,7 +11626,7 @@ function renderToday(){var box=$("#todayBody");if(!box)return;
 
  /* weekvoortgang + To-do knop */
  var _gc={d:0,t:0};try{_gc=gsComp(pid,ws);}catch(_e){}
- if(plan||_gc.t){var _et0=plan?execTotals(plan.items):{d:0,t:0};var _et={d:_et0.d+_gc.d,t:_et0.t+_gc.t};var pct=_et.t?Math.round(100*_et.d/_et.t):0;
+ if((plan||_gc.t)&&(!rolIsSpeler()||modusToont(pid,"wk_voortgang"))){var _et0=plan?execTotals(plan.items):{d:0,t:0};var _et={d:_et0.d+_gc.d,t:_et0.t+_gc.t};var pct=_et.t?Math.round(100*_et.d/_et.t):0;
   var _ws2=null;try{_ws2=wkStatus(pid,ws,dt);}catch(e){}
   var _barc=(pct>=WK_NORM)?"#17a05c":((_ws2&&_ws2.achter)?"var(--orange)":"");
   var _onder="";
