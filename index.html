@@ -783,6 +783,12 @@ input.in.tesg{width:96px;max-width:96px;flex:0 0 96px;text-align:right;font-vari
 .wdchip{font-size:11px;font-weight:700;background:#fde5e5;color:#a32c2e;border-radius:8px;padding:2px 9px}
 .wlleg{display:flex;align-items:center;gap:9px;margin-top:8px;font-size:10.5px;font-weight:700;color:var(--muted)}
 .wlgrad{flex:1;height:8px;border-radius:4px;background:linear-gradient(90deg,#d64550,#e2812e,#e0b13c,#a3c14a,#2fae72)}
+.wlleg2{display:flex;flex-wrap:wrap;gap:6px 10px;margin-top:8px}
+.wlbk{display:inline-flex;align-items:center;gap:4px;font-size:10.5px;color:var(--muted);font-weight:600}
+.wlbk i{width:13px;height:9px;border-radius:2.5px;display:inline-block}
+.wlbk b{color:#B3372F;text-transform:uppercase;font-size:9.5px;letter-spacing:.03em;margin-left:2px}
+.sigchip{display:inline-block;background:#D64550;color:#fff;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;border-radius:999px;padding:2px 8px}
+.barpct.pct{font-size:10px}
 .wlstat{display:inline-flex;flex-direction:column;gap:1px;background:#eef1f4;border-radius:10px;padding:6px 11px;min-width:82px}
 .wlstat span{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
 .wlstat b{font-size:15px;font-variant-numeric:tabular-nums}
@@ -836,6 +842,15 @@ input.in.tesg{width:96px;max-width:96px;flex:0 0 96px;text-align:right;font-vari
 .tkchip{font-size:11px;background:#f1f3f5;border-radius:999px;padding:2px 8px}
 .tkchip.ok{background:#e2f2ea;color:#0F6E56;font-weight:700}
 body.rolspeler .alleencoach{display:none}
+/* v232: doelgroepmodi */
+.modusbadge{display:inline-block;padding:1.5px 7px;border-radius:9px;font-size:10px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;background:#e8eef7;color:#274b77}
+.modusbadge.foundation{background:#e6f4ea;color:#0F6E56}
+.modusbadge.advanced{background:#fdf1e2;color:#B05E10}
+.modusbadge.pro{background:#0a2c55;color:#fff}
+body.toon-kind main{font-size:16px}
+body.toon-kind .title{font-size:30px}
+body.toon-kind .btn{font-size:15.5px}
+body.toon-jeugd main{font-size:15px}
 .opprow.fx{background:#fcfdfe}
 .oppimp small{display:block;font-size:9.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;margin-top:1px}
 .oppmix{margin:2px 0 4px}
@@ -1280,6 +1295,7 @@ function rolPas(){var vast=rolSpelerId();
   }catch(e){}
  }
  try{document.body.classList.toggle("geenklassement",!homeZichtbaar());}catch(e){}
+ try{modusPas();}catch(e){}
  try{rolNaamKop();}catch(e){}
  return !!vast;}
 /* v222: in de spelerweergave hoort er geen spelerkiezer te staan, maar de eigen naam. */
@@ -1431,7 +1447,7 @@ const LIES={f:"Fairway",r:"Rough",s:"Sand",g:"Green"};const DLIES={f:"Fairway",r
 const LV=["PGA Tour"];
 function spread(min,max,n){if(n===1)return [Math.round((min+max)/2)];const a=[];for(let i=0;i<n;i++)a.push(Math.round(min+(max-min)*i/(n-1)));return a;}
 const NSIT=[3,6,9,12,15,18], NHOLE=[6,9,12,18];
-const APP_VERSION="v230";
+const APP_VERSION="v233";
 const TESTS={
 putt_3_5:{name:"Putt 3–5 ft",cat:"Putten",eng:"putt_cat",dists:[3,4,5],per:8,info:"24 putts (8× vanaf 3, 4 en 5 ft). Per afstand: holed, mis binnen 3 ft, mis buiten 3 ft. Output: SG + make%."},
 putt_6_10:{name:"Putt 6–10 ft",cat:"Putten",eng:"putt_cat",dists:[6,8,10],per:8,info:"24 putts (8× vanaf 6, 8 en 10 ft). Zelfde invoer als 3–5 ft."},
@@ -1527,6 +1543,7 @@ function sortTeams(){if(!state.teams)return;var before=state.teams.map(function(
 let activeView="today";
 function acAttach(input,items,labelOf,onPick){if(!input||input._ac)return;input._ac=1;var wrap=input.closest(".acwrap")||input.parentElement;if(getComputedStyle(wrap).position==="static")wrap.style.position="relative";var box=document.createElement("div");box.className="acbox";box.style.display="none";wrap.appendChild(box);function hide(){box.style.display="none";}function draw(){var q=(input.value||"").trim().toLowerCase();if(!q){hide();return;}var list=items.filter(function(it){return labelOf(it).toLowerCase().indexOf(q)===0;}).slice(0,10);if(!list.length){hide();return;}box.innerHTML="";list.forEach(function(it){var el=document.createElement("div");el.className="acitem";el.textContent=labelOf(it);el.addEventListener("mousedown",function(ev){ev.preventDefault();input.value=labelOf(it);hide();onPick(it);});box.appendChild(el);});box.style.display="block";}input.addEventListener("input",draw);input.addEventListener("focus",function(){if(input.select)input.select();draw();});input.addEventListener("blur",function(){setTimeout(hide,180);});}
 function show(v){if(rolIsSpeler()&&(v==="teaminsight"||v==="teams"))v="today";
+ if(rolIsSpeler()&&typeof modusToont==="function"&&!modusToont(rolSpelerId(),v))v="today";
  if(rolIsSpeler()&&v==="home"&&!homeZichtbaar())v="today";
  rolPas();var _prev=activeView;activeView=v;sortTeams();if(_prev!==v){goalCardOpen={};countsProgOpen=false;recentProgOpen=false;progFiltOpen=false;ovOpen={};Object.keys(progOpen).forEach(function(k){delete progOpen[k];});recentHomeOpen=false;countsHomeOpen=false;coursesOpen=false;backupOpen=false;teamOpen={};pickOpen={};teamLbOpen={};libTourOpen={};tlMonthOpen={};tlEventsOpen=false;tlShowPast=false;}document.querySelectorAll(".view").forEach(x=>x.classList.remove("active"));$("#v-"+v).classList.add("active");var _navV=(v==="teaminsight"||v==="logbook"||v==="progress"||v==="baanstats"||v==="wellness")?"scoring":v;document.querySelectorAll("#tabs button").forEach(b=>b.classList.toggle("active",b.dataset.v===_navV));
 if(v==="home")renderHome();if(v==="new")renderNew();if(v==="progress")renderProgress();if(v==="teams")renderTeams();if(v==="teaminsight")renderTeamInsight();if(v==="logbook")renderLogbook();if(v==="scoring")renderScoring();if(v==="kansen")renderKansen();if(v==="baanstats")renderBaanstats();if(v==="wellness")renderWellnessTab();if(v==="trainen")renderTrain();if(v==="today")renderToday();if(v==="planning")renderPlanning();if(v==="goals")renderGoals();if(v==="spelen")renderSpelen();try{renderProgTabs();}catch(e){}window.scrollTo(0,0);}
@@ -2534,8 +2551,10 @@ function scNorm(pid){var out=[];
    var holes=ph.map(function(h){return +h.score;}),pars=ph.map(function(h){return +h.par;});
    var par=0,gr=0;for(var i=0;i<18;i++){par+=pars[i];gr+=holes[i];}
    o={holes:holes,pars:pars,gross:gr,par:par,tp:gr-par,baan:d.courseName||null,tee:d.tee||null};
-   if(d.sgTotal!=null)o.sg=+d.sgTotal;
-   if(ph[0]&&ph[0].sg!=null)o.sgH=ph.map(function(h){return (h.sg!=null)?+h.sg:0;});}
+   /* v231: zonder baanlengtes is er geen echte SG — reken hem dan ook nergens mee. */
+   var _hl=false;try{var _inp=(s.inputs||{})[pid];_hl=!!(_inp&&(_inp.holes||[]).some(function(hh){return +hh.len>0;}));}catch(e){}
+   if(d.sgTotal!=null&&_hl)o.sg=+d.sgTotal;
+   if(_hl&&ph[0]&&ph[0].sg!=null)o.sgH=ph.map(function(h){return (h.sg!=null)?+h.sg:0;});}
   else{var hcnt=(sc.holes&&sc.holes.length)||s.holes||18;if(hcnt<18)return;
    var tp=(sc.gross!=null&&sc.par!=null)?(sc.gross-sc.par):(d.toPar!=null?d.toPar:null);if(tp==null)return;
    o={gross:sc.gross!=null?sc.gross:null,par:sc.par!=null?sc.par:null,tp:tp,baan:sc.baan||null,tee:sc.tee||null};
@@ -2694,7 +2713,7 @@ function scFiltWissel(pid){
  scFilt=_scFiltPer[pid]?JSON.parse(JSON.stringify(_scFiltPer[pid])):{mode:"all",year:"",from:"",to:"",rt:"",main:"",types:[],kl:"",evs:[]};
  _scFiltPid=pid;}
 var scMetric="score", scVerMetric="score", scVerCut=false, scParMetric="par";
-var scYrFrom=null, scYrTo=null, scSelPt=null, scDiffOpen={}, scSgMode="year", scOpenList=null, _scFocus=null, scScKind="dot", scYrMetric="score", scXMode="time";
+var scYrFrom=null, scYrTo=null, scSelPt=null, scDiffOpen={}, scSgMode="year", scOpenList=null, _scFocus=null, scScKind="dot", scYrMetric="score", scXMode="time", scBenchAan=true, scDispPct=false;
 function scRefYear(){return (scFilt.mode==="year"&&scFilt.year)?+scFilt.year:(+todayISO().slice(0,4));}
 function scFiltLabel(f){f=f||scFilt;
  if(f.mode==="year"&&f.year)return String(f.year);
@@ -2721,6 +2740,9 @@ function renderSubBar(){
  if(v==="planning"){items=PLAN_TABS;cur=(typeof planTab!=="undefined")?planTab:"";go=function(k){planTab=k;planPlayer=null;renderPlanning();};}
  else if(PROG_TABS.some(function(t){return t[0]===v;})){items=PROG_TABS;cur=v;go=function(k){show(k);};}
  if(items&&rolIsSpeler())items=items.filter(function(t){return t[0]!=="teaminsight";});
+ if(items&&rolIsSpeler()){var _mpid=rolSpelerId();items=items.filter(function(t){var k=t[0];
+  if(v==="planning"){if(k==="tours")return modusToont(_mpid,"plan_tours");if(k==="timeline")return modusToont(_mpid,"plan_timeline");if(k==="period")return modusToont(_mpid,"plan_period");return true;}
+  return modusToont(_mpid,k);});}
  if(!items){bar.className="subbar";bar.innerHTML="";document.body.classList.remove("hassub");return;}
  bar.className="subbar on";document.body.classList.add("hassub");
  bar.innerHTML='<div class="subbar-in">'+items.map(function(t){
@@ -2835,9 +2857,9 @@ function renderScoring(){var box=$("#scBody");if(!box)return;
   var hasSg=D.list.some(function(r){return r.sg!=null;});
   H+='<div class="card"><div class="cardhd"><h3>Scoreverloop</h3><div class="row" style="gap:8px;flex-wrap:wrap">'
    +'<div class="seg tlmini" id="scScKind" style="max-width:170px;margin:0"><button data-k="dot" class="'+(scScKind==="dot"?"on":"")+'">Dotplot</button><button data-k="bar" class="'+(scScKind==="bar"?"on":"")+'">Staaf</button></div>'
-   +(hasSg?'<div class="seg tlmini" id="scScMet" style="max-width:180px;margin:0"><button data-m="score" class="'+(scMetric==="sg"?"":"on")+'">Score</button><button data-m="sg" class="'+(scMetric==="sg"?"on":"")+'">SG</button></div>':'')+'<div class="seg tlmini" id="scScX" style="max-width:170px;margin:0"><button data-x="time" class="'+(scXMode==="seq"?"":"on")+'">Tijd</button><button data-x="seq" class="'+(scXMode==="seq"?"on":"")+'">Volgorde</button></div>'+'</div></div>'
+   +(hasSg?'<div class="seg tlmini" id="scScMet" style="max-width:180px;margin:0"><button data-m="score" class="'+(scMetric==="sg"?"":"on")+'">Score</button><button data-m="sg" class="'+(scMetric==="sg"?"on":"")+'">SG</button></div>':'')+'<div class="seg tlmini" id="scScX" style="max-width:170px;margin:0"><button data-x="time" class="'+(scXMode==="seq"?"":"on")+'">Tijd</button><button data-x="seq" class="'+(scXMode==="seq"?"on":"")+'">Volgorde</button></div>'+'<div class="seg tlmini" id="scScBm" style="max-width:150px;margin:0"><button class="'+(scBenchAan?"on":"")+'">Benchmark</button></div>'+'</div></div>'
    +'<div id="scScat"></div></div>';
-  if(D.disp.length)H+='<div class="card"><div class="cardhd"><h3>Dispersion t.o.v. par</h3><span class="hdnote">'+D.list.length+' rondes</span></div>'+scDispHtml(D.disp)+'</div>';
+  if(D.disp.length)H+='<div class="card"><div class="cardhd"><h3>Dispersion t.o.v. par</h3><div class="seg tlmini" id="scDispSeg" style="max-width:130px;margin:0"><button data-p="0" class="'+(scDispPct?"":"on")+'">Aantal</button><button data-p="1" class="'+(scDispPct?"on":"")+'">%</button></div><span class="hdnote">'+D.list.length+' rondes</span></div>'+scDispHtml(D.disp)+'</div>';
   if(D.perYear.length)H+='<div class="card"><div class="cardhd"><h3>Gemiddelde per jaar</h3>'
    +(D.sgYear.length?'<div class="seg tlmini" id="scYrMet" style="max-width:190px;margin:0"><button data-m="score" class="'+(scYrMetric==="sg"?"":"on")+'">Score</button><button data-m="sg" class="'+(scYrMetric==="sg"?"on":"")+'">SG</button></div>':'<span class="hdnote" id="scYrLbl"></span>')
    +'</div><div id="scYrChart"></div>'+scYearRangeHtml(D)+'<div class="sx" id="scYrLbl2" style="margin-top:4px"></div></div>';
@@ -2899,6 +2921,8 @@ function renderScoring(){var box=$("#scBody");if(!box)return;
  var ym=$("#scYrMet");if(ym)ym.querySelectorAll("[data-m]").forEach(function(b){b.onclick=function(){scYrMetric=b.dataset.m;renderScoring();};});
  var sk=$("#scScKind");if(sk)sk.querySelectorAll("[data-k]").forEach(function(b){b.onclick=function(){scScKind=b.dataset.k;scSelPt=null;renderScoring();};});
  var sxm=$("#scScX");if(sxm)sxm.querySelectorAll("[data-x]").forEach(function(b){b.onclick=function(){scXMode=b.dataset.x;scSelPt=null;renderScoring();};});
+ var sbm=$("#scScBm");if(sbm){var _b0=sbm.querySelector("button");if(_b0)_b0.onclick=function(){scBenchAan=!scBenchAan;renderScoring();};}
+ var sdp=$("#scDispSeg");if(sdp)sdp.querySelectorAll("[data-p]").forEach(function(b){b.onclick=function(){scDispPct=b.dataset.p==="1";renderScoring();};});
  document.querySelectorAll("[data-dg]").forEach(function(tr){tr.onclick=function(){var k=tr.dataset.dg;scDiffOpen[k]=!scDiffOpen[k];renderScoring();};});
  scYearBind(D);
  var scat=$("#scScat");if(scat&&D.list.length)scat.innerHTML=scScatterSvg(D);
@@ -2957,9 +2981,10 @@ function scDispCol(v){
  if(v<0){var t=Math.min(1,(-v)/5);return "rgb("+Math.round(232-92*t)+","+Math.round(96-58*t)+","+Math.round(96-58*t)+")";}
  var u=Math.min(1,v/10);return "rgb("+Math.round(150-119*u)+","+Math.round(196-125*u)+","+Math.round(232-111*u)+")";}
 function scDispHtml(disp){
- var mx=0;disp.forEach(function(b){if(b.n>mx)mx=b.n;});if(!mx)return "";
+ var mx=0,tot=0;disp.forEach(function(b){if(b.n>mx)mx=b.n;tot+=b.n;});if(!mx)return "";
  return '<div class="barchart" style="min-height:120px">'+disp.map(function(b){var h=Math.max(3,Math.round(b.n/mx*104));
-  return '<div class="barcol"><span class="barpct">'+(b.n||"")+'</span><span class="barfill" style="height:'+h+'px;background:'+scDispCol(b.k===0?0:b.v)+'"></span><span class="barlab dsplab">'+b.lbl+'</span></div>';}).join("")+'</div>';}
+  var lab=b.n?(scDispPct?((b.n/tot*100).toFixed(b.n/tot*100>=9.95?0:1).replace(".",",")+"%"):b.n):"";
+  return '<div class="barcol"><span class="barpct'+(scDispPct?" pct":"")+'">'+lab+'</span><span class="barfill" style="height:'+h+'px;background:'+scDispCol(b.k===0?0:b.v)+'"></span><span class="barlab dsplab">'+b.lbl+'</span></div>';}).join("")+'</div>';}
 function scOpbHtml(ov){
  var lbls=[["ea","Eagles of beter"],["bi","Birdies"],["pa","Parren"],["bo","Bogeys"],["db","Double bogeys"],["wo","Worse"]];
  return '<table class="opbtbl">'+lbls.map(function(l){var v=ov[l[0]];var pc=ov.tot?(v/ov.tot*100):0;
@@ -3036,7 +3061,7 @@ function scYearBind(D){
   var txt=P.length?(P[0].y+(P.length>1?(" – "+P[P.length-1].y):"")):"";
   if(lbl)lbl.textContent=txt;
   if(lbl2)lbl2.textContent=txt?((scYrMetric==="sg"?"Strokes gained":"Score t.o.v. par")+" · "+txt):"";
-  if(ch)ch.innerHTML=P.length?scYearLineSvg(P,(scYrMetric==="sg")?null:D.bench,scYrMetric==="sg"):'<p class="muted" style="margin:0;font-size:13px">Geen jaren in dit bereik.</p>';}
+  if(ch)ch.innerHTML=P.length?scYearLineSvg(P,(!scBenchAan||scYrMetric==="sg")?null:D.bench,scYrMetric==="sg"):'<p class="muted" style="margin:0;font-size:13px">Geen jaren in dit bereik.</p>';}
  var A=$("#scYrA"),B=$("#scYrB");
  if(A)A.oninput=function(){scYrFrom=+A.value;draw();};
  if(B)B.oninput=function(){scYrTo=+B.value;draw();};
@@ -3214,25 +3239,19 @@ function scScatterSvg(D){
  function X(i,t){return seqx?(Lp+(i+0.5)/pts.length*pw):(Lp+(t-x0)/(x1-x0)*pw);}
  function Y(v){return T+ph-((v-mn)/(mx-mn))*ph;}
  var s2='<svg viewBox="0 0 '+W+' '+H+'" width="'+W+'" height="'+H+'" preserveAspectRatio="xMidYMid meet">';
- /* --- benchmark: zone (dotplot) of stippellijn (staaf) --- */
- if(bs.length){
+ /* --- benchmark: zone in beide weergaven (v231), uitschakelbaar --- */
+ if(bs.length&&scBenchAan){
   var seg=[],cur=null;
   pts.forEach(function(p,k){var bv=benchOf(p);var xx=X(k,ds[k]);
    if(bv==null){if(cur){seg.push(cur);cur=null;}return;}
    if(!cur||cur.b!==bv){if(cur){cur.x1=xx;seg.push(cur);}cur={b:bv,x0:(cur?cur.x1:Lp),x1:xx};}else cur.x1=xx;});
   if(cur){cur.x1=W-R;seg.push(cur);}
   if(seg.length)seg[0].x0=Lp;
-  if(!bar){
-   var edge=sg?T:(T+ph);
-   var d="M"+Lp+" "+edge.toFixed(1);
-   seg.forEach(function(g2){d+=" L"+g2.x0.toFixed(1)+" "+Y(g2.b).toFixed(1)+" L"+g2.x1.toFixed(1)+" "+Y(g2.b).toFixed(1);});
-   d+=" L"+(W-R)+" "+edge.toFixed(1)+" Z";
-   s2+='<path class="bmzone" d="'+d+'"/>';
-  }else{
-   var dd="";
-   seg.forEach(function(g2,k){dd+=(k?" L":"M")+g2.x0.toFixed(1)+" "+Y(g2.b).toFixed(1)+" L"+g2.x1.toFixed(1)+" "+Y(g2.b).toFixed(1);});
-   s2+='<path d="'+dd+'" fill="none" class="bml2"/>';
-  }
+  var edge=sg?T:(T+ph);
+  var d="M"+Lp+" "+edge.toFixed(1);
+  seg.forEach(function(g2){d+=" L"+g2.x0.toFixed(1)+" "+Y(g2.b).toFixed(1)+" L"+g2.x1.toFixed(1)+" "+Y(g2.b).toFixed(1);});
+  d+=" L"+(W-R)+" "+edge.toFixed(1)+" Z";
+  s2+='<path class="bmzone" d="'+d+'"/>';
  }
  /* --- raster: secundair fijn met subtiele waarde, primair met label --- */
  var _dec=sg?2:(((mx-mn)<6)?1:0);
@@ -5341,7 +5360,7 @@ function openCoachLogForm(id){var sh=$("#sheet");var n=id?coachLog().find(functi
   else coachLog().push(stempel({id:uid(),playerId:$("#clSp").value||"",date:$("#clDate").value||today,tekst:t,ref:null,createdAt:Date.now()},true));
   save();toast("Bewaard \u2713");openCoachLog();};}
 function openSettings(){const sh=$("#sheet");
-sh.innerHTML='<div class="shead"><div><h2>Instellingen</h2></div><button class="xbtn" onclick="closeSettings()">×</button></div><div class="card"><button class="btn block blue" id="setRol">Rol — wie gebruikt de app?</button><div class="sx" style="margin-top:7px">Nu: <b id="setRolNu"></b>. Bepaalt wat je ziet en onder wiens naam je invoert.</div></div><div class="card"><button class="btn block blue" id="setPrul">Prullenbak</button><div class="sx" style="margin-top:7px">Verwijderde rondes, doelen, evaluaties en notities — terug te zetten.</div></div><div class="card"><button class="btn block blue" id="setCoachLog">Mijn logboek</button><div class="sx" style="margin-top:7px">Eigen aantekeningen van de coach — los van het spelersdossier.</div></div><div class="card"><button class="btn block blue" id="setPriv">Privacy en delen</button><div class="sx" style="margin-top:7px">Wat er van een speler mag meetellen in landelijke cijfers — de speler beslist.</div></div><div class="card"><button class="btn block blue" id="setGoals">Doelen instellen</button><div class="sx" style="margin-top:7px">Targets per test · toewijzen aan team en spelers.</div></div><div class="card"><button class="btn block blue" id="setBuckets">Grenswaarden (buckets)</button><div class="sx" style="margin-top:7px">Proximity-categorieën voor wedges & approaches.</div></div><div class="card"><button class="btn block blue" id="setTax">Wedstrijdtaxonomie (MJOP-ladder)</button><button class="btn block ghost" id="setTourCats">Toernooicategorie\u00ebn</button><div class="sx" style="margin-top:7px">Bewerk de lijst met wedstrijdcategorie\u00ebn (admin).</div></div><div class="card"><button class="btn block blue" id="setTourLabels">Toernooilabels</button><div class="sx" style="margin-top:7px">Bewerk de labels om toernooien te filteren (admin).</div></div><div class="card"><button class="btn block blue" id="setCourses">Banen</button><div class="sx" style="margin-top:7px">Beheer de banen voor de SG (baan)-test.</div></div><div class="card"><button class="btn block blue" id="setGoalTax">Domeinen en categorieën</button><div class="sx" style="margin-top:7px">Bewerk categorieën, subcategorieën en domeinen voor ontwikkelingsdoelen.</div></div><div class="card"><button class="btn block blue" id="setEvalDom">Evaluatiedomeinen</button><div class="sx" style="margin-top:7px">Domeinen voor de duiding in voortgangsevaluaties.</div></div><div class="card"><button class="btn block blue" id="setNotif">Notificaties</button><div class="sx" style="margin-top:7px">Herinneringen, zoals de evaluatiecadans.</div></div><div class="card"><label class="rubtoggle"><input type="checkbox" id="setChkFb"'+(state.checkFeedback?" checked":"")+'><span><b>Feedback bij afvinken</b> — de speler geeft bij elke afgevinkte uitvoering aan hoe het ging (emoji-schaal) met een optionele opmerking.</span></label></div><div class="card"><button class="btn block blue" id="setRubriek">Prestatiegedrag-rubriek</button><div class="sx" style="margin-top:7px">Kies welke competenties je scoort in evaluaties.</div></div><div class="card"><button class="btn block blue" id="setDrillDb">Oefeningen-database</button><div class="sx" style="margin-top:7px">Alle oefeningen, testen en challenges — bekijken en beheren.</div></div><div class="card"><button class="btn block blue" id="setTourDb">Toernooien-database</button><div class="sx" style="margin-top:7px">Terugkerende toernooien en tours (ook bereikbaar via Planning).</div></div><div class="card"><button class="btn block blue" id="setTrainTax">Trainingscategorieën</button><div class="sx" style="margin-top:7px">Bewerk de hoofd-, sub- en sub-subcategorieën van de oefeningen-database.</div></div><div class="card"><button class="btn block blue" id="setPeriod">Periodisering</button><div class="sx" style="margin-top:7px">Standaardwaarden van de motor en de uitleg per fase.</div></div><div class="card"><button class="btn block blue" id="setWellness">Wellness monitoring</button><div class="sx" style="margin-top:7px">Dagelijkse fitheid-check: aanzetten per team of speler, met frequentie (ook per fase).</div></div><div class="card"><button class="btn block blue" id="setBackup">Back-up &amp; data</button><div class="sx" style="margin-top:7px">Exporteer of importeer je gegevens.</div></div><div class="sx" style="text-align:center;margin-top:10px;opacity:.65">NGF Performance Centre · '+APP_VERSION+'</div>';
+sh.innerHTML='<div class="shead"><div><h2>Instellingen</h2></div><button class="xbtn" onclick="closeSettings()">×</button></div><div class="card"><button class="btn block blue" id="setRol">Rol — wie gebruikt de app?</button><div class="sx" style="margin-top:7px">Nu: <b id="setRolNu"></b>. Bepaalt wat je ziet en onder wiens naam je invoert.</div></div><div class="card"><button class="btn block blue" id="setPrul">Prullenbak</button><div class="sx" style="margin-top:7px">Verwijderde rondes, doelen, evaluaties en notities — terug te zetten.</div></div><div class="card"><button class="btn block blue" id="setCoachLog">Mijn logboek</button><div class="sx" style="margin-top:7px">Eigen aantekeningen van de coach — los van het spelersdossier.</div></div><div class="card"><button class="btn block blue" id="setPriv">Privacy en delen</button><div class="sx" style="margin-top:7px">Wat er van een speler mag meetellen in landelijke cijfers — de speler beslist.</div></div><div class="card"><button class="btn block blue" id="setGoals">Doelen instellen</button><div class="sx" style="margin-top:7px">Targets per test · toewijzen aan team en spelers.</div></div><div class="card"><button class="btn block blue" id="setBuckets">Grenswaarden (buckets)</button><div class="sx" style="margin-top:7px">Proximity-categorieën voor wedges & approaches.</div></div><div class="card"><button class="btn block blue" id="setTax">Wedstrijdtaxonomie (MJOP-ladder)</button><button class="btn block ghost" id="setTourCats">Toernooicategorie\u00ebn</button><div class="sx" style="margin-top:7px">Bewerk de lijst met wedstrijdcategorie\u00ebn (admin).</div></div><div class="card"><button class="btn block blue" id="setTourLabels">Toernooilabels</button><div class="sx" style="margin-top:7px">Bewerk de labels om toernooien te filteren (admin).</div></div><div class="card"><button class="btn block blue" id="setCourses">Banen</button><div class="sx" style="margin-top:7px">Beheer de banen voor de SG (baan)-test.</div></div><div class="card"><button class="btn block blue" id="setGoalTax">Domeinen en categorieën</button><div class="sx" style="margin-top:7px">Bewerk categorieën, subcategorieën en domeinen voor ontwikkelingsdoelen.</div></div><div class="card"><button class="btn block blue" id="setEvalDom">Evaluatiedomeinen</button><div class="sx" style="margin-top:7px">Domeinen voor de duiding in voortgangsevaluaties.</div></div><div class="card"><button class="btn block blue" id="setNotif">Notificaties</button><div class="sx" style="margin-top:7px">Herinneringen, zoals de evaluatiecadans.</div></div><div class="card"><label class="rubtoggle"><input type="checkbox" id="setChkFb"'+(state.checkFeedback?" checked":"")+'><span><b>Feedback bij afvinken</b> — de speler geeft bij elke afgevinkte uitvoering aan hoe het ging (emoji-schaal) met een optionele opmerking.</span></label></div><div class="card"><button class="btn block blue" id="setRubriek">Prestatiegedrag-rubriek</button><div class="sx" style="margin-top:7px">Kies welke competenties je scoort in evaluaties.</div></div><div class="card"><button class="btn block blue" id="setDrillDb">Oefeningen-database</button><div class="sx" style="margin-top:7px">Alle oefeningen, testen en challenges — bekijken en beheren.</div></div><div class="card"><button class="btn block blue" id="setTourDb">Toernooien-database</button><div class="sx" style="margin-top:7px">Terugkerende toernooien en tours (ook bereikbaar via Planning).</div></div><div class="card"><button class="btn block blue" id="setTrainTax">Trainingscategorieën</button><div class="sx" style="margin-top:7px">Bewerk de hoofd-, sub- en sub-subcategorieën van de oefeningen-database.</div></div><div class="card"><button class="btn block blue" id="setPeriod">Periodisering</button><div class="sx" style="margin-top:7px">Standaardwaarden van de motor en de uitleg per fase.</div></div><div class="card"><button class="btn block blue" id="setWellness">Wellness monitoring</button><div class="sx" style="margin-top:7px">Dagelijkse fitheid-check: aanzetten per team of speler, met frequentie (ook per fase).</div></div><div class="card alleencoach"><button class="btn block blue" id="setDemo">Demodata</button><div class="sx" style="margin-top:7px">Demoteam met voorbeeldspelers in alle fases \u2014 laden en weer verwijderen.</div></div><div class="card"><button class="btn block blue" id="setBackup">Back-up &amp; data</button><div class="sx" style="margin-top:7px">Exporteer of importeer je gegevens.</div></div><div class="sx" style="text-align:center;margin-top:10px;opacity:.65">NGF Performance Centre · '+APP_VERSION+'</div>';
 openSheet();
 $("#setRol")&&($("#setRol").onclick=()=>{openRolSettings();});
 var _rn=$("#setRolNu");if(_rn)_rn.textContent=rolIsSpeler()?("speler"+(rolSpelerId()?(" \u00b7 "+nameOf(rolSpelerId())):" (geen speler gekozen)")):"coach";
@@ -5357,7 +5376,7 @@ $("#setTrainTax")&&($("#setTrainTax").onclick=()=>{openDrillTaxEdit();});
 $("#setDrillDb")&&($("#setDrillDb").onclick=()=>{closeSheet();show("trainen");});
 var _cfb=$("#setChkFb");if(_cfb)_cfb.onchange=function(){state.checkFeedback=this.checked;save();};
 $("#setTourDb")&&($("#setTourDb").onclick=()=>{openLibrary();});
-$("#setPeriod")&&($("#setPeriod").onclick=()=>{openPerCfg();});$("#setWellness")&&($("#setWellness").onclick=()=>{openWellnessCfg();});$("#setGoalTax").onclick=()=>{openGoalTaxonomy();};$("#setBackup").onclick=()=>{openBackupSettings();};}
+$("#setPeriod")&&($("#setPeriod").onclick=()=>{openPerCfg();});$("#setWellness")&&($("#setWellness").onclick=()=>{openWellnessCfg();});$("#setGoalTax").onclick=()=>{openGoalTaxonomy();};$("#setBackup").onclick=()=>{openBackupSettings();};var _sd=$("#setDemo");if(_sd)_sd.onclick=()=>{openDemoSheet();};}
 function bkActBlock(CATLISTS,offObj,editable,attr){let h="";CATLISTS.forEach(C=>{h+='<div class="bkcat-h">'+C[0]+'</div>';C[1].forEach(L=>{const key=L[0];const defs=(state.bucketDefs[key]||[]).slice().sort((a,b)=>(a.op==="holed"?-1:b.op==="holed"?1:a.t-b.t));const offIds=offObj[key]||[];h+='<div class="bkgrp"><div class="bkgrp-h">'+L[1]+'</div><div class="bkacts">'+(defs.length?defs.map(d=>{const on=offIds.indexOf(d.id)<0;return '<button class="bkact'+(on?" on":"")+(editable?"":" dis")+'" data-'+attr+'="'+key+":"+d.id+'">'+opLabel(d)+'</button>';}).join(""):'<span class="sx">geen</span>')+'</div></div>';});});return h;}
 function _geenTeamSheet(titel,uitleg){
  var sh=$("#sheet");
@@ -5612,7 +5631,7 @@ c.innerHTML='<div class="ch" data-th="'+t.id+'"><div><b style="font-size:15px">'
 box.appendChild(c);
 c.querySelector('[data-th="'+t.id+'"]').onclick=(e)=>{if(e.target.closest("button"))return;teamOpen[t.id]=!teamOpen[t.id];renderTeams();};
 const list=c.querySelector('[data-list="'+t.id+'"]');
-t.players.slice().sort((a,b)=>(a.name||"").localeCompare(b.name||"","nl")).forEach(p=>{const pc=el("div","pcard");var mt=[];if(p.birthYear)mt.push(String(p.birthYear));var _gi=(p.gender==="jongen")?'<span class="gicon m"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="14" r="6"/><path d="M15 9l5-5M15 4h5v5"/></svg></span>':((p.gender==="meisje")?'<span class="gicon f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="M12 15v7M9 19h6"/></svg></span>':"");pc.innerHTML=(p.photo?'<div class="av"><img src="'+p.photo+'" alt=""></div>':'<div class="av">'+initials(p.name)+'</div>')+'<div class="pn">'+esc(p.name)+'<small class="pmeta2">'+_gi+(mt.length?'<span>'+esc(mt.join(" \u00b7 "))+'</span>':'')+'</small></div>';
+t.players.slice().sort((a,b)=>(a.name||"").localeCompare(b.name||"","nl")).forEach(p=>{const pc=el("div","pcard");var mt=[];if(p.birthYear)mt.push(String(p.birthYear));var _mi2=playerModusInfo(p.id);var _mb=_mi2.m?(' <span class="modusbadge '+_mi2.m+'">'+modusLabel(_mi2.m)+'</span>'):"";var _gi=(p.gender==="jongen")?'<span class="gicon m"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="14" r="6"/><path d="M15 9l5-5M15 4h5v5"/></svg></span>':((p.gender==="meisje")?'<span class="gicon f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="M12 15v7M9 19h6"/></svg></span>':"");pc.innerHTML=(p.photo?'<div class="av"><img src="'+p.photo+'" alt=""></div>':'<div class="av">'+initials(p.name)+'</div>')+'<div class="pn">'+esc(p.name)+'<small class="pmeta2">'+_gi+(mt.length?'<span>'+esc(mt.join(" \u00b7 "))+'</span>':'')+_mb+'</small></div>';
 const e=el("button","link","Bewerk");e.onclick=()=>openPlayerForm(t.id,p.id);pc.appendChild(e);list.appendChild(pc);});
 const sb=c.querySelector('[data-act="'+t.id+'"]');if(sb)sb.onclick=(e)=>{e.stopPropagation();state.activeTeamId=t.id;save();renderTeams();};
 const ai=c.querySelector('[data-add="'+t.id+'"]'),ab=c.querySelector('[data-addp="'+t.id+'"]');
@@ -6477,7 +6496,22 @@ function renderGoals(){
   
   body.innerHTML="";
   (function(){var vp=registryPlayer(goalPlayer)||{};var vis=vp.vision;if(typeof vis==="string")vis={identity:vis,future:""};vis=vis||{};var has=(vis.identity||"").trim()||(vis.future||"").trim();var inner=has?((vis.identity?'<div class="sx" style="font-weight:700;color:var(--orange);margin-top:2px">Sportieve identiteit \u00b7 Wie wil ik zijn?</div><div style="white-space:pre-wrap;font-size:14px;line-height:1.6;margin-bottom:10px">'+esc(vis.identity)+'</div>':"")+(vis.future?'<div class="sx" style="font-weight:700;color:var(--orange)">Toekomst \u00b7 Waar wil ik heen?</div><div style="white-space:pre-wrap;font-size:14px;line-height:1.6">'+esc(vis.future)+'</div>':"")):'<div class="muted" style="font-size:13px">Nog geen visie beschreven.</div>';var vc=el("div","card");vc.innerHTML='<div class="ch" id="visHead" style="cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0"><div style="display:flex;align-items:center;gap:8px"><span class="chev'+(visOpen?" open":"")+'">\u25b6</span><h3 style="margin:0;color:var(--orange)">Visie</h3></div><button class="xbtn" id="visEdit" title="Bewerk">\u270e</button></div>'+(visOpen?'<div style="margin-top:8px">'+inner+'</div>':"");body.appendChild(vc);var vh=$("#visHead");if(vh)vh.onclick=function(ev){if(ev.target.closest("#visEdit"))return;visOpen=!visOpen;renderGoals();};var ve=$("#visEdit");if(ve)ve.onclick=function(ev){ev.stopPropagation();openVisionForm(goalPlayer);};})();
+  (function(){/* v232: Foundation-fasedoelkaart */
+   if(!rolIsSpeler()||modusNu(goalPlayer)!=="foundation")return;
+   var tr=playerTred(goalPlayer)||"F3";if(tr==="F1")return;
+   var doel=(tr==="F2")?54:36;
+   var pF=registryPlayer(goalPlayer)||{};var h=(pF.hcp!=null&&pF.hcp!=="")?+pF.hcp:null;
+   var kop="Op naar handicap "+doel;
+   var sub=(tr==="F2")?"Samen met je coach werk je naar je eerste handicap: 54. Zet daarnaast gerust je eigen doelen!":"Jouw fasedoel: handicap 36. Kleine stappen tellen!";
+   var extra="";
+   if(h!=null){extra='<div class="sx" style="margin-top:6px">Jouw handicap nu: <b>'+esc(hcpFmt(h))+'</b></div>';
+    if(tr==="F3"){var pct=Math.max(0,Math.min(100,Math.round((54-Math.max(Math.min(h,54),36))/(54-36)*100)));extra+='<div class="cntbar" style="margin-top:6px;display:block;height:8px"><span class="cntbarf" style="width:'+pct+'%"></span></div>';}}
+   var cF=el("div","card gcard fasedoel");
+   cF.innerHTML='<div class="glevhead"><span class="gdot" style="background:#0F6E56"></span><span class="glevname" style="color:#0F6E56">'+kop+'</span></div><p class="muted" style="font-size:12.5px;margin:0">'+sub+'</p>'+extra;
+   body.appendChild(cF);
+  })();
   (function(){/* v225: grootste kansen zonder doel */
+   if(rolIsSpeler()&&!modusToont(goalPlayer,"kansdoel"))return;
    var OPS=[];try{OPS=opportunities(goalPlayer)||[];}catch(e){}
    var top=OPS.filter(function(o){return o.kwadrant==="kans"&&!goalVoorKans(goalPlayer,o.key);}).slice(0,3);
    if(!top.length)return;
@@ -7498,6 +7532,8 @@ function openPlayerForm(tid,pid){
     +'<label class="fld" style="margin-top:10px">Geboortejaar <span class="sx">(voor geschiktheid)</span></label><input class="in" id="pfYear" type="number" inputmode="numeric" maxlength="4" oninput="this.value=this.value.slice(0,4)" placeholder="bijv. 2010" value="'+(p.birthYear||"")+'">'
     +'<label class="fld" style="margin-top:10px">MJOP-fase <span class="sx" id="pfMjopHint"></span></label>'+mjopSelHtml("pfMjop",p.mjopPhase||"","— geen fase")
     +'<div class="sx" id="pfMjopDoel" style="margin-top:4px"></div>'
+    +'<label class="fld" style="margin-top:10px">Weergavemodus <span class="sx" id="pfModusNu"></span></label><select class="in" id="pfModus"><option value="">Automatisch</option><option value="foundation"'+(p.modusOverride==="foundation"?" selected":"")+'>Foundation</option><option value="advanced"'+(p.modusOverride==="advanced"?" selected":"")+'>Advanced</option><option value="pro"'+(p.modusOverride==="pro"?" selected":"")+'>PRO</option></select>'
+    +'<label class="rubtoggle" style="margin-top:8px"><input type="checkbox" id="pfWellMini"'+(p.wellnessMini?" checked":"")+'><span><b>Wellness-mini in Foundation</b> \u2014 alleen de stemmingsvraag in de spelerweergave.</span></label>'
     +'<label class="fld" style="margin-top:10px">Wedstrijdcategorie</label>'
     +'<select class="in" id="pfCat"><option value="">\u2014 automatisch</option>'+TAX_CATS.map(function(c){return '<option value="'+c.c+'"'+(p.tourCat===c.c?' selected':'')+'>'+esc(c.naam)+'</option>';}).join("")+'</select>'
     +'<div class="sx" id="pfCatHint" style="margin-top:4px"></div>'
@@ -7514,6 +7550,7 @@ function openPlayerForm(tid,pid){
   $("#pfBack").onclick=back;$("#pfX").onclick=back;$("#pfCancel").onclick=back;
   $("#pfG").querySelectorAll("button").forEach(function(b){b.onclick=function(){gsel=(gsel===b.dataset.g)?"":b.dataset.g;$("#pfG").querySelectorAll("button").forEach(function(x){x.classList.toggle("on",x.dataset.g===gsel);});};});
   var _mh=$("#pfMjopHint");function _updMj(){if(!_mh)return;var sg=mjopSuggest((($("#pfYear")||{}).value||"").trim());_mh.textContent=sg?("(suggestie o.b.v. leeftijd: "+mjopName(sg)+")"):"";}_updMj();var _py2=$("#pfYear");if(_py2)_py2.addEventListener("input",_updMj);
+  var _mnEl=$("#pfModusNu");if(_mnEl){var _inf=playerModusInfo(p.id);_mnEl.textContent=_inf.m?("(nu: "+modusLabel(_inf.m)+" \u00b7 "+({override:"handmatig",fase:"uit fase",handicap:"uit handicap",leeftijd:"uit leeftijd",vragenlijst:"uit vragenlijst"}[_inf.bron]||"")+")"):"(nog onbekend \u2014 de speler krijgt een korte vragenlijst)";}
   var _hd=$("#pfMjopDoel"),_hh=$("#pfHcpHint"),_hi=$("#pfHcp"),_ms=$("#pfMjop");
   function _updHcp(){
    var ph=_ms?_ms.value:"";
@@ -7541,7 +7578,7 @@ function openPlayerForm(tid,pid){
    if(hn)t+=". Norm in deze categorie: "+hn+" holes";
    _ch.textContent=t+".";}
   _updCat();if(_ci)_ci.addEventListener("change",_updCat);if(_py2)_py2.addEventListener("input",_updCat);
-  var _pf={photo:p.photo||null};var _pfF=$("#pfPhotoFile"),_pfB=$("#pfPhotoBtn"),_pfP=$("#pfPhotoPrev"),_pfD=$("#pfPhotoDel");if(_pfB)_pfB.onclick=function(){_pfF.click();};if(_pfF)_pfF.onchange=function(){var f=_pfF.files&&_pfF.files[0];if(!f)return;compressImage(f,function(d){_pf.photo=d;_pfP.innerHTML='<img src="'+d+'" alt="">';if(_pfD)_pfD.style.display="";});};if(_pfD)_pfD.onclick=function(){_pf.photo=null;_pfP.innerHTML='<span>+</span>';_pfD.style.display="none";};$("#pfSave").onclick=function(){var nm=$("#pfName").value.trim();if(!nm){toast("Geef een naam");return;}p.name=nm;var y=$("#pfYear").value.trim();p.birthYear=y?(+y||""):"";var _mjv=$("#pfMjop")?$("#pfMjop").value:"";if(_mjv)p.mjopPhase=_mjv;else delete p.mjopPhase;p.gender=gsel;p.tourRights=rights.slice();var _hv=hcpParse($("#pfHcp")?$("#pfHcp").value:"");if(_hv==null){p.hcp=null;}else{hcpSet(p.id,_hv);}var _cv=$("#pfCat")?$("#pfCat").value:"";if(_cv)p.tourCat=_cv;else delete p.tourCat;if(_pf.photo){p.photo=_pf.photo;}else{delete p.photo;}save();closeSheet();renderTeams();toast("Opgeslagen \u2713");};
+  var _pf={photo:p.photo||null};var _pfF=$("#pfPhotoFile"),_pfB=$("#pfPhotoBtn"),_pfP=$("#pfPhotoPrev"),_pfD=$("#pfPhotoDel");if(_pfB)_pfB.onclick=function(){_pfF.click();};if(_pfF)_pfF.onchange=function(){var f=_pfF.files&&_pfF.files[0];if(!f)return;compressImage(f,function(d){_pf.photo=d;_pfP.innerHTML='<img src="'+d+'" alt="">';if(_pfD)_pfD.style.display="";});};if(_pfD)_pfD.onclick=function(){_pf.photo=null;_pfP.innerHTML='<span>+</span>';_pfD.style.display="none";};$("#pfSave").onclick=function(){var nm=$("#pfName").value.trim();if(!nm){toast("Geef een naam");return;}p.name=nm;var y=$("#pfYear").value.trim();p.birthYear=y?(+y||""):"";var _mjv=$("#pfMjop")?$("#pfMjop").value:"";if(_mjv)p.mjopPhase=_mjv;else delete p.mjopPhase;var _mo=$("#pfModus")?$("#pfModus").value:"";if(_mo)p.modusOverride=_mo;else delete p.modusOverride;if($("#pfWellMini")&&$("#pfWellMini").checked)p.wellnessMini=true;else delete p.wellnessMini;p.gender=gsel;p.tourRights=rights.slice();var _hv=hcpParse($("#pfHcp")?$("#pfHcp").value:"");if(_hv==null){p.hcp=null;}else{hcpSet(p.id,_hv);}var _cv=$("#pfCat")?$("#pfCat").value:"";if(_cv)p.tourCat=_cv;else delete p.tourCat;if(_pf.photo){p.photo=_pf.photo;}else{delete p.photo;}save();closeSheet();renderTeams();toast("Opgeslagen \u2713");};
   $("#pfUnlink").onclick=function(){confirmDlg("\u201c"+p.name+"\u201d uit "+t.name+" halen? De speler en resultaten blijven bestaan.",function(){t.playerIds=(t.playerIds||[]).filter(function(id){return id!==p.id;});rehydrate();save();closeSheet();renderTeams();toast("Uit team gehaald \u2713");});};$("#pfDel").onclick=function(){confirmDlg("\u201c"+p.name+"\u201d definitief verwijderen? Uit alle teams, met alle resultaten en doelen. Dit kan niet ongedaan gemaakt worden.",function(){var pid=p.id;(state.teams||[]).forEach(function(tt){tt.playerIds=(tt.playerIds||[]).filter(function(id){return id!==pid;});});(state.sessions||[]).forEach(function(x){x.results=(x.results||[]).filter(function(r){return r.playerId!==pid;});});state.sessions=(state.sessions||[]).filter(function(x){return (x.results||[]).length>0;});state.goals=(state.goals||[]).filter(function(g){return g.playerId!==pid;});state.goalThemes=(state.goalThemes||[]).filter(function(th){return th.playerId!==pid;});state.players=(state.players||[]).filter(function(x){return x.id!==pid;});rehydrate();save();closeSheet();renderTeams();toast("Verwijderd \u2713");});};var _ts=$("#pfTeamSel");var _mv=$("#pfMove");if(_mv)_mv.onclick=function(){var dst=_ts.value;var dn=((state.teams||[]).find(function(x){return x.id===dst;})||{}).name||"";confirmDlg('\u201c'+p.name+'\u201d verplaatsen naar '+dn+'?',function(){playerMoveTeam(tid,pid,dst);state.activeTeamId=dst;closeSheet();renderTeams();toast('Verplaatst \u2713');});};var _cp=$("#pfCopy");if(_cp)_cp.onclick=function(){var dst=_ts.value;var ok=playerCopyTeam(tid,pid,dst);closeSheet();renderTeams();toast(ok?'Toegevoegd aan team \u2713':'Zit al in dat team');};
 }
 /* ===== Batch 4: jaar-tijdlijn + blokkades ===== */
@@ -10049,6 +10086,19 @@ const MOOD_COLORS=["#d64550","#e2812e","#e0b13c","#a3c14a","#2fae72","#2e78e8"];
 function moodFace(lv,size){var m=["M8 16.6q4-4.4 8 0","M8 16.2q4-2.6 8 0","M8.3 15.6h7.4","M8 14.9q4 2.6 8 0","M8 14.4q4 4.4 8 0","M8 14.4q4 4.4 8 0"][lv-1]||"";
  var eyes=(lv===6)?'<path d="M9 8.8 9.62 10.08 10.9 10.7 9.62 11.32 9 12.6 8.38 11.32 7.1 10.7 8.38 10.08 Z" fill="currentColor" stroke="none"/><path d="M15 8.8 15.62 10.08 16.9 10.7 15.62 11.32 15 12.6 14.38 11.32 13.1 10.7 14.38 10.08 Z" fill="currentColor" stroke="none"/>':'<circle cx="9" cy="10.7" r=".95" fill="currentColor" stroke="none"/><circle cx="15" cy="10.7" r=".95" fill="currentColor" stroke="none"/>';
  return '<svg viewBox="0 0 24 24" width="'+(size||22)+'" height="'+(size||22)+'" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="9.2"/>'+eyes+(m?'<path d="'+m+'"/>':'')+'</svg>';}
+/* v231 — iconenschalen op verzoek van Tom: vermoeidheid = batterijniveau, stress = spanningsmeter.
+   Hoger blijft beter: batterij 6 = vol, meter 6 = in het groen. Overige onderdelen houden de smiley. */
+function battIcon(lv,size){var w=Math.max(1.6,(lv/6)*12.6);
+ return '<svg viewBox="0 0 24 24" width="'+(size||22)+'" height="'+(size||22)+'" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="3" y="7.6" width="15" height="9.4" rx="2.4"/><path d="M20.6 10.6v2.8"/><rect x="4.6" y="9.2" width="'+w.toFixed(1)+'" height="6.2" rx="1.1" fill="currentColor" stroke="none"/></svg>';}
+function gaugeIcon(lv,size){
+ var a=Math.PI*(1-((lv-0.5)/6));
+ var cx=12,cy=16.4,r=7.2;
+ var nx=cx+Math.cos(a)*r*0.86,ny=cy-Math.sin(a)*r*0.86;
+ return '<svg viewBox="0 0 24 24" width="'+(size||22)+'" height="'+(size||22)+'" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4.6 16.4a7.4 7.4 0 0 1 14.8 0"/><path d="M4.6 16.4h-1M20.4 16.4h1M12 8v-1M6.8 10.9l-.7-.7M17.2 10.9l.7-.7"/><path d="M'+cx+' '+cy+' L'+nx.toFixed(1)+' '+ny.toFixed(1)+'" stroke-width="2"/><circle cx="'+cx+'" cy="'+cy+'" r="1.5" fill="currentColor" stroke="none"/></svg>';}
+function wellLevelIcon(key,lv,size){
+ if(key==="fatigue")return battIcon(lv,size);
+ if(key==="stress")return gaugeIcon(7-lv,size);
+ return moodFace(lv,size);}
 function fmtSG2(v){var n=+v;if(isNaN(n))return "";var t=n.toFixed(2);return ((n>0?"+":"")+t)+" str";}
 function bulletPre(txt){var ls=String(txt||"").split("\n").map(function(l){if(l.trim()==="")return "";if(/^\s*•/.test(l))return l;return "• "+l.replace(/^\s*[-*]\s*/,"");}).filter(function(l){return l!=="";});return ls.join("\n");}
 function bulletBind(t){if(!t||t._bul)return;t._bul=1;
@@ -10168,7 +10218,9 @@ function wellFreqFor(pid){var c=wellCfg();var pc=c.players[pid];
  if(pc&&pc.mode==="on")return pc.freq||_wellDefFreq();
  var t=(state.teams||[]).find(function(tt){return (tt.playerIds||[]).indexOf(pid)>=0&&c.teams[tt.id]&&c.teams[tt.id].on;});
  return t?(c.teams[t.id].freq||_wellDefFreq()):null;}
-function wellItemsFor(pid){var c=wellCfg();var pc=c.players[pid];var src=null;
+function wellItemsFor(pid){
+ try{if(rolIsSpeler()&&rolSpelerId()===pid&&modusNu(pid)==="foundation"){var _p=registryPlayer(pid);if(_p&&_p.wellnessMini)return ["mood"];}}catch(e){}
+ var c=wellCfg();var pc=c.players[pid];var src=null;
  if(pc&&pc.mode==="on")src=pc;
  else if(!(pc&&pc.mode==="off")){var t=(state.teams||[]).find(function(tt){return (tt.playerIds||[]).indexOf(pid)>=0&&c.teams[tt.id]&&c.teams[tt.id].on;});if(t)src=c.teams[t.id];}
  return (src&&src.items&&src.items.length)?src.items:null;}
@@ -10192,7 +10244,7 @@ function openWellness(pid,date){
  var sel=null;try{sel=wellItemsFor(pid);}catch(e){}
  function itOn(k){return !sel||sel.indexOf(k)>=0;}
  var sh=$("#sheet");
- function scaleRow(key,val){return '<div class="moodrow wsc" data-wrow="'+key+'">'+[1,2,3,4,5,6].map(function(i){return '<button type="button" class="moodbtn sm mf'+(val===i?' on':'')+'" data-m="'+i+'" style="--mfc:'+MOOD_COLORS[i-1]+'">'+moodFace(i,18)+'</button>';}).join("")+'</div>';}
+ function scaleRow(key,val){return '<div class="moodrow wsc" data-wrow="'+key+'">'+[1,2,3,4,5,6].map(function(i){return '<button type="button" class="moodbtn sm mf'+(val===i?' on':'')+'" data-m="'+i+'" style="--mfc:'+MOOD_COLORS[i-1]+'">'+wellLevelIcon(key,i,18)+'</button>';}).join("")+'</div>';}
  function noteInp(key){return '<input class="in tesnote wnote" data-wnote="'+key+'" placeholder="Toelichting (optioneel)" style="display:'+((((+d[key]||0)>0&&(+d[key]||0)<=2)||(d.itemNotes[key]||"").trim())?"":"none")+'" value="'+esc(d.itemNotes[key]||"")+'">';}
  var rows="";
  WELL_ITEMS.forEach(function(it){var k=it[0];if(k==="mood"||!itOn(k))return;
@@ -10240,13 +10292,13 @@ function wellnessDetail(id){var w=wellnessById(id);if(!w)return;var sh=$("#sheet
  var rows=scored.map(function(it){var v=+w[it[0]]||0;
   return '<div class="tepartv"><span class="tepvl" style="text-transform:none;font-size:13px"><span class="wdrow">'+wellIcon(it[0])+'<span>'+it[1]
    +((it[0]==="sleepQ"&&w.sleepH!==""&&w.sleepH!=null)?' <span class="sx">('+String(w.sleepH).replace(".",",")+' u)</span>':'')
-   +'</span></span></span><span class="tepe2"'+(v?' style="color:'+MOOD_COLORS[v-1]+'"':'')+'>'+(v?moodFace(v,20):'<span class="sx">–</span>')+'</span></div>';}).join("");
+   +'</span></span></span><span class="tepe2"'+(v?' style="color:'+MOOD_COLORS[v-1]+'"':'')+'>'+(v?wellLevelIcon(it[0],v,20):'<span class="sx">–</span>')+'</span></div>';}).join("");
  var noteList=scored.filter(function(it){return String(notes[it[0]]||"").trim();})
   .map(function(it){return '<div class="wdnote">'+wellIcon(it[0])+'<span class="wdnv">'+esc(String(notes[it[0]]).trim())+'</span></div>';}).join("");
  var bp=(w.bodyParts||[]).map(bodyPartName);
- var rcol=(r==null)?"var(--muted)":(r<50?"var(--bad)":(r<65?"#e2812e":"var(--good)"));
+ var _rbk=readyBracket(r);var rcol=_rbk.col;
  sh.innerHTML='<div class="shead"><div><h2>Wellness check</h2><div class="sx">'+fmtDate(w.date)+' · '+esc(nameOf(w.playerId))+'</div></div><div class="sheadact"><button class="xbtn" id="wdEdit" title="Bewerk">✎</button><button class="xbtn xbtn-del" id="wdDel" title="Verwijder">'+TRASH_SVG+'</button><button class="xbtn" onclick="closeSheet()">×</button></div></div>'
- +'<div class="card"><div class="row spread" style="align-items:center"><span class="lldlbl" style="margin:0">Readiness</span><b style="font-size:21px;color:'+rcol+'">'+(r!=null?r+"%":"–")+'</b></div></div>'
+ +'<div class="card"><div class="row spread" style="align-items:center"><span class="lldlbl" style="margin:0">Readiness</span><span style="display:flex;align-items:center;gap:8px">'+(_rbk.lab?'<span class="sigchip">'+_rbk.lab+'</span>':'')+'<b style="font-size:21px;color:'+rcol+'">'+(r!=null?r+"%":"–")+'</b></span></div></div>'
  +(rows?('<div class="card"><div class="rubsplit"><div class="rubsplit-l">'+rows+'</div>'
    +'<div class="rubsplit-r"><div class="evdlbl">Toelichting</div>'
    +(noteList||'<p class="muted" style="margin:0;font-size:12.5px">Geen toelichting bij deze check.</p>')
@@ -10289,7 +10341,7 @@ function openWellnessCfg(){var c=wellCfg();var sh=$("#sheet");
 }
 function wellnessCardInto(box,pid){if(!pid)return;var list=wellness().filter(function(w){return w.playerId===pid;}).sort(function(a,b){return a.date.localeCompare(b.date);});if(!list.length)return;
  var today=todayISO();var days=[];for(var i=27;i>=0;i--){var dd=dAddDays(today,-i);var w=list.find(function(x){return x.date===dd;});days.push({d:dd,r:w?wellReadiness(w):null,id:w?w.id:null});}
- var bars=days.map(function(o){var h=o.r!=null?Math.max(8,Math.round(o.r*0.52)):3;var col=o.r==null?"#eef1f5":(o.r<50?"var(--bad)":(o.r<65?"#e2812e":"var(--good)"));return '<div class="wbarw"'+(o.id?' data-wid="'+o.id+'" style="cursor:pointer"':'')+'><div class="wbar" style="height:'+h+'px;background:'+col+'"'+(o.r!=null?' title="'+fmtDate(o.d)+' · '+o.r+'%"':'')+'></div></div>';}).join("");
+ var bars=days.map(function(o){var h=o.r!=null?Math.max(8,Math.round(o.r*0.52)):3;var col=o.r==null?"#eef1f5":readyBracket(o.r).col;return '<div class="wbarw"'+(o.id?' data-wid="'+o.id+'" style="cursor:pointer"':'')+'><div class="wbar" style="height:'+h+'px;background:'+col+'"'+(o.r!=null?' title="'+fmtDate(o.d)+' · '+o.r+'%"':'')+'></div></div>';}).join("");
  var last7=list.filter(function(w){return w.date>dAddDays(today,-7);});var prev7=list.filter(function(w){return w.date>dAddDays(today,-14)&&w.date<=dAddDays(today,-7);});
  function avg(arr,key){var su=0,n=0;arr.forEach(function(w){var v=+w[key]||0;if(v){su+=v;n++;}});return n?su/n:null;}
  var items="";
@@ -10297,7 +10349,7 @@ function wellnessCardInto(box,pid){if(!pid)return;var list=wellness().filter(fun
  var flags=list.filter(function(w){return w.date>dAddDays(today,-7)&&wellFlag(w);}).length;
  var warn=(flags>=2)?'<div class="tdfocus" style="border-left-color:var(--bad);margin-top:12px"><b>Signaal:</b> meerdere dagen met lage readiness, klachten of ziekte in de afgelopen week — bespreek de belasting.</div>':'';
  var card=el("div","card");
- card.innerHTML='<div class="row spread" style="align-items:center;margin-bottom:6px"><h3 style="margin:0">Wellness</h3>'+(lr!=null?('<span style="display:flex;align-items:center;gap:6px"><span class="sx" style="font-size:10.5px">laatste: '+fmtDate(latest.date)+'</span><span class="wpctbox" style="background:'+(lr<50?"var(--bad)":(lr<65?"#e2812e":"var(--good)"))+'">'+lr+'%</span></span>'):'')+'</div><div style="display:flex;gap:12px;align-items:flex-end"><div class="wbars" style="flex:1">'+bars+'</div>'+(items?'<div class="witemsV">'+items+'</div>':'')+'</div>'+warn;
+ card.innerHTML='<div class="row spread" style="align-items:center;margin-bottom:6px"><h3 style="margin:0">Wellness</h3>'+(lr!=null?('<span style="display:flex;align-items:center;gap:6px"><span class="sx" style="font-size:10.5px">laatste: '+fmtDate(latest.date)+'</span><span class="wpctbox" style="background:'+readyBracket(lr).col+'">'+lr+'%</span></span>'):'')+'</div><div style="display:flex;gap:12px;align-items:flex-end"><div class="wbars" style="flex:1">'+bars+'</div>'+(items?'<div class="witemsV">'+items+'</div>':'')+'</div>'+warn;
  box.appendChild(card);
  card.style.cursor="pointer";card.onclick=function(){var w=list[list.length-1];if(w)wellnessDetail(w.id);};
  card.querySelectorAll("[data-wid]").forEach(function(b){b.onclick=function(e){e.stopPropagation();wellnessDetail(b.dataset.wid);};});
@@ -10345,6 +10397,14 @@ function wlFiltBind(redraw){
  var a=$("#wlFA");if(a)a.onchange=function(){wlFilt.from=a.value;redraw();};
  var b=$("#wlFB");if(b)b.onchange=function(){wlFilt.to=b.value;redraw();};
  var c=$("#wlFClr");if(c)c.onclick=function(e){e.preventDefault();wlFilt={mode:"m3",year:"",from:"",to:""};redraw();};}
+/* v231 — geen gradient meer maar zeven brackets met een duidelijke toestand.
+   Onder de 50 is het een signaaldag: 25–50 = monitoren, onder 25 = actie (beide rood). */
+var READY_BRACKETS=[[25,"#9E2B33","actie"],[50,"#D64550","monitoren"],[60,"#E2812E",null],[70,"#E0B13C",null],[80,"#83C25C",null],[90,"#2FAE72",null],[101,"#128A5A",null]];
+function readyBracket(v){
+ if(v==null||isNaN(v))return {col:"var(--muted)",lab:null,sig:false};
+ for(var i=0;i<READY_BRACKETS.length;i++){var b=READY_BRACKETS[i];
+  if(v<b[0])return {col:b[1],lab:b[2],sig:!!b[2]};}
+ return {col:"#128A5A",lab:null,sig:false};}
 function wlGrad(t){
  var C=[[214,69,80],[226,129,46],[224,177,60],[163,193,74],[47,174,114]];
  t=Math.max(0,Math.min(1,(isNaN(t)?0:t)));
@@ -10404,9 +10464,10 @@ function wlBarSvg(L,o){
  return '<div class="chartwrap scchart">'+s2+'</div>';}
 function wlReadySvg(L){
  return wlBarSvg(L,{get:function(w){return wellReadiness(w);},min:0,max:100,ticks:[0,25,50,75,100],
-  col:function(v){return wlGrad(v/100);},fmt:function(v){return v+"%";},h:210,
+  col:function(v){return readyBracket(v).col;},fmt:function(v){var b=readyBracket(v);return v+"%"+(b.lab?" \u00b7 "+b.lab:"");},h:210,
   empty:"Geen checks in deze periode."})
-  +'<div class="wlleg"><span class="wlic" title="totaal niet fit">'+WL_ICO_BAT+'</span><i class="wlgrad"></i><span class="wlic" title="superfit">'+WL_ICO_ROCKET+'</span></div>';}
+  +'<div class="wlleg2">'+[["0\u201325","actie"],["25\u201350","monitoren"],["50\u201360",null],["60\u201370",null],["70\u201380",null],["80\u201390",null],["90\u2013100",null]].map(function(x,i){
+    return '<span class="wlbk"><i style="background:'+READY_BRACKETS[i][1]+'"></i>'+x[0]+(x[1]?'<b>'+x[1]+'</b>':'')+'</span>';}).join("")+'</div>';}
 const WL_ICO_BAT='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7.5" width="16" height="10" rx="2.5"/><path d="M21 11v2"/><rect x="4.5" y="10" width="2.6" height="5" rx="1" fill="currentColor" stroke="none"/></svg>';
 const WL_ICO_ROCKET='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5c3 2 5 5.6 5 9.5 0 2.2-.6 4.2-1.6 6H8.6C7.6 16.2 7 14.2 7 12c0-3.9 2-7.5 5-9.5Z"/><circle cx="12" cy="10" r="1.9"/><path d="M8.6 18 6 21l3-.6M15.4 18 18 21l-3-.6"/></svg>';
 function wlScaleSvg(L,key){
@@ -10468,7 +10529,7 @@ function renderWellnessTab(){
   var flags=L.filter(wellFlag).length;
   H+='<div class="card"><div class="cardhd"><h3>Readiness</h3><span class="hdnote">'+L.length+' checks · '+esc(wlFiltLabel())+'</span></div>'
    +'<div class="row" style="gap:10px;flex-wrap:wrap;margin-bottom:6px">'
-   +'<span class="wlstat"><span>Gemiddeld</span><b style="color:'+(rAvg==null?"var(--muted)":wlGrad(rAvg/100))+'">'+(rAvg!=null?rAvg+"%":"–")+'</b></span>'
+   +'<span class="wlstat"><span>Gemiddeld</span><b style="color:'+readyBracket(rAvg).col+'">'+(rAvg!=null?rAvg+"%":"–")+'</b></span>'
    +'<span class="wlstat"><span>Laagste</span><b>'+(rs.length?Math.min.apply(null,rs)+"%":"–")+'</b></span>'
    +'<span class="wlstat"><span>Hoogste</span><b>'+(rs.length?Math.max.apply(null,rs)+"%":"–")+'</b></span>'
    +'<span class="wlstat"><span>Signaaldagen</span><b>'+flags+'</b></span></div>'
@@ -10491,9 +10552,9 @@ function renderWellnessTab(){
    +wlScaleSvg(L,wlMetric)+'</div>';
   H+='<div class="card"><div class="cardhd"><h3>Klachten in de tijd</h3><span class="hdnote">'+L.filter(function(w){return (w.bodyParts||[]).length||w.illness;}).length+' checks met klachten</span></div>'+wlComplaintSvg(L)+'</div>';
   var rowsH=L.slice().reverse().map(function(w){var r=wellReadiness(w);
-   var col=(r==null)?"var(--muted)":wlGrad(r/100);
+   var _bk=readyBracket(r);var col=_bk.col;
    var tags=[];if(w.illness)tags.push("ziek");if((w.bodyParts||[]).length)tags.push((w.bodyParts||[]).length+" klacht"+((w.bodyParts||[]).length===1?"":"en"));
-   return '<div class="sprow" data-wd="'+w.id+'"><div style="flex:1;min-width:0"><b style="font-size:13.5px">'+fmtDate(w.date)+'</b>'+(tags.length?'<small class="muted" style="display:block">'+esc(tags.join(" · "))+'</small>':'')+'</div><b style="color:'+col+'">'+(r!=null?r+"%":"–")+'</b><span class="chev">▶</span></div>';}).join("");
+   return '<div class="sprow" data-wd="'+w.id+'"><div style="flex:1;min-width:0"><b style="font-size:13.5px">'+fmtDate(w.date)+'</b>'+(tags.length?'<small class="muted" style="display:block">'+esc(tags.join(" · "))+'</small>':'')+'</div>'+(_bk.lab?'<span class="sigchip">'+_bk.lab+'</span>':'')+'<b style="color:'+col+'">'+(r!=null?r+"%":"–")+'</b><span class="chev">▶</span></div>';}).join("");
   H+='<div class="collap'+(wlChecksOpen?' open':'')+'"><div class="ch" id="wlChH"><b>Checks <span class="muted" style="font-weight:600">· '+L.length+'</span></b><span class="chev">▶</span></div><div class="cb">'+rowsH+'</div></div>';
  }
  box.innerHTML=H;
@@ -10564,6 +10625,137 @@ function mjopName(k){var i=mjopIdx(k);return i>=0?(MJOP_PHASES[i][0]+" · "+MJOP
 function mjopRangeLabel(d){var a=mjopIdx(d.mjopFrom),b=mjopIdx(d.mjopTo);if(a<0&&b<0)return "";if(a<0)return "t/m "+d.mjopTo;if(b<0)return "vanaf "+d.mjopFrom;if(a===b)return String(d.mjopFrom);return d.mjopFrom+" t/m "+d.mjopTo;}
 function mjopSuggest(by){if(!by)return null;var age=(new Date()).getFullYear()-(+by);if(isNaN(age)||age<3||age>60)return null;if(age<=7)return "F1";if(age<=9)return "F2";if(age<=11)return "F3";if(age<=13)return "A1";if(age<=15)return "A2";if(age<=16)return "T1";if(age<=18)return "T2";if(age<=21)return "T3";return "E1";}
 function playerMjop(pid){var p=registryPlayer(pid);return (p&&p.mjopPhase)||null;}
+/* ===== v232: doelgroepmodi — Foundation (F1–F3) / Advanced (A1–A2) / PRO (T/E/M) ===== */
+function modusVanFase(f){if(!f)return null;var c=String(f).charAt(0);if(c==="F")return "foundation";if(c==="A")return "advanced";if(c==="T"||c==="E"||c==="M")return "pro";return null;}
+function modusUitHcp(h){if(h==null||h==="")return null;h=+h;if(isNaN(h))return null;if(h>36)return "foundation";if(h>=11.5)return "advanced";return "pro";}
+function playerModusInfo(pid){var p=registryPlayer(pid);if(!p)return {m:null,bron:null};
+ if(p.modusOverride&&["foundation","advanced","pro"].indexOf(p.modusOverride)>=0)return {m:p.modusOverride,bron:"override"};
+ var m=modusVanFase(p.mjopPhase);if(m)return {m:m,bron:"fase"};
+ m=modusUitHcp(p.hcp);if(m)return {m:m,bron:"handicap"};
+ if(p.birthYear){m=modusVanFase(mjopSuggest(p.birthYear));if(m)return {m:m,bron:"leeftijd"};}
+ if(p.modusIntake&&["foundation","advanced","pro"].indexOf(p.modusIntake)>=0)return {m:p.modusIntake,bron:"vragenlijst"};
+ return {m:null,bron:null};}
+function playerModus(pid){return playerModusInfo(pid).m;}
+function modusNu(pid){return playerModus(pid)||"pro";}
+function modusLabel(m){return m==="foundation"?"Foundation":m==="advanced"?"Advanced":m==="pro"?"PRO":"?";}
+function playerTred(pid){if(modusNu(pid)!=="foundation")return null;var p=registryPlayer(pid)||{};var f=/^F[123]$/.test(p.mjopPhase||"")?p.mjopPhase:null;
+ if(!f&&p.birthYear){var sg=mjopSuggest(p.birthYear);if(/^F[123]$/.test(sg||""))f=sg;}
+ return f||"F3";}
+function toonLaag(pid){var p=registryPlayer(pid);if(!p||!p.birthYear)return "normaal";var age=(new Date()).getFullYear()-(+p.birthYear);if(isNaN(age)||age<3)return "normaal";if(age<=8)return "kind";if(age<=13)return "jeugd";return "normaal";}
+/* welke onderdelen de SPELERweergave toont; de coach ziet altijd alles. f=foundation (evt. per trede), a=advanced, p=pro. */
+var MODUS_FEATS={
+ home:{f:0,a:1,p:1}, scoring:{f:0,a:1,p:1}, baanstats:{f:0,a:1,p:1}, progress:{f:0,a:1,p:1},
+ kansen:{f:0,a:1,p:1}, logbook:{f:0,a:1,p:1},
+ wellness:{f:"mini",a:1,p:1}, bodymap:{f:0,a:1,p:1},
+ goals:{f:{F1:0,F2:1,F3:1},a:1,p:1}, spelen:{f:{F1:0,F2:1,F3:1},a:1,p:1},
+ planning:{f:{F1:0,F2:1,F3:1},a:1,p:1},
+ plan_tours:{f:{F1:0,F2:0,F3:1},a:1,p:1}, plan_timeline:{f:0,a:1,p:1}, plan_period:{f:0,a:0,p:1},
+ kansdoel:{f:0,a:0,p:1}, sg_detail:{f:0,a:0,p:1}};
+function modusToont(pid,feat){
+ if(!rolIsSpeler())return true;
+ pid=pid||rolSpelerId();if(!pid)return true;
+ var def=MODUS_FEATS[feat];if(!def)return true;
+ var m=modusNu(pid);
+ var v=(m==="foundation")?def.f:(m==="advanced")?def.a:def.p;
+ if(v==="mini"){var p=registryPlayer(pid);return !!(p&&p.wellnessMini);}
+ if(v&&typeof v==="object")return !!v[playerTred(pid)||"F3"];
+ return !!v;}
+function modusPas(){
+ var b=document.body;
+ ["modus-foundation","modus-advanced","modus-pro","tred-f1","tred-f2","tred-f3","toon-kind","toon-jeugd"].forEach(function(c){b.classList.remove(c);});
+ var pid=rolSpelerId();
+ var navBtns=document.querySelectorAll("#tabs button");
+ if(!pid){navBtns.forEach(function(bt){bt.style.display="";});return;}
+ var m=modusNu(pid);b.classList.add("modus-"+m);
+ var t=playerTred(pid);if(t)b.classList.add("tred-"+t.toLowerCase());
+ var tl=toonLaag(pid);if(tl!=="normaal")b.classList.add("toon-"+tl);
+ navBtns.forEach(function(bt){bt.style.display=modusToont(pid,bt.dataset.v)?"":"none";});}
+/* korte vragenlijst als fase, handicap en geboortejaar alle drie ontbreken */
+function openModusIntake(pid){
+ var p=registryPlayer(pid);if(!p)return;
+ var ant={erv:null,wed:null};
+ var sh=$("#sheet");
+ function chips(id,opts,cur){return '<div class="dvtiles" data-mi="'+id+'">'+opts.map(function(o){return '<button type="button" class="dvtile'+(cur===o[0]?" on":"")+'" data-k="'+o[0]+'">'+o[1]+'</button>';}).join("")+'</div>';}
+ function draw(hv){
+  sh.innerHTML='<div class="shead"><div><h2>Jouw weergave</h2><div class="sx">'+esc(p.name)+'</div></div><button class="xbtn" onclick="closeSheet()">\u00d7</button></div>'
+  +'<div class="card"><label class="fld">Hoe lang golf je al?</label>'+chips("erv",[["nieuw","Net begonnen"],["paar","1\u20133 jaar"],["lang","Langer"]],ant.erv)
+  +'<label class="fld" style="margin-top:12px">Speel je wedstrijden?</label>'+chips("wed",[["nee","Nee"],["club","Op de club"],["reg","Regionaal of hoger"]],ant.wed)
+  +'<label class="fld" style="margin-top:12px">Ken je je handicap? <span class="sx">(leeg laten mag)</span></label><input class="in" id="miHcp" inputmode="decimal" placeholder="bijv. 28,5" value="'+esc(hv||"")+'"></div>'
+  +'<button class="btn block blue" id="miSave">Klaar</button>';
+  sh.querySelectorAll("[data-mi]").forEach(function(g){g.querySelectorAll("button").forEach(function(b){b.onclick=function(){ant[g.dataset.mi]=b.dataset.k;var h=sh.querySelector("#miHcp");draw(h?h.value:"");};});});
+  $("#miSave").onclick=function(){
+   var h=hcpParse(($("#miHcp").value||"").trim());
+   var m=null;
+   if(h!=null){hcpSet(pid,h);m=modusUitHcp(h);}
+   if(!m){if(ant.erv==="nieuw"||ant.wed==="nee")m="foundation";else if(ant.erv==="lang"&&ant.wed==="reg")m="pro";else m="advanced";}
+   p.modusIntake=m;stempel(p);save();closeSheet();rolPas();try{show("today");}catch(e){}toast("Weergave ingesteld \u2713");};}
+ draw("");openSheet();}
+/* ===== v233: demodata — een compleet demoteam om mee te testen, met één knop te verwijderen ===== */
+function demoAanwezig(){return (state.teams||[]).some(function(t){return t.demo;});}
+function seedDemoData(){
+ if(demoAanwezig())return;
+ var yr=(new Date()).getFullYear(),vandaag=todayISO(),tid="dteam";
+ function py(n){return String(yr-n);}
+ function dMin(n){return dAddDays(vandaag,-n);}
+ var P=[
+  {id:"dp_kai",name:"Kai Vermeer",birthYear:py(7),mjopPhase:"F1",gender:"jongen"},
+  {id:"dp_fee",name:"Fee de Boer",birthYear:py(9),mjopPhase:"F2",gender:"meisje",wellnessMini:true},
+  {id:"dp_sam",name:"Sam Willems",birthYear:py(11),mjopPhase:"F3",gender:"jongen",hcp:44},
+  {id:"dp_noa",name:"Noa Jansen",birthYear:py(13),mjopPhase:"A1",gender:"meisje",hcp:19.8},
+  {id:"dp_bo",name:"Bo van Dijk",birthYear:py(15),mjopPhase:"A2",gender:"jongen",hcp:8.6},
+  {id:"dp_tess",name:"Tess Hendriks",birthYear:py(17),mjopPhase:"T2",gender:"meisje",hcp:1.4},
+  {id:"dp_robin",name:"Robin Smit",gender:""}];
+ P.forEach(function(p){p.demo=true;state.players.push(p);});
+ state.teams.push({id:tid,demo:true,name:"Demoteam",playerIds:P.map(function(p){return p.id;}),players:[],sessions:[],goals:[],bucketsOff:{},seasons:[{id:"dsz",name:String(yr)}],currentSeasonId:"dsz"});
+ function ronde(pid,dagen,gross,par,rtype,ev,baan){return {id:uid(),demo:true,teamId:tid,testId:"spelen",holes:18,finalized:true,date:dMin(dagen),seasonId:"dsz",rtype:rtype,results:[{playerId:pid,detail:{toPar:gross-par}}],sc:{gross:gross,par:par,baan:baan||"Demobaan",ev:ev||""}};}
+ function sgRonde(pid,dagen,sgT){var ph=[],hs=[],i;
+  for(i=0;i<18;i++){var par=(i%6===2)?3:((i%6===5)?5:4);var len=(par===3)?150:((par===5)?480:360);var sc2=par+((i%4===0)?1:0);
+   ph.push({score:sc2,par:par,sg:Math.round(sgT/18*100)/100});hs.push({hole:i+1,loopName:"Demo",loopHole:(i%9)+1,par:par,len:len,score:sc2});}
+  var inp={};inp[pid]={courseName:"Demobaan",teeName:"geel",holes:hs};
+  return {id:uid(),demo:true,teamId:tid,testId:"sg_round",finalized:true,date:dMin(dagen),seasonId:"dsz",rtype:"oefen",
+   results:[{playerId:pid,detail:{sgTotal:sgT,strokes:hs.reduce(function(a,h){return a+h.score;},0),perHole:ph}}],inputs:inp};}
+ var S=[];
+ [[ "dp_sam",[95,98,93,99,91,94],76],["dp_noa",[88,85,90,84,87,83,86,82],72],["dp_bo",[79,76,81,75,78,74,77,73],72],["dp_tess",[73,70,74,69,72,68,71,67],72]].forEach(function(row){
+  var pid=row[0],gr=row[1],par=row[2];
+  gr.forEach(function(g,i){var wed=(i%2===1);S.push(ronde(pid,150-i*18-(pid.length%5)*3,g,par,wed?"wedstrijd":"oefen",wed?("Demo Open "+(i+1)):"",wed?"Golfbaan Stippelberg":"Demobaan"));});});
+ S.push(sgRonde("dp_tess",21,-1.6),sgRonde("dp_tess",7,0.4));
+ S.forEach(function(x){state.sessions.push(x);});
+ state.wellness=state.wellness||[];
+ var basis=[5,4,5,3,5,6,2,5,4,5,6,5];
+ ["dp_noa","dp_bo","dp_tess"].forEach(function(pid,pi){
+  basis.forEach(function(b,i){if((i+pi)%5===4)return;var v=Math.max(1,Math.min(6,b+((i+pi)%3)-1));
+   state.wellness.push({id:uid(),demo:true,playerId:pid,date:dMin(11-i),mood:v,sleepQ:v,fatigue:Math.max(1,v-((i%2)?1:0)),physFit:v,mentFit:v,stress:v,motivation:Math.min(6,v+((i%3)?0:1)),confidence:v,bodyParts:[],itemNotes:{},createdAt:Date.now()});});});
+ state.upgame=state.upgame||[];
+ [["dp_noa",{tee:-0.6,approach:-1.5,shortgame:0.3,putten:-0.2}],["dp_bo",{tee:-1.1,approach:-0.4,shortgame:-0.9,putten:0.1}],["dp_tess",{tee:0.2,approach:-0.8,shortgame:-0.3,putten:-0.6}]].forEach(function(u){
+  state.upgame.push({demo:true,playerId:u[0],gen:dMin(14),sg:u[1]});});
+ state.goals=state.goals||[];
+ var nu=Date.now();
+ state.goals.push(
+  {id:uid(),demo:true,playerId:"dp_tess",type:"prestatie",cat:"approach",subcat:"sg_ronde",title:"",baseline:"-0.8",baselineDate:dMin(14),target:"0",status:"open",door:"coach",oppKey:"up_approach",priority:0,createdAt:nu,updatedAt:nu},
+  {id:uid(),demo:true,playerId:"dp_bo",type:"leer",title:"Pre-shot routine vasthouden onder druk",status:"open",door:"speler",priority:0,createdAt:nu,updatedAt:nu},
+  {id:uid(),demo:true,playerId:"dp_bo",type:"proces",title:"3\u00d7 per week 30 min putten",status:"open",door:"coach",priority:0,createdAt:nu,updatedAt:nu},
+  {id:uid(),demo:true,playerId:"dp_noa",type:"leer",title:"Clubkeuze bij wind leren inschatten",status:"voorgesteld",door:"coach",priority:0,createdAt:nu,updatedAt:nu});
+ state.coachLog=state.coachLog||[];
+ state.coachLog.push(
+  {id:uid(),demo:true,playerId:"dp_tess",date:dMin(6),tekst:"Approach-window besproken; volgende les videocheck.",ref:null,createdAt:nu},
+  {id:uid(),demo:true,playerId:"dp_bo",date:dMin(3),tekst:"Bo meldt drukte op school \u2014 belasting deze week iets terug.",ref:null,createdAt:nu});
+ state.activeTeamId=tid;
+ try{rehydrate();}catch(e){}save();}
+function demoVerwijder(){
+ var pids={};(state.players||[]).forEach(function(p){if(p.demo)pids[p.id]=1;});
+ state.players=(state.players||[]).filter(function(p){return !p.demo;});
+ state.teams=(state.teams||[]).filter(function(t){return !t.demo;});
+ state.sessions=(state.sessions||[]).filter(function(x){return !x.demo;});
+ ["wellness","upgame","coachLog","goals"].forEach(function(k){state[k]=(state[k]||[]).filter(function(x){return !x.demo&&!pids[x.playerId];});});
+ if(!(state.teams||[]).some(function(t){return t.id===state.activeTeamId;}))state.activeTeamId=((state.teams||[])[0]||{}).id||null;
+ try{rehydrate();}catch(e){}save();}
+function openDemoSheet(){var sh=$("#sheet");var aan=demoAanwezig();
+ sh.innerHTML='<div class="shead"><button class="bkbtn" onclick="openSettings()">\u2039 Terug</button><div><h2>Demodata</h2><div class="sx">Voorbeeldspelers in alle fases</div></div><button class="xbtn" onclick="closeSheet()">\u00d7</button></div>'
+ +'<div class="card"><p class="muted" style="margin:0;font-size:13px;line-height:1.55">Het demoteam bevat zeven spelers \u2014 van F1 t/m Talent, plus \u00e9\u00e9n zonder gegevens (voor de vragenlijst) \u2014 met rondes, wellness, baanstats, doelen en logboeknotities. Alles is gemarkeerd als demo; je eigen gegevens blijven onaangetast en met \u00e9\u00e9n knop haal je alles weer weg.</p></div>'
+ +(aan?'<button class="btn danger block" id="demoWeg">Demodata verwijderen</button>':'<button class="btn blue block" id="demoLaad">Demoteam laden</button>');
+ openSheet();
+ var b1=$("#demoLaad");if(b1)b1.onclick=function(){seedDemoData();closeSheet();show("teams");toast("Demoteam geladen \u2713");};
+ var b2=$("#demoWeg");if(b2)b2.onclick=function(){confirmDlg("Alle demodata verwijderen? Je eigen gegevens blijven staan.",function(){demoVerwijder();closeSheet();show("teams");toast("Demodata verwijderd \u2713");});};}
 function drillMjopOk(d,ph){var i=mjopIdx(ph);if(i<0)return true;var a=d.mjopFrom?mjopIdx(d.mjopFrom):-1;var b=d.mjopTo?mjopIdx(d.mjopTo):-1;if(a<0&&b<0)return true;if(a<0)a=0;if(b<0)b=MJOP_PHASES.length-1;return i>=a&&i<=b;}
 function drillMjopDist(d,ph){var i=mjopIdx(ph);if(i<0)return 0;var a=d.mjopFrom?mjopIdx(d.mjopFrom):-1;var b=d.mjopTo?mjopIdx(d.mjopTo):-1;if(a<0&&b<0)return 0;if(a<0)a=0;if(b<0)b=MJOP_PHASES.length-1;if(i>=a&&i<=b)return 0;return i<a?(a-i):(i-b);}
 function mjopSplit(cands,ph){if(!ph)return {ok:cands,rest:[]};var ok=[],rest=[];cands.forEach(function(d){(drillMjopOk(d,ph)?ok:rest).push(d);});rest.sort(function(x,y){return drillMjopDist(x,ph)-drillMjopDist(y,ph);});return {ok:ok,rest:rest};}
@@ -10797,6 +10989,7 @@ function renderToday(){var box=$("#todayBody");if(!box)return;
  var sub=$("#todaySub");if(sub)sub.textContent=new Date(todayDate+"T12:00:00").toLocaleDateString("nl-NL",{weekday:"long",day:"numeric",month:"long"});
  var html=startKaartHtml()+'<div class="card"><label class="fld">Speler</label><span class="acwrap" style="display:block"><input class="in" id="tdQ" autocomplete="off" placeholder="Zoek speler…" value="'+esc(todayPlayer?nameOf(todayPlayer):"")+'"></span></div>';
  if(!todayPlayer){box.innerHTML=html+'<div class="card"><p class="muted" style="margin:0">Kies een speler om het dagprogramma te zien.</p></div>';bindTodayTop();return;}
+ if(rolIsSpeler()&&playerModus(todayPlayer)==null)html+='<div class="card" id="modusIntakeKaart"><b>Stel je weergave in</b><p class="muted" style="font-size:13px;margin:6px 0 8px">Een paar korte vragen zodat de app past bij waar jij nu staat.</p><button class="btn blue sm" onclick="openModusIntake(\''+todayPlayer+'\')">Beantwoord 3 vragen</button></div>';
  var pid=todayPlayer,dt=todayDate,ws=weekStart(dt),di=dDiffDays(ws,dt);
  var wb=activeBlocksWeek(pid,ws);
  var bl=wb.blocks.filter(function(b){return b.day===di;}).sort(function(a,b){return (a.start||"").localeCompare(b.start||"");});
@@ -11455,12 +11648,22 @@ function openWelkomCoach(){var sh=$("#sheet");
 function openWelkomSpeler(){var sh=$("#sheet");
  sh.innerHTML='<div class="shead"><button class="bkbtn" onclick="openWelkom()">\u2039 Terug</button><div><h2>Wie ben jij?</h2></div><button class="xbtn" onclick="welkomLater()">\u00d7</button></div>'
  +'<div class="card"><label class="fld">Je naam</label><input class="in" id="wkNaam" placeholder="Voor- en achternaam">'
- +'<label class="fld" style="margin-top:12px">Geboortejaar <span class="sx">\u2014 optioneel</span></label><input class="in" id="wkJaar" type="number" inputmode="numeric" placeholder="2009"></div>'
+ +'<label class="fld" style="margin-top:12px">Geboortejaar <span class="sx">\u2014 optioneel</span></label><input class="in" id="wkJaar" type="number" inputmode="numeric" placeholder="2009">'
+ +'<label class="fld" style="margin-top:12px">Handicap <span class="sx">\u2014 optioneel (plus-handicap met een +)</span></label><input class="in" id="wkHcp" inputmode="decimal" placeholder="bijv. 28,5">'
+ +'<div class="sx" id="wkModusHint" style="margin-top:6px"></div></div>'
  +'<div class="row"><button class="btn block" id="wkKlaar">Aan de slag</button></div>';
  openSheet();
+ function _wkHint(){var el2=$("#wkModusHint");if(!el2)return;
+  var h=hcpParse(($("#wkHcp").value||"").trim());
+  var m=modusUitHcp(h);
+  if(!m){var jr=($("#wkJaar").value||"").trim();if(jr&&String(jr).length===4)m=modusVanFase(mjopSuggest(jr));}
+  el2.textContent=m?("De app stelt zich in op de "+modusLabel(m)+"-weergave \u2014 je coach kan dit later bijstellen.")
+   :"Zonder geboortejaar of handicap krijg je straks drie korte vragen om je weergave te bepalen.";}
+ _wkHint();["wkJaar","wkHcp"].forEach(function(id){var i2=$("#"+id);if(i2)i2.addEventListener("input",_wkHint);});
  $("#wkKlaar").onclick=function(){
   var n=($("#wkNaam").value||"").trim();if(!n){toast("Vul je naam in");return;}
   var pid=uid();state.players.push({id:pid,name:n,birthYear:($("#wkJaar").value||"").trim(),gender:""});
+  var _wh=hcpParse(($("#wkHcp").value||"").trim());if(_wh!=null)hcpSet(pid,_wh);
   state.rol="speler";state.rolSpeler=pid;state.onboarded=true;
   try{rehydrate();}catch(e){}save();
   closeSheet();try{rolPas();}catch(e){}show("today");toast("Welkom, "+n+" \u2713");
