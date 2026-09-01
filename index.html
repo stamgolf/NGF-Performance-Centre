@@ -102,7 +102,11 @@ label.fld{display:block;font-size:12px;font-weight:700;color:var(--muted);margin
 .setrow .tx{flex:1;min-width:0;display:block}
 .setrow .tt{display:block;font-size:13.5px;font-weight:700;color:var(--ink)}
 .setrow .ds{display:block;font-size:11.5px;font-weight:500;color:var(--muted);margin-top:2px;line-height:1.4}
-.setrow .chev{flex:0 0 auto;color:#c3cbd2;font-size:17px;font-weight:700}.filtbody .fld{width:100px;flex:none}
+.setrow .chev{flex:0 0 auto;color:#c3cbd2;font-size:17px;font-weight:700}
+nav.tabs{display:none}
+.sbtn.main.on{background:var(--orange);box-shadow:0 2px 8px rgba(232,82,10,.35)}
+.sbtn.anchor{width:44px;background:var(--orange);color:#fff;box-shadow:0 2px 8px rgba(232,82,10,.35);flex:0 0 auto}
+.sbdiv{width:1px;height:24px;background:#d3dce4;flex:0 0 auto;margin:0 2px}.filtbody .fld{width:100px;flex:none}
 input.in,select.in{width:100%;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;font-size:15px;background:#fff;color:var(--ink)}
 input.in:focus,select.in:focus{outline:none;border-color:var(--orange)}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
@@ -1527,7 +1531,7 @@ const LIES={f:"Fairway",r:"Rough",s:"Sand",g:"Green"};const DLIES={f:"Fairway",r
 const LV=["PGA Tour"];
 function spread(min,max,n){if(n===1)return [Math.round((min+max)/2)];const a=[];for(let i=0;i<n;i++)a.push(Math.round(min+(max-min)*i/(n-1)));return a;}
 const NSIT=[3,6,9,12,15,18], NHOLE=[6,9,12,18];
-const APP_VERSION="v246";
+const APP_VERSION="v248";
 const TESTS={
 putt_3_5:{name:"Putt 3–5 ft",cat:"Putten",eng:"putt_cat",dists:[3,4,5],per:8,info:"24 putts (8× vanaf 3, 4 en 5 ft). Per afstand: holed, mis binnen 3 ft, mis buiten 3 ft. Output: SG + make%."},
 putt_6_10:{name:"Putt 6–10 ft",cat:"Putten",eng:"putt_cat",dists:[6,8,10],per:8,info:"24 putts (8× vanaf 6, 8 en 10 ft). Zelfde invoer als 3–5 ft."},
@@ -2820,20 +2824,51 @@ const PROG_TABS=[["kansen","Analyse",'<svg viewBox="0 0 24 24"><path d="M9.5 18.
  ["progress","Training",'<svg viewBox="0 0 24 24"><path d="M2.5 9.5v5M6 6.5v11M18 6.5v11M21.5 9.5v5M6 12h12"/></svg>'],["wellness","Wellness",'<svg viewBox="0 0 24 24"><path d="M20.4 5.9a4.9 4.9 0 0 0-7 0L12 7.3l-1.4-1.4a4.9 4.9 0 1 0-7 7L12 21.5l8.4-8.6a4.9 4.9 0 0 0 0-7Z"/></svg>'],["teaminsight","Team",'<svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 20.5a6.5 6.5 0 0 1 13 0"/><path d="M16.3 5.3a3.2 3.2 0 0 1 0 5.4M17.8 14.3a6.5 6.5 0 0 1 3.7 6.2"/></svg>'],["logbook","Logboek",'<svg viewBox="0 0 24 24"><path d="M5.5 4.5a2 2 0 0 1 2-2H19v19H7.5a2 2 0 0 0-2 2Z"/><path d="M9.5 7.5h6M9.5 11.5h6"/></svg>']];
 const PLAN_TABS=[["tours","Toernooien",'<svg viewBox="0 0 24 24"><path d="M7 4h10v4a5 5 0 0 1-10 0V4Z"/><path d="M5 5H3v1a3 3 0 0 0 3 3M19 5h2v1a3 3 0 0 1-3 3M9 20h6M12 16v4"/></svg>'],["timeline","Kalender",'<svg viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg>'],["period","Periodisering",'<svg viewBox="0 0 24 24"><path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="M3 13l9 5 9-5"/></svg>'],["training","Weekplan",'<svg viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9h18M9 9v11.5M15 9v11.5"/></svg>'],["todo","To-do",'<svg viewBox="0 0 24 24"><rect x="5" y="3.5" width="14" height="17.5" rx="2"/><path d="M9 3.5h6M9 12.5l2 2 4-4.5"/></svg>']];
 /* v216: zwevende subtabbalk \u2014 blijft in beeld terwijl je scrollt. */
+var navMode="hoofd",_navPrevGroup=null;
+function navGroupOf(v){if(v==="planning")return "planning";if(PROG_TABS.some(function(t){return t[0]===v;}))return "prog";return null;}
+function navMainItems(){var out=[];document.querySelectorAll("#tabs button").forEach(function(b){var v=b.dataset.v;
+ if(v==="teams"&&document.body.classList.contains("rolspeler"))return;
+ if(v==="home"&&document.body.classList.contains("geenklassement"))return;
+ if(b.style.display==="none")return;
+ var l=b.querySelector(".tblbl"),s=b.querySelector("svg");
+ out.push([v,l?l.textContent:v,s?s.outerHTML:""]);});return out;}
 function renderSubBar(){
  var bar=document.getElementById("subbar");if(!bar)return;
  var v=activeView,items=null,cur="",go=null;
- if(v==="planning"){items=PLAN_TABS;cur=(typeof planTab!=="undefined")?planTab:"";go=function(k){planTab=k;planPlayer=null;renderPlanning();};}
- else if(PROG_TABS.some(function(t){return t[0]===v;})){items=PROG_TABS;cur=v;go=function(k){show(k);};}
+ var grp=navGroupOf(v);
+ if(grp!==_navPrevGroup){navMode=grp?"sub":"hoofd";_navPrevGroup=grp;}
+ if(!grp)navMode="hoofd";
+ if(grp==="planning"){items=PLAN_TABS;cur=(typeof planTab!=="undefined")?planTab:"";go=function(k){planTab=k;planPlayer=null;renderPlanning();};}
+ else if(grp==="prog"){items=PROG_TABS;cur=v;go=function(k){show(k);};}
  if(items&&rolIsSpeler())items=items.filter(function(t){return t[0]!=="teaminsight";});
  if(items&&rolIsSpeler()){var _mpid=rolSpelerId();items=items.filter(function(t){var k=t[0];
-  if(v==="planning"){if(k==="tours")return false;if(k==="timeline")return modusToont(_mpid,"plan_timeline");if(k==="period")return modusToont(_mpid,"plan_period");if(k==="training")return modusToont(_mpid,"plan_training");return true;}
+  if(grp==="planning"){if(k==="tours")return false;if(k==="timeline")return modusToont(_mpid,"plan_timeline");if(k==="period")return modusToont(_mpid,"plan_period");if(k==="training")return modusToont(_mpid,"plan_training");return true;}
   return modusToont(_mpid,k);});}
- if(!items){bar.className="subbar";bar.innerHTML="";document.body.classList.remove("hassub");return;}
+ var html="";
+ if(grp&&navMode==="sub"&&items&&items.length){
+  var mainV=(grp==="planning")?"planning":"scoring";
+  var mb=document.querySelector('#tabs button[data-v="'+mainV+'"]');
+  var ic=(mb&&mb.querySelector("svg"))?mb.querySelector("svg").outerHTML:"";
+  html='<button class="sbtn anchor" data-sbanchor="1" title="Alle tabbladen" aria-label="Alle tabbladen">'+ic+'</button><span class="sbdiv"></span>'
+   +items.map(function(t){return '<button class="sbtn'+((t[0]===cur)?" on":"")+'" data-sb="'+t[0]+'" title="'+esc(t[1])+'" aria-label="'+esc(t[1])+'"'+((t[0]===cur)?' aria-current="page"':'')+'>'+t[2]+'<span>'+esc(t[1])+'</span></button>';}).join("");
+ }else{
+  var navV=(v==="teaminsight"||v==="logbook"||v==="progress"||v==="baanstats"||v==="wellness"||v==="kansen"||v==="scoring")?"scoring":v;
+  html=navMainItems().map(function(t){return '<button class="sbtn main'+((t[0]===navV)?" on":"")+'" data-sbmain="'+t[0]+'" title="'+esc(t[1])+'" aria-label="'+esc(t[1])+'"'+((t[0]===navV)?' aria-current="page"':'')+'>'+t[2]+'<span>'+esc(t[1])+'</span></button>';}).join("");
+ }
  bar.className="subbar on";document.body.classList.add("hassub");
- bar.innerHTML='<div class="subbar-in">'+items.map(function(t){
-  return '<button class="sbtn'+((t[0]===cur)?" on":"")+'" data-sb="'+t[0]+'" title="'+esc(t[1])+'" aria-label="'+esc(t[1])+'"'+((t[0]===cur)?' aria-current="page"':'')+'>'+t[2]+'<span>'+esc(t[1])+'</span></button>';}).join("")+'</div>';
- bar.querySelectorAll("[data-sb]").forEach(function(b){b.onclick=function(){go(b.dataset.sb);};});}
+ bar.innerHTML='<div class="subbar-in">'+html+'</div>';
+ bar.querySelectorAll("[data-sb]").forEach(function(b){b.onclick=function(){b.blur();var k=b.dataset.sb;
+  bar.querySelectorAll("[data-sb]").forEach(function(x){x.classList.toggle("on",x===b);});
+  requestAnimationFrame(function(){requestAnimationFrame(function(){go(k);});});};});
+ var _an=bar.querySelector("[data-sbanchor]");if(_an)_an.onclick=function(){navMode="hoofd";renderSubBar();};
+ bar.querySelectorAll("[data-sbmain]").forEach(function(b){b.onclick=function(){b.blur();var tv=b.dataset.sbmain;
+  try{if(rolIsSpeler()&&typeof modusToont==="function"&&!modusToont(rolSpelerId(),tv))tv="today";}catch(e){}
+  var g2=navGroupOf(tv);
+  bar.querySelectorAll("[data-sbmain]").forEach(function(x){x.classList.toggle("on",x.dataset.sbmain===tv);});
+  if(tv===activeView){if(g2){navMode="sub";_navPrevGroup=g2;renderSubBar();}return;}
+  navMode=g2?"sub":"hoofd";_navPrevGroup=g2;
+  requestAnimationFrame(function(){requestAnimationFrame(function(){show(tv);});});};});
+}
 function renderProgTabs(){renderSubBar();}
 function renderKansen(){
  var box=$("#kansenBody");if(!box)return;
@@ -11878,27 +11913,27 @@ function renderToday(){var box=$("#todayBody");if(!box)return;
  if(!acts.length)ac='<p class="muted" style="margin:0">Geen acties voor vandaag.</p>';
  acts.forEach(function(a,ai){
   if(a.kind==='mp'){
-   ac+='<div class="tdact"><div class="tdact-h actrow" data-ask="'+ai+'"><span class="wkdot" style="background:'+(a.klaar?"#17a05c":"#8b5cf6")+'"></span><div style="flex:1;min-width:0"><b>'+a.title+'</b><small class="muted" style="display:block">'+a.sub+'</small></div><button class="btn ghost sm" data-mpact="'+ai+'">'+(a.klaar?'Bekijk':'Invoeren')+'</button></div></div>';
+   ac+='<div class="tdact"><div class="tdact-h actrow" data-ask="'+ai+'"><span class="wkdot" style="background:'+(a.klaar?"#17a05c":"#8b5cf6")+'"></span><div style="flex:1;min-width:0"><b>'+a.title+'</b><small class="muted" style="display:block">'+a.sub+'</small></div><span class="chev">\u25b6</span></div></div>';
   }else if(a.kind==='stats'){
-   ac+='<div class="tdact"><div class="tdact-h actrow" data-ask="'+ai+'"><span class="wkdot" style="background:var(--orange)"></span><div style="flex:1;min-width:0"><b>'+a.title+'</b><small class="muted" style="display:block">'+a.sub+'</small></div><button class="btn ghost sm" data-stats="1">Invoeren</button></div></div>';
+   ac+='<div class="tdact"><div class="tdact-h actrow" data-ask="'+ai+'"><span class="wkdot" style="background:var(--orange)"></span><div style="flex:1;min-width:0"><b>'+a.title+'</b><small class="muted" style="display:block">'+a.sub+'</small></div><span class="chev">\u25b6</span></div></div>';
   }else if(a.kind==='teval'){
-   ac+='<div class="tdact"><div class="tdact-h actrow" data-ask="'+ai+'"><span class="wkdot" style="background:#854F0B"></span><div style="flex:1;min-width:0"><b>'+a.title+'</b><small class="muted" style="display:block">'+a.sub+'</small></div><button class="btn ghost sm"'+(a.tvId?' data-tevalv="'+a.tvId+'"':' data-teval="'+a.edId+'"')+'>'+(a.tvId?'Bekijk':'Invullen')+'</button></div></div>';
+   ac+='<div class="tdact"><div class="tdact-h actrow" data-ask="'+ai+'"><span class="wkdot" style="background:#854F0B"></span><div style="flex:1;min-width:0"><b>'+a.title+'</b><small class="muted" style="display:block">'+a.sub+'</small></div><span class="chev">\u25b6</span></div></div>';
   }else if(a.kind==='well'){
-   ac+='<div class="tdact"><div class="tdact-h actrow" data-ask="'+ai+'"><span class="wkdot" style="background:#0ea5a3"></span><div style="flex:1;min-width:0"><b>'+a.title+'</b><small class="muted" style="display:block">'+a.sub+'</small></div><button class="btn ghost sm"'+(a.wId?' data-wellv="'+a.wId+'"':' data-well="1"')+'>'+(a.wId?'Bekijk':'Invullen')+'</button></div></div>';
+   ac+='<div class="tdact"><div class="tdact-h actrow" data-ask="'+ai+'"><span class="wkdot" style="background:#0ea5a3"></span><div style="flex:1;min-width:0"><b>'+a.title+'</b><small class="muted" style="display:block">'+a.sub+'</small></div><span class="chev">\u25b6</span></div></div>';
   }else if(a.kind==='tm'){
-   ac+='<div class="tdact"><div class="tdact-h actrow" data-ask="'+ai+'"><span class="wkdot" style="background:'+(a.klaar?"#17a05c":"#0f9e73")+'"></span><div style="flex:1;min-width:0"><b>'+a.title+'</b><small class="muted" style="display:block">'+a.sub+'</small></div><button class="btn ghost sm" data-tmact="'+ai+'">'+(a.klaar?'Bekijk':'Invoeren')+'</button></div></div>';
+   ac+='<div class="tdact"><div class="tdact-h actrow" data-ask="'+ai+'"><span class="wkdot" style="background:'+(a.klaar?"#17a05c":"#0f9e73")+'"></span><div style="flex:1;min-width:0"><b>'+a.title+'</b><small class="muted" style="display:block">'+a.sub+'</small></div><span class="chev">\u25b6</span></div></div>';
   }else if(a.kind==='rondes'){
-   ac+='<div class="tdact"><div class="tdact-h actrow" data-ask="'+ai+'"><span class="wkdot" style="background:var(--orange)"></span><div style="flex:1;min-width:0"><b>'+a.title+'</b><small class="muted" style="display:block">'+a.sub+'</small></div><button class="btn ghost sm" data-stats="1">Invoeren</button></div></div>';
+   ac+='<div class="tdact"><div class="tdact-h actrow" data-ask="'+ai+'"><span class="wkdot" style="background:var(--orange)"></span><div style="flex:1;min-width:0"><b>'+a.title+'</b><small class="muted" style="display:block">'+a.sub+'</small></div><span class="chev">\u25b6</span></div></div>';
   }else if(a.kind==='wkplan'){
-   ac+='<div class="tdact"><div class="tdact-h actrow" data-ask="'+ai+'"><span class="wkdot" style="background:var(--orange)"></span><div style="flex:1;min-width:0"><b>'+a.title+'</b><small class="muted" style="display:block">'+a.sub+'</small></div><button class="btn ghost sm" data-wkplan="1">Weekplan \u203a</button></div></div>';
+   ac+='<div class="tdact"><div class="tdact-h actrow" data-ask="'+ai+'"><span class="wkdot" style="background:var(--orange)"></span><div style="flex:1;min-width:0"><b>'+a.title+'</b><small class="muted" style="display:block">'+a.sub+'</small></div><span class="chev">\u25b6</span></div></div>';
   }else if(a.kind==='oppstil'){
-   ac+='<div class="tdact"><div class="tdact-h actrow" data-ask="'+ai+'"><span class="wkdot" style="background:#8b5cf6"></span><div style="flex:1;min-width:0"><b>'+a.title+'</b><small class="muted" style="display:block">'+a.sub+'</small></div><button class="btn ghost sm" data-oppstil="1">Analyse \u203a</button></div></div>';
+   ac+='<div class="tdact"><div class="tdact-h actrow" data-ask="'+ai+'"><span class="wkdot" style="background:#8b5cf6"></span><div style="flex:1;min-width:0"><b>'+a.title+'</b><small class="muted" style="display:block">'+a.sub+'</small></div><span class="chev">\u25b6</span></div></div>';
   }else if(a.kind==='backup'){
-   ac+='<div class="tdact"><div class="tdact-h actrow" data-ask="'+ai+'"><span class="wkdot" style="background:#6b7785"></span><div style="flex:1;min-width:0"><b>'+a.title+'</b><small class="muted" style="display:block">'+a.sub+'</small></div><button class="btn ghost sm" data-bkup="1">Nu maken</button></div></div>';
+   ac+='<div class="tdact"><div class="tdact-h actrow" data-ask="'+ai+'"><span class="wkdot" style="background:#6b7785"></span><div style="flex:1;min-width:0"><b>'+a.title+'</b><small class="muted" style="display:block">'+a.sub+'</small></div><span class="chev">\u25b6</span></div></div>';
   }else if(a.kind==='log'){
-   ac+='<div class="tdact"><div class="tdact-h actrow" data-ask="'+ai+'"><span class="wkdot" style="background:#c8791a"></span><div style="flex:1;min-width:0"><b>'+a.title+'</b><small class="muted" style="display:block">'+a.sub+'</small></div><button class="btn ghost sm" data-tlog="'+a.blkId+'" data-tld="'+a.date+'" data-tlt="'+a.blkType+'" data-tll="'+esc(a.blkLabel)+'"'+(a.ll?' data-tlv="'+a.ll.id+'"':'')+'>'+(a.ll?'Bekijk':'Invullen')+'</button></div></div>';
+   ac+='<div class="tdact"><div class="tdact-h actrow" data-ask="'+ai+'"><span class="wkdot" style="background:#c8791a"></span><div style="flex:1;min-width:0"><b>'+a.title+'</b><small class="muted" style="display:block">'+a.sub+'</small></div><span class="chev">\u25b6</span></div></div>';
   }else if(a.kind==='gs'){
-   ac+='<div class="tdact"><div class="tdact-h actrow" data-ask="'+ai+'"><span class="wkdot" style="background:'+(a.klaar?"#17a05c":(a.herin?"var(--orange)":"#0ea5a3"))+'"></span><div style="flex:1;min-width:0"><b>'+a.title+'</b><small class="muted" style="display:block">'+a.sub+'</small></div><button class="btn ghost sm" data-gsact="'+ai+'">'+(a.klaar?'Bekijk':'Reageer')+'</button></div></div>';
+   ac+='<div class="tdact"><div class="tdact-h actrow" data-ask="'+ai+'"><span class="wkdot" style="background:'+(a.klaar?"#17a05c":(a.herin?"var(--orange)":"#0ea5a3"))+'"></span><div style="flex:1;min-width:0"><b>'+a.title+'</b><small class="muted" style="display:block">'+a.sub+'</small></div><span class="chev">\u25b6</span></div></div>';
   }});
  var tr="";
  trainActs.forEach(function(a){
