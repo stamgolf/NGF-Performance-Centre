@@ -27,7 +27,7 @@ header.bar{background:linear-gradient(180deg,var(--blue),var(--blue-700));color:
 .brand .sub{font-size:11px;opacity:.7;letter-spacing:.06em;margin-top:3px}
 nav.tabs{display:flex;gap:4px;margin-top:14px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 nav.tabs::-webkit-scrollbar{display:none}
-nav.tabs button{flex:1 0 auto;min-width:46px;background:rgba(255,255,255,.08);color:#fff;border:0;border-radius:10px;padding:7px 2px;font-size:9px;font-weight:600;opacity:.78;transition:.18s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;white-space:nowrap}
+nav.tabs button{flex:1 0 auto;min-width:46px;background:rgba(255,255,255,.08);color:#fff;border:0;border-radius:10px;padding:7px 2px;font-size:9px;font-weight:600;opacity:.78;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;white-space:nowrap}
 nav.tabs button svg{flex:none;width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 nav.tabs button .ic{font-size:15px;line-height:1}
 .sprow{display:flex;align-items:center;gap:10px;padding:11px 2px;border-bottom:1px solid #eef1f4;cursor:pointer}.sprow:last-child{border-bottom:0}.sprow .tag{font-size:10px;vertical-align:2px}
@@ -1257,6 +1257,10 @@ nav.tabs button:focus,nav.tabs button:focus-visible{outline:none}
 .gkanstop b{flex:1;min-width:0;font-size:13.5px}
 .gkdom{flex:0 0 auto;font-size:10px;font-weight:800;color:#0F6E56;background:#e7f3ee;border-radius:6px;padding:2px 7px;letter-spacing:.03em}
 .gkanstxt{font-size:12px;color:#5b6b7a;line-height:1.5;margin-top:3px}
+
+/* v240 */
+nav.tabs button{touch-action:manipulation}
+nav.tabs button:active{opacity:1}
 </style>
 </head>
 <body>
@@ -1489,7 +1493,7 @@ const LIES={f:"Fairway",r:"Rough",s:"Sand",g:"Green"};const DLIES={f:"Fairway",r
 const LV=["PGA Tour"];
 function spread(min,max,n){if(n===1)return [Math.round((min+max)/2)];const a=[];for(let i=0;i<n;i++)a.push(Math.round(min+(max-min)*i/(n-1)));return a;}
 const NSIT=[3,6,9,12,15,18], NHOLE=[6,9,12,18];
-const APP_VERSION="v239";
+const APP_VERSION="v241";
 const TESTS={
 putt_3_5:{name:"Putt 3–5 ft",cat:"Putten",eng:"putt_cat",dists:[3,4,5],per:8,info:"24 putts (8× vanaf 3, 4 en 5 ft). Per afstand: holed, mis binnen 3 ft, mis buiten 3 ft. Output: SG + make%."},
 putt_6_10:{name:"Putt 6–10 ft",cat:"Putten",eng:"putt_cat",dists:[6,8,10],per:8,info:"24 putts (8× vanaf 6, 8 en 10 ft). Zelfde invoer als 3–5 ft."},
@@ -1587,15 +1591,15 @@ function acAttach(input,items,labelOf,onPick){if(!input||input._ac)return;input.
 function show(v){if(rolIsSpeler()&&(v==="teaminsight"||v==="teams"))v="today";
  if(rolIsSpeler()&&typeof modusToont==="function"&&!modusToont(rolSpelerId(),v))v="today";
  if(rolIsSpeler()&&v==="home"&&!homeZichtbaar())v="today";
- rolPas();var _prev=activeView;activeView=v;sortTeams();if(_prev!==v){goalCardOpen={};countsProgOpen=false;recentProgOpen=false;progFiltOpen=false;ovOpen={};Object.keys(progOpen).forEach(function(k){delete progOpen[k];});recentHomeOpen=false;countsHomeOpen=false;coursesOpen=false;backupOpen=false;teamOpen={};pickOpen={};teamLbOpen={};libTourOpen={};tlMonthOpen={};tlEventsOpen=false;tlShowPast=false;}document.querySelectorAll(".view").forEach(x=>x.classList.remove("active"));$("#v-"+v).classList.add("active");var _navV=(v==="teaminsight"||v==="logbook"||v==="progress"||v==="baanstats"||v==="wellness")?"scoring":v;document.querySelectorAll("#tabs button").forEach(b=>b.classList.toggle("active",b.dataset.v===_navV));
+ rolPas();var _prev=activeView;activeView=v;sortTeams();if(_prev!==v){goalCardOpen={};countsProgOpen=false;recentProgOpen=false;progFiltOpen=false;ovOpen={};Object.keys(progOpen).forEach(function(k){delete progOpen[k];});recentHomeOpen=false;countsHomeOpen=false;coursesOpen=false;backupOpen=false;teamOpen={};pickOpen={};teamLbOpen={};libTourOpen={};tlMonthOpen={};tlEventsOpen=false;tlShowPast=false;}document.querySelectorAll(".view").forEach(x=>x.classList.toggle("active",x.id==="v-"+v));var _navV=(v==="teaminsight"||v==="logbook"||v==="progress"||v==="baanstats"||v==="wellness")?"scoring":v;document.querySelectorAll("#tabs button").forEach(b=>b.classList.toggle("active",b.dataset.v===_navV));
 if(v==="home")renderHome();if(v==="new")renderNew();if(v==="progress")renderProgress();if(v==="teams")renderTeams();if(v==="teaminsight")renderTeamInsight();if(v==="logbook")renderLogbook();if(v==="scoring")renderScoring();if(v==="kansen")renderKansen();if(v==="baanstats")renderBaanstats();if(v==="wellness")renderWellnessTab();if(v==="trainen")renderTrain();if(v==="today")renderToday();if(v==="planning")renderPlanning();if(v==="goals")renderGoals();if(v==="spelen")renderSpelen();try{renderProgTabs();}catch(e){}window.scrollTo(0,0);}
 document.querySelectorAll("#tabs button").forEach(b=>b.onclick=()=>{b.blur();
  var tv=b.dataset.v;
  try{if(rolIsSpeler()&&typeof modusToont==="function"&&!modusToont(rolSpelerId(),tv))tv="today";}catch(e){}
  var navV=(tv==="teaminsight"||tv==="logbook"||tv==="progress"||tv==="baanstats"||tv==="wellness")?"scoring":tv;
  document.querySelectorAll("#tabs button").forEach(x=>x.classList.toggle("active",x.dataset.v===navV));
- document.querySelectorAll(".view").forEach(x=>x.classList.remove("active"));
- var _tg=document.querySelector("#v-"+tv);if(_tg)_tg.classList.add("active");
+ if(tv===activeView)return; /* zelfde tab: niets her-renderen */
+ document.querySelectorAll(".view").forEach(x=>x.classList.toggle("active",x.id==="v-"+tv));
  requestAnimationFrame(()=>requestAnimationFrame(()=>show(b.dataset.v)));});
 function teamSwitch(id,withAll,allActive){if(state.teams.length===0)return "";var opts=(withAll?'<option value="__all__" '+(allActive?'selected':'')+'>\u2605 Alle teams (totaal)</option>':'')+state.teams.map(t=>'<option value="'+t.id+'" '+((!allActive&&t.id===state.activeTeamId)?'selected':'')+'>'+esc(t.name)+'</option>').join("");return '<div class="teamswitch"><select id="'+id+'">'+opts+'</select></div>';}
 function bindSwitch(id,onAll){const s=$("#"+id);if(!s)return;s.onchange=()=>{if(onAll&&s.value==="__all__"){onAll(true);}else{if(onAll)onAll(false);state.activeTeamId=s.value;save();show(activeView);}};}
@@ -2872,7 +2876,7 @@ function renderScoring(){var box=$("#scBody");if(!box)return;
    +'<tr class="kvsub"><th></th><th style="text-align:right">Aantal</th><th style="text-align:right">Percentage</th></tr>'
    +nRow("Benchmark of beter",(S.benchN!=null?S.benchN:null),S.n)
    +((rolIsSpeler()&&modusNu(spPlayer)==="advanced"&&!(S.parN>0))?"":nRow("Par of beter",S.parN,S.n))+'</table></div>'
-   +'<div class="row spread" style="align-items:center;margin-top:10px"><span class="muted" style="font-size:12.5px">Benchmark: <b>'+(bch!=null?scF(bch):"–")+'</b>'+(registryPlayer(spPlayer)&&registryPlayer(spPlayer).scBench!=null&&registryPlayer(spPlayer).scBench!==""?' (eigen)':' (o.b.v. leeftijd)')+'</span><a href="#" id="scBchE" style="font-size:12.5px">aanpassen</a></div></div>';
+   +'<div class="row spread" style="align-items:center;margin-top:10px"><span class="muted" style="font-size:12.5px">Benchmark: <b>'+(bch!=null?scF(bch):"–")+'</b>'+(registryPlayer(spPlayer)&&registryPlayer(spPlayer).scBench!=null&&registryPlayer(spPlayer).scBench!==""?' (eigen)':' (o.b.v. leeftijd)')+'</span>'+(rolIsSpeler()?'':'<a href="#" id="scBchE" style="font-size:12.5px">aanpassen</a>')+'</div></div>';
   var MP=null,_mpPer="";
   try{
    var _fn=scFiltNorm(scFilt),_v="",_t="";
@@ -3342,9 +3346,7 @@ function scScatterSvg(D){
     +'<text class="axd" x="'+(X(0,t2)+3).toFixed(1)+'" y="'+(H-9)+'" text-anchor="start">'+yr+'</text>';}
  }
  s2+='<g class="tip" style="display:none"><rect x="0" y="0" width="0" height="15" rx="4"/><text x="0" y="0"></text></g></svg>';
- var leg='<div class="chleg">'+(bar?'':'<span><i class="lineleg"></i>trendlijn</span>')
-  +(bs.length?('<span><i class="'+(bar?"benchleg":"zoneleg")+'"></i>benchmark'+(bar?"":" of beter")+'</span>'):'')
-  +(seqx?'<span style="opacity:.75">rondes op volgorde</span>':'')+'</div>';
+ var leg='';
  return '<div class="chartwrap scchart">'+s2+'</div>'+leg;}
 function scTipShow(el){
  var svg=el.closest("svg");var tip=svg.querySelector(".tip");if(!tip)return;
@@ -7710,7 +7712,7 @@ function renderTimeline(host){
   var _stageCount=events.filter(function(ev){return ev.type==="stage";}).length;
   var _trainCount=events.filter(function(ev){return ev.type==="training";}).length;
   var _modTl=rolIsSpeler()?modusNu(rolSpelerId()):null;
-  var _sumRows=(_modTl==="advanced")?[["Wedstrijden",items.length],["Wedstrijddagen",_tourDays],["Trainingen",_trainCount+_stageCount]]:[["Toernooien",items.length],["Toernooidagen",_tourDays],["Reisdagen",_travelDays],["Trainingsstages",_stageCount],["Trainingen",_trainCount]];
+  var _sumRows=(_modTl==="advanced")?[["Toernooien",items.length],["Wedstrijddagen",_tourDays],["Trainingen",_trainCount+_stageCount]]:[["Toernooien",items.length],["Wedstrijddagen",_tourDays],["Reisdagen",_travelDays],["Trainingsstages",_stageCount],["Trainingen",_trainCount]];
   var _summaryCard='<div class="card"><div style="font-size:14px;font-weight:700;margin-bottom:8px">Overzicht '+Y+'</div><div class="sumgrid">'+_sumRows.map(function(r){return '<div class="sumstat"><div class="sv">'+r[1]+'</div><div class="sl">'+r[0]+'</div></div>';}).join("")+'</div></div>';
   var _upcoming=items.filter(function(it){return it.s>=_today;}).sort(function(a,b){return a.s-b.s;});
   function _peakLvlOf(it){var ps=it.ed.participants||{};
@@ -11117,16 +11119,25 @@ function openSpelerProfiel(pid){var p=registryPlayer(pid);if(!p)return;var sh=$(
  var hb=$("#spfHcpSave");if(hb)hb.onclick=function(){var v=hcpParse(($("#spfHcp").value||"").trim());if(v==null){toast("Vul een geldige handicap in");return;}hcpSet(pid,v);stempel(p);save();toast("Handicap bijgewerkt ✓");try{rolPas();}catch(_e){}openSpelerProfiel(pid);};
  var eb=$("#spfEdit");if(eb)eb.onclick=function(){openSpelerProfielEdit(pid);};}
 function openSpelerProfielEdit(pid){var p=registryPlayer(pid);if(!p)return;var sh=$("#sheet");
+ var gsel=p.gender||"";var _foto=p.photo||null;
  sh.innerHTML='<div class="shead"><button class="bkbtn" id="speBack">‹ Terug</button><div><h2>Profiel bewerken</h2><div class="sx">'+esc(p.name)+'</div></div><button class="xbtn" onclick="closeSheet()">×</button></div>'
- +'<div class="card"><label class="fld">Naam</label><input class="in" id="speNaam" value="'+esc(p.name||"")+'">'
+ +'<div class="card"><div style="display:flex;align-items:center;gap:14px;margin-bottom:4px"><div id="spePrev" style="width:64px;height:64px;border-radius:50%;overflow:hidden;background:#eef1f4;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;color:#5b6b7a">'+(_foto?'<img src="'+_foto+'" alt="" style="width:100%;height:100%;object-fit:cover">':esc(initials(p.name)))+'</div><div><button class="btn ghost sm" id="speFotoBtn" type="button">Foto kiezen</button><button class="link" id="speFotoDel" style="display:'+(_foto?'block':'none')+';margin-top:6px;color:var(--bad)">Foto verwijderen</button><input type="file" id="speFotoFile" style="display:none"></div></div>'
+ +'<label class="fld" style="margin-top:10px">Naam</label><input class="in" id="speNaam" value="'+esc(p.name||"")+'">'
  +'<label class="fld" style="margin-top:10px">Geboortejaar</label><input class="in" id="speJaar" type="number" inputmode="numeric" maxlength="4" oninput="this.value=this.value.slice(0,4)" value="'+esc(p.birthYear||"")+'" placeholder="bijv. 2012">'
+ +'<label class="fld" style="margin-top:10px">Geslacht</label><div class="seg" id="speG"><button data-g="jongen" class="'+(gsel==="jongen"?"on":"")+'">Jongen</button><button data-g="meisje" class="'+(gsel==="meisje"?"on":"")+'">Meisje</button><button data-g="" class="'+(gsel===""?"on":"")+'">Geen</button></div>'
  +'<label class="fld" style="margin-top:10px">Handicap <span class="sx">(plus-handicap met een + ervoor)</span></label><input class="in" id="speHcp" type="text" inputmode="decimal" value="'+(p.hcp!=null&&p.hcp!==""?hcpFmt(p.hcp):"")+'" placeholder="bijv. 28,4 of +2,4">'
  +'<div class="sx" style="margin-top:10px">Je MJOP-fase en weergavemodus stelt je coach in.</div></div>'
  +'<button class="btn block blue" id="speSave">Opslaan</button>';
  openSheet();
+ var ff=$("#speFotoFile"),fb=$("#speFotoBtn");
+ if(fb)fb.onclick=function(){ff.click();};
+ if(ff)ff.onchange=function(){var f=ff.files&&ff.files[0];if(!f)return;compressImage(f,function(d){if(!d)return;_foto=d;var pv=$("#spePrev");if(pv)pv.innerHTML='<img src="'+d+'" alt="" style="width:100%;height:100%;object-fit:cover">';var fd2=$("#speFotoDel");if(fd2)fd2.style.display="block";});};
+ var fd=$("#speFotoDel");if(fd)fd.onclick=function(){_foto=null;var pv=$("#spePrev");if(pv)pv.textContent=initials(p.name);fd.style.display="none";};
+ $("#speG").querySelectorAll("button").forEach(function(b){b.onclick=function(){gsel=b.dataset.g;$("#speG").querySelectorAll("button").forEach(function(x){x.classList.toggle("on",x===b);});};});
  $("#speBack").onclick=function(){openSpelerProfiel(pid);};
  $("#speSave").onclick=function(){var nm=($("#speNaam").value||"").trim();if(nm)p.name=nm;
   p.birthYear=($("#speJaar").value||"").trim();
+  p.gender=gsel;p.photo=_foto||null;
   var hv=($("#speHcp").value||"").trim();
   if(hv){var v=hcpParse(hv);if(v==null){toast("Vul een geldige handicap in");return;}if(v!==p.hcp)hcpSet(pid,v);}
   stempel(p);try{rehydrate();}catch(e){}save();toast("Profiel bijgewerkt ✓");try{rolPas();}catch(e){}openSpelerProfiel(pid);};}
@@ -11235,11 +11246,11 @@ function fasePasInto(body,pid,fase){
  var FI=FASE_DOELEN[fase]||{};var FP=FASE_PAS[fase]||{};var p=registryPlayer(pid)||{};
  var isPro=(modusNu(pid)==="pro");var open=isPro?!!fasePasOpen:true;
  var kl=fasePasKleur(fase);var mi=mjopIdx(fase);
- var sub=mjopHoofdfase(fase)+" · "+fase+" "+((mi>=0?MJOP_PHASES[mi][1]:""))+(mi>=0?" · "+MJOP_PHASES[mi][2]:"");
+ var sub=mjopHoofdfase(fase)+" · "+fase+" "+((mi>=0?MJOP_PHASES[mi][1]:""));
  var head='<div class="glevhead"'+(isPro?' style="cursor:pointer" id="fpHead"':'')+'><span class="phbadge sm" style="background:'+kl+'">'+esc(fase)+'</span><span class="glevname" style="color:'+kl+'">Fasepaspoort</span><span class="hdnote">'+esc(sub)+'</span>'+(isPro?'<span class="chev" style="margin-left:auto;display:inline-block;transform:rotate('+(open?90:0)+'deg)">▶</span>':'')+'</div>';
  var rest="";
  if(open){
-  var leerH='<div>'+((FP.leer||[]).length?('<div class="fplbl" style="margin-top:0">Wat leer ik in deze fase</div><ul class="fplist">'+FP.leer.map(function(x){return '<li>'+esc(x)+'</li>';}).join("")+'</ul>'):'')+'</div>';
+  var leerH='<div>'+((FP.leer||[]).length?('<div class="fplbl" style="margin-top:0">Focuspunten</div><ul class="fplist">'+FP.leer.map(function(x){return '<li>'+esc(x)+'</li>';}).join("")+'</ul>'):'')+'</div>';
   var richtH='<div class="fpricht" style="background:'+kl+'14;border:1px solid '+kl+'2e"><div class="fplbl" style="margin-top:0;color:'+kl+'">Richtlijnen</div>'
    +'<div class="fprrow"><span>Training</span><b>'+esc(FP.uren||"–")+'</b></div>'
    +'<div class="fprrow"><span>Niveau</span><b>'+esc(FP.niv||FI.doel||"–")+'</b></div>'
@@ -11271,7 +11282,7 @@ function fasePasInto(body,pid,fase){
  if(!thermos&&!dts)return;
  var c2=el("div","card gcard fasedoelen");
  c2.innerHTML='<div class="glevhead"><span class="gdot" style="background:'+kl+'"></span><span class="glevname" style="color:'+kl+'">Fasedoelen'+(cd.length?' · '+done+'/'+cd.length:'')+'</span></div>'
-  +thermos+(dts?'<div class="fplbl" style="margin-top:'+(thermos?'12':'2')+'px">Concrete doelen</div><div class="sx" style="margin:0 0 4px">Worden automatisch of door de coach als behaald gemarkeerd.</div>'+dts:'');
+  +thermos+(dts?'<div class="fplbl" style="margin-top:'+(thermos?'12':'2')+'px">Concrete doelen</div>'+dts:'');
  body.appendChild(c2);
  c2.querySelectorAll("[data-fpt]").forEach(function(b){b.onclick=function(){if(rolIsSpeler())return;if(!state.faseTicks)state.faseTicks={};
   var k=pid+"|"+fase+"|"+b.dataset.fpt;var t=state.faseTicks[k];var st=t?(t.st||"done"):null;
@@ -11609,7 +11620,17 @@ function renderToday(){var box=$("#todayBody");if(!box)return;
   if(!_fxF&&modusNu(todayPlayer)==="foundation")_fxF=playerTred(todayPlayer);
   if(_fxF){_fxH=mjopHoofdfase(_fxF);var _mi9=mjopIdx(_fxF);_fxS=_fxF+(_mi9>=0?" · "+MJOP_PHASES[_mi9][1]:"");_fxKl=fasePasKleur(_fxF);}
   else{var _m9=playerModus(todayPlayer);if(_m9){_fxH=modusLabel(_m9);_fxKl=(_m9==="foundation")?"#0f9e73":(_m9==="advanced")?"#c8791a":"#1B4F9C";}}}}catch(_e){}
- var html=startKaartHtml()+'<div class="card"><label class="fld">Speler</label><div class="row" style="gap:10px;align-items:center"><span class="acwrap" style="display:block;flex:1;min-width:0"><input class="in" id="tdQ" autocomplete="off" placeholder="Zoek speler…" value="'+esc(todayPlayer?nameOf(todayPlayer):"")+'"></span>'+(_fxH?('<span id="tdFase" style="flex:0 0 auto;text-align:right;line-height:1.25"><b style="display:block;font-size:13.5px;letter-spacing:-.01em;color:'+_fxKl+'">'+esc(_fxH)+'</b>'+(_fxS?'<small style="font-size:11px;font-weight:700;color:'+_fxKl+';opacity:.72">'+esc(_fxS)+'</small>':'')+'</span>'):'')+'</div></div>';
+ var _avH="";
+ if(todayPlayer){var _pf0=registryPlayer(todayPlayer)||{};
+  _avH='<span id="tdAv" style="flex:0 0 auto;width:42px;height:42px;border-radius:50%;overflow:hidden;background:#eef1f4;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;color:#5b6b7a;box-shadow:0 0 0 2.5px '+(_fxH?_fxKl:"#dfe5ea")+'">'+(_pf0.photo?'<img src="'+_pf0.photo+'" alt="" style="width:100%;height:100%;object-fit:cover">':esc(initials(_pf0.name||"")))+'</span>';}
+ var _fbH="";
+ if(_fxH){_fbH='<button id="tdFase" style="display:flex;gap:9px;align-items:center;flex:0 0 auto;background:none;border:0;padding:0;cursor:pointer;text-align:left;font-family:inherit;-webkit-tap-highlight-color:transparent" title="Naar het Fasepaspoort">'
+  +'<span style="display:block;width:3.5px;height:32px;border-radius:2px;background:'+_fxKl+'"></span>'
+  +'<span style="display:block;line-height:1.3;max-width:150px;min-width:0">'
+  +(_fxS?('<b style="display:block;font-size:9.5px;font-weight:800;letter-spacing:.07em;color:#7b8794;text-transform:uppercase">'+esc(_fxH)+'</b><small style="display:block;font-size:12.5px;font-weight:800;color:'+_fxKl+';white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+esc(_fxS)+'</small>')
+   :('<b style="display:block;font-size:12.5px;font-weight:800;color:'+_fxKl+'">'+esc(_fxH)+'</b>'))
+  +'</span></button>';}
+ var html=startKaartHtml()+'<div class="card"><label class="fld">Speler</label><div class="row" style="gap:11px;align-items:center">'+_avH+'<span class="acwrap" style="display:block;flex:1;min-width:0"><input class="in" id="tdQ" autocomplete="off" placeholder="Zoek speler…" value="'+esc(todayPlayer?nameOf(todayPlayer):"")+'"></span>'+_fbH+'</div></div>';
  if(!todayPlayer){box.innerHTML=html+'<div class="card"><p class="muted" style="margin:0">Kies een speler om het dagprogramma te zien.</p></div>';bindTodayTop();return;}
  if(rolIsSpeler()&&playerModus(todayPlayer)==null)html+='<div class="card" id="modusIntakeKaart"><b>Stel je weergave in</b><p class="muted" style="font-size:13px;margin:6px 0 8px">Een paar korte vragen zodat de app past bij waar jij nu staat.</p><button class="btn blue sm" onclick="openModusIntake(\''+todayPlayer+'\')">Beantwoord 3 vragen</button></div>';
  var pid=todayPlayer,dt=todayDate,ws=weekStart(dt),di=dDiffDays(ws,dt);
@@ -11771,6 +11792,7 @@ function renderToday(){var box=$("#todayBody");if(!box)return;
  html+=upCard+'<div class="tdcols"><div class="card tdwin"><div class="row" style="align-items:center;gap:5px;margin:0 0 8px"><button class="xbtn sm" id="tdPrev">‹</button><span style="position:relative;display:inline-flex"><button class="tdDateBtn" id="tdDateBtn"><b>'+(isToday?'Vandaag':new Date(dt+"T12:00:00").toLocaleDateString("nl-NL",{weekday:"long"}))+'</b><small>'+fmtDate(dt)+' ▾</small></button><input type="date" id="tdDateInp" value="'+dt+'"></span><button class="xbtn sm" id="tdNext">›</button>'+(_pd?'<button class="tpphase" id="tdPhase" title="'+esc(_pd[1])+'" style="padding:3px 5px"><span class="phbadge sm" style="background:'+_pd[2]+'">'+_pd[5]+'</span></button>':'')+(isToday?'':'<button class="btn ghost sm" id="tdToday" style="padding:4px 8px">Vandaag</button>')+'<span style="flex:1"></span><button class="xbtn sm" id="tdWeekBtn" title="Naar weekrooster"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9h18M9 9v11.5M15 9v11.5"/></svg></button></div><div class="tdscroll">'+ag+'</div></div><div class="tdstack">'+(tr?'<div class="card tdfit"><h3 style="margin:0 0 8px">Training</h3>'+tr+'</div>':'')+'<div class="card tdwin tdgrow"><h3 style="margin:0 0 8px">Acties</h3><div class="tdscroll">'+ac+'</div></div></div></div>';
  box.innerHTML=html;
  bindTodayTop();
+ var _tfB=$("#tdFase");if(_tfB)_tfB.onclick=function(){goalPlayer=pid;try{setSelPlayer(pid);}catch(_e){}show('goals');};
  var tp=$("#tdPrev");if(tp)tp.onclick=function(){todayDate=dAddDays(todayDate,-1);renderToday();};
  var tn=$("#tdNext");if(tn)tn.onclick=function(){todayDate=dAddDays(todayDate,1);renderToday();};
  var tt=$("#tdToday");if(tt)tt.onclick=function(){todayDate=todayISO();renderToday();};
