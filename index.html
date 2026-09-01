@@ -40,6 +40,7 @@ main{flex:1;padding:16px 16px calc(env(safe-area-inset-bottom) + 90px)}
 @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 .eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--orange);font-weight:800;margin:0 0 4px}
 .title{font-size:23px;font-weight:800;margin:0 0 14px;line-height:1.1}
+main .view>h1.title{display:none}
 .card{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);padding:16px;margin-bottom:14px}
 .card h3{margin:0 0 10px;font-size:14px}
 .muted{color:var(--muted)}.row{display:flex;gap:10px;align-items:center}.spread{justify-content:space-between}
@@ -1279,7 +1280,7 @@ nav.tabs button:active{opacity:1}
 <section class="view" id="v-progress"><div id="progSwitch"></div><h1 class="title">Voortgang</h1><div id="progressBody"></div></section>
 <section class="view" id="v-kansen"><div id="kansenSwitch"></div><h1 class="title" style="margin-bottom:2px">Kansen</h1><p class="plansub">Waar levert trainen het meeste op, en klopt je wedstrijdmix?</p><div id="kansenBody"></div></section><section class="view" id="v-wellness"><h1 class="title" style="margin-bottom:2px">Wellness</h1><p class="plansub">Dagelijkse fitheid-check en readiness</p><div id="wlBody"></div></section>
 <section class="view" id="v-teams"><p class="eyebrow">Groepen</p><h1 class="title">Teams</h1><div id="teamsBody"></div></section>
-<section class="view" id="v-teaminsight"><div id="teamSwitchTI"></div><h1 class="title">Teamprestaties</h1><div id="teamInsightBody"></div></section><section class="view" id="v-logbook"><h1 class="title" style="margin-bottom:2px">Logboek</h1><p class="plansub">Alle voltooide acties van de speler</p><div id="logbookBody"></div></section><section class="view" id="v-scoring"><h1 class="title" style="margin-bottom:2px">Scoring</h1><p class="plansub">Scoreverloop en scoringsoverzicht<span class="alleencoach"> per speler</span></p><div id="scBody"></div></section><section class="view" id="v-baanstats"><h1 class="title" style="margin-bottom:2px">Baanstats</h1><p class="plansub">Upgame-snapshots en strokes gained</p><div id="bsBody"></div></section><section class="view" id="v-trainen"><button class="bkbtn" onclick="openSettings()" style="margin:0 0 8px;display:inline-block">‹ Instellingen</button><h1 class="title" style="margin-bottom:2px">Oefeningen-database</h1><p class="plansub">Oefeningen, testen en challenges</p><div id="trainBody"></div></section><section class="view active" id="v-today"><h1 class="title" style="margin-bottom:2px">Vandaag</h1><p class="plansub" id="todaySub"></p><div id="todayBody"></div></section><section class="view" id="v-planning"><div id="planSwitch"></div><h1 class="title" style="margin-bottom:2px">Planning</h1><p class="plansub" id="planSub"></p><div id="planBody"></div></section><section class="view" id="v-goals"><div id="goalScope"></div><h1 class="title">Doelen</h1><div id="goalsBody"></div></section><section class="view" id="v-spelen"><div id="spTop"></div><h1 class="title" style="margin-bottom:2px">Spelen</h1><p class="plansub">Rondeoverzicht en score-invoer per speler</p><div id="spBody"></div></section>
+<section class="view" id="v-teaminsight"><div id="teamSwitchTI"></div><h1 class="title">Teamprestaties</h1><div id="teamInsightBody"></div></section><section class="view" id="v-logbook"><h1 class="title" style="margin-bottom:2px">Logboek</h1><p class="plansub">Alle voltooide acties van de speler</p><div id="logbookBody"></div></section><section class="view" id="v-scoring"><h1 class="title" style="margin-bottom:2px">Scoring</h1><p class="plansub">Scoreverloop en scoringsoverzicht<span class="alleencoach"> per speler</span></p><div id="scBody"></div></section><section class="view" id="v-baanstats"><h1 class="title" style="margin-bottom:2px">Baanstats</h1><p class="plansub">Upgame-snapshots en strokes gained</p><div id="bsBody"></div></section><section class="view" id="v-trainen"><button class="bkbtn" onclick="openSettings()" style="margin:0 0 8px;display:inline-block">‹ Instellingen</button><h1 class="title" style="margin-bottom:2px">Oefeningen-database</h1><p class="plansub">Oefeningen, testen en challenges</p><div id="trainBody"></div></section><section class="view active" id="v-today"><h1 class="title" style="margin-bottom:2px">Vandaag</h1><div id="todayBody"></div></section><section class="view" id="v-planning"><div id="planSwitch"></div><h1 class="title" style="margin-bottom:2px">Planning</h1><p class="plansub" id="planSub"></p><div id="planBody"></div></section><section class="view" id="v-goals"><div id="goalScope"></div><h1 class="title">Doelen</h1><div id="goalsBody"></div></section><section class="view" id="v-spelen"><div id="spTop"></div><h1 class="title" style="margin-bottom:2px">Spelen</h1><p class="plansub">Rondeoverzicht en score-invoer per speler</p><div id="spBody"></div></section>
 </main>
 <div class="subbar" id="subbar" role="tablist"></div></div>
 <div class="scrim" id="scrim"><div class="sheet" id="sheet"></div></div>
@@ -1493,7 +1494,7 @@ const LIES={f:"Fairway",r:"Rough",s:"Sand",g:"Green"};const DLIES={f:"Fairway",r
 const LV=["PGA Tour"];
 function spread(min,max,n){if(n===1)return [Math.round((min+max)/2)];const a=[];for(let i=0;i<n;i++)a.push(Math.round(min+(max-min)*i/(n-1)));return a;}
 const NSIT=[3,6,9,12,15,18], NHOLE=[6,9,12,18];
-const APP_VERSION="v241";
+const APP_VERSION="v242";
 const TESTS={
 putt_3_5:{name:"Putt 3–5 ft",cat:"Putten",eng:"putt_cat",dists:[3,4,5],per:8,info:"24 putts (8× vanaf 3, 4 en 5 ft). Per afstand: holed, mis binnen 3 ft, mis buiten 3 ft. Output: SG + make%."},
 putt_6_10:{name:"Putt 6–10 ft",cat:"Putten",eng:"putt_cat",dists:[6,8,10],per:8,info:"24 putts (8× vanaf 6, 8 en 10 ft). Zelfde invoer als 3–5 ft."},
@@ -11614,7 +11615,6 @@ function renderToday(){var box=$("#todayBody");if(!box)return;
  if(!todayPlayer&&typeof selPlayer!=="undefined"&&selPlayer&&registryPlayer(selPlayer))todayPlayer=selPlayer;
  if(todayPlayer&&!registryPlayer(todayPlayer))todayPlayer=null;
  if(!todayDate)todayDate=todayISO();
- var sub=$("#todaySub");if(sub)sub.textContent=new Date(todayDate+"T12:00:00").toLocaleDateString("nl-NL",{weekday:"long",day:"numeric",month:"long"});
  var _fxH="",_fxS="",_fxKl="#5b6b7a";
  try{if(todayPlayer){var _pf9=registryPlayer(todayPlayer)||{};var _fxF=_pf9.mjopPhase||null;
   if(!_fxF&&modusNu(todayPlayer)==="foundation")_fxF=playerTred(todayPlayer);
@@ -11630,7 +11630,9 @@ function renderToday(){var box=$("#todayBody");if(!box)return;
   +(_fxS?('<b style="display:block;font-size:9.5px;font-weight:800;letter-spacing:.07em;color:#7b8794;text-transform:uppercase">'+esc(_fxH)+'</b><small style="display:block;font-size:12.5px;font-weight:800;color:'+_fxKl+';white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+esc(_fxS)+'</small>')
    :('<b style="display:block;font-size:12.5px;font-weight:800;color:'+_fxKl+'">'+esc(_fxH)+'</b>'))
   +'</span></button>';}
- var html=startKaartHtml()+'<div class="card"><label class="fld">Speler</label><div class="row" style="gap:11px;align-items:center">'+_avH+'<span class="acwrap" style="display:block;flex:1;min-width:0"><input class="in" id="tdQ" autocomplete="off" placeholder="Zoek speler…" value="'+esc(todayPlayer?nameOf(todayPlayer):"")+'"></span>'+_fbH+'</div></div>';
+ var _dat9=new Date(todayDate+"T12:00:00").toLocaleDateString("nl-NL",{weekday:"long",day:"numeric",month:"long"});
+ _dat9=_dat9.charAt(0).toUpperCase()+_dat9.slice(1);
+ var html=startKaartHtml()+'<div class="card"><div class="row" style="gap:11px;align-items:center">'+_avH+'<div style="flex:1;min-width:0"><span class="acwrap" style="display:block;min-width:0"><input class="in" id="tdQ" autocomplete="off" placeholder="Zoek speler…" value="'+esc(todayPlayer?nameOf(todayPlayer):"")+'"></span><div class="sx" id="tdDatum" style="margin-top:3px">'+_dat9+'</div></div>'+_fbH+'</div></div>';
  if(!todayPlayer){box.innerHTML=html+'<div class="card"><p class="muted" style="margin:0">Kies een speler om het dagprogramma te zien.</p></div>';bindTodayTop();return;}
  if(rolIsSpeler()&&playerModus(todayPlayer)==null)html+='<div class="card" id="modusIntakeKaart"><b>Stel je weergave in</b><p class="muted" style="font-size:13px;margin:6px 0 8px">Een paar korte vragen zodat de app past bij waar jij nu staat.</p><button class="btn blue sm" onclick="openModusIntake(\''+todayPlayer+'\')">Beantwoord 3 vragen</button></div>';
  var pid=todayPlayer,dt=todayDate,ws=weekStart(dt),di=dDiffDays(ws,dt);
