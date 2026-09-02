@@ -12,7 +12,7 @@
 <link rel="apple-touch-icon" sizes="167x167" href="apple-touch-icon-167.png">
 <link rel="apple-touch-icon" sizes="152x152" href="apple-touch-icon-152.png">
 <link rel="icon" type="image/png" href="icon-192.png">
-<title>NGF Performance Centre</title>
+<title>C@ddie</title>
 <style>
 :root{--blue:#003366;--blue-700:#002347;--orange:#E8520A;--paper:#eef2f6;--card:#fff;--ink:#0d1b2a;--muted:#5b6b7b;--line:#dde5ec;--good:#1f9d57;--bad:#c2383a;--r:14px;--shadow:0 2px 10px rgba(0,35,71,.08),0 8px 30px rgba(0,35,71,.06)}
 *{box-sizing:border-box}html,body{margin:0;padding:0}
@@ -21,10 +21,83 @@ body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-
 button{font-family:inherit;cursor:pointer}input,select{font-family:inherit}
 .pos{color:var(--good)}.neg{color:var(--bad)}.zero{color:var(--ink)}
 .app{max-width:920px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column}
+@media(min-width:1000px){.app{max-width:1160px}main{padding-left:26px;padding-right:26px}}
 header.bar{background:linear-gradient(180deg,var(--blue),var(--blue-700));color:#fff;padding:calc(env(safe-area-inset-top) + 14px) 18px 14px;position:sticky;top:0;z-index:50;box-shadow:0 4px 18px rgba(0,35,71,.25)}
 .brand{display:flex;align-items:center;gap:11px}
 .crest{width:34px;height:34px;border-radius:8px;background:var(--orange);display:grid;place-items:center;color:#fff;font-weight:800;font-size:15px;box-shadow:inset 0 0 0 2px rgba(255,255,255,.18)}
-.brand h1{font-size:15px;margin:0;letter-spacing:.14em;text-transform:uppercase;font-weight:800;line-height:1}
+.brand h1{font-size:16.5px;margin:0;letter-spacing:.26em;text-transform:uppercase;font-weight:800;line-height:1}
+.brand h1 em{font-style:normal;color:var(--orange)}
+.crest svg{width:20px;height:20px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#splash{position:fixed;inset:0;z-index:9999;background:linear-gradient(180deg,var(--blue),var(--blue-700));display:flex;align-items:center;justify-content:center;animation:splweg .5s ease 1s forwards;pointer-events:none}
+#splash .splx{display:flex;flex-direction:column;align-items:center;gap:17px;animation:splin .55s cubic-bezier(.2,.8,.2,1)}
+#splash .spl-logo{width:78px;height:78px;border-radius:23px;background:var(--orange);display:flex;align-items:center;justify-content:center;box-shadow:0 12px 34px rgba(0,0,0,.35),inset 0 0 0 2.5px rgba(255,255,255,.16)}
+#splash .spl-logo svg{width:46px;height:46px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#splash .spl-wm{color:#fff;font-size:24px;font-weight:800;letter-spacing:.3em;margin-right:-.3em;text-transform:uppercase}
+#splash .spl-wm em{font-style:normal;color:var(--orange)}
+@keyframes splin{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:none}}
+@keyframes splweg{to{opacity:0;visibility:hidden}}
+@media(prefers-reduced-motion:reduce){#splash,#splash .splx{animation:none}#splash{display:none}}
+.ccgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.cctegel{background:var(--card);border:0;border-radius:var(--r);box-shadow:var(--shadow);padding:16px;text-align:left;cursor:pointer;font-family:inherit;display:block;-webkit-tap-highlight-color:transparent}
+.cctegel:active{transform:translateY(1px)}
+.cctegel .tic{width:34px;height:34px;border-radius:10px;background:#eef3f8;color:var(--blue);display:flex;align-items:center;justify-content:center;margin-bottom:10px}
+.cctegel .tic svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.cctegel b{display:block;font-size:14px;letter-spacing:-.01em}
+.cctegel small{display:block;color:var(--muted);font-size:12px;margin-top:3px;line-height:1.45}
+.cctegel.dim{opacity:.55}
+.cvgrid{display:grid;grid-template-columns:1fr;gap:0 14px;align-items:start}
+.cvzone{font-size:10.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:#7b8794;margin:4px 2px 8px}
+.cvrow{display:flex;align-items:center;gap:10px;padding:8px 2px;border-bottom:1px solid var(--line);cursor:pointer;-webkit-tap-highlight-color:transparent}
+.cvrow:last-child{border-bottom:0}
+.cvrow b{display:block;font-size:13.5px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cvrow small{display:block;color:var(--muted);font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cvdot{flex:0 0 auto;width:8px;height:8px;border-radius:50%}
+.cvtijd{flex:0 0 auto;font-size:11px;color:var(--muted);font-weight:700}
+@media(min-width:700px){.cvgrid{grid-template-columns:1fr 1fr}}
+.splrow{display:flex;align-items:center;gap:11px;padding:9px 2px;border-bottom:1px solid var(--line);cursor:pointer;-webkit-tap-highlight-color:transparent}
+.splrow:last-child{border-bottom:0}
+.splrow b.nm{display:block;font-size:14px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.splrow small{display:block;color:var(--muted);font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.splfoto{width:40px;height:40px;border-radius:50%;overflow:hidden;background:#eef1f4;flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#5b6b7a;box-shadow:0 0 0 2px #fff,0 0 0 3px #dfe5ea}
+.splfoto img{width:100%;height:100%;object-fit:cover}
+.splfase{flex:0 0 auto;font-size:13.5px;font-weight:800;letter-spacing:.02em;min-width:26px;text-align:right}
+.splstat{flex:0 0 auto;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;background:#eef1f4;color:#5b6b7a;border-radius:999px;padding:2.5px 8px;white-space:nowrap}
+.calkop{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.calkop b{font-size:15px;letter-spacing:-.01em}
+.calkop u{text-decoration:none;border-bottom:1.5px dashed #b6c0c9;cursor:pointer}
+.calgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.calwd{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:#7b8794;text-align:center;padding:2px 0}
+.calcel{background:var(--paper);border-radius:8px;min-height:46px;padding:4px 5px;cursor:pointer;overflow:hidden;-webkit-tap-highlight-color:transparent}
+.calcel.oth{opacity:.38}
+.calcel b{font-size:11px;display:block}
+.calcel.nu b{color:var(--orange)}
+.calcel.sel{box-shadow:0 0 0 2px var(--blue) inset}
+.caldots{display:flex;gap:2.5px;margin-top:3px;flex-wrap:wrap}
+.caldots i{width:5.5px;height:5.5px;border-radius:50%;display:block}
+.calevts{display:none}
+.callagen{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.callaag{display:flex;align-items:center;gap:6px;border:0;background:var(--paper);border-radius:999px;padding:5px 11px;font-size:11.5px;font-weight:700;color:var(--muted);cursor:pointer;font-family:inherit;-webkit-tap-highlight-color:transparent}
+.callaag.on{background:#fff;box-shadow:var(--shadow);color:#0b1720}
+.callaag i{width:8px;height:8px;border-radius:50%;display:block;opacity:.35}
+.callaag.on i{opacity:1}
+.calwk{display:grid;grid-template-columns:30px repeat(7,1fr);gap:3px}
+.calwkuren{position:relative}
+.calwkuren span{position:absolute;right:3px;font-size:9px;color:#9aa6b0;transform:translateY(-4px)}
+.calwkdag{position:relative;background:var(--paper);border-radius:8px;background-image:repeating-linear-gradient(to bottom,transparent 0,transparent 33px,rgba(15,40,60,.05) 33px,rgba(15,40,60,.05) 34px)}
+.calblok{position:absolute;left:2px;right:2px;border-radius:5px;color:#fff;font-size:9.5px;font-weight:700;padding:2px 4px;overflow:hidden;cursor:pointer;line-height:1.25}
+.caljaar{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.calmini{background:var(--paper);border-radius:10px;padding:11px 12px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.calmini b{display:block;font-size:13px}
+.calmini small{display:block;color:var(--muted);font-size:11.5px;margin-top:2px}
+.calmini .caldots{margin-top:6px}
+@media(min-width:700px){
+ .calcel{min-height:78px}
+ .caldots{display:none}
+ .calevts{display:block;margin-top:2px}
+ .calevts em{display:block;font-style:normal;font-size:10.5px;font-weight:700;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ .calevts em.meer{color:var(--muted)}
+ .calmini .caldots{display:flex}
+}
 .brand .sub{font-size:11px;opacity:.7;letter-spacing:.06em;margin-top:3px}
 nav.tabs{display:flex;gap:4px;margin-top:14px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 nav.tabs::-webkit-scrollbar{display:none}
@@ -467,7 +540,7 @@ small.note{display:block;color:var(--muted);font-size:11.5px;line-height:1.5;mar
 .pvpil.pv-in{background:#fcecec;color:#b42318}
 .prulrow .ps{flex:0 0 auto;font-size:11px;color:#9aa5b1;text-transform:uppercase;letter-spacing:.05em}
 .prulrow .pb{flex:0 0 auto;border:1px solid #d5dae0;background:#fff;border-radius:8px;padding:4px 10px;font-size:12.5px;font-weight:700;cursor:pointer}
-body.rolspeler #tabs button[data-v="teams"]{display:none}
+body.rolspeler #tabs button[data-v="teams"],body.rolspeler #tabs button[data-v="coachcorner"],body.rolspeler #tabs button[data-v="spelers"]{display:none}
 body.geenklassement #tabs button[data-v="home"]{display:none}
 body.rolspeler #homeSwitch{display:none}
 .rolnaam{font-size:17px;font-weight:800;letter-spacing:-.01em;color:var(--ink,#0b1720);margin:0 0 2px}
@@ -607,6 +680,13 @@ body.rolspeler label.fld:has(+ .acwrap #progSelPQ){display:none}
 .sbtn span{display:none;font-size:11.5px;font-weight:800;white-space:nowrap;letter-spacing:.01em}
 .sbtn.on{width:auto;padding:0 13px 0 11px;background:var(--blue);color:#fff;box-shadow:0 2px 8px rgba(0,35,71,.28)}
 .sbtn.on span{display:block}
+@media(min-width:700px){
+ .subbar-in{gap:5px;padding:6px;border-radius:24px}
+ .sbtn{width:auto;height:44px;padding:0 14px 0 12px;gap:7px}
+ .sbtn svg{width:21px;height:21px}
+ .sbtn span{display:block}
+ .sbtn.anchor{width:48px;padding:0}
+}
 .sbtn:active{opacity:.75}
 body.hassub main{padding-bottom:calc(env(safe-area-inset-bottom) + 122px)}
 .tpnav{display:flex;align-items:center;gap:10px}
@@ -665,6 +745,14 @@ input[type=time]{min-width:0;width:100%;max-width:100%;-webkit-appearance:none;a
 .tdbar i{display:block;height:100%;background:var(--good);border-radius:5px;transition:width .3s}
 .tdpct{font-size:13px;font-weight:800;color:var(--ink);min-width:38px;text-align:right}
 .tdstreak{display:flex;align-items:center;gap:7px;margin-top:9px;font-size:12px;font-weight:600;color:var(--muted)}
+.tdduo{display:grid;grid-template-columns:1.4fr 1fr;gap:10px;margin-bottom:14px}
+.tdduo .card{margin-bottom:0}
+@media(max-width:560px){.tdduo{grid-template-columns:1fr;gap:9px}}
+.motivcard{display:flex;align-items:center;padding:12px 16px}
+.motiv{display:flex;align-items:center;gap:9px;font-size:12.5px;font-weight:600;line-height:1.45;color:#155e3d}
+.motiv .mb{width:8px;height:8px;border-radius:50%;background:#17a05c;flex:none}
+.motiv.achter{color:#8a5200}
+.motiv.achter .mb{background:var(--orange)}
 .tdstreak .b{width:7px;height:7px;border-radius:50%;background:#17a05c;flex:none}
 .tdstreak.achter{color:#8a5200}
 .tdstreak.achter .b{background:var(--orange)}
@@ -1291,14 +1379,16 @@ nav.tabs button:active{opacity:1}
 </style>
 </head>
 <body>
+<div id="splash" aria-hidden="true"><div class="splx"><span class="spl-logo"><svg viewBox="0 0 24 24"><path d="M7 9.5 9.5 4l2.5 1.2"/><path d="M10.5 9.5 13 4.5l2.3 1.5"/><rect x="6" y="9.5" width="10" height="10.5" rx="2.6"/><path d="M6 13.5h10"/></svg></span><div class="spl-wm">C<em>@</em>ddie</div></div><script>setTimeout(function(){var s=document.getElementById("splash");if(s)s.style.display="none";},1650);</script></div>
 <div class="app">
-<header class="bar"><div class="barTop"><div class="brand"><div class="crest">PC</div><div><h1>NGF Performance Centre</h1><div class="sub">Plan, Play, Perform</div></div></div><div class="hdricons"><button id="notifBtn" class="hdricon" aria-label="Notificaties" onclick="openNotifs()" style="position:relative"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="notifdot" id="notifDot" style="display:none"></span></button><button id="teamsBtn" class="hdricon" aria-label="Teams" onclick="hdrTeams()"><svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16.5 5.2a3 3 0 0 1 0 5.6"/><path d="M17 20a6.5 6.5 0 0 0-1.7-4.4"/></svg></button><button id="gearBtn" class="hdricon" aria-label="Instellingen" onclick="openSettings()"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button></div></div>
+<header class="bar"><div class="barTop"><div class="brand"><div class="crest" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 9.5 9.5 4l2.5 1.2"/><path d="M10.5 9.5 13 4.5l2.3 1.5"/><rect x="6" y="9.5" width="10" height="10.5" rx="2.6"/><path d="M6 13.5h10"/></svg></div><div><h1>C<em>@</em>DDIE</h1></div></div><div class="hdricons"><button id="notifBtn" class="hdricon" aria-label="Notificaties" onclick="openNotifs()" style="position:relative"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="notifdot" id="notifDot" style="display:none"></span></button><button id="teamsBtn" class="hdricon" aria-label="Teams" onclick="hdrTeams()"><svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16.5 5.2a3 3 0 0 1 0 5.6"/><path d="M17 20a6.5 6.5 0 0 0-1.7-4.4"/></svg></button><button id="gearBtn" class="hdricon" aria-label="Instellingen" onclick="openSettings()"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button></div></div>
 <nav class="tabs" id="tabs">
 <button data-v="today" class="active"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><span class="tblbl">Vandaag</span></button>
+<button data-v="spelers"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M3.5 19c.6-3.2 2.8-5 5.5-5s4.9 1.8 5.5 5"/><circle cx="17" cy="9.5" r="2.7"/><path d="M15.6 14.4c2.4.2 4.2 1.8 4.7 4.6"/></svg><span class="tblbl">Spelers</span></button>
 <button data-v="planning"><svg viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg><span class="tblbl">Planning</span></button>
 <button data-v="scoring"><svg viewBox="0 0 24 24"><path d="M4 4v16h16M8 14l3-4 3 2.5L20 8"/></svg><span class="tblbl">Voortgang</span></button>
 <button data-v="goals"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2"/></svg><span class="tblbl">Doelen</span></button>
-<button data-v="spelen"><svg viewBox="0 0 24 24"><path d="M8 20V4M8 4l8 2.5-8 2.5"/><path d="M4 20.5h9"/></svg><span class="tblbl">Spelen</span></button><button data-v="new"><svg viewBox="0 0 24 24"><path d="M5 21V4M5 4h11l-2 3.5L16 11H5"/></svg><span class="tblbl">Challenge</span></button>
+<button data-v="spelen"><svg viewBox="0 0 24 24"><path d="M8 20V4M8 4l8 2.5-8 2.5"/><path d="M4 20.5h9"/></svg><span class="tblbl">Spelen</span></button><button data-v="new"><svg viewBox="0 0 24 24"><path d="M5 21V4M5 4h11l-2 3.5L16 11H5"/></svg><span class="tblbl">Challenge</span></button><button data-v="coachcorner"><svg viewBox="0 0 24 24"><path d="M12 3 2.5 7.5 12 12l9.5-4.5L12 3Z"/><path d="M5 9.7V15c0 1.7 3.1 3.5 7 3.5s7-1.8 7-3.5V9.7"/></svg><span class="tblbl">Coachcorner</span></button>
 <button data-v="home"><svg viewBox="0 0 24 24"><path d="M7 4h10v4a5 5 0 0 1-10 0V4Z"/><path d="M5 5H3v1a3 3 0 0 0 3 3M19 5h2v1a3 3 0 0 1-3 3M9 20h6M12 16v4"/></svg><span class="tblbl">Klassement</span></button></nav></header>
 <main>
 <section class="view" id="v-home"><div id="homeSwitch"></div><div id="seasonBar"></div><h1 class="title" style="margin-bottom:10px">Klassement</h1><div id="seasonLadder"></div><div id="teamDash"></div><div id="recentSessions"></div></section>
@@ -1306,7 +1396,7 @@ nav.tabs button:active{opacity:1}
 <section class="view" id="v-progress"><div id="progSwitch"></div><h1 class="title">Voortgang</h1><div id="progressBody"></div></section>
 <section class="view" id="v-kansen"><div id="kansenSwitch"></div><h1 class="title" style="margin-bottom:2px">Kansen</h1><p class="plansub">Waar levert trainen het meeste op, en klopt je wedstrijdmix?</p><div id="kansenBody"></div></section><section class="view" id="v-wellness"><h1 class="title" style="margin-bottom:2px">Wellness</h1><p class="plansub">Dagelijkse fitheid-check en readiness</p><div id="wlBody"></div></section>
 <section class="view" id="v-teams"><p class="eyebrow">Groepen</p><h1 class="title">Teams</h1><div id="teamsBody"></div></section>
-<section class="view" id="v-teaminsight"><div id="teamSwitchTI"></div><h1 class="title">Teamprestaties</h1><div id="teamInsightBody"></div></section><section class="view" id="v-logbook"><h1 class="title" style="margin-bottom:2px">Logboek</h1><p class="plansub">Alle voltooide acties van de speler</p><div id="logbookBody"></div></section><section class="view" id="v-scoring"><h1 class="title" style="margin-bottom:2px">Scoring</h1><p class="plansub">Scoreverloop en scoringsoverzicht<span class="alleencoach"> per speler</span></p><div id="scBody"></div></section><section class="view" id="v-baanstats"><h1 class="title" style="margin-bottom:2px">Baanstats</h1><p class="plansub">Upgame-snapshots en strokes gained</p><div id="bsBody"></div></section><section class="view" id="v-trainen"><button class="bkbtn" onclick="openSettings()" style="margin:0 0 8px;display:inline-block">‹ Instellingen</button><h1 class="title" style="margin-bottom:2px">Oefeningen-database</h1><p class="plansub">Oefeningen, testen en challenges</p><div id="trainBody"></div></section><section class="view active" id="v-today"><h1 class="title" style="margin-bottom:2px">Vandaag</h1><div id="todayBody"></div></section><section class="view" id="v-planning"><div id="planSwitch"></div><h1 class="title" style="margin-bottom:2px">Planning</h1><p class="plansub" id="planSub"></p><div id="planBody"></div></section><section class="view" id="v-goals"><div id="goalScope"></div><h1 class="title">Doelen</h1><div id="goalsBody"></div></section><section class="view" id="v-spelen"><div id="spTop"></div><h1 class="title" style="margin-bottom:2px">Spelen</h1><p class="plansub">Rondeoverzicht en score-invoer per speler</p><div id="spBody"></div></section>
+<section class="view" id="v-teaminsight"><div id="teamSwitchTI"></div><h1 class="title">Teamprestaties</h1><div id="teamInsightBody"></div></section><section class="view" id="v-logbook"><h1 class="title" style="margin-bottom:2px">Logboek</h1><p class="plansub">Alle voltooide acties van de speler</p><div id="logbookBody"></div></section><section class="view" id="v-scoring"><h1 class="title" style="margin-bottom:2px">Scoring</h1><p class="plansub">Scoreverloop en scoringsoverzicht<span class="alleencoach"> per speler</span></p><div id="scBody"></div></section><section class="view" id="v-baanstats"><h1 class="title" style="margin-bottom:2px">Baanstats</h1><p class="plansub">Upgame-snapshots en strokes gained</p><div id="bsBody"></div></section><section class="view" id="v-trainen"><button class="bkbtn" onclick="show('coachcorner')" style="margin:0 0 8px;display:inline-block">‹ Coachcorner</button><h1 class="title" style="margin-bottom:2px">Oefeningen-database</h1><p class="plansub">Oefeningen, testen en challenges</p><div id="trainBody"></div></section><section class="view active" id="v-today"><h1 class="title" style="margin-bottom:2px">Vandaag</h1><div id="todayBody"></div></section><section class="view" id="v-planning"><div id="planSwitch"></div><h1 class="title" style="margin-bottom:2px">Planning</h1><p class="plansub" id="planSub"></p><div id="planBody"></div></section><section class="view" id="v-goals"><div id="goalScope"></div><h1 class="title">Doelen</h1><div id="goalsBody"></div></section><section class="view" id="v-spelen"><div id="spTop"></div><h1 class="title" style="margin-bottom:2px">Spelen</h1><p class="plansub">Rondeoverzicht en score-invoer per speler</p><div id="spBody"></div></section><section class="view" id="v-coachcorner"><div id="ccBody"></div></section><section class="view" id="v-spelers"><h1 class="title" style="margin-bottom:2px">Spelers</h1><p class="plansub">Alle spelers · tik voor het dagprogramma</p><div id="splBody"></div></section>
 </main>
 <div class="subbar" id="subbar" role="tablist"></div></div>
 <div class="scrim" id="scrim"><div class="sheet" id="sheet"></div></div>
@@ -1373,10 +1463,42 @@ function rolPas(){var vast=rolSpelerId();
  try{hdrProfielPas();}catch(e){}
  return !!vast;}
 /* v222: in de spelerweergave hoort er geen spelerkiezer te staan, maar de eigen naam. */
+function renderCoachcorner(){var box=$("#ccBody");if(!box)return;
+ function teg(ic,t,s,id,dim){return '<button class="cctegel'+(dim?' dim':'')+'" id="'+id+'"><span class="tic">'+ic+'</span><b>'+t+'</b><small>'+s+'</small></button>';}
+ var I={team:'<svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16.5 5.2a3 3 0 0 1 0 5.6"/><path d="M17 20a6.5 6.5 0 0 0-1.7-4.4"/></svg>',
+  schema:'<svg viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9h18M9 9v11.5M15 9v11.5"/></svg>',
+  drill:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg>',
+  tour:'<svg viewBox="0 0 24 24"><path d="M7 4h10v4a5 5 0 0 1-10 0V4Z"/><path d="M5 5H3v1a3 3 0 0 0 3 3M19 5h2v1a3 3 0 0 1-3 3M9 20h6M12 16v4"/></svg>',
+  rap:'<svg viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9l-6-6Z"/><path d="M14 3v6h6M9 13h6M9 17h6"/></svg>',
+  log:'<svg viewBox="0 0 24 24"><path d="M4 4h13a3 3 0 0 1 3 3v13H7a3 3 0 0 1-3-3V4Z"/><path d="M8 8h8M8 12h8"/></svg>'};
+ box.innerHTML='<div class="ccgrid">'
+  +teg(I.team,"Teams & groepen","Aanmaken, samenstellen, seizoenen en groepen beheren.","ccTeams")
+  +teg(I.schema,"Schema\u2019s","Rooster & groepsschema\u2019s \u00b7 trainingsschema individueel.","ccSchemas")
+  +teg(I.drill,"Drills-database","Oefeningen, testen en challenges \u2014 bekijken en beheren.","ccDrills")
+  +teg(I.tour,"Toernooi-database","Terugkerende toernooien, edities en labels.","ccTours")
+  +teg(I.log,"Logboek","Eigen aantekeningen en groepslogs.","ccLog")
+  +teg(I.rap,"Rapporten","Spelersrapport en groepsoverzicht \u2014 in ontwikkeling.","ccRap",true)
+  +'</div>';
+ function _b9c(id,fn){var b=document.getElementById(id);if(b)b.onclick=fn;}
+ _b9c("ccTeams",function(){show("teams");});
+ _b9c("ccSchemas",function(){openCcSchemas();});
+ _b9c("ccDrills",function(){show("trainen");});
+ _b9c("ccTours",function(){openLibrary();});
+ _b9c("ccLog",function(){openCoachLog();});
+ _b9c("ccRap",function(){toast("Rapporten komen hier samen \u2014 in ontwikkeling.");});}
+function openCcSchemas(){var sh=$("#sheet");
+ sh.innerHTML='<div class="shead"><div><h2>Schema\u2019s</h2><div class="sx">rooster en trainingsschema\u2019s</div></div><button class="xbtn" onclick="closeSheet()">\u00d7</button></div>'
+  +'<div class="setgrp">'
+  +'<button class="setrow" id="ccsRooster"><span class="tx"><span class="tt">Rooster & groepsschema\u2019s</span><span class="ds">Trainingsmomenten en weekinhoud per groep of team.</span></span><span class="chev">\u203a</span></button>'
+  +'<button class="setrow" id="ccsInd"><span class="tx"><span class="tt">Trainingsschema individueel</span><span class="ds">Weekplan per speler \u2014 genereren en bijstellen.</span></span><span class="chev">\u203a</span></button>'
+  +'</div>';
+ openSheet();
+ var _r=$("#ccsRooster");if(_r)_r.onclick=function(){closeSheet();show("teams");};
+ var _i=$("#ccsInd");if(_i)_i.onclick=function(){closeSheet();planTab="training";show("planning");};}
 var HDR_TEAMS_SVG='<svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16.5 5.2a3 3 0 0 1 0 5.6"/><path d="M17 20a6.5 6.5 0 0 0-1.7-4.4"/></svg>';
 function hdrProfielPas(){var b=document.getElementById("teamsBtn");if(!b)return;
  if(rolIsSpeler()&&rolSpelerId()){var p=registryPlayer(rolSpelerId())||{};
-  b.innerHTML='<span style="width:29px;height:29px;border-radius:50%;overflow:hidden;background:rgba(255,255,255,.22);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;letter-spacing:.02em">'+(p.photo?'<img src="'+p.photo+'" alt="" style="width:100%;height:100%;object-fit:cover">':esc(initials(p.name||"")))+'</span>';
+  b.innerHTML='<span style="width:29px;height:29px;border-radius:50%;border:1.5px solid #fff;background:none;color:#fff;display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:800;letter-spacing:.02em">'+esc(initials(p.name||""))+'</span>';
   b.setAttribute("aria-label","Mijn profiel");b.title="Mijn profiel";}
  else{b.innerHTML=HDR_TEAMS_SVG;b.setAttribute("aria-label","Teams");b.title="";}}
 function rolNaamKop(){
@@ -1531,7 +1653,7 @@ const LIES={f:"Fairway",r:"Rough",s:"Sand",g:"Green"};const DLIES={f:"Fairway",r
 const LV=["PGA Tour"];
 function spread(min,max,n){if(n===1)return [Math.round((min+max)/2)];const a=[];for(let i=0;i<n;i++)a.push(Math.round(min+(max-min)*i/(n-1)));return a;}
 const NSIT=[3,6,9,12,15,18], NHOLE=[6,9,12,18];
-const APP_VERSION="v248";
+const APP_VERSION="v256";
 const TESTS={
 putt_3_5:{name:"Putt 3–5 ft",cat:"Putten",eng:"putt_cat",dists:[3,4,5],per:8,info:"24 putts (8× vanaf 3, 4 en 5 ft). Per afstand: holed, mis binnen 3 ft, mis buiten 3 ft. Output: SG + make%."},
 putt_6_10:{name:"Putt 6–10 ft",cat:"Putten",eng:"putt_cat",dists:[6,8,10],per:8,info:"24 putts (8× vanaf 6, 8 en 10 ft). Zelfde invoer als 3–5 ft."},
@@ -1626,11 +1748,11 @@ function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");se
 function sortTeams(){if(!state.teams)return;var before=state.teams.map(function(t){return t.id;}).join();state.teams.sort(function(a,b){return (a.name||"").localeCompare(b.name||"","nl");});if(state.teams.map(function(t){return t.id;}).join()!==before)save();}
 let activeView="today";
 function acAttach(input,items,labelOf,onPick){if(!input||input._ac)return;input._ac=1;var wrap=input.closest(".acwrap")||input.parentElement;if(getComputedStyle(wrap).position==="static")wrap.style.position="relative";var box=document.createElement("div");box.className="acbox";box.style.display="none";wrap.appendChild(box);function hide(){box.style.display="none";}function draw(){var q=(input.value||"").trim().toLowerCase();if(!q){hide();return;}var list=items.filter(function(it){return labelOf(it).toLowerCase().indexOf(q)===0;}).slice(0,10);if(!list.length){hide();return;}box.innerHTML="";list.forEach(function(it){var el=document.createElement("div");el.className="acitem";el.textContent=labelOf(it);el.addEventListener("mousedown",function(ev){ev.preventDefault();input.value=labelOf(it);hide();onPick(it);});box.appendChild(el);});box.style.display="block";}input.addEventListener("input",draw);input.addEventListener("focus",function(){if(input.select)input.select();draw();});input.addEventListener("blur",function(){setTimeout(hide,180);});}
-function show(v){if(rolIsSpeler()&&(v==="teaminsight"||v==="teams"))v="today";
+function show(v){if(rolIsSpeler()&&(v==="teaminsight"||v==="teams"||v==="coachcorner"||v==="spelers"))v="today";
  if(rolIsSpeler()&&typeof modusToont==="function"&&!modusToont(rolSpelerId(),v))v="today";
  if(rolIsSpeler()&&v==="home"&&!homeZichtbaar())v="today";
  rolPas();var _prev=activeView;activeView=v;sortTeams();if(_prev!==v){goalCardOpen={};countsProgOpen=false;recentProgOpen=false;progFiltOpen=false;ovOpen={};Object.keys(progOpen).forEach(function(k){delete progOpen[k];});recentHomeOpen=false;countsHomeOpen=false;coursesOpen=false;backupOpen=false;teamOpen={};pickOpen={};teamLbOpen={};libTourOpen={};tlMonthOpen={};tlEventsOpen=false;tlShowPast=false;}document.querySelectorAll(".view").forEach(x=>x.classList.toggle("active",x.id==="v-"+v));var _navV=(v==="teaminsight"||v==="logbook"||v==="progress"||v==="baanstats"||v==="wellness")?"scoring":v;document.querySelectorAll("#tabs button").forEach(b=>b.classList.toggle("active",b.dataset.v===_navV));
-if(v==="home")renderHome();if(v==="new")renderNew();if(v==="progress")renderProgress();if(v==="teams")renderTeams();if(v==="teaminsight")renderTeamInsight();if(v==="logbook")renderLogbook();if(v==="scoring")renderScoring();if(v==="kansen")renderKansen();if(v==="baanstats")renderBaanstats();if(v==="wellness")renderWellnessTab();if(v==="trainen")renderTrain();if(v==="today")renderToday();if(v==="planning")renderPlanning();if(v==="goals")renderGoals();if(v==="spelen")renderSpelen();try{renderProgTabs();}catch(e){}window.scrollTo(0,0);}
+if(v==="home")renderHome();if(v==="new")renderNew();if(v==="progress")renderProgress();if(v==="teams")renderTeams();if(v==="teaminsight")renderTeamInsight();if(v==="logbook")renderLogbook();if(v==="scoring")renderScoring();if(v==="kansen")renderKansen();if(v==="baanstats")renderBaanstats();if(v==="wellness")renderWellnessTab();if(v==="trainen")renderTrain();if(v==="coachcorner")renderCoachcorner();if(v==="spelers")renderSpelers();if(v==="today")renderToday();if(v==="planning")renderPlanning();if(v==="goals")renderGoals();if(v==="spelen")renderSpelen();try{renderProgTabs();}catch(e){}window.scrollTo(0,0);}
 document.querySelectorAll("#tabs button").forEach(b=>b.onclick=()=>{b.blur();
  var tv=b.dataset.v;
  try{if(rolIsSpeler()&&typeof modusToont==="function"&&!modusToont(rolSpelerId(),tv))tv="today";}catch(e){}
@@ -2827,7 +2949,7 @@ const PLAN_TABS=[["tours","Toernooien",'<svg viewBox="0 0 24 24"><path d="M7 4h1
 var navMode="hoofd",_navPrevGroup=null;
 function navGroupOf(v){if(v==="planning")return "planning";if(PROG_TABS.some(function(t){return t[0]===v;}))return "prog";return null;}
 function navMainItems(){var out=[];document.querySelectorAll("#tabs button").forEach(function(b){var v=b.dataset.v;
- if(v==="teams"&&document.body.classList.contains("rolspeler"))return;
+ if((v==="teams"||v==="coachcorner"||v==="spelers")&&document.body.classList.contains("rolspeler"))return;
  if(v==="home"&&document.body.classList.contains("geenklassement"))return;
  if(b.style.display==="none")return;
  var l=b.querySelector(".tblbl"),s=b.querySelector("svg");
@@ -2866,6 +2988,7 @@ function renderSubBar(){
   var g2=navGroupOf(tv);
   bar.querySelectorAll("[data-sbmain]").forEach(function(x){x.classList.toggle("on",x.dataset.sbmain===tv);});
   if(tv===activeView){if(g2){navMode="sub";_navPrevGroup=g2;renderSubBar();}return;}
+  if(tv==="today"&&!rolIsSpeler())todayPlayer=null;
   navMode=g2?"sub":"hoofd";_navPrevGroup=g2;
   requestAnimationFrame(function(){requestAnimationFrame(function(){show(tv);});});};});
 }
@@ -5561,7 +5684,7 @@ sh.innerHTML='<div class="shead"><div><h2>Instellingen</h2></div><button class="
   _rij("setBackup","Back-up &amp; data","Exporteer of importeer je gegevens."),
   _rij("setPrul","Prullenbak","Verwijderde rondes, doelen, evaluaties en notities \u2014 terug te zetten.")])
  +(_sp?'':_grp("Coach",[
-  _rij("setCoachLog","Mijn logboek","Eigen aantekeningen van de coach \u2014 los van het spelersdossier."),
+  _rij("setSignals","Signalen","Welke spelersignalen meetellen op je Vandaag-overzicht."),
   _rij("setDemo","Demodata","Demoteam met voorbeeldspelers in alle fases \u2014 laden en weer verwijderen.")]))
  +(_sp?'':_grp("Training &amp; begeleiding",[
   _rij("setGoals","Doelen instellen","Targets per test \u00b7 toewijzen aan team en spelers."),
@@ -5572,15 +5695,13 @@ sh.innerHTML='<div class="shead"><div><h2>Instellingen</h2></div><button class="
   _rij("setEvalDom","Evaluatiedomeinen","Domeinen voor de duiding in voortgangsevaluaties."),
   '<label class="setrow"><span class="tx"><span class="tt">Feedback bij afvinken</span><span class="ds">De speler geeft bij elke afgevinkte uitvoering aan hoe het ging.</span></span><input type="checkbox" id="setChkFb"'+(state.checkFeedback?" checked":"")+' style="width:17px;height:17px;accent-color:var(--blue,#1B4F9C);flex:0 0 auto;margin:0"></label>']))
  +(_sp?'':_grp("Bibliotheken",[
-  _rij("setDrillDb","Oefeningen-database","Alle oefeningen, testen en challenges \u2014 bekijken en beheren."),
   _rij("setTrainTax","Trainingscategorie\u00ebn","Hoofd-, sub- en sub-subcategorie\u00ebn van de oefeningen-database."),
-  _rij("setTourDb","Toernooien-database","Terugkerende toernooien en tours (ook via Planning)."),
   _rij("setTax","Wedstrijdtaxonomie (MJOP-ladder)","Wedstrijdcategorie\u00ebn en de ladder (admin)."),
   _rij("setTourCats","Toernooicategorie\u00ebn","Bewerk de lijst met toernooicategorie\u00ebn (admin)."),
   _rij("setTourLabels","Toernooilabels","Labels om toernooien te filteren (admin)."),
   _rij("setCourses","Banen","Beheer de banen voor de SG (baan)-test."),
   _rij("setGoalTax","Domeinen en categorie\u00ebn","Categorie\u00ebn, subcategorie\u00ebn en domeinen voor ontwikkelingsdoelen.")]))
- +'<div class="sx" style="text-align:center;margin:14px 0 4px;opacity:.7">NGF Performance Centre \u00b7 '+APP_VERSION+'</div>';
+ +'<div class="sx" style="text-align:center;margin:14px 0 4px;opacity:.7">C@ddie \u00b7 '+APP_VERSION+'</div>';
 openSheet();
 function _b9(id,fn){var b=document.getElementById(id);if(b)b.onclick=fn;}
 _b9("setRol",()=>{openRolSettings();});
@@ -5596,7 +5717,7 @@ _b9("setTrainTax",()=>{openDrillTaxEdit();});
 _b9("setDrillDb",()=>{closeSheet();show("trainen");});
 var _cfb=$("#setChkFb");if(_cfb)_cfb.onchange=function(){state.checkFeedback=this.checked;save();};
 _b9("setTourDb",()=>{openLibrary();});
-_b9("setPeriod",()=>{openPerCfg();});_b9("setWellness",()=>{openWellnessCfg();});_b9("setGoalTax",()=>{openGoalTaxonomy();});_b9("setBackup",()=>{openBackupSettings();});_b9("setDemo",()=>{openDemoSheet();});}
+_b9("setPeriod",()=>{openPerCfg();});_b9("setWellness",()=>{openWellnessCfg();});_b9("setGoalTax",()=>{openGoalTaxonomy();});_b9("setBackup",()=>{openBackupSettings();});_b9("setDemo",()=>{openDemoSheet();});_b9("setSignals",()=>{openSignalSettings();});}
 function bkActBlock(CATLISTS,offObj,editable,attr){let h="";CATLISTS.forEach(C=>{h+='<div class="bkcat-h">'+C[0]+'</div>';C[1].forEach(L=>{const key=L[0];const defs=(state.bucketDefs[key]||[]).slice().sort((a,b)=>(a.op==="holed"?-1:b.op==="holed"?1:a.t-b.t));const offIds=offObj[key]||[];h+='<div class="bkgrp"><div class="bkgrp-h">'+L[1]+'</div><div class="bkacts">'+(defs.length?defs.map(d=>{const on=offIds.indexOf(d.id)<0;return '<button class="bkact'+(on?" on":"")+(editable?"":" dis")+'" data-'+attr+'="'+key+":"+d.id+'">'+opLabel(d)+'</button>';}).join(""):'<span class="sx">geen</span>')+'</div></div>';});});return h;}
 function _geenTeamSheet(titel,uitleg){
  var sh=$("#sheet");
@@ -7754,6 +7875,7 @@ function openPlayerForm(tid,pid){
     +'<div class="sx" id="pfMjopDoel" style="margin-top:4px"></div>'
     +'<label class="fld" style="margin-top:10px">Weergavemodus <span class="sx" id="pfModusNu"></span></label><select class="in" id="pfModus"><option value="">Automatisch</option><option value="foundation"'+(p.modusOverride==="foundation"?" selected":"")+'>Foundation</option><option value="advanced"'+(p.modusOverride==="advanced"?" selected":"")+'>Advanced</option><option value="pro"'+(p.modusOverride==="pro"?" selected":"")+'>PRO</option></select>'
     +'<label class="rubtoggle" style="margin-top:8px"><input type="checkbox" id="pfWellMini"'+(p.wellnessMini?" checked":"")+'><span><b>Wellness-mini in Foundation</b> \u2014 alleen de stemmingsvraag in de spelerweergave.</span></label>'
+    +'<label class="fld" style="margin-top:10px">Status <span class="sx">(inactieve spelers geven geen signalen of actiepunten)</span></label><select class="in" id="pfStatus"><option value="">Actief</option><option value="tijdelijk"'+(p.inactiefTot?" selected":"")+'>Tijdelijk inactief t/m\u2026</option><option value="inactief"'+(p.inactief?" selected":"")+'>Inactief</option></select><input class="in" type="date" id="pfStatusTot" value="'+(p.inactiefTot||"")+'" style="margin-top:6px;'+(p.inactiefTot?"":"display:none")+'">'
     +'<label class="fld" style="margin-top:10px">Wedstrijdcategorie</label>'
     +'<select class="in" id="pfCat"><option value="">\u2014 automatisch</option>'+TAX_CATS.map(function(c){return '<option value="'+c.c+'"'+(p.tourCat===c.c?' selected':'')+'>'+esc(c.naam)+'</option>';}).join("")+'</select>'
     +'<div class="sx" id="pfCatHint" style="margin-top:4px"></div>'
@@ -7768,6 +7890,7 @@ function openPlayerForm(tid,pid){
   var back=function(){closeSheet();renderTeams();};
   var _rt=$("#pfRights");if(_rt)_rt.querySelectorAll("[data-right]").forEach(function(b){b.onclick=function(){var id=b.dataset.right,i=rights.indexOf(id);if(i>=0)rights.splice(i,1);else rights.push(id);b.classList.toggle("on");};});
   $("#pfBack").onclick=back;$("#pfX").onclick=back;$("#pfCancel").onclick=back;
+  var _ps=$("#pfStatus");if(_ps)_ps.onchange=function(){var d9=$("#pfStatusTot");if(d9)d9.style.display=(this.value==="tijdelijk")?"block":"none";};
   $("#pfG").querySelectorAll("button").forEach(function(b){b.onclick=function(){gsel=(gsel===b.dataset.g)?"":b.dataset.g;$("#pfG").querySelectorAll("button").forEach(function(x){x.classList.toggle("on",x.dataset.g===gsel);});};});
   var _mh=$("#pfMjopHint");function _updMj(){if(!_mh)return;var sg=mjopSuggest((($("#pfYear")||{}).value||"").trim());_mh.textContent=sg?("(suggestie o.b.v. leeftijd: "+mjopName(sg)+")"):"";}_updMj();var _py2=$("#pfYear");if(_py2)_py2.addEventListener("input",_updMj);
   var _mnEl=$("#pfModusNu");if(_mnEl){var _inf=playerModusInfo(p.id);_mnEl.textContent=_inf.m?("(nu: "+modusLabel(_inf.m)+" \u00b7 "+({override:"handmatig",fase:"uit fase",handicap:"uit handicap",leeftijd:"uit leeftijd",vragenlijst:"uit vragenlijst"}[_inf.bron]||"")+")"):"(nog onbekend \u2014 de speler krijgt een korte vragenlijst)";}
@@ -7798,7 +7921,7 @@ function openPlayerForm(tid,pid){
    if(hn)t+=". Norm in deze categorie: "+hn+" holes";
    _ch.textContent=t+".";}
   _updCat();if(_ci)_ci.addEventListener("change",_updCat);if(_py2)_py2.addEventListener("input",_updCat);
-  var _pf={photo:p.photo||null};var _pfF=$("#pfPhotoFile"),_pfB=$("#pfPhotoBtn"),_pfP=$("#pfPhotoPrev"),_pfD=$("#pfPhotoDel");if(_pfB)_pfB.onclick=function(){_pfF.click();};if(_pfF)_pfF.onchange=function(){var f=_pfF.files&&_pfF.files[0];if(!f)return;compressImage(f,function(d){_pf.photo=d;_pfP.innerHTML='<img src="'+d+'" alt="">';if(_pfD)_pfD.style.display="";});};if(_pfD)_pfD.onclick=function(){_pf.photo=null;_pfP.innerHTML='<span>+</span>';_pfD.style.display="none";};$("#pfSave").onclick=function(){var nm=$("#pfName").value.trim();if(!nm){toast("Geef een naam");return;}p.name=nm;var y=$("#pfYear").value.trim();p.birthYear=y?(+y||""):"";var _mjv=$("#pfMjop")?$("#pfMjop").value:"";if(_mjv)p.mjopPhase=_mjv;else delete p.mjopPhase;var _mo=$("#pfModus")?$("#pfModus").value:"";if(_mo)p.modusOverride=_mo;else delete p.modusOverride;if($("#pfWellMini")&&$("#pfWellMini").checked)p.wellnessMini=true;else delete p.wellnessMini;p.gender=gsel;p.tourRights=rights.slice();var _hv=hcpParse($("#pfHcp")?$("#pfHcp").value:"");if(_hv==null){p.hcp=null;}else{hcpSet(p.id,_hv);}var _cv=$("#pfCat")?$("#pfCat").value:"";if(_cv)p.tourCat=_cv;else delete p.tourCat;if(_pf.photo){p.photo=_pf.photo;}else{delete p.photo;}save();closeSheet();renderTeams();toast("Opgeslagen \u2713");};
+  var _pf={photo:p.photo||null};var _pfF=$("#pfPhotoFile"),_pfB=$("#pfPhotoBtn"),_pfP=$("#pfPhotoPrev"),_pfD=$("#pfPhotoDel");if(_pfB)_pfB.onclick=function(){_pfF.click();};if(_pfF)_pfF.onchange=function(){var f=_pfF.files&&_pfF.files[0];if(!f)return;compressImage(f,function(d){_pf.photo=d;_pfP.innerHTML='<img src="'+d+'" alt="">';if(_pfD)_pfD.style.display="";});};if(_pfD)_pfD.onclick=function(){_pf.photo=null;_pfP.innerHTML='<span>+</span>';_pfD.style.display="none";};$("#pfSave").onclick=function(){var nm=$("#pfName").value.trim();if(!nm){toast("Geef een naam");return;}p.name=nm;var y=$("#pfYear").value.trim();p.birthYear=y?(+y||""):"";var _mjv=$("#pfMjop")?$("#pfMjop").value:"";if(_mjv)p.mjopPhase=_mjv;else delete p.mjopPhase;var _mo=$("#pfModus")?$("#pfModus").value:"";if(_mo)p.modusOverride=_mo;else delete p.modusOverride;if($("#pfWellMini")&&$("#pfWellMini").checked)p.wellnessMini=true;else delete p.wellnessMini;p.gender=gsel;p.tourRights=rights.slice();var _hv=hcpParse($("#pfHcp")?$("#pfHcp").value:"");if(_hv==null){p.hcp=null;}else{hcpSet(p.id,_hv);}var _cv=$("#pfCat")?$("#pfCat").value:"";if(_cv)p.tourCat=_cv;else delete p.tourCat;if(_pf.photo){p.photo=_pf.photo;}else{delete p.photo;}var _st9=$("#pfStatus")?$("#pfStatus").value:"";if(_st9==="inactief"){p.inactief=true;delete p.inactiefTot;}else if(_st9==="tijdelijk"){delete p.inactief;var _sd9=($("#pfStatusTot")||{}).value||"";if(_sd9)p.inactiefTot=_sd9;else delete p.inactiefTot;}else{delete p.inactief;delete p.inactiefTot;}save();closeSheet();renderTeams();toast("Opgeslagen \u2713");};
   $("#pfUnlink").onclick=function(){confirmDlg("\u201c"+p.name+"\u201d uit "+t.name+" halen? De speler en resultaten blijven bestaan.",function(){t.playerIds=(t.playerIds||[]).filter(function(id){return id!==p.id;});rehydrate();save();closeSheet();renderTeams();toast("Uit team gehaald \u2713");});};$("#pfDel").onclick=function(){confirmDlg("\u201c"+p.name+"\u201d definitief verwijderen? Uit alle teams, met alle resultaten en doelen. Dit kan niet ongedaan gemaakt worden.",function(){var pid=p.id;(state.teams||[]).forEach(function(tt){tt.playerIds=(tt.playerIds||[]).filter(function(id){return id!==pid;});});(state.sessions||[]).forEach(function(x){x.results=(x.results||[]).filter(function(r){return r.playerId!==pid;});});state.sessions=(state.sessions||[]).filter(function(x){return (x.results||[]).length>0;});state.goals=(state.goals||[]).filter(function(g){return g.playerId!==pid;});state.goalThemes=(state.goalThemes||[]).filter(function(th){return th.playerId!==pid;});state.players=(state.players||[]).filter(function(x){return x.id!==pid;});rehydrate();save();closeSheet();renderTeams();toast("Verwijderd \u2713");});};var _ts=$("#pfTeamSel");var _mv=$("#pfMove");if(_mv)_mv.onclick=function(){var dst=_ts.value;var dn=((state.teams||[]).find(function(x){return x.id===dst;})||{}).name||"";confirmDlg('\u201c'+p.name+'\u201d verplaatsen naar '+dn+'?',function(){playerMoveTeam(tid,pid,dst);state.activeTeamId=dst;closeSheet();renderTeams();toast('Verplaatst \u2713');});};var _cp=$("#pfCopy");if(_cp)_cp.onclick=function(){var dst=_ts.value;var ok=playerCopyTeam(tid,pid,dst);closeSheet();renderTeams();toast(ok?'Toegevoegd aan team \u2713':'Zit al in dat team');};
 }
 /* ===== Batch 4: jaar-tijdlijn + blokkades ===== */
@@ -11775,10 +11898,230 @@ function renderLogbook(){var box=$("#logbookBody");if(!box)return;
 function lbBind(){var q=$("#lbQ");if(!q)return;
  q.onfocus=function(){var e=this;setTimeout(function(){try{e.select();}catch(_){}},0);};
  acAttach(q,(state.players||[]),function(p){return p.name;},function(p){lbPlayer=p.id;lbFilter=null;lbShowN=30;if(typeof setSelPlayer==="function")setSelPlayer(p.id);save();renderLogbook();});}
+/* ===== v253: coach-Vandaag in twee zones (Coachcorner stap 2) ===== */
+function cvRow(kleur,hoofd,sub,rechts,click){
+ return '<div class="cvrow"'+(click?' onclick="'+click+'"':'')+'><span class="cvdot" style="background:'+kleur+'"></span><span style="flex:1;min-width:0"><b>'+hoofd+'</b>'+(sub?'<small>'+sub+'</small>':'')+'</span>'+(rechts?'<span class="cvtijd">'+rechts+'</span>':'')+'</div>';}
+function cvKaart(id,titel,note,inhoud,leeg){
+ return '<div class="card" id="'+id+'"><div class="cardhd"><h3>'+titel+'</h3>'+(note?(note.charAt(0)==="<"?note:'<span class="hdnote">'+note+'</span>'):'')+'</div>'+(inhoud||'<p class="muted" style="margin:0;font-size:13px">'+leeg+'</p>')+'</div>';}
+function cvNaarSpeler(pid){cvTerugView=(activeView==="spelers")?"spelers":"today";todayPlayer=pid;try{setSelPlayer(pid);}catch(_e){}todayDate=todayISO();if(activeView!=="today")show("today");else renderToday();window.scrollTo(0,0);}
+function cvTerugKlik(){var t=cvTerugView;cvTerugView="today";todayPlayer=null;if(t==="spelers")show("spelers");else renderToday();window.scrollTo(0,0);}
+function cvAgendaItems(dt){
+ var out=[];
+ try{gsEventsRange(dt,dt,null).forEach(function(ev){out.push({tijd:ev.startTime||"",tot:ev.endTime||"",naam:esc(ev.name),sub:"Groepstraining"+(ev._gs&&ev._gs.thema?" · "+esc(ev._gs.thema):"")+(ev.location?" · "+esc(ev.location):""),kleur:"#0ea5a3",click:"eventDetail('"+ev.id+"')"});});}catch(_e){}
+ (state.events||[]).forEach(function(ev){var st=ev.start,e=ev.end||ev.start;if(!st||st>dt||e<dt||ev.type==="vakantie")return;
+  out.push({tijd:ev.startTime||"",tot:ev.endTime||"",naam:esc(ev.name||blockTypeName(ev.type)),sub:esc(blockTypeName(ev.type))+(ev.location?" · "+esc(ev.location):""),kleur:"#1B4F9C",click:"eventDetail('"+ev.id+"')"});});
+ out.sort(function(a,b){return (a.tijd||"99:99").localeCompare(b.tijd||"99:99");});
+ return out;}
+function cvActiepunten(dt){
+ var out=[];
+ var _t=null;try{_t=team();}catch(_e){}
+ var _ids=((_t&&_t.playerIds)||[]).filter(function(pid){return !!registryPlayer(pid);});
+ try{gsList().forEach(function(sch){gsSessies(sch).forEach(function(x){
+  if(x.datum!==dt&&x.datum!==dAddDays(dt,1))return;
+  var o=gsOpkomst(sch,x.datum);if(!o.open.length)return;
+  out.push({t:"Aanmeldingen nalopen",s:esc(sch.name)+" · "+(x.datum===dt?"vandaag":"morgen")+" · "+o.open.length+" nog niet gereageerd",click:"eventDetail('gs_"+sch.id+"_"+x.datum+"')"});});});}catch(_e){}
+ try{var ws2=dAddDays(weekStart(dt),7),we2=dAddDays(ws2,6);
+  gsList().forEach(function(sch){var ses=gsSessies(sch).filter(function(x){return x.datum>=ws2&&x.datum<=we2;});if(!ses.length)return;
+   var leeg=ses.some(function(x){var inh=x.week?gsInhoud(sch,x.week):null;return !inh||!(((inh.thema||"").trim())||(inh.drillIds||[]).length);});
+   if(leeg)out.push({t:"Weekinhoud vullen",s:esc(sch.name)+" · komende week nog leeg",click:"show('teams')"});});}catch(_e){}
+ (state.players||[]).forEach(function(pp){
+  if(!pp.mjopPhase||!pp.birthYear)out.push({t:"Profiel afmaken",s:esc(pp.name)+" · "+(!pp.mjopPhase?"fase":"geboortejaar")+" ontbreekt",click:"show('teams')"});});
+ try{gsList().forEach(function(sch){gsSessies(sch).forEach(function(x){
+  if(x.datum>=dt||dDiffDays(x.datum,dt)>7)return;
+  var tel=gsAanwTelling(sch,x.datum);
+  if(tel.aanw+tel.afw===0)out.push({t:"Aanwezigheid invullen",s:esc(sch.name)+" \u00b7 "+fmtDate(x.datum),click:"eventDetail('gs_"+sch.id+"_"+x.datum+"')"});
+  if(!gsGroepslogFor(sch.id,x.datum))out.push({t:"Groepslog invullen",s:esc(sch.name)+" \u00b7 "+fmtDate(x.datum),click:"openGsGroepslog('"+sch.id+"','"+x.datum+"')"});});});}catch(_e){}
+ try{if(evalCadans()){_ids.forEach(function(pid){if(spStatus(registryPlayer(pid))!=="actief")return;
+  var du=evalDue(pid);if(du&&du.due)out.push({t:"Evaluatiegesprek inplannen",s:esc(nameOf(pid))+" \u00b7 "+(du.weeks==null?"nog geen evaluatie":"laatste "+du.weeks+" weken geleden"),click:"cvNaarDoelen('"+pid+"')"});});}}catch(_e){}
+ (state.tourEditions||[]).forEach(function(ed){if(!ed.start)return;var dd=dDiffDays(dt,ed.start);if(dd<1||dd>7)return;
+  Object.keys(ed.participants||{}).forEach(function(pid){if(!registryPlayer(pid))return;var pp=ed.participants[pid];if(peakNum(pp.peak)<4)return;
+   var m2=edMeta(ed);out.push({t:"Wedstrijdvoorbereiding checken",s:esc(nameOf(pid))+" \u00b7 "+esc(m2.name)+" over "+dd+(dd===1?" dag":" dagen")+" \u00b7 P"+peakNum(pp.peak),click:"editionDetail('"+ed.id+"')"});});});
+ try{var _yr=+dt.slice(0,4);_ids.forEach(function(pid){if(playerModus(pid)!=="pro"||spStatus(registryPlayer(pid))!=="actief")return;
+  var pl=perPlan(pid,_yr);if(!pl||!(pl.phases||[]).length)out.push({t:"Jaarplan klaarzetten",s:esc(nameOf(pid))+" \u00b7 geen periodisering voor "+_yr,click:"cvNaarSpeler('"+pid+"')"});});}catch(_e){}
+ try{var st=bkStatus();if(st.due)out.push({t:"Back-up maken",s:esc(bkTekst(st)),click:"openBackupSettings()"});}catch(_e){}
+ return out;}
+function cvSpeeltWaar(dt){
+ var out=[];var lim=dAddDays(dt,21);
+ (state.tourEditions||[]).forEach(function(ed){if(!ed.start)return;var e=ed.end||ed.start;
+  if(e<dt||ed.start>lim)return;
+  var wie=Object.keys(ed.participants||{}).filter(function(pid){return !!registryPlayer(pid);}).map(function(pid){return nameOf(pid);});
+  if(!wie.length)return;var m=edMeta(ed);
+  out.push({nu:(dt>=ed.start&&dt<=e),start:ed.start,naam:m.name,wie:wie,sub:fmtRange(ed)+(ed.location?" · "+ed.location:""),id:ed.id});});
+ out.sort(function(a,b){return ((b.nu?1:0)-(a.nu?1:0))||String(a.start).localeCompare(String(b.start));});
+ return out;}
+function cvActiviteiten(dt){
+ var out=[];
+ (state.tourEditions||[]).forEach(function(ed){if(!ed.start)return;var e=ed.end||ed.start;
+  if(e>=dt||dDiffDays(e,dt)>14)return;var m=edMeta(ed);
+  Object.keys(ed.participants||{}).forEach(function(pid){if(!registryPlayer(pid))return;
+   if(!tourEvalFor(pid,ed.id))out.push({d:e,pid:pid,t:esc(nameOf(pid))+" · toernooi-evaluatie open",s:esc(m.name)});});});
+ var t=null;try{t=team();}catch(_e){}
+ ((t&&t.playerIds)||[]).forEach(function(pid){var st=null;try{st=wkStatus(pid,weekStart(dt),dt);}catch(_e){}
+  if(st&&st.achter)out.push({d:dt,pid:pid,t:esc(nameOf(pid))+" · "+st.c.open+(st.c.open===1?" weekplan-onderdeel":" weekplan-onderdelen")+" open",s:"deze week op "+st.c.pct+"%"});});
+ out=out.filter(function(a){return !sigPauze(a.pid,dt);});
+ out.sort(function(a,b){return String(b.d).localeCompare(String(a.d));});
+ return out;}
+/* ===== v254: signalen- en actiepuntenmotor (Coachcorner stap 3) ===== */
+var cvSigF="",cvActF="";
+var CV_SIGDEFS=[
+ ["wel","Wellness-signaaldag","readiness onder de 50 in de afgelopen 7 dagen"],
+ ["inact","Inactiviteit","langer stil dan 15 (Foundation), 10 (Advanced) of 5 (PRO) dagen"],
+ ["wkpl","Weekplan-achterstand","Advanced onder 40% vanaf vrijdag · PRO onder 50% vanaf donderdag"],
+ ["ready","Lage readiness vóór wedstrijd","signaaldag binnen 3 dagen voor een P4/P5-wedstrijd"],
+ ["uitv","Moeizame uitvoering","drie keer op rij een lage score bij het afvinken"]];
+function sigAan(k){return !(state.sigOff||{})[k];}
+function spStatus(p){if(!p)return "actief";
+ if(p.inactief)return "inactief";
+ if(p.inactiefTot&&p.inactiefTot>=todayISO())return "tijdelijk";
+ return "actief";}
+function cvVakantieNu(pid,dt){return (state.events||[]).some(function(ev){return ev.type==="vakantie"&&(ev.players||[]).indexOf(pid)>=0&&ev.start<=dt&&(ev.end||ev.start)>=dt;});}
+function sigPauze(pid,dt){var p=registryPlayer(pid);if(!p)return true;
+ if(spStatus(p)!=="actief")return true;
+ return cvVakantieNu(pid,dt);}
+function cvVakEind(pid,dt){var e="";(state.events||[]).forEach(function(ev){if(ev.type!=="vakantie"||(ev.players||[]).indexOf(pid)<0)return;var en=ev.end||ev.start;if(en&&en<=dt&&en>e)e=en;});return e;}
+function cvSignaalItems(dt){
+ var out=[];var t=null;try{t=team();}catch(_e){}
+ var ids=((t&&t.playerIds)||[]).filter(function(pid){return !!registryPlayer(pid);});
+ var act=ids.filter(function(pid){return !sigPauze(pid,dt);});
+ if(sigAan("wel")){try{wlSignalen().forEach(function(x){if(act.indexOf(x.pid)<0)return;
+  out.push({pid:x.pid,type:"wel",hoofd:esc(nameOf(x.pid)),sub:"wellness-signaaldag · "+fmtDate(x.date),d:x.date,chip:{lab:x.lab,col:readyBracket(x.r).col},rechts:x.r+"%",click:"wellnessDetail('"+x.wid+"')"});});}catch(_e){}}
+ act.forEach(function(pid){
+  var m=modusNu(pid);
+  if(sigAan("inact")){
+   var grens=(m==="foundation")?15:(m==="advanced")?10:5;
+   var la=wkLaatsteActiviteit(pid);var vk=cvVakEind(pid,dt);if(vk&&(!la||vk>la))la=vk;
+   var stil=la?dDiffDays(la,dt):null;
+   if(stil==null||stil>=grens)out.push({pid:pid,type:"inact",hoofd:esc(nameOf(pid)),sub:(stil==null?"nog geen activiteit geregistreerd":stil+" dagen stil")+" · grens "+grens+" dagen",d:la||"0000",click:"cvNaarSpeler('"+pid+"')"});}
+  if(sigAan("wkpl")&&(m==="advanced"||m==="pro")){
+   var ws=weekStart(dt),dag=dDiffDays(ws,dt);
+   var lim=(m==="pro")?{v:50,vanaf:3}:{v:40,vanaf:4};
+   if(dag>=lim.vanaf){var c=null;try{c=wkComp(pid,ws);}catch(_e){}
+    if(c&&c.pct<lim.v)out.push({pid:pid,type:"wkpl",hoofd:esc(nameOf(pid)),sub:"weekplan-achterstand (signaal onder "+lim.v+"%)",d:dt,rechts:c.pct+"%",click:"cvNaarSpeler('"+pid+"')"});}}
+  if(sigAan("ready")){
+   (state.tourEditions||[]).forEach(function(ed){var pp=(ed.participants||{})[pid];if(!pp||!ed.start)return;
+    if(peakNum(pp.peak)<4)return;
+    var dd=dDiffDays(dt,ed.start);if(dd<0||dd>3)return;
+    var w=(state.wellness||[]).filter(function(x){if(x.playerId!==pid||x.date>dt||dDiffDays(x.date,dt)>3)return false;var r0=wellReadiness(x);return r0!=null&&r0<50;}).sort(function(a,b){return String(b.date).localeCompare(String(a.date));})[0];
+    if(!w)return;var r=wellReadiness(w);
+    var m2=edMeta(ed);out.push({pid:pid,type:"ready",hoofd:esc(nameOf(pid))+" · wedstrijd over "+dd+(dd===1?" dag":" dagen"),sub:"readiness "+r+"% · "+esc(m2.name)+" · P"+peakNum(pp.peak),d:w.date,chip:{lab:"wedstrijd",col:"#D64550"},rechts:r+"%",click:"wellnessDetail('"+w.id+"')"});});}
+  if(sigAan("uitv")){
+   var logs=(state.trainLog||[]).filter(function(x){return x.playerId===pid&&x.mood;}).sort(function(a,b){return String(b.date).localeCompare(String(a.date))||((b.createdAt||0)-(a.createdAt||0));}).slice(0,3);
+   if(logs.length===3&&logs.every(function(x){return x.mood<=2;}))out.push({pid:pid,type:"uitv",hoofd:esc(nameOf(pid)),sub:"3× op rij moeizame uitvoering bij het afvinken",d:logs[0].date,click:"cvNaarSpeler('"+pid+"')"});}
+ });
+ out.sort(function(a,b){return String(b.d).localeCompare(String(a.d));});
+ return out;}
+function cvFilterSel(id,cur,pids,varnaam){
+ var seen={},L=[];pids.forEach(function(pid){if(!seen[pid]){seen[pid]=1;L.push(pid);}});
+ if(L.length<2&&!cur)return "";
+ return '<select class="in" id="'+id+'" onchange="'+varnaam+'=this.value;renderToday()" style="flex:0 0 auto;width:auto;font-size:12px;padding:4px 26px 4px 8px;height:auto">'+'<option value="">alle spelers</option>'+L.map(function(pid){return '<option value="'+pid+'"'+(cur===pid?" selected":"")+'>'+esc(nameOf(pid))+'</option>';}).join("")+'</select>';}
+function cvNaarDoelen(pid){try{setSelPlayer(pid);}catch(_e){}goalPlayer=pid;show('goals');}
+function openSignalSettings(){var sh=$("#sheet");
+ sh.innerHTML='<div class="shead"><button class="bkbtn" onclick="openSettings()">‹ Terug</button><div><h2>Signalen</h2></div><button class="xbtn" onclick="closeSheet()">×</button></div>'
+ +'<div class="card"><p class="sx" style="margin:0 0 10px">Deze signalen verschijnen op je Vandaag-overzicht onder Inzicht. Spelers met status Inactief of Tijdelijk inactief — en spelers met een eigen vakantie-event in de kalender — geven geen signalen; een teambrede schoolvakantie pauzeert niets.</p>'
+ +CV_SIGDEFS.map(function(d){return '<label class="rubtoggle" style="margin-top:6px"><input type="checkbox" data-sig="'+d[0]+'"'+(sigAan(d[0])?" checked":"")+'><span><b>'+d[1]+'</b> — '+d[2]+'.</span></label>';}).join("")+'</div>';
+ openSheet();
+ sh.querySelectorAll("[data-sig]").forEach(function(c){c.onchange=function(){if(!state.sigOff)state.sigOff={};if(c.checked)delete state.sigOff[c.dataset.sig];else state.sigOff[c.dataset.sig]=1;save();};});}
+function renderCoachVandaag(box){
+ var dt=todayISO();
+ var dat=new Date(dt+"T12:00:00").toLocaleDateString("nl-NL",{weekday:"long",day:"numeric",month:"long"});
+ dat=dat.charAt(0).toUpperCase()+dat.slice(1);
+ var ag=cvAgendaItems(dt),ap=cvActiepunten(dt),ww=cvSpeeltWaar(dt),act=cvActiviteiten(dt),sig=[];
+ try{sig=cvSignaalItems(dt);}catch(_e){}
+ if(cvSigF&&!sig.some(function(x){return x.pid===cvSigF;}))cvSigF="";
+ if(cvActF&&!act.some(function(x){return x.pid===cvActF;}))cvActF="";
+ var sigAll=sig,actAll=act;
+ if(cvSigF)sig=sig.filter(function(x){return x.pid===cvSigF;});
+ if(cvActF)act=act.filter(function(x){return x.pid===cvActF;});
+ var h=startKaartHtml()+'<div class="sx" id="tdDatum" style="margin:2px 2px 10px">'+dat+'</div><div class="cvgrid">';
+ h+='<div><div class="cvzone">Doen — jouw dag</div>';
+ h+=cvKaart('cvAgenda','Agenda',(ag.length?String(ag.length)+(ag.length===1?" activiteit":" activiteiten"):""),
+  ag.map(function(a){return cvRow(a.kleur,(a.tijd?a.tijd+(a.tot?"–"+a.tot:"")+" · ":"")+a.naam,a.sub,"",a.click);}).join(""),
+  "Geen activiteiten vandaag.");
+ h+=cvKaart('cvActies','Actiepunten',(ap.length?String(ap.length)+" open":""),
+  ap.map(function(a){return cvRow("#1B4F9C",a.t,a.s,"",a.click);}).join(""),
+  "Niets openstaands — alles is bijgewerkt.");
+ h+='</div><div><div class="cvzone">Inzicht — jouw spelers</div>';
+ h+=cvKaart('cvSpeelt','Wie speelt waar',(ww.length?"actueel & aankomend":""),
+  ww.map(function(w){var wie=w.wie.length>2?esc(w.wie.slice(0,2).join(", "))+" +"+(w.wie.length-2):esc(w.wie.join(", "));
+   return cvRow("var(--orange)",wie+" · "+esc(w.naam),esc(w.sub),(w.nu?"nu":""),"editionDetail('"+w.id+"')");}).join(""),
+  "Geen actuele of aankomende wedstrijden.");
+ h+=cvKaart('cvSignalen','Signalen',cvFilterSel('cvSigSel',cvSigF,sigAll.map(function(x){return x.pid;}),'cvSigF')||"actueel",
+  sig.slice(0,12).map(function(x){return '<div class="cvrow"'+(x.click?' onclick="'+x.click+'"':'')+'>'+(x.chip?'<span class="sigchip" style="background:'+x.chip.col+'">'+(x.chip.lab||"")+'</span>':'<span class="cvdot" style="background:'+(x.dot||"#c8791a")+'"></span>')+'<span style="flex:1;min-width:0"><b>'+x.hoofd+'</b>'+(x.sub?'<small>'+x.sub+'</small>':'')+'</span>'+(x.rechts?'<span class="cvtijd">'+x.rechts+'</span>':'')+'</div>';}).join(""),
+  "Geen signalen.");
+ h+=cvKaart('cvActiviteiten','Activiteitenlijst',cvFilterSel('cvActSel',cvActF,actAll.map(function(x){return x.pid;}),'cvActF')||(act.length?"achterstallig · nieuwste eerst":""),
+  act.map(function(a){return cvRow("#c8791a",a.t,a.s,(a.d===dt?"vandaag":fmtDate(a.d)),"cvNaarSpeler('"+a.pid+"')");}).join(""),
+  "Geen achterstallige punten bij je spelers.");
+ h+='</div></div>';
+ box.innerHTML=h;}
+/* ===== v255: Spelers-hoofdtab in S2-presentatie (Coachcorner stap 4a) ===== */
+var cvTerugView="today";
+var splF={q:"",fase:[],team:[],grp:[],lmin:"",lmax:""};
+function splLeeftijd(p){return p.birthYear?Math.max(0,(+todayISO().slice(0,4))-(+p.birthYear)):null;}
+function splData(){
+ var seen={},out=[];
+ (state.teams||[]).forEach(function(t){(t.playerIds||[]).forEach(function(pid){
+  var p=registryPlayer(pid);if(!p)return;
+  if(seen[pid]){if(seen[pid].teamIds.indexOf(t.id)<0){seen[pid].teams.push(t.name);seen[pid].teamIds.push(t.id);}return;}
+  var o={p:p,teams:[t.name],teamIds:[t.id],grpIds:[]};seen[pid]=o;out.push(o);});});
+ (state.groups||[]).forEach(function(g){(g.playerIds||[]).forEach(function(pid){if(seen[pid])seen[pid].grpIds.push(g.id);});});
+ out.sort(function(a,b){return (a.p.name||"").localeCompare(b.p.name||"","nl");});
+ return out;}
+function splTelFilters(){return splF.fase.length+splF.team.length+splF.grp.length+((splF.lmin!==""||splF.lmax!=="")?1:0);}
+function splGefilterd(){
+ var q=(splF.q||"").toLowerCase();
+ return splData().filter(function(o){
+  if(q&&(o.p.name||"").toLowerCase().indexOf(q)<0)return false;
+  if(splF.fase.length){var f=o.p.mjopPhase||"geen";if(splF.fase.indexOf(f)<0)return false;}
+  if(splF.team.length&&!o.teamIds.some(function(id){return splF.team.indexOf(id)>=0;}))return false;
+  if(splF.grp.length&&!o.grpIds.some(function(id){return splF.grp.indexOf(id)>=0;}))return false;
+  if(splF.lmin!==""||splF.lmax!==""){var lt=splLeeftijd(o.p);if(lt==null)return false;
+   if(splF.lmin!==""&&lt<+splF.lmin)return false;if(splF.lmax!==""&&lt>+splF.lmax)return false;}
+  return true;});}
+function splStatusChip(p){
+ var st=spStatus(p);if(st==="actief")return "";
+ return '<span class="splstat">'+(st==="inactief"?"Inactief":"t/m "+fmtDate(p.inactiefTot))+'</span>';}
+function splListHtml(){
+ var L=splGefilterd();
+ if(!L.length)return '<p class="muted" style="margin:0;font-size:13px">Geen spelers gevonden'+(splTelFilters()||splF.q?' met deze filters':'')+'.</p>';
+ return L.map(function(o){var p=o.p;var lt=splLeeftijd(p);
+  var sub=o.teams.join(", ")+(lt!=null?" · "+lt+" jr":"");
+  var foto=p.photo?'<img src="'+p.photo+'" alt="">':esc(initials(p.name||""));
+  var fase=p.mjopPhase?'<b class="splfase" style="color:'+fasePasKleur(p.mjopPhase)+'">'+esc(p.mjopPhase)+'</b>':'<b class="splfase" style="color:#b6c0c9">–</b>';
+  return '<div class="splrow" onclick="cvNaarSpeler(\''+p.id+'\')"><span class="splfoto">'+foto+'</span><span style="flex:1;min-width:0"><b class="nm">'+esc(p.name)+'</b><small>'+esc(sub)+'</small></span>'+splStatusChip(p)+fase+'</div>';}).join("");}
+function renderSpelers(){
+ var box=$("#splBody");if(!box)return;
+ var n=splTelFilters();
+ box.innerHTML='<div class="card"><div class="row" style="gap:8px;align-items:center"><input class="in" id="splQ" autocomplete="off" placeholder="Zoek op naam…" value="'+esc(splF.q)+'" style="flex:1"><button class="btn ghost sm" id="splFilterB" style="flex:0 0 auto">Filters'+(n?' ('+n+')':'')+'</button></div></div>'
+  +'<div class="card" id="splList">'+splListHtml()+'</div>';
+ var q=$("#splQ");if(q)q.oninput=function(){splF.q=this.value;var l=$("#splList");if(l)l.innerHTML=splListHtml();};
+ var fb=$("#splFilterB");if(fb)fb.onclick=openSplFilters;}
+function openSplFilters(){
+ var sh=$("#sheet");
+ function chip(attr,val,lab,on){return '<button type="button" class="dvtile'+(on?" on":"")+'" data-'+attr+'="'+val+'">'+lab+'</button>';}
+ function draw(){
+  var fases=[];splData().forEach(function(o){var f=o.p.mjopPhase||"geen";if(fases.indexOf(f)<0)fases.push(f);});
+  fases.sort(function(a,b){var ia=a==="geen"?99:mjopIdx(a),ib=b==="geen"?99:mjopIdx(b);return ia-ib;});
+  var H='<div class="shead"><div><h2>Filters</h2><div class="sx">Spelers</div></div><button class="xbtn" id="splfX">×</button></div>';
+  H+='<div class="card"><label class="fld">Fase</label><div class="dvtiles">'+fases.map(function(f){return chip("spf",f,f==="geen"?"geen fase":f,splF.fase.indexOf(f)>=0);}).join("")+'</div>';
+  if((state.teams||[]).length>1)H+='<label class="fld" style="margin-top:12px">Team</label><div class="dvtiles">'+(state.teams||[]).map(function(t){return chip("spt",t.id,esc(t.name),splF.team.indexOf(t.id)>=0);}).join("")+'</div>';
+  if((state.groups||[]).length)H+='<label class="fld" style="margin-top:12px">Groep</label><div class="dvtiles">'+(state.groups||[]).map(function(g){return chip("spg",g.id,esc(g.name),splF.grp.indexOf(g.id)>=0);}).join("")+'</div>';
+  H+='<label class="fld" style="margin-top:12px">Leeftijd</label><div class="row" style="gap:8px;align-items:center"><input class="in" id="splLmin" type="number" inputmode="numeric" placeholder="van" value="'+esc(String(splF.lmin))+'" style="flex:0 0 90px"><span class="sx">t/m</span><input class="in" id="splLmax" type="number" inputmode="numeric" placeholder="tot" value="'+esc(String(splF.lmax))+'" style="flex:0 0 90px"><span class="sx">jaar</span></div></div>';
+  H+='<div class="row" style="gap:8px"><button class="btn ghost" style="flex:1" id="splfWis">Wis filters</button><button class="btn blue" style="flex:2" id="splfOk">Toon '+splGefilterd().length+' spelers</button></div>';
+  sh.innerHTML=H;openSheet();
+  function tog(attr,arr){sh.querySelectorAll("[data-"+attr+"]").forEach(function(b){b.onclick=function(){var v=b.dataset[attr==="spf"?"spf":attr==="spt"?"spt":"spg"];var i=arr.indexOf(v);if(i>=0)arr.splice(i,1);else arr.push(v);draw();};});}
+  tog("spf",splF.fase);tog("spt",splF.team);tog("spg",splF.grp);
+  var mi=$("#splLmin"),ma=$("#splLmax");
+  if(mi)mi.onchange=function(){splF.lmin=this.value;draw();};
+  if(ma)ma.onchange=function(){splF.lmax=this.value;draw();};
+  $("#splfWis").onclick=function(){splF.fase=[];splF.team=[];splF.grp=[];splF.lmin="";splF.lmax="";draw();};
+  $("#splfOk").onclick=function(){closeSheet();renderSpelers();};
+  $("#splfX").onclick=function(){closeSheet();renderSpelers();};}
+ draw();}
 function renderToday(){var box=$("#todayBody");if(!box)return;
- if(!todayPlayer&&typeof selPlayer!=="undefined"&&selPlayer&&registryPlayer(selPlayer))todayPlayer=selPlayer;
+ if(!todayPlayer&&rolIsSpeler()&&typeof selPlayer!=="undefined"&&selPlayer&&registryPlayer(selPlayer))todayPlayer=selPlayer;
  if(todayPlayer&&!registryPlayer(todayPlayer))todayPlayer=null;
  if(!todayDate)todayDate=todayISO();
+ if(!rolIsSpeler()&&!todayPlayer){renderCoachVandaag(box);return;}
  var _fxH="",_fxS="",_fxKl="#5b6b7a";
  try{if(todayPlayer){var _pf9=registryPlayer(todayPlayer)||{};var _fxF=_pf9.mjopPhase||null;
   if(!_fxF&&modusNu(todayPlayer)==="foundation")_fxF=playerTred(todayPlayer);
@@ -11796,7 +12139,7 @@ function renderToday(){var box=$("#todayBody");if(!box)return;
   +'</span></button>';}
  var _dat9=new Date(todayDate+"T12:00:00").toLocaleDateString("nl-NL",{weekday:"long",day:"numeric",month:"long"});
  _dat9=_dat9.charAt(0).toUpperCase()+_dat9.slice(1);
- var html=startKaartHtml()+'<div class="card"><div class="row" style="gap:11px;align-items:center">'+_avH+'<div style="flex:1;min-width:0"><span class="acwrap" style="display:block;min-width:0"><input class="in" id="tdQ" autocomplete="off" placeholder="Zoek speler…" value="'+esc(todayPlayer?nameOf(todayPlayer):"")+'"></span><div class="sx" id="tdDatum" style="margin-top:3px">'+_dat9+'</div></div>'+_fbH+'</div></div>';
+ var html=(!rolIsSpeler()?'<button class="bkbtn" onclick="cvTerugKlik()" style="margin:0 0 8px;display:inline-block">\u2039 '+(cvTerugView==="spelers"?"Spelers":"Overzicht")+'</button>':'')+startKaartHtml()+'<div class="card"><div class="row" style="gap:11px;align-items:center">'+_avH+'<div style="flex:1;min-width:0"><span class="acwrap" style="display:block;min-width:0"><input class="in" id="tdQ" autocomplete="off" placeholder="Zoek speler…" value="'+esc(todayPlayer?nameOf(todayPlayer):"")+'"></span><div class="sx" id="tdDatum" style="margin-top:3px">'+_dat9+'</div></div>'+_fbH+'</div></div>';
  if(!todayPlayer){box.innerHTML=html+'<div class="card"><p class="muted" style="margin:0">Kies een speler om het dagprogramma te zien.</p></div>';bindTodayTop();return;}
  if(rolIsSpeler()&&playerModus(todayPlayer)==null)html+='<div class="card" id="modusIntakeKaart"><b>Stel je weergave in</b><p class="muted" style="font-size:13px;margin:6px 0 8px">Een paar korte vragen zodat de app past bij waar jij nu staat.</p><button class="btn blue sm" onclick="openModusIntake(\''+todayPlayer+'\')">Beantwoord 3 vragen</button></div>';
  var pid=todayPlayer,dt=todayDate,ws=weekStart(dt),di=dDiffDays(ws,dt);
@@ -11816,14 +12159,15 @@ function renderToday(){var box=$("#todayBody");if(!box)return;
  if((plan||_gc.t)&&(!rolIsSpeler()||modusToont(pid,"wk_voortgang"))){var _et0=plan?execTotals(plan.items):{d:0,t:0};var _et={d:_et0.d+_gc.d,t:_et0.t+_gc.t};var pct=_et.t?Math.round(100*_et.d/_et.t):0;
   var _ws2=null;try{_ws2=wkStatus(pid,ws,dt);}catch(e){}
   var _barc=(pct>=WK_NORM)?"#17a05c":((_ws2&&_ws2.achter)?"var(--orange)":"");
-  var _onder="";
+  var _motH="",_motA=false;
   if(_ws2){
    var _rt=wkReeksTxt(_ws2.reeks);
-   if(_ws2.achter)_onder='<div class="tdstreak achter"><span class="b"></span><span>Nog '+_ws2.c.open+(_ws2.c.open===1?' onderdeel':' onderdelen')+' te gaan deze week</span></div>';
-   else if(_rt)_onder='<div class="tdstreak"><span class="b"></span><span>'+esc(_rt)+'</span></div>';
-   else if(pct>=WK_NORM)_onder='<div class="tdstreak"><span class="b"></span><span>Deze week boven de '+WK_NORM+'% — begin van een reeks</span></div>';
+   if(_ws2.achter){_motA=true;_motH='Nog '+_ws2.c.open+(_ws2.c.open===1?' onderdeel':' onderdelen')+' te gaan deze week \u2014 een kleine stap vandaag telt al.';}
+   else if(_rt)_motH=esc(_rt);
+   else if(pct>=WK_NORM)_motH='Deze week boven de '+WK_NORM+'% \u2014 begin van een reeks.';
   }
-  html+='<div class="card"><div class="tdprog" style="margin:0"><span class="sx" style="font-weight:800;flex:0 0 auto">Week</span><div class="tdbar"><i style="width:'+pct+'%'+(_barc?(";background:"+_barc):"")+'"></i></div><span class="tdpct">'+pct+'% <small class="sx" style="font-weight:600">('+_et.d+'/'+_et.t+')</small></span><button class="btn ghost sm" id="tdPlanBtn" style="padding:5px 11px">To-do ›</button></div>'+_onder+'</div>';}
+  var _wkC='<div class="card"><div class="tdprog" style="margin:0"><span class="sx" style="font-weight:800;flex:0 0 auto">Week</span><div class="tdbar"><i style="width:'+pct+'%'+(_barc?(";background:"+_barc):"")+'"></i></div><span class="tdpct">'+pct+'% <small class="sx" style="font-weight:600">('+_et.d+'/'+_et.t+')</small></span><button class="btn ghost sm" id="tdPlanBtn" style="padding:5px 11px">To-do ›</button></div></div>';
+  html+=_motH?('<div class="tdduo">'+_wkC+'<div class="card motivcard"><div class="motiv'+(_motA?' achter':'')+'"><span class="mb"></span><span>'+_motH+'</span></div></div></div>'):_wkC;}
  /* agenda */
  var ag="";
  cal.forEach(function(c){ag+='<div class="tdblk clickable" data-agcal="'+(c.edId||c.evId||"")+'" data-agk="'+(c.edId?"ed":"ev")+'"><span class="wkdot" style="background:#E8520A"></span><div class="tdblk-b"><b>'+esc(c.label)+'</b><small class="muted">'+esc(c.sub||"")+(c.time?' · '+c.time.split("–").map(fmtHM).join("–"):' · hele dag')+'</small></div></div>';});
@@ -11990,6 +12334,132 @@ function renderToday(){var box=$("#todayBody");if(!box)return;
  box.querySelectorAll("[data-chk]").forEach(function(b){b.onclick=function(){if(!plan)return;var row=b.closest("[data-bctx]");planTick(plan,pid,b.dataset.chk,row?{blockId:row.dataset.bctx}:null);};});
 }
 function bindTodayTop(){var q=$("#tdQ");if(!q)return;acAttach(q,allPlayers(),function(p){return p.name;},function(p){setSelPlayer(p.id);renderToday();});q.onfocus=function(){var e=this;setTimeout(function(){try{e.select();}catch(_){}},0);};}
+/* ===== v256: coach-kalender — Maand/Week/Jaar/Tijdlijn (Coachcorner stap 4b) ===== */
+var calDatum=null,calSel=null;
+var CAL_MN=["Januari","Februari","Maart","April","Mei","Juni","Juli","Augustus","September","Oktober","November","December"];
+var CAL_MNK=["jan","feb","mrt","apr","mei","jun","jul","aug","sep","okt","nov","dec"];
+var CAL_WD=["ma","di","wo","do","vr","za","zo"];
+var CAL_KLEUR={agenda:"#1B4F9C",gtrain:"#0ea5a3",wed:"#E8520A",vak:"#94a3b8"};
+function calMode(){return state.calMode||"maand";}
+function calLagen(){if(!state.calLagen)state.calLagen={agenda:true,gtrain:true,wed:true,vak:true};return state.calLagen;}
+function calUur(t){if(!t)return null;var q=String(t).split(":");var h=+q[0],mi=+(q[1]||0);if(isNaN(h))return null;return h+(isNaN(mi)?0:mi)/60;}
+function calDagKort(d){return (+d.slice(8,10))+" "+CAL_MNK[+d.slice(5,7)-1];}
+function calCoachItems(van,tot){
+ var out=[];var L=calLagen();
+ if(L.gtrain){try{gsEventsRange(van,tot,null).forEach(function(ev){out.push({date:ev.start,laag:"gtrain",tijd:ev.startTime||"",tot:ev.endTime||"",naam:ev.name,sub:"Groepstraining",open:"ev",id:ev.id});});}catch(_e){}}
+ (state.events||[]).forEach(function(ev){var st=ev.start,e=ev.end||ev.start;if(!st||st>tot||e<van)return;
+  var laag=(ev.type==="vakantie")?"vak":"agenda";if(!L[laag])return;
+  var d=(st>van?st:van),last=(e<tot?e:tot);
+  while(d<=last){out.push({date:d,laag:laag,tijd:ev.startTime||"",tot:ev.endTime||"",naam:ev.name||blockTypeName(ev.type),sub:blockTypeName(ev.type),open:"ev",id:ev.id});d=dAddDays(d,1);}});
+ if(L.wed)(state.tourEditions||[]).forEach(function(ed){if(!ed.start)return;var e=ed.end||ed.start;if(ed.start>tot||e<van)return;
+  var wie=Object.keys(ed.participants||{}).filter(function(pid){return !!registryPlayer(pid);});if(!wie.length)return;
+  var m=edMeta(ed);var d=(ed.start>van?ed.start:van),last=(e<tot?e:tot);
+  while(d<=last){out.push({date:d,laag:"wed",tijd:"",tot:"",naam:m.name,sub:wie.length===1?nameOf(wie[0]):wie.length+" spelers",open:"ed",id:ed.id});d=dAddDays(d,1);}});
+ out.sort(function(a,b){return a.date.localeCompare(b.date)||(a.tijd||"99:99").localeCompare(b.tijd||"99:99");});
+ return out;}
+function calMaandShift(n){var y=+calDatum.slice(0,4),mo=+calDatum.slice(5,7)-1+n;var y2=y+Math.floor(mo/12),m2=((mo%12)+12)%12;calDatum=y2+"-"+("0"+(m2+1)).slice(-2)+"-01";renderPlanning();}
+function calLagenChips(){
+ var L=calLagen();
+ return '<div class="callagen">'+[["agenda","Eigen agenda"],["gtrain","Groepstrainingen"],["wed","Wedstrijden"],["vak","Vakanties"]].map(function(o){
+  return '<button class="callaag'+(L[o[0]]?" on":"")+'" data-laag="'+o[0]+'"><i style="background:'+CAL_KLEUR[o[0]]+'"></i>'+o[1]+'</button>';}).join("")+'</div>';}
+function calKopHtml(midden){
+ return '<div class="calkop"><button class="xbtn" data-cnav="-1">‹</button><b>'+midden+'</b><button class="xbtn" data-cnav="1">›</button><span style="flex:1"></span><button class="btn ghost sm" id="calVandaag">Vandaag</button></div>';}
+function calMaandHtml(){
+ var yr=+calDatum.slice(0,4),mIdx=+calDatum.slice(5,7)-1;
+ var d0=calDatum.slice(0,7)+"-01";
+ var nm=(mIdx===11)?((yr+1)+"-01-01"):(yr+"-"+("0"+(mIdx+2)).slice(-2)+"-01");
+ var last=dAddDays(nm,-1);
+ var gs=weekStart(d0),ge=dAddDays(weekStart(last),6);
+ var its=calCoachItems(gs,ge);var per={};its.forEach(function(i){(per[i.date]=per[i.date]||[]).push(i);});
+ var vandaag=todayISO();
+ var H='<div class="card">'+calKopHtml('<u data-mkies>'+CAL_MN[mIdx]+'</u> <u data-jkies>'+yr+'</u>');
+ H+='<div class="calgrid" id="calGrid">'+CAL_WD.map(function(w){return '<span class="calwd">'+w+'</span>';}).join("");
+ var d=gs;
+ while(d<=ge){var dl=per[d]||[];var oth=d.slice(0,7)!==calDatum.slice(0,7);
+  H+='<div class="calcel'+(oth?" oth":"")+(d===vandaag?" nu":"")+(d===calSel?" sel":"")+'" data-cd="'+d+'"><b>'+(+d.slice(8,10))+'</b>'
+   +'<span class="caldots">'+dl.slice(0,4).map(function(i){return '<i style="background:'+CAL_KLEUR[i.laag]+'"></i>';}).join("")+'</span>'
+   +'<span class="calevts">'+dl.slice(0,3).map(function(i){return '<em style="color:'+CAL_KLEUR[i.laag]+'">'+(i.tijd?i.tijd+" ":"")+esc(i.naam)+'</em>';}).join("")+(dl.length>3?'<em class="meer">+'+(dl.length-3)+'</em>':'')+'</span></div>';
+  d=dAddDays(d,1);}
+ H+='</div>'+calLagenChips()+'</div>';
+ if(calSel&&calSel>=gs&&calSel<=ge){
+  var sel=per[calSel]||[];
+  H+='<div class="card" id="calDag"><div class="cardhd"><h3>'+esc(calDagKort(calSel))+'</h3><span class="hdnote">'+(sel.length?sel.length+(sel.length===1?" activiteit":" activiteiten"):"")+'</span></div>'
+   +(sel.length?sel.map(function(i,ix){return '<div class="cvrow" data-op="'+i.open+'|'+i.id+'"><span class="cvdot" style="background:'+CAL_KLEUR[i.laag]+'"></span><span style="flex:1;min-width:0"><b>'+esc(i.naam)+'</b>'+(i.sub?'<small>'+esc(i.sub)+'</small>':'')+'</span>'+(i.tijd?'<span class="cvtijd">'+i.tijd+(i.tot?"–"+i.tot:"")+'</span>':'')+'</div>';}).join(""):'<p class="muted" style="margin:0;font-size:13px">Geen activiteiten.</p>')+'</div>';}
+ return H;}
+function calRangeTxt(ws,we){return calDagKort(ws)+" – "+calDagKort(we)+" "+we.slice(0,4);}
+function calWeekHtml(){
+ var ws=weekStart(calDatum),we=dAddDays(ws,6);
+ var its=calCoachItems(ws,we);var per={};its.forEach(function(i){(per[i.date]=per[i.date]||[]).push(i);});
+ var vandaag=todayISO();var U0=7,U1=22,H=34,TH=(U1-U0+1)*H;
+ var K='<div class="card">'+calKopHtml(calRangeTxt(ws,we));
+ K+='<div class="calwk" style="margin-bottom:2px"><span></span>'+CAL_WD.map(function(w,ix){var dd=dAddDays(ws,ix);return '<span class="calwd'+(dd===vandaag?'" style="color:var(--orange)':'')+'">'+w+' '+(+dd.slice(8,10))+'</span>';}).join("")+'</div>';
+ K+='<div class="calwk"><div class="calwkuren" style="height:'+TH+'px">';
+ for(var u=U0;u<=U1;u++)K+='<span style="top:'+((u-U0)*H)+'px">'+u+'</span>';
+ K+='</div>';
+ for(var dx=0;dx<7;dx++){var dd2=dAddDays(ws,dx);var dl=per[dd2]||[];var los=0;
+  K+='<div class="calwkdag" style="height:'+TH+'px">';
+  dl.forEach(function(i){
+   var su=calUur(i.tijd);
+   if(su==null){K+='<span class="calblok" data-op="'+i.open+'|'+i.id+'" style="top:'+(los*20)+'px;height:18px;background:'+CAL_KLEUR[i.laag]+'">'+esc(i.naam)+'</span>';los++;return;}
+   var eu=calUur(i.tot);if(eu==null||eu<=su)eu=su+1;
+   var top=Math.max(0,(su-U0)*H),hh=Math.max(20,(eu-su)*H);
+   K+='<span class="calblok" data-op="'+i.open+'|'+i.id+'" style="top:'+top+'px;height:'+hh+'px;background:'+CAL_KLEUR[i.laag]+'">'+i.tijd+' '+esc(i.naam)+'</span>';});
+  K+='</div>';}
+ K+='</div>'+calLagenChips()+'</div>';
+ return K;}
+function calJaarHtml(){
+ var yr=+calDatum.slice(0,4);
+ var its=calCoachItems(yr+"-01-01",yr+"-12-31");
+ var per={};its.forEach(function(i){var k=+i.date.slice(5,7)-1;(per[k]=per[k]||[]).push(i);});
+ var J='<div class="card">'+calKopHtml('<span>'+yr+'</span>');
+ J+='<div class="caljaar">'+CAL_MN.map(function(nm2,ix){
+  var dl=per[ix]||[];var lags=[];dl.forEach(function(i){if(lags.indexOf(i.laag)<0)lags.push(i.laag);});
+  return '<div class="calmini" data-cmnd="'+ix+'"><b>'+nm2+'</b><small>'+(dl.length?dl.length+(dl.length===1?" activiteit":" activiteiten"):"rustig")+'</small><span class="caldots">'+lags.map(function(l){return '<i style="background:'+CAL_KLEUR[l]+'"></i>';}).join("")+'</span></div>';}).join("")+'</div>'+calLagenChips()+'</div>';
+ return J;}
+function openCalMaandKiezer(yr){
+ var sh=$("#sheet");
+ sh.innerHTML='<div class="shead"><div><h2>'+yr+'</h2><div class="sx">Kies een maand</div></div><button class="xbtn" onclick="closeSheet()">×</button></div>'
+  +'<div class="card"><div class="dvtiles">'+CAL_MN.map(function(nm2,ix){return '<button type="button" class="dvtile" data-ckm="'+ix+'">'+nm2+'</button>';}).join("")+'</div></div>';
+ openSheet();
+ sh.querySelectorAll("[data-ckm]").forEach(function(b){b.onclick=function(){calDatum=yr+"-"+("0"+(+b.dataset.ckm+1)).slice(-2)+"-01";state.calMode="maand";save();closeSheet();renderPlanning();};});}
+function openCalJaarKiezer(){
+ var sh=$("#sheet");var y0=+calDatum.slice(0,4);var yrs=[];for(var y=y0-4;y<=y0+4;y++)yrs.push(y);
+ sh.innerHTML='<div class="shead"><div><h2>Kies een jaar</h2><div class="sx">daarna de maand</div></div><button class="xbtn" onclick="closeSheet()">×</button></div>'
+  +'<div class="card"><div class="dvtiles">'+yrs.map(function(y2){return '<button type="button" class="dvtile'+(y2===y0?" on":"")+'" data-ckj="'+y2+'">'+y2+'</button>';}).join("")+'</div></div>';
+ openSheet();
+ sh.querySelectorAll("[data-ckj]").forEach(function(b){b.onclick=function(){openCalMaandKiezer(+b.dataset.ckj);};});}
+function renderCalCoach(host){
+ if(!calDatum)calDatum=todayISO();
+ if(!calSel)calSel=todayISO();
+ var ys=$("#planYearSel");if(ys)ys.style.display=(calMode()==="tijdlijn")?"":"none";
+ var m=calMode();
+ var wrap=document.createElement("div");host.appendChild(wrap);
+ var segH='<div class="card" style="padding:9px 10px"><div class="seg" id="calSeg">'+[["maand","Maand"],["week","Week"],["jaar","Jaar"],["tijdlijn","Tijdlijn"]].map(function(o){return '<button class="'+(m===o[0]?"on":"")+'" data-cm="'+o[0]+'">'+o[1]+'</button>';}).join("")+'</div></div>';
+ if(m==="tijdlijn"){wrap.innerHTML=segH;var h2=document.createElement("div");host.appendChild(h2);renderTimeline(h2);}
+ else if(m==="week")wrap.innerHTML=segH+calWeekHtml();
+ else if(m==="jaar")wrap.innerHTML=segH+calJaarHtml();
+ else wrap.innerHTML=segH+calMaandHtml();
+ /* binden */
+ wrap.querySelectorAll("#calSeg [data-cm]").forEach(function(b){b.onclick=function(){state.calMode=b.dataset.cm;save();renderPlanning();};});
+ wrap.querySelectorAll("[data-cnav]").forEach(function(b){b.onclick=function(){var n=+b.dataset.cnav;
+  if(m==="maand")calMaandShift(n);
+  else if(m==="week"){calDatum=dAddDays(weekStart(calDatum),7*n);renderPlanning();}
+  else if(m==="jaar"){calDatum=((+calDatum.slice(0,4))+n)+calDatum.slice(4);renderPlanning();}};});
+ var vd=wrap.querySelector("#calVandaag");if(vd)vd.onclick=function(){calDatum=todayISO();calSel=todayISO();renderPlanning();};
+ var mk=wrap.querySelector("[data-mkies]");if(mk)mk.onclick=function(){openCalMaandKiezer(+calDatum.slice(0,4));};
+ var jk=wrap.querySelector("[data-jkies]");if(jk)jk.onclick=function(){openCalJaarKiezer();};
+ wrap.querySelectorAll(".calcel").forEach(function(c){
+  c.onclick=function(){calSel=c.dataset.cd;renderPlanning();};
+  c.ondblclick=function(){calDatum=c.dataset.cd;calSel=c.dataset.cd;state.calMode="week";save();renderPlanning();};});
+ wrap.querySelectorAll(".calmini").forEach(function(c){c.onclick=function(){var yr=+calDatum.slice(0,4);calDatum=yr+"-"+("0"+(+c.dataset.cmnd+1)).slice(-2)+"-01";state.calMode="maand";save();renderPlanning();};});
+ wrap.querySelectorAll("[data-laag]").forEach(function(b){b.onclick=function(){var L=calLagen();L[b.dataset.laag]=!L[b.dataset.laag];save();renderPlanning();};});
+ wrap.querySelectorAll("[data-op]").forEach(function(r){r.onclick=function(){var q=r.dataset.op.split("|");if(q[0]==="ev")eventDetail(q[1]);else editionDetail(q[1]);};});
+ /* swipe */
+ var sx=null;
+ wrap.addEventListener("touchstart",function(e){sx=e.touches&&e.touches[0]?e.touches[0].clientX:null;},{passive:true});
+ wrap.addEventListener("touchend",function(e){if(sx==null)return;var ex=(e.changedTouches&&e.changedTouches[0])?e.changedTouches[0].clientX:null;if(ex==null)return;var dx=ex-sx;sx=null;if(Math.abs(dx)<50)return;var n=dx<0?1:-1;
+  if(m==="maand")calMaandShift(n);else if(m==="week"){calDatum=dAddDays(weekStart(calDatum),7*n);renderPlanning();}else if(m==="jaar"){calDatum=((+calDatum.slice(0,4))+n)+calDatum.slice(4);renderPlanning();}},{passive:true});
+}
 function renderPlanning(){if(planTab==="players")planTab="timeline";if(selPlayer&&registryPlayer(selPlayer)){tlPlayer=selPlayer;tlTeam=null;}
   if(rolIsSpeler()&&(planTab==="tours"||(planTab==="period"&&!modusToont(null,"plan_period"))||(planTab==="training"&&!modusToont(null,"plan_training"))))planTab="timeline";
   $("#planSwitch").innerHTML="";
@@ -12010,7 +12480,7 @@ function renderPlanning(){if(planTab==="players")planTab="timeline";if(selPlayer
   var _pl=$("#planLib");if(_pl)_pl.onclick=openLibrary;
   var _pa=$("#planAdd");if(_pa)_pa.onclick=openAddChooser;
   var host=el("div","");box.appendChild(host);
-  if(planTab==="timeline")renderTimeline(host); else if(planTab==="tours")renderTourTab(host); else if(planTab==="period")perRender(host); else if(planTab==="training")renderTrainPlanTab(host); else if(planTab==="todo")renderTodoTab(host); else if(planPlayer)renderPlayerSchedule(host); else renderPlayerTab(host);
+  if(planTab==="timeline"){if(rolIsSpeler())renderTimeline(host);else renderCalCoach(host);} else if(planTab==="tours")renderTourTab(host); else if(planTab==="period")perRender(host); else if(planTab==="training")renderTrainPlanTab(host); else if(planTab==="todo")renderTodoTab(host); else if(planPlayer)renderPlayerSchedule(host); else renderPlayerTab(host);
 }
 
 function labelFilterRow(onChange){
@@ -12454,7 +12924,7 @@ function welkomBijStart(){
   openWelkom();
  }catch(e){}},1400);}catch(e){}}
 function openWelkom(){var sh=$("#sheet");
- sh.innerHTML='<div class="shead"><div><h2>Welkom</h2><div class="sx">NGF Performance Centre</div></div><button class="xbtn" onclick="welkomLater()">\u00d7</button></div>'
+ sh.innerHTML='<div class="shead"><div><h2>Welkom</h2><div class="sx">C@ddie \u2014 jouw digitale caddie</div></div><button class="xbtn" onclick="welkomLater()">\u00d7</button></div>'
  +'<div class="card"><p class="privlead">Spelen, trainen en plannen bij elkaar: scores en baanstatistieken, een oefeningendatabase met testen en challenges, planning met periodisering en een levendige doelensectie \u2014 voor speler en coach samen.</p><p class="privlead" style="margin-bottom:0">Twee minuten en je staat klaar. Wie gaat deze app gebruiken?</p></div>'
  +'<div class="card"><button class="btn block blue" id="wkCoach">Ik ben coach</button><div class="sx" style="margin:7px 0 14px">Je maakt een team en zet je spelers erin.</div>'
  +'<button class="btn block" id="wkSpeler">Ik ben speler</button><div class="sx" style="margin-top:7px">Je werkt voor jezelf; een coach kan later aanhaken.</div></div>'
