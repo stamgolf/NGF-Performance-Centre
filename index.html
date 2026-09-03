@@ -64,17 +64,19 @@ header.bar{background:#fff;color:var(--ink);padding:calc(env(safe-area-inset-top
 .cvrow .cvwie{display:block;color:var(--muted);font-size:12px;white-space:normal;line-height:1.35}
 .btn.grijs{background:#E6E8EA;color:var(--ink);box-shadow:none}
 /* v264: fase-blok (zoals Vandaag-spelerweergave) in de spelerslijst */
-.fasebadge{flex:0 0 auto;width:214px;height:38px;padding:0 8px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;line-height:1.15;text-align:center}
-.fasebadge b{display:block;font-size:8.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;opacity:.9}
-.fasebadge small,.splrow .fasebadge small{display:block;font-size:11.5px;font-weight:800;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
-@media(max-width:480px){.fasebadge{width:168px}.fasebadge small,.splrow .fasebadge small{font-size:10.5px}}
-.fasebadge.leeg{background:none;color:#C4C8CC;font-size:16px;font-weight:800}
+.fasebadge{flex:0 0 auto;width:236px;display:flex;align-items:center;justify-content:flex-end;gap:9px}
+.fasebadge i{flex:0 0 auto;width:38px;height:30px;border-radius:8px;background:var(--k,#E6E8EA);color:#fff;font-style:normal;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;letter-spacing:.01em}
+.fasebadge span{min-width:0;line-height:1.2;text-align:right}
+.fasebadge span b,.splrow .fasebadge span b{display:block;font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:800}
+.fasebadge span small,.splrow .fasebadge span small{display:block;font-size:12px;font-weight:800;color:var(--k,#C4C8CC);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.fasebadge.leeg i{background:none;color:#C4C8CC;font-size:16px}
+@media(max-width:480px){.fasebadge{width:150px}.fasebadge span small,.splrow .fasebadge span small{font-size:11px}}
 .fasemini{display:flex;gap:8px;align-items:center;flex:0 0 auto;line-height:1.25;text-align:left}
 .fasemini i{display:block;width:3.5px;height:28px;border-radius:2px}
 .fasemini b{display:block;font-size:9px;font-weight:800;letter-spacing:.07em;color:var(--muted);text-transform:uppercase}
 .fasemini small{display:block;font-size:12px;font-weight:800}
 /* v264: coach kijkt als speler */
-#kijkbar{display:none;background:var(--ink);color:#fff;font-size:12.5px;font-weight:700;padding:8px 16px;align-items:center;gap:10px}
+#kijkbar{display:none;background:#7A7F85;color:#fff;font-size:12.5px;font-weight:700;padding:8px 16px;align-items:center;gap:10px}
 body.kijkvancoach #kijkbar{display:flex}
 #kijkbar button{background:rgba(255,255,255,.14);color:#fff;border:0;border-radius:999px;padding:5px 12px;font-weight:800;font-size:12px;cursor:pointer;font-family:inherit;flex:0 0 auto}
 #kijkbar span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;opacity:.85}
@@ -117,7 +119,7 @@ body.kijkvancoach #kijkbar{display:flex}
 .calwkuren{position:relative}
 .calwkuren span{position:absolute;right:3px;font-size:9px;color:#9A9EA3;transform:translateY(-4px)}
 .calwkdag{position:relative;background:var(--paper);border-radius:8px;background-image:repeating-linear-gradient(to bottom,transparent 0,transparent 33px,rgba(15,40,60,.05) 33px,rgba(15,40,60,.05) 34px)}
-.calblok{position:absolute;left:2px;right:2px;border-radius:5px;color:#fff;font-size:9.5px;font-weight:700;padding:2px 4px;overflow:hidden;cursor:pointer;line-height:1.25}
+.calblok{position:absolute;left:2px;right:2px;border-radius:5px;color:var(--ink);font-size:9.5px;font-weight:700;padding:2px 4px 2px 5px;overflow:hidden;cursor:pointer;line-height:1.25}
 .caljaar{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
 .calmini{background:var(--paper);border-radius:10px;padding:11px 12px;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .calmini b{display:block;font-size:13px}
@@ -127,7 +129,8 @@ body.kijkvancoach #kijkbar{display:flex}
  .calcel{min-height:78px}
  .caldots{display:none}
  .calevts{display:block;margin-top:2px}
- .calevts em{display:block;font-style:normal;font-size:10.5px;font-weight:700;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ .calevts em{display:block;font-style:normal;font-size:10.5px;font-weight:700;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-radius:3px;padding:0 4px 0 5px;margin-top:2px}
+.calevts em.meer{background:none!important;border:0!important}
  .calevts em.meer{color:var(--muted)}
  .calmini .caldots{display:flex}
 }
@@ -154,7 +157,7 @@ main .view>h1.title,main .view>p.plansub,main .view>p.eyebrow{display:none}
 .btn{background:var(--orange);color:#fff;border:0;border-radius:11px;padding:13px 18px;font-weight:700;font-size:14px;transition:.15s;box-shadow:0 3px 10px rgba(244,124,32,.3)}
 .btn:active{transform:translateY(1px)}.btn.block{width:100%}
 .btn.ghost{background:#fff;color:var(--blue);box-shadow:inset 0 0 0 1.5px var(--line)}
-.btn.blue{background:var(--blue);box-shadow:0 3px 10px rgba(43,47,51,.25)}
+.btn.blue{background:#7A7F85;box-shadow:0 3px 10px rgba(43,47,51,.18)}
 .btn.sm{padding:8px 13px;font-size:12.5px;border-radius:9px}
 .btn.danger{background:#fff;color:var(--bad);box-shadow:inset 0 0 0 1.5px #f0c9ca}
 .btn:disabled{opacity:.45;box-shadow:none}
@@ -721,7 +724,7 @@ body.rolspeler label.fld:has(+ .acwrap #progSelPQ){display:none}
 .sbtn{flex:0 0 auto;width:44px;height:40px;border:0;border-radius:16px;background:transparent;color:var(--muted);display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer;padding:0;transition:background .16s,color .16s}
 .sbtn svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
 .sbtn span{display:none;font-size:11.5px;font-weight:800;white-space:nowrap;letter-spacing:.01em}
-.sbtn.on{width:auto;padding:0 13px 0 11px;background:var(--blue);color:#fff;box-shadow:0 2px 8px rgba(43,47,51,.28)}
+.sbtn.on{width:auto;padding:0 13px 0 11px;background:#7A7F85;color:#fff;box-shadow:0 2px 8px rgba(43,47,51,.2)}
 .sbtn.on span{display:block}
 @media(min-width:700px){
  .subbar-in{gap:5px;padding:6px;border-radius:24px}
@@ -780,6 +783,15 @@ input[type=time]{min-width:0;width:100%;max-width:100%;-webkit-appearance:none;a
 .wg-lcal{background:#fff4ec;color:#c2410c}
 .wg-empty{text-align:center;color:var(--line);font-size:11px;padding-top:4px}
 .wg-sub{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:10px;padding-top:9px;border-top:1px solid var(--line);align-items:center}
+.wkbar{display:flex;height:10px;border-radius:999px;overflow:hidden;background:var(--paper);gap:2px;margin:2px 0 12px}.wkbar i{display:block;min-width:4px}
+.wktiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px}
+.wktile{display:flex;align-items:center;gap:8px;background:var(--paper);border-radius:10px;padding:8px 10px;min-width:0}.wktile i{width:4px;height:26px;border-radius:2px;flex:0 0 auto}
+.wktile small{display:block;font-size:10.5px;color:var(--muted);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.wktile b{display:block;font-size:14px;font-family:var(--fd);font-weight:500}
+.wktile.tot{background:#fff;box-shadow:inset 0 0 0 1.5px var(--line)}
+.urings{display:flex;justify-content:space-around;align-items:flex-start;gap:8px;padding:4px 0 2px}
+.uring{text-align:center;min-width:76px}.uring svg{width:68px;height:68px;display:block;margin:0 auto}
+.uring small{display:block;font-size:11px;color:var(--muted);font-weight:700;margin-top:5px}.uring b{display:block;font-size:11px;font-weight:600;color:var(--muted)}.uring .uover{color:var(--orange);font-weight:800}
+.ulegend{display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:10px;padding-top:8px;border-top:1px solid var(--line);font-size:11px;color:var(--muted);font-weight:700;align-items:center}.ulegend span{display:inline-flex;align-items:center;gap:5px}.ulegend i{width:8px;height:8px;border-radius:50%}.ulegend .unorm{margin-left:auto;font-weight:600}
 .wg-si{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;color:var(--muted)}
 .wg-si i{width:7px;height:7px;border-radius:50%;display:inline-block}
 .wg-tot{margin-left:auto;font-weight:800;color:var(--ink)}
@@ -953,6 +965,12 @@ input.in.tesg{width:96px;max-width:96px;flex:0 0 96px;text-align:right;font-vari
 .wlstat{display:inline-flex;flex-direction:column;gap:1px;background:#F2F3F5;border-radius:10px;padding:6px 11px;min-width:82px}
 .wlstat span{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
 .wlstat b{font-size:15px;font-variant-numeric:tabular-nums}
+.wlrol,select.in.wlrol{width:auto!important;flex:0 0 auto;font-size:12px;padding:4px 26px 4px 8px;height:auto;border-radius:999px}
+#wlBelSeg,#wlKlSeg{flex:0 0 auto}.cardhd>span.row{flex-wrap:nowrap;flex:0 0 auto;max-width:100%}
+.klbm{display:flex;gap:6px;flex:0 0 auto;width:min(46%,300px)}.klbm .bmwrap{flex:1}.klbm canvas{width:100%;height:auto;display:block;cursor:pointer}
+.klzl{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.klchip{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:4px 10px;font-size:11.5px;font-weight:700;color:var(--muted);cursor:pointer;font-family:inherit}.klchip b{color:#C2383A}
+.klbadge{pointer-events:none}
+.seg.sm#wlBelSeg{margin:0}
 .scchart .wlrow{font-size:10px;fill:#5a6673;font-weight:700}
 .sigrow{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #F2F3F5}
 .sigrow:last-of-type{border-bottom:none}
@@ -1738,7 +1756,7 @@ const LIES={f:"Fairway",r:"Rough",s:"Sand",g:"Green"};const DLIES={f:"Fairway",r
 const LV=["PGA Tour"];
 function spread(min,max,n){if(n===1)return [Math.round((min+max)/2)];const a=[];for(let i=0;i<n;i++)a.push(Math.round(min+(max-min)*i/(n-1)));return a;}
 const NSIT=[3,6,9,12,15,18], NHOLE=[6,9,12,18];
-const APP_VERSION="v267";
+const APP_VERSION="v271";
 const TESTS={
 putt_3_5:{name:"Putt 3–5 ft",cat:"Putten",eng:"putt_cat",dists:[3,4,5],per:8,info:"24 putts (8× vanaf 3, 4 en 5 ft). Per afstand: holed, mis binnen 3 ft, mis buiten 3 ft. Output: SG + make%."},
 putt_6_10:{name:"Putt 6–10 ft",cat:"Putten",eng:"putt_cat",dists:[6,8,10],per:8,info:"24 putts (8× vanaf 6, 8 en 10 ft). Zelfde invoer als 3–5 ft."},
@@ -4852,7 +4870,7 @@ function playerWeakCats(pid){var per={};var _up={};try{_up=upCatPer(pid);}catch(
  var arr=Object.keys(per).filter(function(c){return per[c].st>=10;}).map(function(c){return {cat:c,avg:per[c].sg/per[c].st};});
  arr.sort(function(a,b){return a.avg-b.avg;});return arr.slice(0,2);}
 function trainFocusFor(pid){if(!state.trainFocus)state.trainFocus={};return state.trainFocus[pid]||(state.trainFocus[pid]=[]);}
-const WKTYPES=[["golf","Golftraining (Z)","#2e78e8"],["golfb","Golftraining (B)","#c8791a"],["fysiek","Fysiek (Z)","#0f9e73"],["fysb","Fysieke training (B)","#0b7a58"],["school","School","#64748b"],["werk","Werk","#8b5cf6"],["overig","Overig","#94a3b8"]];
+const WKTYPES=[["golf","Golftraining (Z)","#3E6FB0"],["golfb","Golftraining (B)","#B0782E"],["fysiek","Fysiek (Z)","#3C9A78"],["fysb","Fysieke training (B)","#2E7A60"],["school","School","#7A7F85"],["werk","Werk","#8C7BB8"],["overig","Overig","#9AA1A8"]];
 const WKMODES=[["ind","Individueel"],["groep","Groep"]];
 function wkModeLabel(m){return ({ind:"Individueel",groep:"Groep"})[m]||"";}
 function fmtHM(t){if(!t)return"";var p=String(t).split(":");return ("0"+p[0]).slice(-2)+":"+("0"+(p[1]||"00")).slice(-2);}
@@ -8586,7 +8604,7 @@ if(scope&&scope.player&&tmToernooi(ed)){
   +'<button class="btn block '+(_tr2?"ghost":"blue")+'" id="edTmB" style="margin-top:10px">'+(_tr2?"Teamuitslagen":"Uitslagen invoeren")+'</button></div>';}
 var _gc=(scope&&scope.player)?taxGenderCheck(scope.player,m.gender||""):null;
 var _gw=(_gc&&_gc.r==="mismatch")?('<div class="edvorm"><span class="b" style="background:var(--orange)"></span><span>'+esc(taxGenderCheckTxt(_gc))+'</span></div>'):"";
-sh.innerHTML='<div class="shead"><div><h2>'+esc(m.name)+'</h2><div class="sx">Toernooi</div></div><div class="sheadact"><button class="xbtn" id="edEditB" title="Bewerk">\u270e</button><button class="xbtn xbtn-del" id="edDelB" title="Verwijder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></button><button class="xbtn" onclick="closeSheet()">\u00d7</button></div></div><div class="card">'+rows+_vn+_cw+_gw+'</div>'+_mpB+_dl+_ev+edCoachKaart(ed,scope);openSheet();edCoachBind(ed,id,scope);
+sh.innerHTML='<div class="shead"><div><h2>'+esc(m.name)+'</h2><div class="sx">Toernooi</div></div><div class="sheadact"><button class="xbtn" id="edEditB" title="Bewerk">\u270e</button><button class="xbtn xbtn-del" id="edDelB" title="Verwijder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></button><button class="xbtn" onclick="closeSheet()">\u00d7</button></div></div><div class="card">'+rows+_vn+_cw+_gw+'</div>'+edCoachKaart(ed,scope)+_mpB+_dl+_ev;openSheet();edCoachBind(ed,id,scope);
 var _mpb=$("#edMpB");if(_mpb)_mpb.onclick=function(){openMatchplay(id,scope.player,function(){editionDetail(id,scope);});};
 var _tmb=$("#edTmB");if(_tmb)_tmb.onclick=function(){openTeamWedstrijd(id,scope.player,function(){editionDetail(id,scope);});};if(!(scope&&scope.player))edDoelenBind(ed,id,scope);var _tgb=$("#edTgB");if(_tgb)_tgb.onclick=function(){openTourGoalsForm(id,scope.player);};var _evb=$("#edEvalB");if(_evb)_evb.onclick=function(){var _t=tourEvalFor(scope.player,id);if(_t)tourEvalDetail(_t.id);else openTourEval(scope.player,id);};$("#edEditB").onclick=function(){openEditionForm(id,scope);};$("#edDelB").onclick=function(){
  if(scope&&scope.player){var _nm=nameOf(scope.player);
@@ -10049,9 +10067,6 @@ function perRender(host){perEnsure();
  card.innerHTML='<div class="row" style="gap:8px;align-items:center"><span class="fld" style="margin:0;white-space:nowrap">Speler</span><span class="acwrap" style="flex:1"><input class="in" id="perPQ" autocomplete="off" value="'+esc(nameOf(pid))+'" placeholder="Zoek speler\u2026"></span>'
   +'<button class="btn sm" id="perGen">Genereer</button><button class="btn ghost sm" id="perWipe">Wissen</button></div>';
  host.appendChild(card);
- var yc=el("div","card");yc.innerHTML='<div class="row" style="gap:6px;align-items:center"><span style="font-size:14px;font-weight:700;flex:1">Jaarplan</span><button class="xbtn sm" id="perPrevY">\u2039</button><b style="font-size:14px">'+year+'</b><button class="xbtn sm" id="perNextY">\u203a</button></div>';host.appendChild(yc);
- var _py1=yc.querySelector("#perPrevY");if(_py1)_py1.onclick=function(){tlJaarStap(-1);};
- var _py2=yc.querySelector("#perNextY");if(_py2)_py2.onclick=function(){tlJaarStap(1);};
  var q=$("#perPQ");q.onfocus=function(){q.select();};acAttach(q,allPlayers(),function(p2){return p2.name;},function(p2){setSelPlayer(p2.id);renderPlanning();});
  $("#perGen").onclick=function(){confirmDlg("Periodisering opnieuw genereren voor "+nameOf(pid)+" ("+year+")? Handmatige aanpassingen gaan verloren.",function(){var p3=perPlanEnsure(pid,year);perUndo={pid:pid,year:year,phases:JSON.parse(JSON.stringify(p3.phases||[]))};p3.phases=perGenerate(pid,year);save();renderPlanning();toast("Periodisering gegenereerd \u2713");});};
  $("#perWipe").onclick=function(){var p4=perPlan(pid,year);var n=((p4&&p4.phases)||[]).length;
@@ -10201,10 +10216,12 @@ function perRender(host){perEnsure();
   +(perView.mode==="period"?'<span class="perrange"><select class="in sm" id="perFrom">'+MFULL.map(function(m,i){return '<option value="'+i+'"'+((perView.from||0)===i?" selected":"")+'>'+m+'</option>';}).join("")+'</select><span class="sx">t/m</span><select class="in sm" id="perTo">'+MFULL.map(function(m,i){return '<option value="'+i+'"'+((perView.to==null?11:perView.to)===i?" selected":"")+'>'+m+'</option>';}).join("")+'</select></span>':"")+(perView.mode==="month"?'<span class="perzoomchip">'+MFULL[perView.idx]+' <a href="#" id="perZoomOut">\u00d7</a></span>':'')
   +'<label class="rubtoggle percomptg"><input type="checkbox" id="perCompTg"'+(perCompOn?" checked":"")+'><span class="sx">Componenten</span></label></div>';
  var bar=el("div","card");
- bar.innerHTML='<div class="row spread" style="margin-bottom:6px;align-items:center"><h3 style="margin:0">Jaarplan '+year+'</h3><div style="display:flex;align-items:center;gap:10px"><button class="btn '+(perSimActive(pid,year)?'':'ghost ')+'sm" id="perSimBtn">'+(perSimActive(pid,year)?'Simulatie aan':'Wat als?')+'</button><button class="btn ghost sm" id="perAdd">+ Fase</button></div></div>'+vsel
+ bar.innerHTML='<div class="row spread" style="margin-bottom:6px;align-items:center"><h3 style="margin:0;display:flex;align-items:center;gap:6px">Jaarplan <button class="xbtn sm" id="perPrevY">\u2039</button><span>'+year+'</span><button class="xbtn sm" id="perNextY">\u203a</button></h3><div style="display:flex;align-items:center;gap:10px"><button class="btn '+(perSimActive(pid,year)?'':'ghost ')+'sm" id="perSimBtn">'+(perSimActive(pid,year)?'Simulatie aan':'Wat als?')+'</button><button class="btn ghost sm" id="perAdd">+ Fase</button></div></div>'+vsel
   +panels.map(function(pn,i){return '<div class="perhalf"'+(i?' style="margin-top:14px"':'')+'><div class="perhalf-t">'+pn.t+'</div>'+halfSvg(pn.m0,pn.m1)+'</div>';}).join("")
   +legend;
  host.appendChild(bar);
+ var _py1=bar.querySelector("#perPrevY");if(_py1)_py1.onclick=function(){tlJaarStap(-1);};
+ var _py2=bar.querySelector("#perNextY");if(_py2)_py2.onclick=function(){tlJaarStap(1);};
  var _simBtn=bar.querySelector("#perSimBtn");
  if(_simBtn)_simBtn.onclick=function(){perSim=perSimActive(pid,year)?null:{pid:pid,year:year,ov:{}};renderPlanning();};
  /* --- simulatiepaneel --- */
@@ -10288,6 +10305,7 @@ function perRender(host){perEnsure();
   lst.querySelectorAll("[data-phr]").forEach(function(r){r.onclick=function(e2){e2.stopPropagation();openPhaseDetail(pid,year,r.dataset.phr);};});
   lst.querySelectorAll("[data-mac2]").forEach(function(r){r.onclick=function(e2){e2.stopPropagation();openMacroDetail(pid,year,r.dataset.mac2);};});
   var pgb=$("#perGuide");if(pgb)pgb.onclick=function(e2){e2.stopPropagation();openPhaseGuide();};}
+ try{microCardInto(host,pid,year);}catch(e){}
  /* aandachtspunten */
  var warns=perWarnings(pid,year);
  if(warns.length){var wc=el("div","card");
@@ -10306,7 +10324,6 @@ function perRender(host){perEnsure();
     else if(ed.participants[pid])ed.participants[pid][a.apply.field]=a.apply.val;
     var p9=perPlanEnsure(pid,year);p9.phases=perGenerate(pid,year);
     save();renderPlanning();toast("Advies toegepast \u2713");});};});}
- try{microCardInto(host,pid,year);}catch(e){}
 }
 var perMicroOpen=false;
 var perUndo=null;
@@ -10396,9 +10413,9 @@ function fillTrainPlan(box){ if(!box)return; if(!tpPlayer){box.innerHTML='<div c
    K+='<span class="calblok"'+attrs+' style="top:'+Math.max(0,(s1-_rbU0)*_rbH)+'px;height:'+Math.max(20,(e1-s1)*_rbH)+'px;background:'+kleur+'" title="'+tit+'">'+esc(fmtHM(p9[0]))+' '+esc(c.label)+'</span>';});
   wb.blocks.filter(function(b){return b.day===di;}).sort(function(a,b2){return (a.start||"").localeCompare(b2.start||"");}).forEach(function(b){
    var mt=wkTypeMeta(b.type);var s1=calUur(b.start),e1=calUur(b.end);
-   if(s1==null){K+='<span class="calblok" data-blk="'+b.id+'" style="top:'+(los*20)+'px;height:18px;background:'+mt[2]+'">'+esc(b.label||mt[1])+'</span>';los++;return;}
+   if(s1==null){K+='<span class="calblok" data-blk="'+b.id+'" style="top:'+(los*20)+'px;height:18px;'+calBlokStyle(mt[2])+'">'+esc(b.label||mt[1])+'</span>';los++;return;}
    if(e1==null||e1<=s1)e1=s1+1;
-   K+='<span class="calblok" data-blk="'+b.id+'" style="top:'+Math.max(0,(s1-_rbU0)*_rbH)+'px;height:'+Math.max(20,(e1-s1)*_rbH)+'px;background:'+mt[2]+'" title="'+esc((b.label||mt[1])+" · "+fmtHM(b.start)+"–"+fmtHM(b.end))+'">'+fmtHM(b.start)+' '+esc(b.label||mt[1])+'</span>';});
+   K+='<span class="calblok" data-blk="'+b.id+'" style="top:'+Math.max(0,(s1-_rbU0)*_rbH)+'px;height:'+Math.max(20,(e1-s1)*_rbH)+'px;'+calBlokStyle(mt[2])+'" title="'+esc((b.label||mt[1])+" · "+fmtHM(b.start)+"–"+fmtHM(b.end))+'">'+fmtHM(b.start)+' '+esc(b.label||mt[1])+'</span>';});
   return K+'</div>';
  }).join("");
  var _cats=[["golf","Golf (Z)"],["golfb","Golf (B)"],["fysiek","Fysiek (Z)"],["fysb","Fysiek (B)"]];
@@ -11042,6 +11059,7 @@ function wlBarSvg(L,o){
  function X(t){return Lp+(t-t0)/(t1-t0)*pw;}
  function Y(v){return T+ph-((v-lo)/(hi-lo))*ph;}
  var s2='<svg viewBox="0 0 '+W+' '+H+'" width="'+W+'" height="'+H+'" preserveAspectRatio="xMidYMid meet">';
+ if(o.zone!=null){s2+='<rect x="'+Lp+'" y="'+Y(o.zone).toFixed(1)+'" width="'+pw+'" height="'+(Y(lo)-Y(o.zone)).toFixed(1)+'" fill="'+WL_C.zone+'"/><line x1="'+Lp+'" x2="'+(W-R)+'" y1="'+Y(o.zone).toFixed(1)+'" y2="'+Y(o.zone).toFixed(1)+'" stroke="'+WL_C.red2+'" stroke-dasharray="3 4"/>';}
  (o.ticks||[]).forEach(function(g){var y=Y(g);
   s2+='<line class="'+(g===lo?"gzero":"gmaj")+'" x1="'+Lp+'" y1="'+y.toFixed(1)+'" x2="'+(W-R)+'" y2="'+y.toFixed(1)+'"/>'
    +'<text class="axv" x="'+(Lp-8)+'" y="'+(y+3.2).toFixed(1)+'" text-anchor="end">'+(o.tickLab?o.tickLab(g):g)+'</text>';});
@@ -11060,10 +11078,37 @@ function wlBarSvg(L,o){
  wlAxisT(L).forEach(function(t){s2+='<text class="axd" x="'+X(t.t).toFixed(1)+'" y="'+(H-9)+'" text-anchor="middle">'+t.lab+'</text>';});
  s2+='</svg>';
  return '<div class="chartwrap scchart">'+s2+'</div>';}
+var WL_C={grey:"#D9DCE0",red:"#C2383A",red2:"#E08A8D",zone:"rgba(194,56,58,.07)",blue:"#4A6FA5",ink:"#2B2F33"};
 function wlReadySvg(L){
- return wlBarSvg(L,{get:function(w){return wellReadiness(w);},min:0,max:100,ticks:[0,25,50,75,100],
-  col:function(v){return readyBracket(v).col;},fmt:function(v){var b=readyBracket(v);return v+"%"+(b.lab?" \u00b7 "+b.lab:"");},h:210,
+ return wlBarSvg(L,{get:function(w){return wellReadiness(w);},min:0,max:100,ticks:[0,25,50,75,100],zone:50,
+  col:function(v){return v<25?WL_C.red:(v<50?WL_C.red2:WL_C.grey);},fmt:function(v){var b=readyBracket(v);return v+"%"+(b.lab?" \u00b7 "+b.lab:"");},h:210,
   empty:"Geen checks in deze periode."});}
+/* v270: lijngrafiek (1–6) met signaalzone; heatmap over alle onderdelen */
+function wlLineSvg(L,key){
+ var pts=[];L.forEach(function(w){var v=+w[key]||0;if(v)pts.push({w:w,v:v});});
+ if(!pts.length)return '<p class="muted" style="margin:0;font-size:13px">Geen antwoorden op dit onderdeel in deze periode.</p>';
+ var W=640,H=200,Lp=34,R=12,T=14,B=28,pw=W-Lp-R,ph=H-T-B,lo=1,hi=6;
+ var t0=wlTs(L[0]),t1=wlTs(L[L.length-1]);if(t1<=t0)t1=t0+864e5;
+ function X(t){return Lp+(t-t0)/(t1-t0)*pw;}function Y(v){return T+ph-((v-lo)/(hi-lo))*ph;}
+ var s='<svg viewBox="0 0 '+W+' '+H+'" width="'+W+'" height="'+H+'" preserveAspectRatio="xMidYMid meet">';
+ s+='<rect x="'+Lp+'" y="'+Y(2.5).toFixed(1)+'" width="'+pw+'" height="'+(Y(lo)-Y(2.5)).toFixed(1)+'" fill="'+WL_C.zone+'"/><line x1="'+Lp+'" x2="'+(W-R)+'" y1="'+Y(2.5).toFixed(1)+'" y2="'+Y(2.5).toFixed(1)+'" stroke="'+WL_C.red2+'" stroke-dasharray="3 4"/>';
+ [1,2,3,4,5,6].forEach(function(g){var y=Y(g);s+='<line class="'+(g===lo?"gzero":"gmaj")+'" x1="'+Lp+'" y1="'+y.toFixed(1)+'" x2="'+(W-R)+'" y2="'+y.toFixed(1)+'"/><text class="axv" x="'+(Lp-8)+'" y="'+(y+3.2).toFixed(1)+'" text-anchor="end">'+g+'</text>';});
+ var P=pts.map(function(p){return [X(wlTs(p.w)),Y(p.v)];});var d='M'+P.map(function(q){return q[0].toFixed(1)+','+q[1].toFixed(1);}).join(' L');
+ s+='<path d="'+d+' L'+P[P.length-1][0].toFixed(1)+','+Y(lo).toFixed(1)+' L'+P[0][0].toFixed(1)+','+Y(lo).toFixed(1)+'Z" fill="'+WL_C.ink+'" opacity=".05"/><path d="'+d+'" fill="none" stroke="'+WL_C.ink+'" stroke-width="1.8" stroke-linejoin="round" opacity=".8"/>';
+ var LAB=["heel laag","laag","matig","redelijk","goed","top"];
+ pts.forEach(function(p,i){var sig=p.v<=2;var col=p.v<=1?WL_C.red:WL_C.red2;s+='<circle class="pt" cx="'+P[i][0].toFixed(1)+'" cy="'+P[i][1].toFixed(1)+'" r="'+(sig?5:3.2)+'" fill="'+(sig?col:"#fff")+'" stroke="'+(sig?col:WL_C.ink)+'" stroke-width="1.8" data-wid="'+p.w.id+'"><title>'+fmtDate(p.w.date)+' · '+LAB[p.v-1]+'</title></circle>';});
+ wlAxisT(L).forEach(function(t){s+='<text class="axd" x="'+X(t.t).toFixed(1)+'" y="'+(H-9)+'" text-anchor="middle">'+t.lab+'</text>';});
+ return '<div class="chartwrap scchart">'+s+'</svg></div>';}
+function wlHeatSvg(L,MET){
+ var W=640,LabW=118,R=8,T=6,rh=22,H=T+MET.length*rh+26,pw=W-LabW-R,n=Math.max(1,L.length),cw=pw/n;
+ var s='<svg viewBox="0 0 '+W+' '+H+'" width="'+W+'" height="'+H+'" preserveAspectRatio="xMidYMid meet">';
+ MET.forEach(function(mt,ri){var y=T+ri*rh;s+='<text class="wlrow" x="'+(LabW-8)+'" y="'+(y+rh/2+3.5).toFixed(1)+'" text-anchor="end">'+esc(mt[1])+'</text>';
+  L.forEach(function(w,i){var v=+w[mt[0]]||0;var x=LabW+i*cw;if(!v){s+='<rect x="'+x.toFixed(1)+'" y="'+(y+2)+'" width="'+Math.max(1,cw-2).toFixed(1)+'" height="'+(rh-4)+'" rx="3" fill="#F2F3F5"/>';return;}
+   var fill=v<=1?WL_C.red:(v<=2?WL_C.red2:WL_C.blue);var op=v<=2?1:(0.18+0.82*((v-3)/3));
+   s+='<rect class="pt" x="'+x.toFixed(1)+'" y="'+(y+2)+'" width="'+Math.max(1,cw-2).toFixed(1)+'" height="'+(rh-4)+'" rx="3" fill="'+fill+'" opacity="'+op.toFixed(2)+'" data-wid="'+w.id+'"><title>'+fmtDate(w.date)+' · '+esc(mt[1])+' '+v+'/6</title></rect>';});});
+ wlAxis(L).forEach(function(t){s+='<text class="axd" x="'+(LabW+(t.i+0.5)*cw).toFixed(1)+'" y="'+(H-8)+'" text-anchor="middle">'+t.lab+'</text>';});
+ return '<div class="chartwrap scchart">'+s+'</svg></div>';}
+var wlBelView="lijn";
 const WL_ICO_BAT='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7.5" width="16" height="10" rx="2.5"/><path d="M21 11v2"/><rect x="4.5" y="10" width="2.6" height="5" rx="1" fill="currentColor" stroke="none"/></svg>';
 const WL_ICO_ROCKET='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5c3 2 5 5.6 5 9.5 0 2.2-.6 4.2-1.6 6H8.6C7.6 16.2 7 14.2 7 12c0-3.9 2-7.5 5-9.5Z"/><circle cx="12" cy="10" r="1.9"/><path d="M8.6 18 6 21l3-.6M15.4 18 18 21l-3-.6"/></svg>';
 function wlScaleSvg(L,key){
@@ -11077,7 +11122,7 @@ function wlHoursSvg(L){
  var mx=Math.max(10,Math.ceil(Math.max.apply(null,hs)));
  var ticks=[];for(var g=0;g<=mx;g+=2)ticks.push(g);
  return wlBarSvg(L,{get:function(w){return (w.sleepH===""||w.sleepH==null)?null:(+w.sleepH||null);},min:0,max:mx,ticks:ticks,
-  col:function(v){return v>=8?"#2fae72":(v>=7?"#a3c14a":(v>=6?"#e0b13c":"#d64550"));},
+  col:function(v){return v<5?WL_C.red:(v<6?WL_C.red2:WL_C.grey);},zone:6,
   fmt:function(v){return String(v).replace(".",",")+" u";},h:190,avg:av,avgLab:"gem. "+av.toFixed(1).replace(".",",")+" u",trend:false});}
 function wlComplaintSvg(L){
  var cnt={},order=[];
@@ -11102,6 +11147,82 @@ function wlComplaintSvg(L){
  wlAxis(L).forEach(function(t){s2+='<text class="axd" x="'+X(t.i).toFixed(1)+'" y="'+(H-8)+'" text-anchor="middle">'+t.lab+'</text>';});
  s2+='</svg>';
  return '<div class="chartwrap scchart">'+s2+'</div>';}
+/* ===== v271: Klachten — stroken (A), lichaamskaart (B), weekstaven (C) ===== */
+var wlKlView="stroken",klZone=null,klWeek=null,KL_LANG=3;
+function klDagen(L){return L.filter(function(w){return (w.bodyParts||[]).length||w.illness;});}
+function klRuns(dates){dates=dates.slice().sort();var runs=[];var cur=null;
+ dates.forEach(function(d){if(cur&&dDiffDays(cur.end,d)<=2){cur.end=d;cur.n++;}else{cur={start:d,end:d,n:1};runs.push(cur);}});
+ runs.forEach(function(r){r.days=dDiffDays(r.start,r.end)+1;});return runs;}
+function klParts(L){var per={};L.forEach(function(w){(w.bodyParts||[]).forEach(function(k){(per[k]=per[k]||[]).push(w.date);});if(w.illness)(per.__ill=per.__ill||[]).push(w.date);});return per;}
+function klNaam(k){return k==="__ill"?"Ziek / niet fit":bodyPartName(k);}
+function klStrokenSvg(L){
+ var per=klParts(L);var rows=[];
+ Object.keys(per).forEach(function(k){var runs=klRuns(per[k]);var lang=runs.filter(function(r){return r.days>=KL_LANG;});if(!lang.length)return;rows.push({k:k,lab:klNaam(k),runs:runs,days:runs.reduce(function(a,r){return a+r.days;},0),n:per[k].length});});
+ rows.sort(function(a,b){return b.days-a.days||a.lab.localeCompare(b.lab,"nl");});
+ var los=Object.keys(per).length-rows.length;
+ if(!rows.length)return '<p class="muted" style="margin:0;font-size:13px">Geen langdurige klachten (≥ '+KL_LANG+' dagen aaneengesloten) in deze periode'+(los?' — wel '+los+' zone'+(los===1?'':'s')+' met losse meldingen, zie Lichaamskaart.':'.')+'</p>';
+ var W=640,LabW=150,R=44,T=10,rh=26,H=T+rows.length*rh+26,pw=W-LabW-R;
+ var t0=wlTs(L[0]),t1=wlTs(L[L.length-1])+864e5;if(t1<=t0)t1=t0+864e5;
+ function X(d){return LabW+(wlTs({date:d})-t0)/(t1-t0)*pw;}
+ var s='<svg viewBox="0 0 '+W+' '+H+'" width="'+W+'" height="'+H+'" preserveAspectRatio="xMidYMid meet">';
+ wlAxisT(L).forEach(function(t){var x=LabW+(t.t-t0)/(t1-t0)*pw;s+='<line x1="'+x.toFixed(1)+'" x2="'+x.toFixed(1)+'" y1="'+T+'" y2="'+(T+rows.length*rh)+'" stroke="#E6E8EA"/><text class="axd" x="'+(x+4).toFixed(1)+'" y="'+(H-8)+'" text-anchor="start">'+t.lab+'</text>';});
+ rows.forEach(function(r,i){var y=T+i*rh;
+  s+='<line x1="'+LabW+'" x2="'+(W-R)+'" y1="'+(y+rh)+'" y2="'+(y+rh)+'" stroke="#F2F3F5"/><text class="wlrow" x="'+(LabW-8)+'" y="'+(y+rh/2+4)+'" text-anchor="end">'+esc(r.lab)+'</text>';
+  r.runs.forEach(function(run){var x=X(run.start),x2=X(dAddDays(run.end,1));var lang=run.days>=KL_LANG;
+   s+='<rect x="'+x.toFixed(1)+'" y="'+(y+7)+'" width="'+Math.max(4,x2-x).toFixed(1)+'" height="'+(rh-14)+'" rx="5" fill="'+(r.k==="__ill"||lang?WL_C.red:WL_C.red2)+'" opacity="'+(lang?1:.7)+'"><title>'+esc(r.lab)+' · '+fmtDate(run.start)+(run.days>1?' – '+fmtDate(run.end):'')+' · '+run.days+' dag'+(run.days===1?'':'en')+'</title></rect>';});
+  s+='<text class="axv" x="'+(W-8)+'" y="'+(y+rh/2+4)+'" text-anchor="end">'+r.days+' d</text>';});
+ return '<div class="chartwrap scchart">'+s+'</svg></div><p class="sx" style="margin:6px 0 0">Alleen zones met minstens één aaneengesloten periode van '+KL_LANG+' dagen of meer. Donker = langdurig of ziek, licht = losse melding binnen die zone.</p>';}
+function klBodyHtml(L,pid){
+ var per=klParts(L);var keys=Object.keys(per).filter(function(k){return k!=="__ill";});
+ if(!keys.length)return '<p class="muted" style="margin:0;font-size:13px">Geen lichaamsklachten gemeld in deze periode.</p>';
+ if(klZone&&!per[klZone])klZone=null;
+ var g=bmGender(pid);
+ var H='<div class="row" style="gap:10px;align-items:flex-start"><div class="klbm">'+bmHtml("f",g)+bmHtml("b",g)+'</div><div style="flex:1;min-width:0" id="klZoneBox">'+klZoneHtml(L,per)+'</div></div>';
+ return H;}
+function klZoneHtml(L,per){
+ if(!klZone)return '<p class="muted" style="margin:0;font-size:13px">Tik op een zone met een stip voor het verloop van die klacht.</p>'+'<div class="klzl">'+Object.keys(per).filter(function(k){return k!=="__ill";}).sort(function(a,b){return per[b].length-per[a].length;}).slice(0,6).map(function(k){return '<button class="klchip" data-klz="'+k+'">'+esc(klNaam(k))+' <b>'+per[k].length+'×</b></button>';}).join("")+'</div>';
+ var dates=per[klZone]||[];var runs=klRuns(dates);var lang=runs.filter(function(r){return r.days>=KL_LANG;}).length;
+ var W=640,Lp=10,R=10,T=26,H=90,pw=W-Lp-R;
+ var t0=wlTs(L[0]),t1=wlTs(L[L.length-1])+864e5;if(t1<=t0)t1=t0+864e5;
+ function X(d){return Lp+(wlTs({date:d})-t0)/(t1-t0)*pw;}
+ var s='<svg viewBox="0 0 '+W+' '+H+'" width="'+W+'" height="'+H+'" preserveAspectRatio="xMidYMid meet"><line x1="'+Lp+'" x2="'+(W-R)+'" y1="'+(T+22)+'" y2="'+(T+22)+'" stroke="#E6E8EA"/>';
+ runs.forEach(function(run){var x=X(run.start),x2=X(dAddDays(run.end,1));s+='<rect x="'+x.toFixed(1)+'" y="'+(T+8)+'" width="'+Math.max(6,x2-x).toFixed(1)+'" height="28" rx="6" fill="'+(run.days>=KL_LANG?WL_C.red:WL_C.red2)+'" opacity="'+(run.days>=KL_LANG?.95:.6)+'"><title>'+fmtDate(run.start)+(run.days>1?' – '+fmtDate(run.end):'')+' · '+run.days+' dag'+(run.days===1?'':'en')+'</title></rect>';});
+ L.forEach(function(w){if((w.bodyParts||[]).indexOf(klZone)<0)return;var x=X(w.date);s+='<circle class="pt" cx="'+x.toFixed(1)+'" cy="'+(T+22)+'" r="3" fill="#fff" stroke="'+WL_C.red+'" stroke-width="1.6" data-wid="'+w.id+'"><title>'+fmtDate(w.date)+'</title></circle>';});
+ wlAxisT(L).forEach(function(t){var x=Lp+(t.t-t0)/(t1-t0)*pw;s+='<text class="axd" x="'+x.toFixed(1)+'" y="'+(H-8)+'" text-anchor="start">'+t.lab+'</text>';});
+ return '<div class="cardhd" style="margin-bottom:4px"><h3 style="font-size:13.5px">'+esc(klNaam(klZone))+'</h3><span class="hdnote">'+dates.length+' melding'+(dates.length===1?'':'en')+' · '+runs.length+' periode'+(runs.length===1?'':'s')+(lang?' · '+lang+' langdurig':'')+'</span></div><div class="chartwrap scchart">'+s+'</svg></div><button class="klchip" data-klz="" style="margin-top:6px">‹ alle zones</button>';}
+function klBmCent(c){if(c.cent)return c.cent;var sx={},sy={},n={};var idx=c.idx,W=c.W;for(var i=0;i<idx.length;i++){var v=idx[i];if(!v)continue;sx[v]=(sx[v]||0)+(i%W);sy[v]=(sy[v]||0)+Math.floor(i/W);n[v]=(n[v]||0)+1;}
+ var cent={};Object.keys(n).forEach(function(v){cent[v]=[sx[v]/n[v],sy[v]/n[v]];});c.cent=cent;return cent;}
+function klBmRender(cv,side,g,per,sel){bmReady(side,g,function(c){bmRender(cv,side,g,sel?[sel]:[]);
+ setTimeout(function(){var ctx=cv.getContext("2d");var cent=klBmCent(c);var mx=1;Object.keys(per).forEach(function(k){if(k!=="__ill")mx=Math.max(mx,per[k].length);});
+  Object.keys(per).forEach(function(k){if(k==="__ill")return;var v=bmIdxByKey(k);var p=cent[v];if(!p)return;var f=per[k].length/mx;var sc=c.W/160;var r=(5+9*f)*sc;
+   ctx.beginPath();ctx.arc(p[0],p[1],r,0,Math.PI*2);ctx.fillStyle=(f>=.6)?"rgba(194,56,58,.92)":"rgba(224,138,141,.92)";ctx.fill();
+   if(sel===k){ctx.lineWidth=2.5*sc;ctx.strokeStyle="#2B2F33";ctx.stroke();}else{ctx.lineWidth=1.5*sc;ctx.strokeStyle="#fff";ctx.stroke();}});},0);});}
+function klWeekSvg(L,pid){
+ var D=klDagen(L);var ws0=weekStart(L[0].date),ws1=weekStart(L[L.length-1].date);var weeks=[];var d=ws0;var n=0;
+ while(d<=ws1&&n<160){weeks.push(d);d=dAddDays(d,7);n++;}
+ var per={};D.forEach(function(w){var k=weekStart(w.date);(per[k]=per[k]||[]).push(w);});
+ var load=weeks.map(function(wk){var m=0;try{m=activeBlocksWeek(pid,wk).blocks.filter(function(b){return /^(golf|golfb|fysiek|fysb)$/.test(b.type);}).reduce(function(a,b){return a+blockMin(b);},0);}catch(_e){}return m;});
+ var mxL=Math.max(1,Math.max.apply(null,load));var mxN=Math.max(4,Math.max.apply(null,weeks.map(function(wk){return (per[wk]||[]).length;})));
+ var W=640,Lp=30,R=12,T=16,B=26,H=190,pw=W-Lp-R,ph=H-T-B,cw=pw/weeks.length;
+ var s='<svg viewBox="0 0 '+W+' '+H+'" width="'+W+'" height="'+H+'" preserveAspectRatio="xMidYMid meet">';
+ for(var g=1;g<=mxN;g++){if(mxN>8&&g%2)continue;var y=T+ph-g/mxN*ph;s+='<line class="gmaj" x1="'+Lp+'" x2="'+(W-R)+'" y1="'+y.toFixed(1)+'" y2="'+y.toFixed(1)+'"/><text class="axv" x="'+(Lp-8)+'" y="'+(y+3).toFixed(1)+'" text-anchor="end">'+g+'</text>';}
+ if(klWeek&&weeks.indexOf(klWeek)<0)klWeek=null;
+ weeks.forEach(function(wk,i){var arr=per[wk]||[];if(!arr.length)return;var ill=arr.some(function(w){return w.illness;});var zw=arr.length>=2||ill;var x=Lp+i*cw+cw*.2,hh=arr.length/mxN*ph;
+  s+='<rect class="pt" data-klw="'+wk+'" x="'+x.toFixed(1)+'" y="'+(T+ph-hh).toFixed(1)+'" width="'+(cw*.6).toFixed(1)+'" height="'+hh.toFixed(1)+'" rx="3" fill="'+(zw?WL_C.red:WL_C.red2)+'"'+(klWeek===wk?' stroke="#2B2F33" stroke-width="1.5"':'')+'><title>Week '+isoWeek(new Date(wk))+' · '+arr.length+' klachtdag'+(arr.length===1?'':'en')+'</title></rect>';});
+ if(load.some(function(v){return v>0;})){var pts=load.map(function(v,i){return (Lp+i*cw+cw/2).toFixed(1)+','+(T+ph-v/mxL*ph*.9).toFixed(1);}).join(' L');s+='<path d="M'+pts+'" fill="none" stroke="'+WL_C.ink+'" stroke-width="1.5" opacity=".65"/><text class="axd" x="'+(W-R)+'" y="'+(T+6)+'" text-anchor="end" style="fill:#7A7F85">— belasting (geplande trainingsuren)</text>';}
+ wlAxisT(L).forEach(function(t){var i=weeks.findIndex(function(wk){return wlTs({date:wk})+7*864e5>t.t;});if(i<0)return;s+='<text class="axd" x="'+(Lp+i*cw+2).toFixed(1)+'" y="'+(H-8)+'" text-anchor="start">'+t.lab+'</text>';});
+ if(klWeek&&per[klWeek]){var i2=weeks.indexOf(klWeek);var cnt={};per[klWeek].forEach(function(w){(w.bodyParts||[]).forEach(function(k){cnt[k]=(cnt[k]||0)+1;});if(w.illness)cnt.__ill=(cnt.__ill||0)+1;});
+  var lines=Object.keys(cnt).sort(function(a,b){return cnt[b]-cnt[a];}).slice(0,5).map(function(k){return klNaam(k)+(cnt[k]>1?' ×'+cnt[k]:'');});
+  var bw=Math.max(150,Math.max.apply(null,lines.map(function(t){return t.length*6.2;}))+24),bh=16+lines.length*14;var bx=Lp+i2*cw+cw/2;bx=Math.min(W-R-bw,Math.max(Lp,bx-bw/2));var by=T+4;
+  s+='<g class="klbadge"><rect x="'+bx.toFixed(1)+'" y="'+by+'" width="'+bw.toFixed(1)+'" height="'+bh+'" rx="8" fill="#fff" stroke="#E6E8EA"/><text x="'+(bx+10).toFixed(1)+'" y="'+(by+13)+'" font-size="9.5" font-weight="800" fill="#7A7F85">WEEK '+isoWeek(new Date(klWeek))+' · '+per[klWeek].length+' DAG'+(per[klWeek].length===1?'':'EN')+'</text>'+lines.map(function(t,li){return '<text x="'+(bx+10).toFixed(1)+'" y="'+(by+27+li*14)+'" font-size="11" font-weight="700" fill="#2B2F33">'+esc(t)+'</text>';}).join("")+'</g>';}
+ return '<div class="chartwrap scchart">'+s+'</svg></div><p class="sx" style="margin:6px 0 0">Staaf = dagen met een klacht in die week (licht = 1 melding, donker = 2+ of ziek). Tik op een staaf voor de klachten van die week.</p>';}
+function klBind(box,L,pid){
+ var seg=box.querySelector("#wlKlSeg");if(seg)seg.querySelectorAll("[data-kv]").forEach(function(b){b.onclick=function(){wlKlView=b.dataset.kv;renderWellnessTab();};});
+ box.querySelectorAll("[data-klz]").forEach(function(b){b.onclick=function(){klZone=b.dataset.klz||null;renderWellnessTab();};});
+ box.querySelectorAll("[data-klw]").forEach(function(b){b.style.cursor="pointer";b.onclick=function(){klWeek=(klWeek===b.dataset.klw)?null:b.dataset.klw;renderWellnessTab();};});
+ var per=klParts(L);var g=bmGender(pid);
+ box.querySelectorAll(".klbm canvas.bmcv").forEach(function(cv){var side=cv.dataset.bmside;klBmRender(cv,side,g,per,klZone);
+  cv.onclick=function(ev){bmClickKey(cv,side,g,ev,function(k){if(k&&per[k]){klZone=(klZone===k)?null:k;renderWellnessTab();}});};});}
 function wlSignalen(){
  var t=team();var ids=t?(t.playerIds||[]):[];var res=[];var grens=dAddDays(todayISO(),-7);
  ids.forEach(function(pid){
@@ -11133,7 +11254,7 @@ function renderWellnessTab(){
   var flags=L.filter(wellFlag).length;
   H+='<div class="card"><div class="cardhd"><h3>Readiness</h3><span class="hdnote">'+L.length+' checks · '+esc(wlFiltLabel())+'</span></div>'
    +'<div class="row" style="gap:10px;flex-wrap:wrap;margin-bottom:6px">'
-   +'<span class="wlstat"><span>Gemiddeld</span><b style="color:'+readyBracket(rAvg).col+'">'+(rAvg!=null?rAvg+"%":"–")+'</b></span>'
+   +'<span class="wlstat"><span>Gemiddeld</span><b style="color:'+(rAvg!=null&&rAvg<50?WL_C.red:"var(--ink)")+'">'+(rAvg!=null?rAvg+"%":"–")+'</b></span>'
    +'<span class="wlstat"><span>Laagste</span><b>'+(rs.length?Math.min.apply(null,rs)+"%":"–")+'</b></span>'
    +'<span class="wlstat"><span>Hoogste</span><b>'+(rs.length?Math.max.apply(null,rs)+"%":"–")+'</b></span>'
    +'<span class="wlstat"><span>Signaaldagen</span><b>'+flags+'</b></span></div>'
@@ -11143,18 +11264,16 @@ function renderWellnessTab(){
   H+='<div class="card"><div class="cardhd"><h3>Slaap</h3><span class="hdnote">'+(sh2.length?sh2.length+' nachten met uren':'geen uren ingevuld')+'</span></div>'
    +'<div class="row" style="gap:10px;flex-wrap:wrap;margin-bottom:6px">'
    +'<span class="wlstat"><span>Gem. uren</span><b>'+(sh2.length?(sh2.reduce(function(a,w){return a+(+w.sleepH||0);},0)/sh2.length).toFixed(1).replace(".",","):"–")+'</b></span>'
-   +'<span class="wlstat"><span>Gem. kwaliteit</span><b style="color:'+(sq==null?"var(--muted)":MOOD_COLORS[Math.max(0,Math.round(sq)-1)])+'">'+(sq!=null?wlPct(sq)+"%":"–")+'</b></span></div>'
-   +wlHoursSvg(L)
-   +'<div class="trlbl" style="margin-top:12px">Slaapkwaliteit</div>'+wlScaleSvg(L,"sleepQ")+'</div>';
-  var fa=wlAvg(L,"fatigue");
-  H+='<div class="card"><div class="cardhd"><h3>Vermoeidheid</h3><span class="hdnote">'+(fa!=null?"gemiddeld "+fa.toFixed(1).replace(".",",")+" / 6":"geen data")+'</span></div>'+wlScaleSvg(L,"fatigue")+'</div>';
-  var MET=[["mood","Stemming"],["physFit","Fysieke fitheid"],["mentFit","Mentale fitheid"],["stress","Stress"],["motivation","Motivatie"],["confidence","Zelfvertrouwen"]];
+   +'<span class="wlstat"><span>Gem. kwaliteit</span><b>'+(sq!=null?wlPct(sq)+"%":"–")+'</b></span></div>'
+   +wlHoursSvg(L)+'</div>';
+  var MET=[["mood","Stemming"],["sleepQ","Slaapkwaliteit"],["fatigue","Vermoeidheid"],["physFit","Fysieke fitheid"],["mentFit","Mentale fitheid"],["stress","Stress"],["motivation","Motivatie"],["confidence","Zelfvertrouwen"]];
   if(!MET.some(function(m){return m[0]===wlMetric;}))wlMetric="mood";
   var ma=wlAvg(L,wlMetric);
-  H+='<div class="card"><div class="cardhd"><h3>Beleving</h3><span class="hdnote">'+(ma!=null?"gemiddeld "+ma.toFixed(1).replace(".",",")+" / 6":"geen data")+'</span></div>'
-   +'<div class="trchips sm" id="wlMet" style="margin:0 0 10px">'+MET.map(function(m){return '<button data-wm="'+m[0]+'" class="'+(wlMetric===m[0]?"on":"")+'">'+m[1]+'</button>';}).join("")+'</div>'
-   +wlScaleSvg(L,wlMetric)+'</div>';
-  H+='<div class="card"><div class="cardhd"><h3>Klachten in de tijd</h3><span class="hdnote">'+L.filter(function(w){return (w.bodyParts||[]).length||w.illness;}).length+' checks met klachten</span></div>'+wlComplaintSvg(L)+'</div>';
+  H+='<div class="card"><div class="cardhd"><h3>Beleving</h3><span class="row" style="gap:8px;align-items:center"><div class="seg sm" id="wlBelSeg"><button data-bv="lijn" class="'+(wlBelView==="lijn"?"on":"")+'">Lijn</button><button data-bv="heat" class="'+(wlBelView==="heat"?"on":"")+'">Heatmap</button></div>'+(wlBelView==="lijn"?'<select class="in wlrol" id="wlMetSel">'+MET.map(function(m){return '<option value="'+m[0]+'"'+(wlMetric===m[0]?" selected":"")+'>'+m[1]+'</option>';}).join("")+'</select>':'')+'</span></div>'
+   +(wlBelView==="heat"?wlHeatSvg(L,MET):('<div class="sx" style="margin:0 0 6px">'+(ma!=null?"gemiddeld "+ma.toFixed(1).replace(".",",")+" / 6":"geen data")+'</div>'+wlLineSvg(L,wlMetric)))+'</div>';
+  var _kln=klDagen(L).length;
+  H+='<div class="card" id="wlKlCard"><div class="cardhd"><h3>Klachten</h3><span class="row" style="gap:8px;align-items:center"><span class="hdnote">'+_kln+' dag'+(_kln===1?'':'en')+' met klachten</span><div class="seg sm" id="wlKlSeg"><button data-kv="stroken" class="'+(wlKlView==="stroken"?"on":"")+'">Stroken</button><button data-kv="body" class="'+(wlKlView==="body"?"on":"")+'">Lichaam</button><button data-kv="weken" class="'+(wlKlView==="weken"?"on":"")+'">Weken</button></div></span></div>'
+   +(!_kln?'<p class="muted" style="margin:0;font-size:13px">Geen klachten gemeld in deze periode.</p>':(wlKlView==="body"?klBodyHtml(L,spPlayer):(wlKlView==="weken"?klWeekSvg(L,spPlayer):klStrokenSvg(L))))+'</div>';
   var rowsH=L.slice().reverse().map(function(w){var r=wellReadiness(w);
    var _bk=readyBracket(r);var col=_bk.col;
    var tags=[];if(w.illness)tags.push("ziek");if((w.bodyParts||[]).length)tags.push((w.bodyParts||[]).length+" klacht"+((w.bodyParts||[]).length===1?"":"en"));
@@ -11164,8 +11283,10 @@ function renderWellnessTab(){
  box.innerHTML=H;
  scPickBind("wl",renderWellnessTab);
  wlFiltBind(renderWellnessTab);
- var mt=$("#wlMet");if(mt)mt.querySelectorAll("[data-wm]").forEach(function(b){b.onclick=function(){wlMetric=b.dataset.wm;renderWellnessTab();};});
+ var _ms=$("#wlMetSel");if(_ms)_ms.onchange=function(){wlMetric=_ms.value;renderWellnessTab();};
+ var _bs=$("#wlBelSeg");if(_bs)_bs.querySelectorAll("[data-bv]").forEach(function(b){b.onclick=function(){wlBelView=b.dataset.bv;renderWellnessTab();};});
  var wch=$("#wlChH");if(wch)wch.onclick=function(){wlChecksOpen=!wlChecksOpen;renderWellnessTab();};
+ try{var _klc=$("#wlKlCard");if(_klc&&L&&L.length)klBind(_klc,L,spPlayer);}catch(_e){}
  box.querySelectorAll("[data-wd]").forEach(function(b){b.onclick=function(){wellnessDetail(b.dataset.wd);};});
  box.querySelectorAll("[data-wid]").forEach(function(b){b.style.cursor="pointer";b.onclick=function(){wellnessDetail(b.dataset.wid);};});
 }
@@ -12362,9 +12483,9 @@ function splStatusChip(p){
  return '<span class="splstat">'+(st==="inactief"?"Inactief":"t/m "+fmtDate(p.inactiefTot))+'</span>';}
 function faseMiniHtml(pid){var p=registryPlayer(pid)||{};var f=p.mjopPhase||null,H="",K="#C4C8CC";
  if(f){try{H=mjopHoofdfase(f);K=fasePasKleur(f);}catch(_e){H="";K=fasePasKleur(f);}}
- if(!f)return '<span class="fasebadge leeg">–</span>';
- var mi=-1;try{mi=mjopIdx(f);}catch(_e){}var S=f+(mi>=0?" · "+MJOP_PHASES[mi][1]:"");
- return '<span class="fasebadge" style="background:'+K+'">'+(H?'<b>'+esc(H)+'</b>':'')+'<small>'+esc(S)+'</small></span>';}
+ if(!f)return '<span class="fasebadge leeg"><i>–</i></span>';
+ var mi=-1;try{mi=mjopIdx(f);}catch(_e){}var N=(mi>=0?MJOP_PHASES[mi][1]:"");
+ return '<span class="fasebadge" style="--k:'+K+'"><span>'+(H?'<b>'+esc(H)+'</b>':'')+'<small>'+esc(N||f)+'</small></span><i>'+esc(f)+'</i></span>';}
 function splListHtml(){
  var L=splGefilterd();
  if(!L.length)return '<p class="muted" style="margin:0;font-size:13px">Geen spelers gevonden'+(splTelFilters()||splF.q?' met deze filters':'')+'.</p>';
@@ -12418,7 +12539,7 @@ function renderToday(){var box=$("#todayBody");if(!box)return;
  var _fbH="";
  if(_fxH){_fbH='<button id="tdFase" style="display:flex;gap:9px;align-items:center;flex:0 0 auto;background:none;border:0;padding:0;cursor:pointer;text-align:left;font-family:inherit;-webkit-tap-highlight-color:transparent" title="Naar het Fasepaspoort">'
   +'<span style="display:block;width:3.5px;height:32px;border-radius:2px;background:'+_fxKl+'"></span>'
-  +'<span style="display:block;line-height:1.3;max-width:150px;min-width:0">'
+  +'<span style="display:block;line-height:1.3;max-width:300px;min-width:0">'
   +(_fxS?('<b style="display:block;font-size:9.5px;font-weight:800;letter-spacing:.07em;color:#7A7F85;text-transform:uppercase">'+esc(_fxH)+'</b><small style="display:block;font-size:12.5px;font-weight:800;color:'+_fxKl+';white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+esc(_fxS)+'</small>')
    :('<b style="display:block;font-size:12.5px;font-weight:800;color:'+_fxKl+'">'+esc(_fxH)+'</b>'))
   +'</span></button>';}
@@ -12624,7 +12745,9 @@ var calDatum=null,calSel=null;
 var CAL_MN=["Januari","Februari","Maart","April","Mei","Juni","Juli","Augustus","September","Oktober","November","December"];
 var CAL_MNK=["jan","feb","mrt","apr","mei","jun","jul","aug","sep","okt","nov","dec"];
 var CAL_WD=["ma","di","wo","do","vr","za","zo"];
-var CAL_KLEUR={agenda:"#1B4F9C",sact:"#64748b",gtrain:"#0ea5a3",wed:"#F47C20",swed:"#E3A56E",vak:"#94a3b8"};
+var CAL_KLEUR={agenda:"#3E6FB0",sact:"#7A7F85",gtrain:"#3D9A8F",wed:"#F47C20",swed:"#E9A86B",vak:"#9AA1A8"};
+function calTint(col,a){col=String(col||"#7A7F85");var m=/^#([0-9a-f]{6})$/i.exec(col);if(!m)return col;var n=parseInt(m[1],16);return "rgba("+(n>>16&255)+","+(n>>8&255)+","+(n&255)+","+(a||.14)+")";}
+function calBlokStyle(col,vol){return vol?("background:"+col+";color:#fff;border-left:3px solid "+col):("background:"+calTint(col)+";color:var(--ink);border-left:3px solid "+col);};
 function calMode(){var m=state.calMode;if(m==="jaar")m="maand";if(!m)m="maand";return m;}
 function calLagen(){if(!state.calLagen)state.calLagen={agenda:true,gtrain:true,wed:true,vak:true,sact:true,swed:true};var L=state.calLagen;if(L.sact===undefined)L.sact=true;if(L.swed===undefined)L.swed=true;return L;}
 /* v264: coach-aanwezigheid per toernooidag (ed.coachDagen = ISO-datums). Zonder markering = spelerswedstrijd. */
@@ -12657,10 +12780,10 @@ function calLagenChips(){
  if(!rolIsSpeler()){_rows.splice(1,0,["sact","Spelersactiviteiten"]);_rows.splice(4,0,["swed","Spelerswedstrijden"]);}
  return '<div class="callagen">'+_rows.map(function(o){
   return '<button class="callaag'+(L[o[0]]?" on":"")+'" data-laag="'+o[0]+'"><i style="background:'+CAL_KLEUR[o[0]]+'"></i>'+o[1]+'</button>';}).join("")+'</div>';}
-function calKopHtml(midden,inp,sub){
+function calKopHtml(midden,inp,sub,extra){
  return '<div class="calkop"><button class="xbtn" data-cnav="-1">‹</button>'
  +'<span style="position:relative;display:inline-flex"><button class="tdDateBtn" id="calKiesB" style="padding:2px 4px">'+(sub?('<b>'+midden+'</b><small>'+sub+' ▾</small>'):('<b style="font-size:15px">'+midden+' ▾</b>'))+'</button>'+inp+'</span>'
- +'<button class="xbtn" data-cnav="1">›</button><span style="flex:1"></span><button class="btn ghost sm" id="calVandaag">Vandaag</button><button class="xbtn" id="calAdd" title="Toevoegen" style="font-size:19px;font-weight:700">+</button></div>';}
+ +'<button class="xbtn" data-cnav="1">›</button><span style="flex:1"></span><button class="btn ghost sm" id="calVandaag">Vandaag</button>'+(extra||'')+'<button class="xbtn" id="calAdd" title="Toevoegen" style="font-size:19px;font-weight:700">+</button></div>';}
 function calMaandHtml(){
  var yr=+calDatum.slice(0,4),mIdx=+calDatum.slice(5,7)-1;
  var d0=calDatum.slice(0,7)+"-01";
@@ -12675,7 +12798,7 @@ function calMaandHtml(){
  while(d<=ge){var dl=per[d]||[];var oth=d.slice(0,7)!==calDatum.slice(0,7);
   H+='<div class="calcel'+(oth?" oth":"")+(d===vandaag?" nu":"")+(d===calSel?" sel":"")+'" data-cd="'+d+'"><b>'+(+d.slice(8,10))+'</b>'
    +'<span class="caldots">'+dl.slice(0,4).map(function(i){return '<i style="background:'+CAL_KLEUR[i.laag]+'"></i>';}).join("")+'</span>'
-   +'<span class="calevts">'+dl.slice(0,3).map(function(i){return '<em style="color:'+CAL_KLEUR[i.laag]+'">'+(i.tijd?i.tijd+" ":"")+esc(i.naam)+'</em>';}).join("")+(dl.length>3?'<em class="meer">+'+(dl.length-3)+'</em>':'')+'</span></div>';
+   +'<span class="calevts">'+dl.slice(0,3).map(function(i){return '<em style="'+calBlokStyle(CAL_KLEUR[i.laag],i.laag==="wed")+'">'+(i.tijd?i.tijd+" ":"")+esc(i.naam)+'</em>';}).join("")+(dl.length>3?'<em class="meer">+'+(dl.length-3)+'</em>':'')+'</span></div>';
   d=dAddDays(d,1);}
  H+='</div>'+calLagenChips()+'</div>';
  if(calSel&&calSel>=gs&&calSel<=ge){
@@ -12697,7 +12820,8 @@ function calWeekHtml(){
  if(pid){try{micro=perMicro(pid,year);}catch(_e){micro=[];}}
  var mw=micro.find?micro.find(function(w){return w.start===ws;}):null;
  var wkN=(mw&&mw.n)?mw.n:isoWeek(new Date(ws));
- var K='<div class="card">'+calKopHtml('Week '+wkN,'<input type="date" id="calKiesInp" value="'+calDatum+'">',calDagKort(ws)+' – '+calDagKort(we)+' '+we.slice(2,4));
+ var _wrB=pid?'<button class="xbtn" id="calWr" title="Weekrooster" onclick="openWeekEditor(\''+pid+'\',\''+ws+'\',\'tpl\')"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9.5h18M9 9.5v11M15 9.5v11"/></svg></button>':'';
+ var K='<div class="card">'+calKopHtml('Week '+wkN,'<input type="date" id="calKiesInp" value="'+calDatum+'">',calDagKort(ws)+' – '+calDagKort(we)+' '+we.slice(2,4),_wrB);
  K+='<div class="calwk" style="margin-bottom:2px"><span></span>'+CAL_WD.map(function(w,ix){var dd=dAddDays(ws,ix);return '<span class="calwd'+(dd===vandaag?'" style="color:var(--orange)':'')+'">'+w+' '+(+dd.slice(8,10))+'</span>';}).join("")+'</div>';
  K+='<div class="calwk"><div class="calwkuren" style="height:'+TH+'px">';
  for(var u=U0;u<=U1;u++)K+='<span style="top:'+((u-U0)*H)+'px">'+u+'</span>';
@@ -12706,15 +12830,15 @@ function calWeekHtml(){
   K+='<div class="calwkdag" style="height:'+TH+'px">';
   dl.forEach(function(i){
    var su=calUur(i.tijd);
-   if(su==null){K+='<span class="calblok" data-op="'+i.open+'|'+i.id+'" style="top:'+(los*20)+'px;height:18px;background:'+CAL_KLEUR[i.laag]+'">'+esc(i.naam)+'</span>';los++;return;}
+   if(su==null){K+='<span class="calblok" data-op="'+i.open+'|'+i.id+'" style="top:'+(los*20)+'px;height:18px;'+calBlokStyle(CAL_KLEUR[i.laag],i.laag==="wed")+'">'+esc(i.naam)+'</span>';los++;return;}
    var eu=calUur(i.tot);if(eu==null||eu<=su)eu=su+1;
    var top=Math.max(0,(su-U0)*H),hh=Math.max(20,(eu-su)*H);
-   K+='<span class="calblok" data-op="'+i.open+'|'+i.id+'" style="top:'+top+'px;height:'+hh+'px;background:'+CAL_KLEUR[i.laag]+'">'+i.tijd+' '+esc(i.naam)+'</span>';});
+   K+='<span class="calblok" data-op="'+i.open+'|'+i.id+'" style="top:'+top+'px;height:'+hh+'px;'+calBlokStyle(CAL_KLEUR[i.laag],i.laag==="wed")+'">'+i.tijd+' '+esc(i.naam)+'</span>';});
   if(wb)wb.blocks.filter(function(b){return b.day===dx;}).forEach(function(b){
    var mt=wkTypeMeta(b.type);var s1=calUur(b.start),e1=calUur(b.end);
-   if(s1==null){K+='<span class="calblok" data-blk="'+b.id+'" style="top:'+(los*20)+'px;height:18px;background:'+mt[2]+'">'+esc(b.label||mt[1])+'</span>';los++;return;}
+   if(s1==null){K+='<span class="calblok" data-blk="'+b.id+'" style="top:'+(los*20)+'px;height:18px;'+calBlokStyle(mt[2])+'">'+esc(b.label||mt[1])+'</span>';los++;return;}
    if(e1==null||e1<=s1)e1=s1+1;
-   K+='<span class="calblok" data-blk="'+b.id+'" style="top:'+Math.max(0,(s1-U0)*H)+'px;height:'+Math.max(20,(e1-s1)*H)+'px;background:'+mt[2]+'" title="'+esc((b.label||mt[1])+" · "+fmtHM(b.start)+"–"+fmtHM(b.end))+'">'+fmtHM(b.start)+' '+esc(b.label||mt[1])+'</span>';});
+   K+='<span class="calblok" data-blk="'+b.id+'" style="top:'+Math.max(0,(s1-U0)*H)+'px;height:'+Math.max(20,(e1-s1)*H)+'px;'+calBlokStyle(mt[2])+'" title="'+esc((b.label||mt[1])+" · "+fmtHM(b.start)+"–"+fmtHM(b.end))+'">'+fmtHM(b.start)+' '+esc(b.label||mt[1])+'</span>';});
   K+='</div>';}
  K+='</div>'+calLagenChips()+'</div>';
  if(pid){
@@ -12723,9 +12847,34 @@ function calWeekHtml(){
   var _cats=[["golf","Golf (Z)"],["golfb","Golf (B)"],["fysiek","Fysiek (Z)"],["fysb","Fysiek (B)"]];
   var _tot=0;var subStats=_cats.map(function(c){var m2=typeMinutesWeek(pid,ws,c[0]);_tot+=m2;return '<span class="wg-si"><i style="background:'+wkTypeMeta(c[0])[2]+'"></i>'+c[1]+' '+fmtUren(m2)+'</span>';}).join("");
   subStats='<div class="wg-sub">'+subStats+'<span class="wg-si wg-tot">Totaal '+fmtUren(_tot)+'</span></div>';
-  K+='<div class="card"><div class="row" style="gap:6px;align-items:center">'+phB+'<span style="flex:1"></span><button class="btn ghost sm" onclick="openWeekEditor(\''+pid+'\',\''+ws+'\',\'tpl\')">Weekrooster</button><button class="btn sm" style="padding:8px 13px" onclick="openWeekEditor(\''+pid+'\',\''+ws+'\',\'week\')" title="Deze week aanpassen">+</button></div>'+subStats+'</div>';
+  K+='<div class="card"><div class="cardhd"><h3>Uren deze week</h3>'+phB+'</div>'+wkUrenHtml(pid,ws)+'</div>';
  }
  return K;}
+/* v269: urenoverzicht onder de weekkalender (speler) */
+function urenNormFor(pid,ws){var p=registryPlayer(pid)||{};var st=(state.urenNorm||{})[pid];
+ var m="pro";try{m=modusNu(pid);}catch(_e){}
+ var base=st||((m==="foundation")?{golf:180,fysiek:60}:(m==="advanced")?{golf:360,fysiek:120}:{golf:600,fysiek:240});
+ var f=1,fase=null;try{var yr=+String(ws).slice(0,4);var mw=(perMicro(pid,yr)||[]).find(function(w){return w.start===ws;});if(mw&&mw.phase){fase=mw.phase;f=Math.max(.4,Math.min(1.3,phaseVol(mw.phase)/70));}}catch(_e){}
+ return {golf:Math.round(base.golf*f),fysiek:Math.round(base.fysiek*f),fase:fase,eigen:!!st};}
+function urenRing(col,colB,zelf,beg,norm,lab,sub){
+ var r=27,c=2*Math.PI*r,tot=zelf+beg;var n=Math.max(1,norm||1);
+ var fz=Math.min(1,zelf/n),fb=Math.min(1-fz,beg/n);var over=tot>n?(tot-n)/n:0;
+ var s='<svg viewBox="0 0 68 68"><circle cx="34" cy="34" r="'+r+'" fill="none" stroke="#EEF0F2" stroke-width="7"/>';
+ if(fz>0)s+='<circle cx="34" cy="34" r="'+r+'" fill="none" stroke="'+col+'" stroke-width="7" stroke-linecap="butt" stroke-dasharray="'+(c*fz).toFixed(2)+' '+c.toFixed(2)+'" transform="rotate(-90 34 34)"/>';
+ if(fb>0)s+='<circle cx="34" cy="34" r="'+r+'" fill="none" stroke="'+colB+'" stroke-width="7" stroke-linecap="butt" stroke-dasharray="'+(c*fb).toFixed(2)+' '+c.toFixed(2)+'" stroke-dashoffset="'+(-c*fz).toFixed(2)+'" transform="rotate(-90 34 34)"/>';
+ if(over>0)s+='<circle cx="34" cy="34" r="32" fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="'+(2*Math.PI*32*Math.min(1,over)).toFixed(2)+' '+(2*Math.PI*32).toFixed(2)+'" transform="rotate(-90 34 34)"/>';
+ s+='<text x="34" y="38" text-anchor="middle" font-size="12" font-weight="700" fill="#2B2F33">'+(tot?fmtUren(tot).replace(" u",""):"–")+'</text></svg>';
+ return '<div class="uring"'+(sub?' title="'+esc(sub)+'"':'')+'>'+s+'<small>'+esc(lab)+'</small><b>'+(over>0?'<span class="uover">+'+fmtUren(tot-n)+'</span>':(norm?'van '+fmtUren(n):'geen norm'))+'</b></div>';}
+function wkUrenHtml(pid,ws){
+ var gz=0,gb=0,fz=0,fb=0;try{gz=typeMinutesWeek(pid,ws,"golf");gb=typeMinutesWeek(pid,ws,"golfb");fz=typeMinutesWeek(pid,ws,"fysiek");fb=typeMinutesWeek(pid,ws,"fysb");}catch(_e){}
+ var tot=gz+gb+fz+fb;var N=urenNormFor(pid,ws);
+ if(!tot)return '<p class="muted" style="margin:0;font-size:13px">Nog geen trainingsuren in deze week — zet je weekrooster klaar via het roostericoon bovenin.</p>';
+ var H='<div class="urings">'
+  +urenRing(wkTypeMeta("golf")[2],wkTypeMeta("golfb")[2],gz,gb,N.golf,"Golf","zelfstandig "+fmtUren(gz)+" · begeleid "+fmtUren(gb))
+  +urenRing(wkTypeMeta("fysiek")[2],wkTypeMeta("fysb")[2],fz,fb,N.fysiek,"Fysiek","zelfstandig "+fmtUren(fz)+" · begeleid "+fmtUren(fb))
+  +urenRing("#7A7F85","#2B2F33",gz+fz,gb+fb,N.golf+N.fysiek,"Totaal","zelfstandig "+fmtUren(gz+fz)+" · begeleid "+fmtUren(gb+fb))
+  +'</div><div class="ulegend"><span><i style="background:#B9BEC4"></i>zelfstandig</span><span><i style="background:#2B2F33"></i>begeleid</span><span><i style="background:var(--orange)"></i>boven de norm</span><span class="unorm">norm '+fmtUren(N.golf)+' golf · '+fmtUren(N.fysiek)+' fysiek'+(N.fase?' · fase '+esc(phaseAb(N.fase)):'')+'</span></div>';
+ return H;}
 function tlJaarStap(n){var ys=planYears();var i=ys.indexOf(planYear);var j=Math.max(0,Math.min(ys.length-1,(i<0?ys.length-1:i)+n));planYear=ys[j];renderPlanning();}
 function tlAddKlik(){if(rolIsSpeler()){tlPlayer=rolSpelerId();tlTeam=null;}else{tlPlayer=null;tlTeam=null;}openAddChooser();}
 function renderCalCoach(host){
