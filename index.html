@@ -120,7 +120,7 @@ body.kijkvancoach #kijkbar{display:flex}
 .tiov tr.cat{cursor:pointer;-webkit-tap-highlight-color:transparent}.tiov tr.cat td:first-child:before{content:"\25B8";display:inline-block;width:14px;color:#B9BEC4;font-size:11px}.tiov tr.cat.open td:first-child:before{content:"\25BE"}
 .tiov tr.sub td{font-size:11.5px;color:var(--muted);background:#FAFBFC;padding:5px 6px}.tiov tr.sub td:first-child{font-weight:600;padding-left:26px;color:var(--ink)}
 .tiov td.c1{background:#E3F3EA}.tiov td.c2{background:#B9E0C8}.tiov td.c3{background:#7CCB9C}.tiov td.n1{background:#FBE8E8}.tiov td.n2{background:#F3C1C2}
-.tiov tr.sub td.c1,.tiov tr.sub td.n1{background:transparent}.tiov tr.sub td.c2{background:#EEF2F8;color:var(--ink)}.tiov tr.sub td.c3{background:#D5DDE9;color:var(--ink)}.tiov tr.sub td.n2{background:#F7E9E9;color:var(--ink)}
+.tiov tr.sub td.c1{background:#F0F8F3;color:var(--ink)}.tiov tr.sub td.c2{background:#E3F3EA;color:var(--ink)}.tiov tr.sub td.c3{background:#B9E0C8;color:var(--ink)}.tiov tr.sub td.n1{background:#FDF3F3;color:var(--ink)}.tiov tr.sub td.n2{background:#FBE8E8;color:var(--ink)}
 .tiov th .av,.tiov td .av{display:inline-flex;width:24px;height:24px;border-radius:50%;border:1.5px solid #C4C8CC;align-items:center;justify-content:center;font-size:8.5px;font-weight:800;color:#6B7076;letter-spacing:0;text-transform:none}
 .tiov td.gem{color:var(--muted);font-weight:700}
 
@@ -167,6 +167,15 @@ body.kijkvancoach #kijkbar{display:flex}
 .bstbl{width:100%;border-collapse:collapse;font-size:12px}.bstbl th{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.3px;text-align:right;padding:4px 6px;border-bottom:1px solid var(--line);white-space:nowrap}.bstbl th:first-child,.bstbl td:first-child{text-align:left;font-weight:700}
 .bstbl td{text-align:right;padding:6px 6px;border-bottom:1px solid var(--paper);white-space:nowrap;font-variant-numeric:tabular-nums}.bstbl tr:last-child td{border-bottom:0}.bstbl td.p{color:#17a05c;font-weight:700}.bstbl td.n{color:#C2383A;font-weight:700}.bstbl td.mu{color:var(--muted)}
 .bstblw{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}#bsBody,#bsBody .card,.bsaccb,.bstwo>div{min-width:0;max-width:100%}
+
+/* v290: scoringsparameters t.o.v. par, teamoverzicht, wellness vaste hoogtes */
+.bstile.tit b em.tot{font-style:normal;font-weight:500;font-size:12px;color:#9AA0A6;margin-left:6px;vertical-align:1px}.bstile.tit b.parmin{color:#C2383A}
+.titbl td .parmin{color:#C2383A;font-weight:700}
+.wlstack{display:grid;flex:1 1 auto;min-width:0}.wlstack>div{grid-area:1/1;display:flex;flex-direction:column;min-width:0}.wlstack>div.off{visibility:hidden;pointer-events:none}
+.wlstack>div>.bsfig{flex:1 1 auto;display:flex;flex-direction:column;justify-content:center}.wlstack>div>.bsmini{margin-top:auto;padding-top:8px}
+#wlBody .card.wlchk{display:flex;flex-direction:column}#wlBody .wlchk .wlchecks{flex:1 1 0;min-height:240px;height:0;max-height:none;overflow:auto}
+@media(max-width:699px){#wlBody .wlchk .wlchecks{height:auto;flex:none;max-height:320px;min-height:0}.wlstack>div.off{display:none}}
+#wlBody .cardhd .seg.sm{flex-wrap:nowrap}#wlBody .cardhd .seg.sm button{white-space:nowrap;flex:0 0 auto}#wlBody .cardhd h3{flex:0 1 auto;min-width:0}
 
 /* v289: scoringsparameters S1, teamoverzicht H1 */
 .bstile.tit{padding-bottom:6px}.bstile.tit>span em{font-style:normal;font-weight:700;color:var(--muted)}.bstile.tit>span em.g{color:#17a05c}.bstile.tit>span em.r{color:#C2383A}.tispark{display:block;width:100%;height:20px;margin-top:4px}
@@ -2194,7 +2203,7 @@ const LIES={f:"Fairway",r:"Rough",s:"Sand",g:"Green"};const DLIES={f:"Fairway",r
 const LV=["PGA Tour"];
 function spread(min,max,n){if(n===1)return [Math.round((min+max)/2)];const a=[];for(let i=0;i<n;i++)a.push(Math.round(min+(max-min)*i/(n-1)));return a;}
 const NSIT=[3,6,9,12,15,18], NHOLE=[6,9,12,18];
-const APP_VERSION="v289";
+const APP_VERSION="v290";
 const TESTS={
 putt_3_5:{name:"Putt 3–5 ft",cat:"Putten",eng:"putt_cat",dists:[3,4,5],per:8,info:"24 putts (8× vanaf 3, 4 en 5 ft). Per afstand: holed, mis binnen 3 ft, mis buiten 3 ft. Output: SG + make%."},
 putt_6_10:{name:"Putt 6–10 ft",cat:"Putten",eng:"putt_cat",dists:[6,8,10],per:8,info:"24 putts (8× vanaf 6, 8 en 10 ft). Zelfde invoer als 3–5 ft."},
@@ -6726,7 +6735,7 @@ function tiF2s(v){if(v==null)return "–";var t=(v>=0?"+":"−")+Math.abs(v).toF
 function tiRondesSp(pid){
  var out=[];try{out=(scNorm(pid)||[]).slice();}catch(_e){}
  if(teamSeasonId){var ids={};(state.sessions||[]).forEach(function(s2){if(s2.seasonId===teamSeasonId)ids[s2.id]=1;});out=out.filter(function(r){return ids[r.sid];});}
- out.forEach(function(r){r._g=(r.gross!=null)?r.gross:((r.par!=null&&r.tp!=null)?(r.par+r.tp):null);});
+ out.forEach(function(r){r._g=(r.gross!=null)?r.gross:((r.par!=null&&r.tp!=null)?(r.par+r.tp):null);r._tp=(r.tp!=null)?+r.tp:((r.gross!=null&&r.par!=null)?(r.gross-r.par):null);});
  return out;}
 function tiPeriode(){
  var n=(teamWin==="all")?null:((teamWin==="last")?1:+teamWin);
@@ -6789,25 +6798,42 @@ function tiParamSheet(key){
  sh.innerHTML='<div class="shead"><div><h2>'+lbl+'</h2><div class="sx">Verdeling per speler · huidige periode</div></div><button class="xbtn" onclick="closeSheet()">×</button></div>'
   +'<div class="card">'+(rows.length?rows.map(function(o){return '<div class="uprow"><span class="upnm" style="flex:1">'+esc(o.naam)+'</span><span class="sx" style="margin-right:10px">'+o.m.rondes+(o.m.rondes===1?" ronde":" rondes")+'</span><b>'+o.txt+'</b></div>';}).join(""):'<p class="muted" style="margin:0;font-size:13px">Geen spelers met rondes in deze periode.</p>')+'</div>';
  openSheet();}
-/* ===== v289: scoringsparameters S1 (tegels + spelersmatrix, sorteerbaar, niveau-heatstrip) ===== */
+/* ===== v290: scoringsparameters S1 t.o.v. par (tegels + spelersmatrix, sorteerbaar, niveau-heatstrip) ===== */
 var tiSort="gem",tiOvMode="abs";
-var TI_KOL=[["gem","Gem.","Scoringsgemiddelde",-1,1],["p80","80 %","80 %-gemiddelde",-1,1],["b5","Beste 5","Gemiddelde beste 5",-1,1],["gew","Gewonnen","Slagen gewonnen t.o.v. par per ronde",1,1],["verl","Verloren","Slagen verloren t.o.v. par per ronde",-1,1],["lepar","≤ par","% rondes gelijk aan of onder par",1,0],["bench","≤ bench","% rondes op of onder de benchmark",1,0],["sg","SG / rnd","Strokes gained per ronde",1,2]];
-function tiMetricsX(L){var m=tiMetrics(L);var gw=[],vl=[],lp=0,lpN=0,sg=[];
- L.forEach(function(x){var r=x.r;if(r.holes&&r.pars&&r.holes.length>=18){var g=0,v=0;for(var i=0;i<18;i++){var d=(+r.holes[i])-(+r.pars[i]);if(d<0)g+=-d;else if(d>0)v+=d;}gw.push(g);vl.push(v);}if(r.tp!=null){lpN++;if(r.tp<=0)lp++;}if(r.sg!=null)sg.push(+r.sg);});
+var TI_KOL=[["gem","Gem.","Scoringsgemiddelde t.o.v. par",-1,1],["p80","80 %","80 %-gemiddelde t.o.v. par",-1,1],["b5","Beste 5","Gemiddelde beste 5 t.o.v. par",-1,1],["gew","Gewonnen","Slagen gewonnen t.o.v. par per ronde",1,1],["verl","Verloren","Slagen verloren t.o.v. par per ronde",-1,1],["lepar","≤ par","% rondes gelijk aan of onder par",1,0],["bench","≤ bench","% rondes op of onder de benchmark",1,0],["sg","SG / rnd","Strokes gained per ronde",1,2]];
+function tiTp(r){if(r._tp!=null)return r._tp;if(r.tp!=null)return +r.tp;if(r.gross!=null&&r.par!=null)return r.gross-r.par;return null;}
+function tiMetricsX(L){var m=tiMetrics(L);var gw=[],vl=[],lp=0,lpN=0,sg=[],TP=[],GR=[];
  function mean(a){if(!a.length)return null;var s=0;a.forEach(function(v){s+=v;});return s/a.length;}
+ L.forEach(function(x){var r=x.r;if(r.holes&&r.pars&&r.holes.length>=18){var g=0,v=0;for(var i=0;i<18;i++){var d=(+r.holes[i])-(+r.pars[i]);if(d<0)g+=-d;else if(d>0)v+=d;}gw.push(g);vl.push(v);}
+  var tp=tiTp(r);if(tp!=null){lpN++;if(tp<=0)lp++;TP.push({tp:tp,g:(r._g!=null)?r._g:null});}if(r.sg!=null)sg.push(+r.sg);});
+ TP.sort(function(a,b){return a.tp-b.tp;});
+ function agg(arr){return {tp:mean(arr.map(function(x){return x.tp;})),g:mean(arr.filter(function(x){return x.g!=null;}).map(function(x){return x.g;}))};}
+ m.gemG=m.gem;m.p80G=m.p80;m.b5G=m.b5;
+ var a1=agg(TP),a2=agg(TP.slice(0,Math.max(1,Math.ceil(TP.length*0.8)))),a3=agg(TP.slice(0,Math.min(5,TP.length)));
+ m.gem=a1.tp;m.p80=TP.length?a2.tp:null;m.b5=TP.length?a3.tp:null;m.gemG=a1.g;m.p80G=TP.length?a2.g:null;m.b5G=TP.length?a3.g:null;m.tpN=TP.length;
  m.gew=mean(gw);m.verl=mean(vl);m.lepar=lpN?Math.round(100*lp/lpN):null;m.sg=mean(sg);m.sgN=sg.length;return m;}
-function tiFmt(key,v){if(v==null)return '<span class="muted">–</span>';var k=TI_KOL.find(function(x){return x[0]===key;});var d=k?k[4]:1;if(key==="lepar"||key==="bench")return Math.round(v)+'%';if(key==="sg")return tiF(v);return v.toFixed(d).replace(".",",");}
-function tiSpark(vals,col){var v=vals.filter(function(x){return x!=null;});if(v.length<2)return '';var W=100,H=20;var mx=Math.max.apply(null,v),mn=Math.min.apply(null,v);var pts=v.map(function(x,i){return (i/(v.length-1)*W).toFixed(1)+','+(H-2-(x-mn)/((mx-mn)||1)*(H-4)).toFixed(1);});return '<svg viewBox="0 0 '+W+' '+H+'" class="tispark"><polyline fill="none" stroke="'+col+'" stroke-width="1.6" points="'+pts.join(' ')+'"/></svg>';}
+/* teamwaarde = gemiddelde van de spelerswaarden (elke speler telt even zwaar), zodat de teamrij klopt met de kolom erboven */
+function tiTeam(L){var per={};L.forEach(function(x){(per[x.pid]=per[x.pid]||[]).push(x);});var rows=Object.keys(per).map(function(pid){return tiMetricsX(per[pid]);});
+ var t={rondes:L.length,spelers:rows.length};["gem","p80","b5","gemG","p80G","b5G","gew","verl","lepar","bench","sg"].forEach(function(k){var v=rows.map(function(r){return r[k];}).filter(function(v){return v!=null;});t[k]=v.length?v.reduce(function(a,b){return a+b;},0)/v.length:null;});return t;}
+function tiTpTxt(v,d){if(v==null)return '–';var a=Math.abs(v).toFixed(d==null?1:d).replace(".",",");return (v>0?"+":(v<-0.0001?"−":""))+a;}
+function tiFmt(key,v){if(v==null)return '<span class="muted">–</span>';var k=TI_KOL.find(function(x){return x[0]===key;});var d=k?k[4]:1;
+ if(key==="lepar"||key==="bench")return Math.round(v)+'%';
+ if(key==="sg")return tiF(v);
+ if(key==="gem"||key==="p80"||key==="b5")return '<span class="'+(v<-0.0001?'parmin':'')+'">'+tiTpTxt(v,1)+'</span>';
+ return v.toFixed(d).replace(".",",");}
+function tiSpark(vals,col){var v=vals.filter(function(x){return x!=null;});if(v.length<2)return '';var W=100,H=20;var mx=Math.max.apply(null,v),mn=Math.min.apply(null,v);var pts=v.map(function(x,i){return (i/(v.length-1)*W).toFixed(1)+','+(H-2-(x-mn)/((mx-mn)||1)*(H-4)).toFixed(1);});return '<svg viewBox="0 0 '+W+' '+H+'" class="tispark" preserveAspectRatio="none"><polyline fill="none" stroke="#F47C20" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" points="'+pts.join(' ')+'"/></svg>';}
 function tiBuckets(L,key){var S=L.slice().sort(function(a,b){return String(a.r.date||"").localeCompare(String(b.r.date||""));});var n=Math.min(5,S.length);if(n<2)return [];var out=[];for(var i=0;i<n;i++){var a=Math.floor(i*S.length/n),b=Math.floor((i+1)*S.length/n);var m=tiMetricsX(S.slice(a,b));out.push(m[key]);}return out;}
 function tiScoreBlok(){
  var card=el("div","card");
  var P=tiPeriode();
  if(!P.cur.length){card.innerHTML='<div class="cardhd"><h3>Scoringsparameters</h3></div><p class="muted" style="margin:0;font-size:13px">Nog geen 18-holesrondes in deze selectie.</p>';return card;}
- var cur=tiMetricsX(P.cur),prev=(P.n&&P.prev.length)?tiMetricsX(P.prev):null;
- var note=cur.rondes+(cur.rondes===1?" ronde":" rondes")+(P.n?(prev?" · vs "+prev.rondes+" ervoor":""):"");
+ var cur=tiTeam(P.cur),prev=(P.n&&P.prev.length)?tiTeam(P.prev):null;
+ var note=cur.rondes+(cur.rondes===1?" ronde":" rondes")+' · '+cur.spelers+' spelers'+(P.n?(prev?" · vs "+prev.rondes+" ervoor":""):"");
  function delta(key,richt){if(!prev||cur[key]==null||prev[key]==null)return '';var d=cur[key]-prev[key];var goed=d*richt>0.001,slecht=d*richt<-0.001;var t=(key==="lepar"||key==="bench")?((d>0?"+":d<0?"−":"±")+Math.abs(Math.round(d))):((d>0?"+":d<0?"−":"±")+Math.abs(d).toFixed(key==="sg"?2:1).replace(".",","));return '<em class="'+(goed?'g':slecht?'r':'')+'">'+t+' vs vorige</em>';}
  var TILES=[["gem","Scoringsgem.",-1],["p80","80 %-gem.",-1],["b5","Beste 5",-1],["gew","Gewonnen / rnd",1],["verl","Verloren / rnd",-1],["lepar","≤ par",1]];
- var tiles='<div class="bstiles" style="grid-template-columns:repeat(6,minmax(0,1fr))">'+TILES.map(function(t){var sp=tiBuckets(P.cur,t[0]);var d=delta(t[0],t[2]);var col=/class="g"/.test(d)?"#17a05c":/class="r"/.test(d)?"#C2383A":"#7A7F85";return '<div class="bstile tit"><small>'+t[1]+'</small><b>'+tiFmt(t[0],cur[t[0]])+'</b><span>'+(d||'&nbsp;')+'</span>'+tiSpark(sp,col)+'</div>';}).join("")+'</div>';
+ var tiles='<div class="bstiles" style="grid-template-columns:repeat(6,minmax(0,1fr))">'+TILES.map(function(t){var sp=tiBuckets(P.cur,t[0]);var d=delta(t[0],t[2]);var isTp=(t[0]==="gem"||t[0]==="p80"||t[0]==="b5");var v=cur[t[0]];
+  var big=isTp?('<b class="'+(v!=null&&v<-0.0001?'parmin':'')+'">'+tiTpTxt(v,1)+(cur[t[0]+"G"]!=null?'<em class="tot">'+cur[t[0]+"G"].toFixed(1).replace(".",",")+'</em>':'')+'</b>'):('<b>'+tiFmt(t[0],v)+'</b>');
+  return '<div class="bstile tit"><small>'+t[1]+'</small>'+big+'<span>'+(d||'&nbsp;')+'</span>'+tiSpark(sp)+'</div>';}).join("")+'</div>';
  /* spelersmatrix */
  var per={};P.cur.forEach(function(x){(per[x.pid]=per[x.pid]||[]).push(x);});
  var rows=Object.keys(per).map(function(pid){var m=tiMetricsX(per[pid]);m.pid=pid;m.naam=nameOf(pid);return m;});
@@ -6815,13 +6841,12 @@ function tiScoreBlok(){
  rows.sort(function(a,b){var va=a[sk[0]],vb=b[sk[0]];if(va==null&&vb==null)return a.naam.localeCompare(b.naam,"nl");if(va==null)return 1;if(vb==null)return -1;return (vb-va)*richt||a.naam.localeCompare(b.naam,"nl");});
  var vals=rows.map(function(r){return r[sk[0]];}).filter(function(v){return v!=null;});var mn=vals.length?Math.min.apply(null,vals):0,mx=vals.length?Math.max.apply(null,vals):1;
  function heat(v){if(v==null)return '<td class="tihs"><i style="background:#E6E8EA"></i></td>';var f=(mx===mn)?0.5:(v-mn)/(mx-mn);if(richt<0)f=1-f;var col=f>=0.8?"#17a05c":f>=0.6?"#7CCB9C":f>=0.4?"#C4C8CC":f>=0.2?"#E08A8D":"#C2383A";return '<td class="tihs"><i style="background:'+col+'"></i></td>';}
- function cellCls(key,v){if(v==null||cur[key]==null)return "";var k=TI_KOL.find(function(x){return x[0]===key;});var d=(v-cur[key])*k[3];var eps=(key==="lepar"||key==="bench")?3:(key==="sg"?0.05:0.15);return d>eps?"p":d<-eps?"n":"";}
  var head='<tr><th></th><th class="l">Speler</th><th>Rondes</th>'+TI_KOL.map(function(k){return '<th class="tisrt'+(k[0]===tiSort?' on':'')+'" data-tisort="'+k[0]+'" title="'+esc(k[2])+'">'+k[1]+(k[0]===tiSort?' ▾':'')+'</th>';}).join("")+'</tr>';
- var body=rows.map(function(r){return '<tr class="clickable" data-tirow="'+r.pid+'">'+heat(r[sk[0]])+'<td class="l"><span class="av">'+esc(initials(r.naam||""))+'</span>'+esc(r.naam)+'</td><td class="mu">'+r.rondes+'</td>'+TI_KOL.map(function(k){return '<td class="'+cellCls(k[0],r[k[0]])+(k[0]===tiSort?' srt':'')+'">'+tiFmt(k[0],r[k[0]])+'</td>';}).join("")+'</tr>';}).join("");
+ var body=rows.map(function(r){return '<tr class="clickable" data-tirow="'+r.pid+'">'+heat(r[sk[0]])+'<td class="l"><span class="av">'+esc(initials(r.naam||""))+'</span>'+esc(r.naam)+'</td><td class="mu">'+r.rondes+'</td>'+TI_KOL.map(function(k){return '<td class="'+(k[0]===tiSort?'srt':'')+'">'+tiFmt(k[0],r[k[0]])+'</td>';}).join("")+'</tr>';}).join("");
  var team='<tr class="team"><td></td><td class="l">Team</td><td>'+cur.rondes+'</td>'+TI_KOL.map(function(k){return '<td>'+tiFmt(k[0],cur[k[0]])+'</td>';}).join("")+'</tr>';
  card.innerHTML='<div class="cardhd"><h3>Scoringsparameters</h3><span class="hdnote">'+note+'</span></div>'+tiles
   +'<div class="bstblw"><table class="bstbl titbl">'+head+body+team+'</table></div>'
-  +'<p class="sx" style="margin:8px 2px 0">Bruto over 18-holesrondes · gewonnen/verloren = slagen onder/boven par per ronde · kleur = beter (groen) of slechter (rood) dan het team · tik op een kolomtitel om te rangschikken; de strook links toont het niveau op die parameter · tik op een rij voor de speler.</p>';
+  +'<p class="sx" style="margin:8px 2px 0">Scores t.o.v. par over 18-holesrondes (in de tegels klein de bruto score) · gewonnen/verloren = slagen onder/boven par per ronde · teamrij = gemiddelde van de spelers · tik op een kolomtitel om te rangschikken; de strook links toont het niveau op die parameter · tik op een rij voor de speler.</p>';
  card.querySelectorAll("[data-tisort]").forEach(function(h){h.onclick=function(){tiSort=h.dataset.tisort;renderTeamInsight();};});
  card.querySelectorAll("[data-tirow]").forEach(function(r){r.onclick=function(){if(typeof openSpelerProfiel==="function")openSpelerProfiel(r.dataset.tirow);};});
  return card;}
@@ -6869,7 +6894,7 @@ H+='<div class="titwo" id="tiRij2"></div>';
 const matT=teamDataTest();
 var head='<tr><th>Categorie</th>'+ps.map(p=>'<th title="'+esc(p.name)+'"><span class="av">'+esc(initials(p.name||""))+'</span></th>').join("")+'<th>Gem.</th></tr>';
 var WIN='<svg class="tiwin" viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M7 6H4v2a3 3 0 0 0 3 3M17 6h3v2a3 3 0 0 1-3 3"/></svg>';
-var tiCel=function(v,g,best){var cl=(tiOvMode==="team"&&v!=null&&g!=null)?tiCls(v-g):tiCls(v);return '<td class="'+cl+(best?' best':'')+'">'+tiF(v,true)+(best?WIN:'')+'</td>';};
+var tiCel=function(v,g,best){var tm=(tiOvMode==="team"&&v!=null&&g!=null);var cl=tm?tiCls(v-g):tiCls(v);return '<td class="'+cl+(best?' best':'')+'">'+tiF(tm?(v-g):v,true)+(best?WIN:'')+'</td>';};
 var body=SUMCATS.map(c=>{var vals=ps.map(p=>catVal(mat[p.id],c));var vs=vals.filter(v=>v!=null);var g=vs.length?vs.reduce((a,b)=>a+b,0)/vs.length:null;var open=!!tiCatOpen[c];var bst=vs.length>1?Math.max.apply(null,vs):null;if(bst!=null&&vs.filter(v=>v===bst).length===vs.length)bst=null;
  var r='<tr class="cat'+(open?' open':'')+'" data-ticat="'+esc(c)+'"><td>'+esc(c)+'</td>'+vals.map(v=>tiCel(v,g,bst!=null&&v===bst)).join("")+'<td class="gem">'+tiF(g)+'</td></tr>';
  if(open){ORDER.forEach(tid=>{const t=TESTS[tid];if(!t||t.cat!==c)return;if(t.cat==='Spelen'&&t.eng!=='sground')return;
@@ -6877,7 +6902,7 @@ var body=SUMCATS.map(c=>{var vals=ps.map(p=>catVal(mat[p.id],c));var vs=vals.fil
   var b2=s2.length>1?Math.max.apply(null,s2):null;if(b2!=null&&s2.filter(v=>v===b2).length===s2.length)b2=null;r+='<tr class="sub"><td>'+esc(t.name)+'</td>'+sv.map(v=>tiCel(v,g2,b2!=null&&v===b2)).join("")+'<td class="gem">'+tiF(g2)+'</td></tr>';});}
  return r;}).join("");
 var teamRow='<tr class="titeam"><td>Team</td>'+ps.map(p=>{var s=0,n=0;SUMCATS.forEach(c=>{var v=catVal(mat[p.id],c);if(v!=null){s+=v;n++;}});return '<td>'+(n?tiF(s/n,true):'<span class="muted">–</span>')+'</td>';}).join("")+'<td></td></tr>';
-var ovH='<div class="card"><div class="cardhd"><h3>'+(tiAll?"Totaaloverzicht":"Teamoverzicht")+'</h3><span class="row" style="gap:8px;align-items:center"><span class="hdnote">SG per slag · ▸ afstanden</span><div class="seg sm" id="tiOvSeg"><button data-ov="abs" class="'+(tiOvMode==="abs"?"on":"")+'">SG</button><button data-ov="team" class="'+(tiOvMode==="team"?"on":"")+'">t.o.v. team</button></div></span></div><div style="overflow-x:auto"><table class="tiov">'+head+body+teamRow+'</table></div><p class="sx" style="margin:6px 2px 0">'+(tiOvMode==="team"?'Kleur = verschil met het teamgemiddelde in die categorie (grijs = rond het gemiddelde)':'Kleur = strokes gained per slag (groen +, rood −)')+' · beker = beste van het team · teamrij = gemiddelde per speler over de categorieën.</p></div>';
+var ovH='<div class="card"><div class="cardhd"><h3>'+(tiAll?"Totaaloverzicht":"Teamoverzicht")+'</h3><span class="row" style="gap:8px;align-items:center"><span class="hdnote">SG per slag · ▸ afstanden</span><div class="seg sm" id="tiOvSeg"><button data-ov="abs" class="'+(tiOvMode==="abs"?"on":"")+'">SG</button><button data-ov="team" class="'+(tiOvMode==="team"?"on":"")+'">t.o.v. team</button></div></span></div><div style="overflow-x:auto"><table class="tiov">'+head+body+teamRow+'</table></div><p class="sx" style="margin:6px 2px 0">'+(tiOvMode==="team"?'Waarde en kleur = verschil met het teamgemiddelde in die categorie (kolom Gem.); grijs = rond het gemiddelde':'Kleur = strokes gained per slag (groen +, rood −)')+' · beker = beste van het team · teamrij = gemiddelde per speler over de categorieën.</p></div>';
 H+=ovH;
 box.innerHTML=H;
 $("#tiRij2").insertAdjacentHTML("beforebegin",'<div id="tiScoreRij"></div>');$("#tiScoreRij").appendChild(tiScoreBlok());$("#tiRij2").insertAdjacentHTML("beforeend",lbH);
@@ -11871,11 +11896,11 @@ function wlAxisT(L){
 function wlBarSvg(L,o){
  var pts=[];L.forEach(function(w){var v=o.get(w);if(v==null||isNaN(v))return;pts.push({w:w,v:v});});
  if(!pts.length)return '<p class="muted" style="margin:0;font-size:13px">'+(o.empty||"Geen data in deze periode.")+'</p>';
- var W=640,H=o.h||200,Lp=34,R=12,T=14,B=28,pw=W-Lp-R,ph=H-T-B;
+ var W=o.W||640,H=o.h||200,Lp=o.Lp||34,R=12,T=14,B=28,pw=W-Lp-R,ph=H-T-B;
  var lo=o.min,hi=o.max;
  if(hi==null){hi=Math.max.apply(null,pts.map(function(p){return p.v;}));hi=Math.max(lo+1,Math.ceil(hi));}
  var t0=wlTs(L[0]),t1=wlTs(L[L.length-1]);if(t1<=t0)t1=t0+864e5;
- function X(t){return Lp+(t-t0)/(t1-t0)*pw;}
+var _xp=(o.bwMax||18)/2+3;function X(t){return Lp+_xp+(t-t0)/(t1-t0)*(pw-2*_xp);}
  function Y(v){return T+ph-((v-lo)/(hi-lo))*ph;}
  var s2='<svg viewBox="0 0 '+W+' '+H+'" width="'+W+'" height="'+H+'" preserveAspectRatio="xMidYMid meet">';
  if(o.zone!=null){s2+='<rect x="'+Lp+'" y="'+Y(o.zone).toFixed(1)+'" width="'+pw+'" height="'+(Y(lo)-Y(o.zone)).toFixed(1)+'" fill="'+WL_C.zone+'"/><line x1="'+Lp+'" x2="'+(W-R)+'" y1="'+Y(o.zone).toFixed(1)+'" y2="'+Y(o.zone).toFixed(1)+'" stroke="'+WL_C.red2+'" stroke-dasharray="3 4"/>';}
@@ -11884,7 +11909,7 @@ function wlBarSvg(L,o){
    +'<text class="axv" x="'+(Lp-8)+'" y="'+(y+3.2).toFixed(1)+'" text-anchor="end">'+(o.tickLab?o.tickLab(g):g)+'</text>';});
  var xs=pts.map(function(p){return X(wlTs(p.w));});
  var gap=pw;for(var i=1;i<xs.length;i++){var d=xs[i]-xs[i-1];if(d>0.2&&d<gap)gap=d;}
- var bw=Math.max(1.8,Math.min(18,gap*0.78));
+ var bw=Math.max(1.8,Math.min(o.bwMax||18,gap*0.78));
  var base=T+ph;
  pts.forEach(function(p,i){var y=Y(p.v);
   s2+='<rect class="pt" x="'+(xs[i]-bw/2).toFixed(1)+'" y="'+y.toFixed(1)+'" width="'+bw.toFixed(1)+'" height="'+Math.max(1.8,base-y).toFixed(1)+'" rx="2" fill="'+o.col(p.v)+'" data-wid="'+p.w.id+'"><title>'+fmtDate(p.w.date)+' · '+(o.fmt?o.fmt(p.v):p.v)+'</title></rect>';});
@@ -11900,7 +11925,7 @@ function wlBarSvg(L,o){
 var WL_C={grey:"#D9DCE0",red:"#C2383A",red2:"#E08A8D",zone:"rgba(194,56,58,.07)",blue:"#4A6FA5",ink:"#2B2F33"};
 function wlReadySvg(L){
  return wlBarSvg(L,{get:function(w){return wellReadiness(w);},min:0,max:100,ticks:[0,25,50,75,100],zone:50,
-  col:function(v){return v<25?WL_C.red:(v<50?WL_C.red2:WL_C.grey);},fmt:function(v){var b=readyBracket(v);return v+"%"+(b.lab?" \u00b7 "+b.lab:"");},h:210,
+  col:function(v){return v<25?WL_C.red:(v<50?WL_C.red2:WL_C.grey);},fmt:function(v){var b=readyBracket(v);return v+"%"+(b.lab?" \u00b7 "+b.lab:"");},h:300,W:1280,Lp:56,bwMax:30,
   empty:"Geen checks in deze periode."});}
 /* v270: lijngrafiek (1–6) met signaalzone; heatmap over alle onderdelen */
 function wlLineSvg(L,key){
@@ -12127,18 +12152,15 @@ function renderWellnessTab(){
  H+='<div class="bstwo"><div class="card"><div class="cardhd"><h3>Slaap</h3><span class="hdnote">'+(sh2.length?sh2.length+' nachten met uren':'geen uren ingevuld')+'</span></div>'
   +'<div class="bstiles" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="bstile"><small>Gem. uren</small><b>'+(sh!=null?sh.toFixed(1).replace(".",","):"–")+'</b><span>per nacht</span></div><div class="bstile"><small>Kwaliteit</small><b>'+(sq!=null?wlPct(sq)+"%":"–")+'</b><span>&nbsp;</span></div><div class="bstile"><small>Korte nachten</small><b'+(kort?' style="color:'+WL_C.red+'"':'')+'>'+kort+'</b><span>&lt; 6 uur</span></div></div>'
   +(sh2.length?'<div class="bsfig">'+wlHoursSvg(V)+'</div>':'<p class="muted" style="margin:0;font-size:12.5px">Nog geen slaapuren ingevuld in deze periode.</p>')+'</div>'
-  +'<div class="card"><div class="cardhd"><h3>Beleving</h3><span class="row" style="gap:8px;align-items:center"><div class="seg sm" id="wlBelSeg"><button data-bv="lijn" class="'+(wlBelView==="lijn"?"on":"")+'">Lijn</button><button data-bv="heat" class="'+(wlBelView==="heat"?"on":"")+'">Heatmap</button></div>'+(wlBelView==="lijn"?'<select class="klsel" id="wlMetSel" style="padding:4px 26px 4px 10px;font-size:11.5px">'+MET.map(function(m){return '<option value="'+m[0]+'"'+(wlMetric===m[0]?" selected":"")+'>'+m[1]+'</option>';}).join("")+'</select>':'')+'</span></div>'
-  +(wlBelView==="heat"?'<div class="bsfig">'+wlHeatSvg(V,MET)+'</div><div class="bsmini">1–6 per item'+(wlWkAvg?' · weekgemiddelde':' per check')+' · donker = hoog</div>':('<div class="bstiles" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="bstile"><small>Gemiddeld</small><b>'+(mavg!=null?mavg.toFixed(1).replace(".",","):"–")+'</b><span>/ 6</span></div><div class="bstile"><small>Laagste</small><b>'+(function(){var v=L.map(function(w){return +w[wlMetric]||0;}).filter(Boolean);return v.length?Math.min.apply(null,v):"–";})()+'</b><span>&nbsp;</span></div><div class="bstile"><small>Hoogste</small><b>'+(function(){var v=L.map(function(w){return +w[wlMetric]||0;}).filter(Boolean);return v.length?Math.max.apply(null,v):"–";})()+'</b><span>&nbsp;</span></div></div><div class="bsfig">'+wlLineSvg(V,wlMetric)+'</div>'))+'</div></div>';
+  +'<div class="card"><div class="cardhd"><h3>Overige</h3><span class="row" style="gap:8px;align-items:center">'+(wlBelView==="lijn"?'<select class="klsel" id="wlMetSel" style="padding:4px 26px 4px 10px;font-size:11.5px">'+MET.map(function(m){return '<option value="'+m[0]+'"'+(wlMetric===m[0]?" selected":"")+'>'+m[1]+'</option>';}).join("")+'</select>':'')+'<div class="seg sm" id="wlBelSeg"><button data-bv="lijn" class="'+(wlBelView==="lijn"?"on":"")+'">Lijn</button><button data-bv="heat" class="'+(wlBelView==="heat"?"on":"")+'">Heatmap</button></div></span></div>'
+  +'<div class="wlstack"><div class="'+(wlBelView==="heat"?'':'off')+'"><div class="bsfig">'+wlHeatSvg(V,MET)+'</div><div class="bsmini">1–6 per item'+(wlWkAvg?' · weekgemiddelde':' per check')+' · donker = hoog</div></div><div class="'+(wlBelView==="lijn"?'':'off')+'"><div class="bstiles" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="bstile"><small>Gemiddeld</small><b>'+(mavg!=null?mavg.toFixed(1).replace(".",","):"–")+'</b><span>/ 6</span></div><div class="bstile"><small>Laagste</small><b>'+(function(){var v=L.map(function(w){return +w[wlMetric]||0;}).filter(Boolean);return v.length?Math.min.apply(null,v):"–";})()+'</b><span>&nbsp;</span></div><div class="bstile"><small>Hoogste</small><b>'+(function(){var v=L.map(function(w){return +w[wlMetric]||0;}).filter(Boolean);return v.length?Math.max.apply(null,v):"–";})()+'</b><span>&nbsp;</span></div></div><div class="bsfig">'+wlLineSvg(V,wlMetric)+'</div></div></div></div></div>';
  /* Klachten | Signalen & checks */
  H+='<div class="bstwo"><div class="card" id="wlKlCard"><div class="cardhd"><h3>Klachten</h3><span class="row" style="gap:8px;align-items:center"><span class="hdnote">'+_kln+' dag'+(_kln===1?'':'en')+'</span><div class="seg sm" id="wlKlSeg"><button data-kv="stroken" class="'+(wlKlView==="stroken"?"on":"")+'">Stroken</button><button data-kv="body" class="'+(wlKlView==="body"?"on":"")+'">Lichaam</button><button data-kv="weken" class="'+(wlKlView==="weken"?"on":"")+'">Weken</button></div></span></div>'
-  +(!_kln?'<p class="muted" style="margin:0;font-size:13px">Geen klachten gemeld in deze periode.</p>':(wlKlView==="body"?klBodyHtml(L,spPlayer):(wlKlView==="weken"?klWeekGrid(L,spPlayer):'<div class="bsfig">'+klStrokenSvg(L)+'</div>')))+'</div>';
- var sigL=L.filter(function(w){var r=wellReadiness(w);return (r!=null&&r<50)||w.illness;}).slice().reverse().slice(0,5);
+  +(!_kln?'<p class="muted" style="margin:0;font-size:13px">Geen klachten gemeld in deze periode.</p>':(wlKlView==="body"?klBodyHtml(L,spPlayer):('<div class="wlstack"><div class="off" aria-hidden="true">'+(function(){var _z=klZone;klZone=null;var h=klBodyHtml(L,spPlayer);klZone=_z;return h;})()+'</div><div>'+(wlKlView==="weken"?klWeekGrid(L,spPlayer):'<div class="bsfig">'+klStrokenSvg(L)+'</div>')+'</div></div>')))+'</div>';
  var rowsH=L.slice().reverse().map(function(w){var r=wellReadiness(w);var _bk=readyBracket(r);var col=_bk.col;
   var tags=[];if(w.illness)tags.push("ziek");if((w.bodyParts||[]).length)tags.push((w.bodyParts||[]).length+" klacht"+((w.bodyParts||[]).length===1?"":"en"));
-  return '<div class="sprow" data-wd="'+w.id+'"><div style="flex:1;min-width:0"><b style="font-size:13px">'+fmtDate(w.date)+'</b>'+(tags.length?'<small class="muted" style="display:block">'+esc(tags.join(" · "))+'</small>':'')+'</div>'+(_bk.lab?'<span class="sigchip">'+_bk.lab+'</span>':'')+'<b style="color:'+col+'">'+(r!=null?r+"%":"–")+'</b><span class="chev">▶</span></div>';}).join("");
- H+='<div class="card"><div class="cardhd"><h3>Signalen &amp; checks</h3><span class="hdnote">'+(disc?disc.n+' van '+disc.days+' dagen ingevuld':'')+'</span></div>'
-  +(sigL.length?sigL.map(function(w){var r=wellReadiness(w);var bk=readyBracket(r);var why=[];if(w.illness)why.push("ziek");if(+w.sleepH&&+w.sleepH<6)why.push("slaap "+String(w.sleepH).replace(".",",")+" u");if(+w.stress>=5)why.push("stress "+w.stress);if(+w.fatigue>=5)why.push("vermoeid "+w.fatigue);return '<div class="sprow" data-wd="'+w.id+'"><span class="sigchip" style="background:'+bk.col+'">'+(bk.lab||"ziek")+'</span><div style="flex:1;min-width:0"><b style="font-size:13px">'+fmtDate(w.date)+(r!=null?' · readiness '+r+'%':'')+'</b>'+(why.length?'<small class="muted" style="display:block">'+esc(why.join(" · "))+'</small>':'')+'</div><span class="chev">▶</span></div>';}).join(""):'<p class="muted" style="margin:0 0 8px;font-size:12.5px">Geen signaaldagen in deze periode.</p>')
-  +'<div class="bslbl" style="margin-top:12px">Alle checks · '+L.length+'</div><div class="wlchecks">'+rowsH+'</div></div></div>';
+  return '<div class="sprow" data-wd="'+w.id+'"><div style="flex:1;min-width:0"><b style="font-size:13px">'+fmtDate(w.date)+'</b>'+(tags.length?'<small class="muted" style="display:block">'+esc(tags.join(" · "))+'</small>':'')+'</div>'+(_bk.lab?'<span class="sigchip">'+_bk.lab+'</span>':'')+'<b style="color:'+col+'">'+(r!=null?r+"%":"–")+'</b></div>';}).join("");
+ H+='<div class="card wlchk"><div class="cardhd"><h3>Checks</h3><span class="hdnote">'+L.length+' checks'+(disc?' · '+disc.n+' van '+disc.days+' dagen ingevuld':'')+'</span></div><div class="wlchecks">'+rowsH+'</div></div></div>';
  box.innerHTML=H;
  scPickBind("wl",renderWellnessTab);
  wlFiltBind(renderWellnessTab);
@@ -13780,7 +13802,7 @@ function renderCalCoach(host){
  wrap.querySelectorAll("[data-cnav]").forEach(function(bb){bb.onclick=function(){var n=+bb.dataset.cnav;
   if(m==="maand")calMaandShift(n);
   else if(m==="week"){calDatum=dAddDays(weekStart(calDatum),7*n);renderPlanning();}};});
- var vd=wrap.querySelector("#calVandaag");if(vd)vd.onclick=function(){calDatum=todayISO();calSel=todayISO();renderPlanning();};
+ var vd=wrap.querySelector("#calVandaag");if(vd){vd.onclick=function(){calDatum=todayISO();calSel=todayISO();renderPlanning();};var _t=todayISO();var _op=(m==="maand")?(calDatum.slice(0,7)===_t.slice(0,7)):(weekStart(calDatum)===weekStart(_t));if(_op)vd.style.display="none";}
  var ad=wrap.querySelector("#calAdd");if(ad)ad.onclick=function(){
   if(rolIsSpeler()){tlPlayer=rolSpelerId();tlTeam=null;}else{tlPlayer=null;tlTeam=null;}
   openAddChooser();};
