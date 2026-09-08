@@ -168,6 +168,13 @@ body.kijkvancoach #kijkbar{display:flex}
 .bstbl td{text-align:right;padding:6px 6px;border-bottom:1px solid var(--paper);white-space:nowrap;font-variant-numeric:tabular-nums}.bstbl tr:last-child td{border-bottom:0}.bstbl td.p{color:#17a05c;font-weight:700}.bstbl td.n{color:#C2383A;font-weight:700}.bstbl td.mu{color:var(--muted)}
 .bstblw{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}#bsBody,#bsBody .card,.bsaccb,.bstwo>div{min-width:0;max-width:100%}
 
+/* v294: KPI-pillen, grijze categorielabels, klassement-uitlijning */
+.cvkpi b>span{display:inline;padding:0;background:none;box-shadow:none;border-radius:0;gap:0}
+.bsdual .r>span:first-child{color:var(--muted);font-weight:600;font-size:11.5px}.bsdual b small{color:#9AA0A6}
+.bssgr .l{color:var(--muted);font-weight:600;font-size:12.5px}.bssgr .l small{color:#9AA0A6}
+.bsheat .lb{color:var(--muted);font-weight:600}.bsheat i small{color:#9AA0A6}.bsheat i.p3 small,.bsheat i.n3 small{color:rgba(43,47,51,.55)}
+.klr .mv{flex:0 0 40px;min-width:0;white-space:nowrap;overflow:hidden}.klr .pts{min-width:0}.klr .tr{min-width:0}
+
 /* v292: teamoverzicht vaste kolommen */
 .tiov{table-layout:fixed;min-width:520px}.tiov th:first-child{width:26%}.tiov th:last-child{width:11%}
 
@@ -2217,7 +2224,7 @@ const LIES={f:"Fairway",r:"Rough",s:"Sand",g:"Green"};const DLIES={f:"Fairway",r
 const LV=["PGA Tour"];
 function spread(min,max,n){if(n===1)return [Math.round((min+max)/2)];const a=[];for(let i=0;i<n;i++)a.push(Math.round(min+(max-min)*i/(n-1)));return a;}
 const NSIT=[3,6,9,12,15,18], NHOLE=[6,9,12,18];
-const APP_VERSION="v293";
+const APP_VERSION="v294";
 const TESTS={
 putt_3_5:{name:"Putt 3–5 ft",cat:"Putten",eng:"putt_cat",dists:[3,4,5],per:8,info:"24 putts (8× vanaf 3, 4 en 5 ft). Per afstand: holed, mis binnen 3 ft, mis buiten 3 ft. Output: SG + make%."},
 putt_6_10:{name:"Putt 6–10 ft",cat:"Putten",eng:"putt_cat",dists:[6,8,10],per:8,info:"24 putts (8× vanaf 6, 8 en 10 ft). Zelfde invoer als 3–5 ft."},
@@ -3417,7 +3424,8 @@ function bsPutten(s,p){var pd=s.puttingDetail||{},ppd=(p&&p.puttingDetail)||{};v
  var sum=bsSum([["SG / ronde",bsSg(s.sg&&s.sg.putten,2),bsDelta(s.sg&&s.sg.putten,p&&p.sg&&p.sg.putten,2)],["SG / putt",bsSg(cs.putten,3),""],["3-putts",bsN(dp,2),bsDelta(dp,pdp,2,true)],["5–10 ft",c510?bsPct(c510.pct):'–',c510&&c510.tour!=null?'<em class="bsd t">tour '+bsPct(c510.tour)+'</em>':''],["Ft geholed",bsN(st.ftHoledPerRound,1),bsDelta(st.ftHoledPerRound,pst.ftHoledPerRound,1)]]);
  var g1015=good.find(function(g){return /^10/.test(String(g.band));}),g1525=good.find(function(g){return /^15/.test(String(g.band));});
  var tiles=bsTiles([["SG / ronde",bsSg(s.sg&&s.sg.putten,2),bsDelta(s.sg&&s.sg.putten,p&&p.sg&&p.sg.putten,2)],["SG / putt",bsSg(cs.putten,3),(sl.putten?sl.putten+' putts':'')],["3-putts / ronde",bsN(dp,2),bsDelta(dp,pdp,2,true),hm.driePuttRonde!=null],["Ft geholed / rnd",bsN(st.ftHoledPerRound,1),bsDelta(st.ftHoledPerRound,pst.ftHoledPerRound,1)],["Good putt 10–15",g1015?bsPct(g1015.pct):'–',g1015&&g1015.tour!=null?'tour '+bsPct(g1015.tour):''],["Good putt 15–25",g1525?bsPct(g1525.pct):'–',g1525&&g1525.tour!=null?'tour '+bsPct(g1525.tour):'']]);
- var make=conv.length?bsDual(conv.map(function(c){return [bsBandLbl(c.band)+' ft',c.pct,c.tour,c.putts];}))+'<div class="bsmini">Maakpercentage · gevuld = speler · licht = PGA Tour · streepje = tourwaarde als de speler erboven zit</div>':'<p class="muted" style="margin:0;font-size:12.5px">Geen conversie in deze snapshot.</p>';
+ var BS_MAKE_TOUR={"0-3":99.5,"3-5":87.9,"5-10":56.3,"10-15":30.1,"15-25":15.9,"25+":5.4};
+ var make=conv.length?bsDual(conv.map(function(c){var tk=String(c.band||"").replace(/–/g,"-").replace(/\s|ft/g,"");var tv=(c.tour!=null&&c.tour!=="")?+c.tour:(BS_MAKE_TOUR[tk]!=null?BS_MAKE_TOUR[tk]:null);return [bsBandLbl(c.band)+' ft',c.pct,tv,c.putts];}))+'<div class="bsmini">Maakpercentage · gevuld = speler · licht = PGA Tour · streepje = tourwaarde als de speler erboven zit</div>':'<p class="muted" style="margin:0;font-size:12.5px">Geen conversie in deze snapshot.</p>';
  var sgr=pd.sgPerBand||[];var B=(s.banden&&s.banden.putten)||[];
  var sgb=sgr.length?bsBars(sgr.map(function(b){return b.sg;}),sgr.map(function(b){return bsBandLbl(b.band)+' ft';}),sgr.map(function(b){return b.slagen;}),{h:230})+'<div class="bsmini">SG per ronde per afstand</div>':(B.length?bsBars(B.map(function(b){return b.sg;}),B.map(function(b){return bsBandLbl(b.band)+' ft';}),B.map(function(b){return b.slagen;}),{h:150,dec:2})+'<div class="bsmini">SG per putt per afstand</div>':'');
  var heat=B.length?bsHeat(B.map(function(b){return bsBandLbl(b.band);}),[["SG / putt",B.map(function(b){return {sg:+b.sg,n:+b.slagen};})]]):'';
@@ -6626,7 +6634,7 @@ function rkSesF(s){return s.finalized&&s.counts!==false&&(homeAll||s.seasonId===
 function rkTotals(filter){const tot={};players().forEach(p=>tot[p.id]={pts:0,played:0});rkSes().filter(s=>rkSesF(s)&&(!filter||filter(s))).forEach(s=>(s.results||[]).forEach(r=>{if(!tot[r.playerId])tot[r.playerId]={pts:0,played:0};tot[r.playerId].pts+=(+r.points||0);tot[r.playerId].played++;}));
  return Object.keys(tot).map(id=>({id:id,name:nameOf(id),pts:tot[id].pts,played:tot[id].played})).sort((a,b)=>(b.pts-a.pts)||(b.played-a.played)||a.name.localeCompare(b.name,"nl"));}
 function rkRk(i){return '<span class="klrk'+(i===0?' o':(i<3?' g':''))+'">'+(i+1)+'</span>';}
-function rkRij(p,i,max,mv){var m=(mv==null)?'':('<span class="mv '+(mv>0?'up':mv<0?'dn':'eq')+'">'+(mv>0?'▲'+mv:mv<0?'▼'+(-mv):'–')+'</span>');
+function rkRij(p,i,max,mv){var m=(mv==null)?'':(mv==="new"?'<span class="mv eq" title="Nieuw in het klassement">•</span>':('<span class="mv '+(mv>0?'up':mv<0?'dn':'eq')+'">'+(mv>0?'▲'+mv:mv<0?'▼'+(-mv):'–')+'</span>'));
  return '<div class="klr" data-klp="'+p.id+'">'+rkRk(i)+'<span class="av">'+esc(initials(p.name||""))+'</span><span class="nm"><b>'+esc(p.name)+'</b><small>'+p.played+' challenge'+(p.played===1?'':'s')+'</small></span>'+(max?'<span class="tr'+(i===0?' o':'')+'"><i style="width:'+Math.round(p.pts/max*100)+'%"></i></span>':'')+'<span class="pts">'+fmtPts(p.pts)+'<small>pt</small></span>'+m+'</div>';}
 function rkDagen(){var d={};rkSes().filter(rkSesF).forEach(s=>{if(s.date)d[String(s.date).slice(0,10)]=1;});return Object.keys(d).sort();}
 function rkDagLabel(d){try{return new Date(d+"T12:00:00").toLocaleDateString("nl-NL",{weekday:"short"})+" "+fmtDate(d);}catch(e){return d;}}
@@ -6663,7 +6671,7 @@ function renderHome(){
    +'<div class="klvast" style="margin-top:6px">Deze challenges tellen ook mee in het seizoen — de dagstand is een filter, geen apart klassement.</div>')
    :'<p class="muted" style="margin:0;font-size:13px">Geen challenges op deze dag.'+(dagen.length?' Blader met ‹ › naar een trainingsdag of kies een datum.':' Kies een datum met het kalendericoon.')+'</p>')+'</div>';
  var seiH='<div class="card"><div class="cardhd"><h3>'+(homeAll?'Alle teams':'Seizoen '+esc(seasonName(viewSeasonId)))+'<span class="cvn">'+ranked.length+'</span></h3><span class="hdnote">'+(laatst?'▲▼ t.o.v. vóór '+fmtDate(laatst):'')+'</span></div>'
-  +(ranked.length?ranked.map((p,i)=>{var pr=prevRank[p.id];var mv=(pr==null)?null:(pr-(i+1));return rkRij(p,i,max,laatst?mv:null);}).join(""):'<p class="muted" style="margin:0;font-size:13px">Nog geen challenges gespeeld.</p>')
+  +(ranked.length?ranked.map((p,i)=>{var pr=prevRank[p.id];var mv=(pr==null)?null:(pr-(i+1));return rkRij(p,i,max,laatst?(mv==null?"new":mv):null);}).join(""):'<p class="muted" style="margin:0;font-size:13px">Nog geen challenges gespeeld.</p>')
   +(unranked.length?'<div class="klnochal">Nog geen challenge: '+unranked.map(p=>esc(p.name)).join(", ")+'</div>':'')+'</div>';
  H+='<div class="kltwo">'+dagH+seiH+'</div>';
  /* recente challenges + tellers */
@@ -11942,6 +11950,8 @@ function wlReadySvg(L){
   col:function(v){return v<25?WL_C.red:(v<50?WL_C.red2:WL_C.grey);},fmt:function(v){var b=readyBracket(v);return v+"%"+(b.lab?" \u00b7 "+b.lab:"");},h:300,W:1280,Lp:56,bwMax:30,
   empty:"Geen checks in deze periode."});}
 /* v270: lijngrafiek (1–6) met signaalzone; heatmap over alle onderdelen */
+function wlItemSvg(L,key){var LAB=["heel laag","laag","matig","redelijk","goed","top"];
+ return wlBarSvg(L,{get:function(w){var v=+w[key]||0;return v?v:null;},min:0,max:6,ticks:[0,2,4,6],zone:2.5,col:function(v){return v<=1?WL_C.red:(v<=2?WL_C.red2:WL_C.grey);},fmt:function(v){var r=Math.round(v);return String(v).replace(".",",")+"/6"+(LAB[r-1]?" \u00b7 "+LAB[r-1]:"");},h:200,empty:"Geen antwoorden op dit onderdeel in deze periode."});}
 function wlLineSvg(L,key){
  var pts=[];L.forEach(function(w){var v=+w[key]||0;if(v)pts.push({w:w,v:v});});
  if(!pts.length)return '<p class="muted" style="margin:0;font-size:13px">Geen antwoorden op dit onderdeel in deze periode.</p>';
@@ -12166,8 +12176,8 @@ function renderWellnessTab(){
  H+='<div class="bstwo"><div class="card"><div class="cardhd"><h3>Slaap</h3><span class="hdnote">'+(sh2.length?sh2.length+' nachten met uren':'geen uren ingevuld')+'</span></div>'
   +'<div class="bstiles" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="bstile"><small>Gem. uren</small><b>'+(sh!=null?sh.toFixed(1).replace(".",","):"–")+'</b><span>per nacht</span></div><div class="bstile"><small>Kwaliteit</small><b>'+(sq!=null?wlPct(sq)+"%":"–")+'</b><span>&nbsp;</span></div><div class="bstile"><small>Korte nachten</small><b'+(kort?' style="color:'+WL_C.red+'"':'')+'>'+kort+'</b><span>&lt; 6 uur</span></div></div>'
   +(sh2.length?'<div class="bsfig">'+wlHoursSvg(V)+'</div>':'<p class="muted" style="margin:0;font-size:12.5px">Nog geen slaapuren ingevuld in deze periode.</p>')+'</div>'
-  +'<div class="card"><div class="cardhd"><h3>Overige</h3><span class="row" style="gap:8px;align-items:center">'+(wlBelView==="lijn"?'<select class="klsel" id="wlMetSel" style="padding:4px 26px 4px 10px;font-size:11.5px">'+MET.map(function(m){return '<option value="'+m[0]+'"'+(wlMetric===m[0]?" selected":"")+'>'+m[1]+'</option>';}).join("")+'</select>':'')+'<div class="seg sm" id="wlBelSeg"><button data-bv="lijn" class="'+(wlBelView==="lijn"?"on":"")+'">Lijn</button><button data-bv="heat" class="'+(wlBelView==="heat"?"on":"")+'">Heatmap</button></div></span></div>'
-  +'<div class="wlstack"><div class="'+(wlBelView==="heat"?'':'off')+'"><div class="bsfig">'+wlHeatSvg(V,MET)+'</div><div class="bsmini">1–6 per item'+(wlWkAvg?' · weekgemiddelde':' per check')+' · donker = hoog</div></div><div class="'+(wlBelView==="lijn"?'':'off')+'"><div class="bstiles" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="bstile"><small>Gemiddeld</small><b>'+(mavg!=null?mavg.toFixed(1).replace(".",","):"–")+'</b><span>/ 6</span></div><div class="bstile"><small>Laagste</small><b>'+(function(){var v=L.map(function(w){return +w[wlMetric]||0;}).filter(Boolean);return v.length?Math.min.apply(null,v):"–";})()+'</b><span>&nbsp;</span></div><div class="bstile"><small>Hoogste</small><b>'+(function(){var v=L.map(function(w){return +w[wlMetric]||0;}).filter(Boolean);return v.length?Math.max.apply(null,v):"–";})()+'</b><span>&nbsp;</span></div></div><div class="bsfig">'+wlLineSvg(V,wlMetric)+'</div></div></div></div></div>';
+  +'<div class="card"><div class="cardhd"><h3>Overige</h3><span class="row" style="gap:8px;align-items:center">'+(wlBelView==="lijn"?'<select class="klsel" id="wlMetSel" style="padding:4px 26px 4px 10px;font-size:11.5px">'+MET.map(function(m){return '<option value="'+m[0]+'"'+(wlMetric===m[0]?" selected":"")+'>'+m[1]+'</option>';}).join("")+'</select>':'')+'<div class="seg sm" id="wlBelSeg"><button data-bv="lijn" class="'+(wlBelView==="lijn"?"on":"")+'">Staven</button><button data-bv="heat" class="'+(wlBelView==="heat"?"on":"")+'">Heatmap</button></div></span></div>'
+  +'<div class="wlstack"><div class="'+(wlBelView==="heat"?'':'off')+'"><div class="bsfig">'+wlHeatSvg(V,MET)+'</div><div class="bsmini">1–6 per item'+(wlWkAvg?' · weekgemiddelde':' per check')+' · donker = hoog</div></div><div class="'+(wlBelView==="lijn"?'':'off')+'"><div class="bstiles" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="bstile"><small>Gemiddeld</small><b>'+(mavg!=null?mavg.toFixed(1).replace(".",","):"–")+'</b><span>/ 6</span></div><div class="bstile"><small>Laagste</small><b>'+(function(){var v=L.map(function(w){return +w[wlMetric]||0;}).filter(Boolean);return v.length?Math.min.apply(null,v):"–";})()+'</b><span>&nbsp;</span></div><div class="bstile"><small>Hoogste</small><b>'+(function(){var v=L.map(function(w){return +w[wlMetric]||0;}).filter(Boolean);return v.length?Math.max.apply(null,v):"–";})()+'</b><span>&nbsp;</span></div></div><div class="bsfig">'+wlItemSvg(V,wlMetric)+'</div></div></div></div></div>';
  /* Klachten | Signalen & checks */
  H+='<div class="bstwo"><div class="card" id="wlKlCard"><div class="cardhd"><h3>Klachten</h3><span class="row" style="gap:8px;align-items:center"><span class="hdnote">'+_kln+' dag'+(_kln===1?'':'en')+'</span><div class="seg sm" id="wlKlSeg"><button data-kv="stroken" class="'+(wlKlView==="stroken"?"on":"")+'">Stroken</button><button data-kv="body" class="'+(wlKlView==="body"?"on":"")+'">Lichaam</button><button data-kv="weken" class="'+(wlKlView==="weken"?"on":"")+'">Weken</button></div></span></div>'
   +(!_kln?'<p class="muted" style="margin:0;font-size:13px">Geen klachten gemeld in deze periode.</p>':(wlKlView==="body"?klBodyHtml(L,spPlayer):('<div class="wlstack"><div class="off" aria-hidden="true">'+(function(){var _z=klZone;klZone=null;var h=klBodyHtml(L,spPlayer);klZone=_z;return h;})()+'</div><div>'+(wlKlView==="weken"?klWeekGrid(L,spPlayer):'<div class="bsfig">'+klStrokenSvg(L)+'</div>')+'</div></div>')))+'</div>';
