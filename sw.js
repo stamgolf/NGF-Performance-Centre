@@ -1,9 +1,9 @@
-const CACHE = 'jo-ladder-v302';
+const CACHE = 'jo-ladder-v304';
 const ASSETS = [
   './',
   './index.html',
   './manifest.webmanifest',
-  './icon-192-v2.png',
+  './icon-192-v2.png','./favicon.ico',
   './icon-512-v2.png',
   './apple-touch-icon-v2.png',
   './pdf-lib.min.js'
