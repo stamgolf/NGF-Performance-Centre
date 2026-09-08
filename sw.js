@@ -1,11 +1,11 @@
-const CACHE = 'jo-ladder-v301';
+const CACHE = 'jo-ladder-v302';
 const ASSETS = [
   './',
   './index.html',
   './manifest.webmanifest',
-  './icon-192.png',
-  './icon-512.png',
-  './apple-touch-icon.png',
+  './icon-192-v2.png',
+  './icon-512-v2.png',
+  './apple-touch-icon-v2.png',
   './pdf-lib.min.js'
 ];
 self.addEventListener('install', e => {
