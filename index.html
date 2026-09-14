@@ -43,6 +43,9 @@ header.bar{background:#fff;color:var(--ink);padding:calc(env(safe-area-inset-top
 #splash .spl-wm em{font-style:normal;color:var(--orange)}
 @keyframes splin{from{opacity:0}to{opacity:1}}
 @keyframes splweg{to{opacity:0;visibility:hidden}}
+/* v322: bibliotheekrij met +-knop */
+.lbrow{display:flex;align-items:center;gap:6px;margin-bottom:6px}
+.lbrow .bkpitem{flex:1;margin-bottom:0}
 /* v318: lege staten zonder iconen */
 .empty .em{display:none}
 .empty{padding:22px 18px;opacity:1}
@@ -2362,7 +2365,7 @@ const LIES={f:"Fairway",r:"Rough",s:"Sand",g:"Green"};const DLIES={f:"Fairway",r
 const LV=["PGA Tour"];
 function spread(min,max,n){if(n===1)return [Math.round((min+max)/2)];const a=[];for(let i=0;i<n;i++)a.push(Math.round(min+(max-min)*i/(n-1)));return a;}
 const NSIT=[3,6,9,12,15,18], NHOLE=[6,9,12,18];
-const APP_VERSION="v321";
+const APP_VERSION="v322";
 const TESTS={
 putt_3_5:{name:"Putt 3–5 ft",cat:"Putten",eng:"putt_cat",dists:[3,4,5],per:8,info:"24 putts (8× vanaf 3, 4 en 5 ft). Per afstand: holed, mis binnen 3 ft, mis buiten 3 ft. Output: SG + make%."},
 putt_6_10:{name:"Putt 6–10 ft",cat:"Putten",eng:"putt_cat",dists:[6,8,10],per:8,info:"24 putts (8× vanaf 6, 8 en 10 ft). Zelfde invoer als 3–5 ft."},
@@ -10375,7 +10378,8 @@ function tourCatTree(){
  if(!state.tourCatTree||!state.tourCatTree.length){
   var t=defaultTourCatTree();
   var known={};t.forEach(function(g){g.subs.forEach(function(x){known[x.toLowerCase()]=1;});});
-  (state.tourCats||[]).forEach(function(c){if(c&&!known[String(c).toLowerCase()]){t[3].subs.push(String(c));known[String(c).toLowerCase()]=1;}});
+  var _gn=t.find(function(g){return g.k==="geen";})||t[t.length-1];
+  (state.tourCats||[]).forEach(function(c){var k=String(c||"").toLowerCase();if(!c||known[k])return;if(TAX_MIGRATIE[k]!=null||TOURCAT_EXTRA.some(function(x){return String(x).toLowerCase()===k;}))return;_gn.subs.push(String(c));known[k]=1;});
   state.tourCatTree=t;
  }
  /* v216: Oefenronde als eigen categorie naast Speeltraining */
@@ -10406,6 +10410,8 @@ function normalizePlanning(){
   if(!state.tourCatsV2){TOURCAT_EXTRA.forEach(function(c){if(state.tourCats.indexOf(c)<0)state.tourCats.push(c);});state.tourCatsV2=1;}
   tourCatTree();tourCatSync();
   if(!state.tourLabels||!state.tourLabels.length)state.tourLabels=defaultTourLabels();
+  if(!state.tourLabelsV322){state.tourLabelsV322=1;/* v322: leeftijdscategorieën = TAX_CATS (U15/U21 erbij), eigen extra labels blijven achteraan */var _std=defaultTourLabels();var _extra=(state.tourLabels||[]).filter(function(l){return _std.indexOf(l)<0;});state.tourLabels=_std.concat(_extra);}
+  if(!state.tourCatTreeV322){state.tourCatTreeV322=1;/* v322: oude filtercategorieën (WK/EK, Jeugdtour …) uit de MJOP-ladder halen */if(state.tourCatTree&&state.tourCatTree.length){var _std2={};defaultTourCatTree().forEach(function(g){g.subs.forEach(function(x){_std2[String(x).toLowerCase()]=1;});});var _leg={};Object.keys(TAX_MIGRATIE).forEach(function(k){_leg[k]=1;});TOURCAT_EXTRA.forEach(function(k){_leg[String(k).toLowerCase()]=1;});var _geen=state.tourCatTree.find(function(g){return g.k==="geen";});state.tourCatTree.forEach(function(g){if(g.k==="geen")return;g.subs=g.subs.filter(function(x){var k=String(x).toLowerCase();if(_std2[k])return true;if(_leg[k])return false;if(_geen&&_geen.subs.indexOf(x)<0)_geen.subs.push(x);return false;});});}tourCatSync();}
   if(!state.tourDefs)state.tourDefs=[];
   if(!state.tourDefsV320){state.tourDefsV320=1;SEED_TOURDEFS_V320.forEach(function(d){if(state.tourDefs.some(function(x){return (x.name||"").toLowerCase()===d.name.toLowerCase();}))return;state.tourDefs.push({id:uid(),name:d.name,cat:d.cat,labels:d.labels.slice(),klasse:d.klasse,tourId:"",vorm:d.vorm,gender:d.gender,rondes:d.rondes,load:d.load,invitation:d.invitation,seed:true});});}
   if(!state.tourDefsV321){state.tourDefsV321=1;/* v321: Toms correcties uit het voorstelbestand op de geseede definities */SEED_TOURDEFS_V320.forEach(function(d){var x=state.tourDefs.find(function(y){return y.seed&&((y.name||"").toLowerCase()===d.name.toLowerCase()||(d.was&&(y.name||"").toLowerCase()===d.was.toLowerCase()));});if(!x)return;x.name=d.name;x.cat=d.cat;x.labels=d.labels.slice();x.klasse=d.klasse;x.vorm=d.vorm;x.gender=d.gender;x.rondes=d.rondes;x.load=d.load;x.invitation=d.invitation;});}
@@ -14161,9 +14167,13 @@ function calCoachItems(van,tot){
   while(d<=last){out.push({date:d,laag:laag,tijd:ev.startTime||"",tot:ev.endTime||"",naam:ev.name||blockTypeName(ev.type),sub:blockTypeName(ev.type),open:"ev",id:ev.id});d=dAddDays(d,1);}});
  if(L.wed||(L.swed&&!pid))(state.tourEditions||[]).forEach(function(ed){if(!ed.start)return;var e=ed.end||ed.start;if(ed.start>tot||e<van)return;
   var wie=Object.keys(ed.participants||{}).filter(function(q){return !!registryPlayer(q);});
-  if(pid){if(!(ed.participants||{})[pid])return;}else if(!wie.length)return;
+  var _eigen=(!pid&&!wie.length);/* v322: toernooi zonder deelnemers = eigen coachtoernooi */
+  if(pid){if(!(ed.participants||{})[pid])return;}
   var m=edMeta(ed);var d=(ed.start>van?ed.start:van),last=(e<tot?e:tot);
-  while(d<=last){var _lg=(pid||edCoachDag(ed,d))?"wed":"swed";if(L[_lg])out.push({date:d,laag:_lg,tijd:"",tot:"",naam:m.name,sub:pid?"Wedstrijd":((wie.length===1?nameOf(wie[0]):wie.length+" spelers")+(_lg==="wed"?" · coach aanwezig":"")),open:"ed",id:ed.id});d=dAddDays(d,1);}});
+  while(d<=last){var _cd=edCoachDag(ed,d);var _lg=(pid||_cd)?"wed":"swed";
+   if(_eigen){if(L.wed)out.push({date:d,laag:"wed",dim:!_cd,tijd:"",tot:"",naam:m.name,sub:_cd?"coach aanwezig":"niet aanwezig",open:"ed",id:ed.id});}
+   else if(L[_lg])out.push({date:d,laag:_lg,tijd:"",tot:"",naam:m.name,sub:pid?"Wedstrijd":((wie.length===1?nameOf(wie[0]):wie.length+" spelers")+(_lg==="wed"?" · coach aanwezig":"")),open:"ed",id:ed.id});
+   d=dAddDays(d,1);}});
  out.sort(function(a,b){return a.date.localeCompare(b.date)||(a.tijd||"99:99").localeCompare(b.tijd||"99:99");});
  return out;}
 function calMaandShift(n){var y=+calDatum.slice(0,4),mo=+calDatum.slice(5,7)-1+n;var y2=y+Math.floor(mo/12),m2=((mo%12)+12)%12;calDatum=y2+"-"+("0"+(m2+1)).slice(-2)+"-01";renderPlanning();}
@@ -14192,7 +14202,7 @@ function calMaandHtml(){
  while(d<=ge){var dl=per[d]||[];var oth=d.slice(0,7)!==calDatum.slice(0,7);
   H+='<div class="calcel'+(oth?" oth":"")+(d===vandaag?" nu":"")+(d===calSel?" sel":"")+'" data-cd="'+d+'"><b>'+(+d.slice(8,10))+'</b>'
    +'<span class="caldots">'+dl.slice(0,4).map(function(i){return '<i style="background:'+CAL_KLEUR[i.laag]+'"></i>';}).join("")+'</span>'
-   +'<span class="calevts">'+dl.slice(0,3).map(function(i){return '<em style="'+calBlokStyle(CAL_KLEUR[i.laag],i.laag==="wed")+'">'+(i.tijd?i.tijd+" ":"")+esc(i.naam)+'</em>';}).join("")+(dl.length>3?'<em class="meer">+'+(dl.length-3)+'</em>':'')+'</span></div>';
+   +'<span class="calevts">'+dl.slice(0,3).map(function(i){return '<em style="'+calBlokStyle(CAL_KLEUR[i.laag],i.laag==="wed"&&!i.dim)+(i.dim?';opacity:.55':'')+'">'+(i.tijd?i.tijd+" ":"")+esc(i.naam)+'</em>';}).join("")+(dl.length>3?'<em class="meer">+'+(dl.length-3)+'</em>':'')+'</span></div>';
   d=dAddDays(d,1);}
  H+='</div>'+calLagenChips()+'</div>';
  if(calSel&&calSel>=gs&&calSel<=ge){
@@ -14224,7 +14234,7 @@ function calWeekHtml(){
   K+='<div class="calwkdag" style="height:'+TH+'px">';
   dl.forEach(function(i){
    var su=calUur(i.tijd);
-   if(su==null){K+='<span class="calblok" data-op="'+i.open+'|'+i.id+'" style="top:'+(los*20)+'px;height:18px;'+calBlokStyle(CAL_KLEUR[i.laag],i.laag==="wed")+'">'+esc(i.naam)+'</span>';los++;return;}
+   if(su==null){K+='<span class="calblok" data-op="'+i.open+'|'+i.id+'" style="top:'+(los*20)+'px;height:18px;'+calBlokStyle(CAL_KLEUR[i.laag],i.laag==="wed"&&!i.dim)+(i.dim?';opacity:.55':'')+'">'+esc(i.naam)+'</span>';los++;return;}
    var eu=calUur(i.tot);if(eu==null||eu<=su)eu=su+1;
    var top=Math.max(0,(su-U0)*H),hh=Math.max(20,(eu-su)*H);
    K+='<span class="calblok" data-op="'+i.open+'|'+i.id+'" style="top:'+top+'px;height:'+hh+'px;'+calBlokStyle(CAL_KLEUR[i.laag],i.laag==="wed")+'">'+i.tijd+' '+esc(i.naam)+'</span>';});
@@ -14583,6 +14593,7 @@ function saveEdition(){
   var i=state.tourEditions.findIndex(function(e){return e.id===d.id;});
   if(i>=0)state.tourEditions[i]=d;else state.tourEditions.push(d);
   save();closeSheet();planYear=d.year;renderPlanning();toast("Toernooi opgeslagen \u2713");
+  if(!rolIsSpeler()&&edIsNew&&!Object.keys(d.participants||{}).length){setTimeout(function(){try{editionDetail(d.id);toast("Markeer de dagen waarop je aanwezig bent");}catch(e){}},80);}
 }
 
 /* ---- Library (definitions) ---- */
@@ -14592,7 +14603,7 @@ function openLibrary(){
     var all=(state.tourDefs||[]).filter(function(d){return pickMatch(d,f);});
     if(f.tour==="__none__")all=all.filter(function(d){return !d.tourId||!tourById(d.tourId);});
     else if(f.tour)all=all.filter(function(d){return d.tourId===f.tour;});
-    function itemHtml(d){var t=[];if(d.klasse)t.push("Klasse "+esc(d.klasse));if(d.cat)t.push(esc(d.cat));(d.labels||[]).forEach(function(l){t.push(esc(l));});return '<button class="bkpitem" data-def="'+d.id+'"><b>'+esc(d.name)+'</b>'+(t.length?' <small class="muted">'+t.join(" \u00b7 ")+'</small>':'')+'</button>';}
+    function itemHtml(d){var t=[];if(d.klasse)t.push("Klasse "+esc(d.klasse));if(d.cat)t.push(esc(d.cat));(d.labels||[]).forEach(function(l){t.push(esc(l));});var nEd=(state.tourEditions||[]).filter(function(e){return e.defId===d.id&&e.year===planYear;}).length;return '<div class="lbrow"><button class="bkpitem" data-def="'+d.id+'"><b>'+esc(d.name)+'</b>'+(t.length?' <small class="muted">'+t.join(" \u00b7 ")+'</small>':'')+(nEd?' <span class="rtag">'+nEd+'× '+planYear+'</span>':'')+'</button>'+(rolIsSpeler()?'':'<button class="xbtn sm" data-newed="'+d.id+'" title="Editie aanmaken in '+planYear+'" aria-label="Editie aanmaken" style="font-size:15px;font-weight:700">+</button>')+'</div>';}
     function grp(key,name,ds){var open=libTourOpen[key]!==false;return '<div class="tourgrp"><button class="tourgh'+(open?" open":"")+'" data-tgl="'+key+'"><span class="chev">\u25b6</span><b>'+esc(name)+'</b><span class="muted" style="font-weight:600;margin-left:auto">'+ds.length+'</span></button>'+(open?'<div class="tourgb">'+ds.map(itemHtml).join("")+'</div>':'')+'</div>';}
     var groups='';
     (state.tours||[]).forEach(function(tr){var ds=all.filter(function(d){return d.tourId===tr.id;}).sort(byName);if(ds.length)groups+=grp(tr.id,tr.name,ds);});
@@ -14609,6 +14620,7 @@ function openLibrary(){
     $("#lbTours").onclick=function(){openTours();};
     sh.querySelectorAll("[data-tgl]").forEach(function(b){b.onclick=function(){var k=b.dataset.tgl;libTourOpen[k]=(libTourOpen[k]===false)?true:false;draw();};});
     sh.querySelectorAll("[data-def]").forEach(function(b){b.onclick=function(){openDefForm(b.dataset.def);};});
+    sh.querySelectorAll("[data-newed]").forEach(function(b){b.onclick=function(ev){ev.stopPropagation();newEditionFromDef(b.dataset.newed);};});
   }
   draw();openSheet();
 }
