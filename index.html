@@ -43,6 +43,48 @@ header.bar{background:#fff;color:var(--ink);padding:calc(env(safe-area-inset-top
 #splash .spl-wm em{font-style:normal;color:var(--orange)}
 @keyframes splin{from{opacity:0}to{opacity:1}}
 @keyframes splweg{to{opacity:0;visibility:hidden}}
+/* v317: Urenbalans (week) + To-do kolommen */
+.ubcard{padding:0;overflow:hidden}
+.ubh{display:flex;align-items:center;gap:10px;padding:12px 15px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.ubh h3{margin:0;font-family:var(--fd);font-weight:500;font-size:16.5px;flex:0 0 auto}
+.ubsum{display:flex;gap:6px;flex-wrap:wrap;flex:1;min-width:0;justify-content:flex-end}
+.ubpil{display:inline-flex;align-items:baseline;gap:5px;background:var(--paper);border-radius:999px;padding:4px 11px;white-space:nowrap}
+.ubpil b{font-family:var(--fd);font-size:14px;font-weight:600}.ubpil b.groen{color:#17a05c}.ubpil b.oranje{color:var(--orange)}
+.ubpil small{font-size:9.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:700}
+.ubh .chev{color:var(--muted);font-size:12px;transition:.2s;display:inline-block;flex:0 0 auto}
+.ubcard.open .ubh .chev{transform:rotate(90deg)}
+.ubb{padding:4px 15px 14px;border-top:1px solid var(--line)}
+.ubwrap{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:20px;padding-top:10px}
+.ub{margin:4px 0 12px}
+.ub .t{display:flex;justify-content:space-between;font-size:12.5px;font-weight:600;margin-bottom:5px}.ub .t small{color:var(--muted);font-weight:600;font-size:11.5px}
+.ub .tr{position:relative;height:10px;background:#e9eef4;border-radius:5px}
+.ub .tr i{position:absolute;top:0;bottom:0;border-radius:5px}
+.ub .tr .mk{position:absolute;top:-4px;bottom:-4px;width:2px;background:#7A7F85;border-radius:1px}
+.ubmini{display:flex;gap:4px;align-items:flex-end;height:96px;padding-top:4px}
+.ubmini span{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;min-width:0}
+.ubmini span i{display:block;width:100%;background:#D5DDE9;border-radius:3px 3px 0 0;min-height:2px}
+.ubmini span.nu i{background:#4A6FA5}
+.ubmini span small{font-size:9px;color:#9A9EA3;font-weight:700;margin-top:4px;text-transform:uppercase}
+.ubmini span b{font-size:10px;font-weight:700;color:var(--muted);order:-1;margin-bottom:3px;height:12px}
+.tpkan{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;align-items:start;margin-bottom:14px}
+.tpcol{padding:11px 12px}
+.tpcol .cardhd{padding-bottom:6px;margin-bottom:0}
+.tpcol .cardhd h3{margin:0;font-family:var(--fd);font-weight:500;font-size:14.5px;display:flex;align-items:center;gap:7px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tpcol .cardhd>span.row{flex:0 0 auto}
+.tpkbar{height:5px;border-radius:3px;background:#e9eef4;margin:6px 0 6px;overflow:hidden}.tpkbar i{display:block;height:100%;border-radius:3px}
+.tpcol .tdtodo{padding:6px 0;border-bottom:1px solid var(--line);font-size:12.5px}
+.tpcol .tdtodo:last-child{border-bottom:0}
+.tpcol .tdtodo.done .tdtnm{text-decoration:line-through}
+.tpcol .tdtnm{white-space:normal;line-height:1.25;font-size:12.5px}
+.tpcol .tddots{margin-left:4px}
+.tpprog{display:inline-flex;align-items:center;min-width:180px;margin-left:auto}
+.tpprog .tdprog{margin:0;flex:1}
+@media(max-width:1000px){.tpkan{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:699px){.tpkan{grid-template-columns:1fr}.ubwrap{grid-template-columns:1fr}.ubsum{justify-content:flex-start}}
+/* v316: jaarplan icoonknoppen + maandslider */
+.xbtn.sm.pertg.on{background:#7A7F85;color:#fff;border-color:#7A7F85}
+.permrng{margin:8px 0 2px}
+.percomptg{display:none}
 /* v312/v313: Deze week ring + Volgende piek */
 .tdgrid #cvAgenda{height:auto;flex:1 1 0;min-height:0}
 .tdgrid #cvAgenda .cvbody{overflow:auto}
@@ -2300,7 +2342,7 @@ const LIES={f:"Fairway",r:"Rough",s:"Sand",g:"Green"};const DLIES={f:"Fairway",r
 const LV=["PGA Tour"];
 function spread(min,max,n){if(n===1)return [Math.round((min+max)/2)];const a=[];for(let i=0;i<n;i++)a.push(Math.round(min+(max-min)*i/(n-1)));return a;}
 const NSIT=[3,6,9,12,15,18], NHOLE=[6,9,12,18];
-const APP_VERSION="v315";
+const APP_VERSION="v317";
 const TESTS={
 putt_3_5:{name:"Putt 3–5 ft",cat:"Putten",eng:"putt_cat",dists:[3,4,5],per:8,info:"24 putts (8× vanaf 3, 4 en 5 ft). Per afstand: holed, mis binnen 3 ft, mis buiten 3 ft. Output: SG + make%."},
 putt_6_10:{name:"Putt 6–10 ft",cat:"Putten",eng:"putt_cat",dists:[6,8,10],per:8,info:"24 putts (8× vanaf 6, 8 en 10 ft). Zelfde invoer als 3–5 ft."},
@@ -3771,7 +3813,7 @@ function scFiltWissel(pid){
  scFilt=_scFiltPer[pid]?JSON.parse(JSON.stringify(_scFiltPer[pid])):{mode:"all",year:"",from:"",to:"",rt:"",main:"",types:[],kl:"",evs:[]};
  _scFiltPid=pid;}
 var scMetric="score", scVerMetric="score", scVerCut=false, scParMetric="par";
-var scYrFrom=null, scYrTo=null, scSelPt=null, scDiffOpen={}, scSgMode="year", scOpenList=null, _scFocus=null, scScKind="dot", scYrMetric="score", scXMode="time", scBenchAan=true, scDispPct=false;
+var scYrFrom=null, scYrTo=null, scSelPt=null, scDiffOpen={}, scSgMode="year", scOpenList=null, _scFocus=null, scScKind="bar", scYrMetric="score", scXMode="seq", scBenchAan=true, scDispPct=false;
 function scRefYear(){return (scFilt.mode==="year"&&scFilt.year)?+scFilt.year:(+todayISO().slice(0,4));}
 function scFiltLabel(f){f=f||scFilt;
  if(f.mode==="year"&&f.year)return String(f.year);
@@ -11202,7 +11244,7 @@ function perRender(host){perEnsure();
    var yv=Y.gy+Y.gh-(w.vol/100*Y.gh),yi=Y.gy+Y.gh-(w.int/100*Y.gh);
    volPts.push([x,yv],[x2,yv]);intPts.push([x,yi],[x2,yi]);});
   if(volPts.length){
-   if(!perCompOn){
+   if(!perCompOn&&perVolOn){
    var area="M"+volPts[0][0].toFixed(1)+" "+(Y.gy+Y.gh)+" "+volPts.map(function(p){return "L"+p[0].toFixed(1)+" "+p[1].toFixed(1);}).join(" ")+" L"+volPts[volPts.length-1][0].toFixed(1)+" "+(Y.gy+Y.gh)+" Z";
    g+='<path d="'+area+'" fill="#c9d6e3" opacity=".5"/>';
    g+='<path d="'+volPts.map(function(p,i){return (i?"L":"M")+p[0].toFixed(1)+" "+p[1].toFixed(1);}).join(" ")+'" fill="none" stroke="#5B7A94" stroke-width="1.6"/>';
@@ -11237,23 +11279,27 @@ function perRender(host){perEnsure();
   +'<span class="perlegi"><i style="background:#F47C20"></i>P5</span><span class="perlegi"><i style="background:#EF7B33"></i>P4</span><span class="perlegi"><i style="background:#F0A272"></i>P3</span><span class="perlegi"><i style="background:#F6C39B"></i>P2</span><span class="perlegi"><i style="background:#FBDCC7;border:1px solid #e6ebef"></i>P1</span>'
   +(phases.length?'<span class="perlegsep"></span><span class="perlegi"><i style="background:#7C3AED"></i><b>Gereedheid</b></span>':"")
   +(perSimActive(pid,year)?'<span class="perlegi"><i style="background:#0E7490"></i>Simulatie</span>':'')
-  +(perCompOn?'<span class="perlegi"><i style="background:#1baf7a"></i>Fundament</span><span class="perlegi"><i style="background:#eda100"></i>Scherpte</span><span class="perlegi"><i style="background:#2a78d6"></i>Ritme</span><span class="perlegi"><i style="background:#008300"></i>Frisheid</span>':'<span class="perlegi"><i style="background:#5B7A94"></i>Volume</span><span class="perlegi"><i style="background:#F47C20"></i>Intensiteit</span>')+'</div>';
+  +(perCompOn?'<span class="perlegi"><i style="background:#1baf7a"></i>Fundament</span><span class="perlegi"><i style="background:#eda100"></i>Scherpte</span><span class="perlegi"><i style="background:#2a78d6"></i>Ritme</span><span class="perlegi"><i style="background:#008300"></i>Frisheid</span>':(perVolOn?'<span class="perlegi"><i style="background:#5B7A94"></i>Volume</span><span class="perlegi"><i style="background:#F47C20"></i>Intensiteit</span>':''))+'</div>';
  /* panelen volgens de gekozen zoom */
  var MFULL=["Januari","Februari","Maart","April","Mei","Juni","Juli","Augustus","September","Oktober","November","December"];
  var panels=[];
- if(perView.mode==="year")panels=[{m0:0,m1:11,t:"HELE JAAR "+year}];
+ var _cm=(String(year)===todayISO().slice(0,4))?(+todayISO().slice(5,7)-1):0;
+ if(perView.mode==="year"){var _yf=(perView.from||0),_yt=(perView.to==null?11:perView.to);if(_yt<_yf)_yt=_yf;panels=[{m0:_yf,m1:_yt,t:(_yf===0&&_yt===11)?("HELE JAAR "+year):((MFULL[_yf]+" \u2013 "+MFULL[_yt]).toUpperCase()+" "+year)}];}
+ else if(perView.mode==="half"){var _h0=Math.min(_cm,6);panels=[{m0:_h0,m1:Math.min(11,_h0+5),t:"KOMENDE 6 MAANDEN \u00b7 "+(MFULL[_h0]+" \u2013 "+MFULL[Math.min(11,_h0+5)]).toUpperCase()}];}
+ else if(perView.mode==="quarter"){var _q0=Math.min(_cm,9);panels=[{m0:_q0,m1:Math.min(11,_q0+2),t:"KOMENDE 3 MAANDEN \u00b7 "+(MFULL[_q0]+" \u2013 "+MFULL[Math.min(11,_q0+2)]).toUpperCase()}];}
  else if(perView.mode==="quarter")panels=[0,1,2,3].map(function(q){return {m0:q*3,m1:q*3+2,t:"KWARTAAL "+(q+1)+" \u00b7 "+MFULL[q*3].slice(0,3).toUpperCase()+"\u2013"+MFULL[q*3+2].slice(0,3).toUpperCase()};});
  else if(perView.mode==="month"){var mi=perView.idx||0;panels=[{m0:mi,m1:mi,t:MFULL[mi].toUpperCase()+" "+year}];}
  else if(perView.mode==="period"){var a0=perView.from||0,a1=perView.to||11;if(a1<a0)a1=a0;panels=[{m0:a0,m1:a1,t:(MFULL[a0]+" \u2013 "+MFULL[a1]).toUpperCase()+" "+year}];}
  else panels=[{m0:0,m1:5,t:"JANUARI \u2013 JUNI"},{m0:6,m1:11,t:"JULI \u2013 DECEMBER"}];
  var vsel='<div class="perview"><div class="seg sm" id="perViewSeg">'
-  +[["year","Jaar"],["half","Halfjaar"],["quarter","Kwartaal"],["period","Periode"]].map(function(v){return '<button data-v="'+v[0]+'" class="'+(perView.mode===v[0]?"on":"")+'">'+v[1]+'</button>';}).join("")
+  +[["year","Jaar"],["half","6 mnd"],["quarter","3 mnd"],["period","Periode"]].map(function(v){return '<button data-v="'+v[0]+'" class="'+(perView.mode===v[0]?"on":"")+'">'+v[1]+'</button>';}).join("")
   +'</div>'
   +(perView.mode==="period"?'<span class="perrange"><select class="in sm" id="perFrom">'+MFULL.map(function(m,i){return '<option value="'+i+'"'+((perView.from||0)===i?" selected":"")+'>'+m+'</option>';}).join("")+'</select><span class="sx">t/m</span><select class="in sm" id="perTo">'+MFULL.map(function(m,i){return '<option value="'+i+'"'+((perView.to==null?11:perView.to)===i?" selected":"")+'>'+m+'</option>';}).join("")+'</select></span>':"")+(perView.mode==="month"?'<span class="perzoomchip">'+MFULL[perView.idx]+' <a href="#" id="perZoomOut">\u00d7</a></span>':'')
-  +'<label class="rubtoggle percomptg"><input type="checkbox" id="perCompTg"'+(perCompOn?" checked":"")+'><span class="sx">Componenten</span></label></div>';
+  +'<span class="row" style="gap:6px;margin-left:auto"><button class="xbtn sm pertg'+(perVolOn?" on":"")+'" id="perVolTg" title="Volume en intensiteit tonen/verbergen" aria-label="Volume en intensiteit">'+PER_ICO.vol+'</button><button class="xbtn sm pertg'+(perCompOn?" on":"")+'" id="perCompTg" title="Componenten (fundament · scherpte · ritme · frisheid)" aria-label="Componenten">'+PER_ICO.comp+'</button></span></div>';
  var bar=el("div","card");
- bar.innerHTML='<div class="row spread" style="margin-bottom:6px;align-items:center"><h3 style="margin:0;display:flex;align-items:center;gap:6px">Jaarplan <button class="xbtn sm" id="perPrevY">\u2039</button><span>'+year+'</span><button class="xbtn sm" id="perNextY">\u203a</button></h3><div style="display:flex;align-items:center;gap:10px"><button class="btn '+(perSimActive(pid,year)?'':'ghost ')+'sm" id="perSimBtn">'+(perSimActive(pid,year)?'Simulatie aan':'Wat als?')+'</button><button class="btn ghost sm" id="perAdd">+ Fase</button></div></div>'+vsel
+ bar.innerHTML='<div class="row spread" style="margin-bottom:6px;align-items:center"><h3 style="margin:0;display:flex;align-items:center;gap:6px">Jaarplan <button class="xbtn sm" id="perPrevY">\u2039</button><span>'+year+'</span><button class="xbtn sm" id="perNextY">\u203a</button></h3><div style="display:flex;align-items:center;gap:6px"><button class="xbtn sm pertg'+(perSimActive(pid,year)?' on':'')+'" id="perSimBtn" title="'+(perSimActive(pid,year)?'Simulatie aan — klik om te stoppen':'Wat als? · simulatie')+'" aria-label="Wat als">'+PER_ICO.sim+'</button><button class="xbtn sm" id="perAdd" title="Fase toevoegen" aria-label="Fase toevoegen" style="font-size:18px;font-weight:700">+</button></div></div>'+vsel
   +panels.map(function(pn,i){return '<div class="perhalf"'+(i?' style="margin-top:14px"':'')+'><div class="perhalf-t">'+pn.t+'</div>'+halfSvg(pn.m0,pn.m1)+'</div>';}).join("")
+  +(perView.mode==="year"?('<div class="yrng permrng"><span class="sx">jan</span><div class="yrngs"><input type="range" id="perMA" min="0" max="11" step="1" value="'+(perView.from||0)+'"><input type="range" id="perMB" min="0" max="11" step="1" value="'+(perView.to==null?11:perView.to)+'"></div><span class="sx">dec</span><span class="sx" id="perMLbl" style="min-width:150px;text-align:right;font-weight:700">'+MFULL[perView.from||0]+' \u2013 '+MFULL[perView.to==null?11:perView.to]+'</span></div>'):'')
   +legend;
  host.appendChild(bar);
  var _py1=bar.querySelector("#perPrevY");if(_py1)_py1.onclick=function(){tlJaarStap(-1);};
@@ -11302,8 +11348,13 @@ function perRender(host){perEnsure();
     perSimApply(pid,year);renderPlanning();
     toastUndo("Simulatie vastgelegd",function(){if(perUndo){var p6=perPlanEnsure(perUndo.pid,perUndo.year);p6.phases=perUndo.phases;perUndo=null;save();renderPlanning();toast("Hersteld \u2713");}});});};
  }
- var _ct=bar.querySelector("#perCompTg");if(_ct)_ct.onchange=function(){perCompOn=_ct.checked;renderPlanning();};
- bar.querySelectorAll("#perViewSeg button").forEach(function(b){b.onclick=function(){var m=b.dataset.v;perView=(m==="period")?{mode:"period",from:(perView.from||0),to:(perView.to==null?11:perView.to)}:{mode:m,idx:null};renderPlanning();};});
+ var _ct=bar.querySelector("#perCompTg");if(_ct)_ct.onclick=function(){perCompOn=!perCompOn;renderPlanning();};
+ var _vt=bar.querySelector("#perVolTg");if(_vt)_vt.onclick=function(){perVolOn=!perVolOn;renderPlanning();};
+ var _ma=$("#perMA"),_mb=$("#perMB"),_ml=$("#perMLbl");
+ function _mlab(){if(_ml)_ml.textContent=MFULL[+_ma.value]+" \u2013 "+MFULL[+_mb.value];}
+ if(_ma&&_mb){_ma.oninput=function(){if(+_ma.value>+_mb.value)_mb.value=_ma.value;_mlab();};_mb.oninput=function(){if(+_mb.value<+_ma.value)_ma.value=_mb.value;_mlab();};
+  _ma.onchange=_mb.onchange=function(){perView={mode:"year",idx:null,from:+_ma.value,to:+_mb.value};renderPlanning();};}
+ bar.querySelectorAll("#perViewSeg button").forEach(function(b){b.onclick=function(){var m=b.dataset.v;perView=(m==="period")?{mode:"period",from:(perView.from||0),to:(perView.to==null?11:perView.to)}:{mode:m,idx:null,from:0,to:11};renderPlanning();};});
  var pf=$("#perFrom"),pt2=$("#perTo");
  if(pf)pf.onchange=function(){perView.from=+pf.value;if(perView.to<perView.from)perView.to=perView.from;renderPlanning();};
  if(pt2)pt2.onchange=function(){perView.to=+pt2.value;if(perView.to<perView.from)perView.from=perView.to;renderPlanning();};
@@ -11370,7 +11421,11 @@ function toastUndo(msg,onUndo){var old=document.getElementById("toastUndo");if(o
  t.querySelector("#tuBtn").onclick=function(){clearTimeout(to);t.remove();onUndo();};}
 var perMicroScope="future";
 var perView={mode:"year",idx:null};
-var perFasenOpen=false;var perCompOn=false;
+var perFasenOpen=false;var perCompOn=false;var perVolOn=true;
+var PER_ICO={
+ vol:'<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 3 5-7 4 4"/><path d="M3 21h18"/></svg>',
+ comp:'<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 18V9M10 18V5M16 18v-8M22 18H2"/></svg>',
+ sim:'<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v6l-3.5 8a2 2 0 0 0 1.8 3h15.4a2 2 0 0 0 1.8-3L18 9V3"/><path d="M5 3h14M8 14h8"/></svg>'};
 function openPhaseForm(pid,year,phId){perEnsure();var pl=perPlanEnsure(pid,year);var ph=phId?pl.phases.find(function(x){return x.id===phId;}):null;var isNew=!ph;
  var d=ph?JSON.parse(JSON.stringify(ph)):{id:uid(),type:"alg",start:year+"-01-01",end:year+"-01-31"};
  var sh=$("#sheet");
@@ -11541,7 +11596,16 @@ function fillTodoTab(box){ if(!box)return; if(!tpPlayer){box.innerHTML='<div cla
   var progRow=(!rolIsSpeler()||modusToont(pid,"wk_voortgang"))?('<div class="tdprog"><div class="tdbar"><i style="width:'+pct+'%"></i></div><span class="tdpct">'+pct+'%</span><span class="sx">'+_et.d+'/'+_et.t+'</span></div>'):'';
   var catRows=TODOCATS.map(function(c){var arr=itemsOf(c[0]);var e2=execTotals(arr.map(function(o){return o.it;}));var p2=e2.t?Math.round(100*e2.d/e2.t):0;
    return '<div class="tdcatrow clickable" data-copen="'+c[0]+'"><span class="plicon tdc" style="--cc:'+mcAccent(c[0])+'">'+TODOICONS[c[0]]+'</span><span class="tdcrname">'+c[1]+'</span><div class="tdbar"><i style="width:'+p2+'%;background:'+mcAccent(c[0])+'"></i></div><span class="tdpct">'+p2+'%</span><span class="tdcrn sx">'+e2.d+'/'+e2.t+'</span><span class="chev">▶</span></div>';}).join("");
-  body='<div class="card"><div class="row spread" style="align-items:center"><h3 style="margin:0">To-do deze week'+(plan.edited?' <span class="sx">(aangepast)</span>':'')+'</h3><button class="xbtn sm" id="tpRegen" title="Opnieuw genereren">↻</button></div>'+progRow+'<div class="tdcatlist">'+catRows+'</div></div>';
+  /* v317: kolommen per categorie met de oefeningen direct op de pagina */
+  var _wctxT=null;try{_wctxT=planCtxFor(pid,ws);}catch(e){}
+  function _row(o){var x=o.it.x||1,dn=Math.min(o.it.doneN||0,x);var dots='';for(var i=0;i<x;i++)dots+='<i class="'+(i>=x-dn?'on':'')+'"></i>';return '<div class="tdtodo'+(itemFull(o.it)?' done':'')+'" data-open="'+o.d.id+'">'+tickBtnHtml(o.it,o.d.id)+'<span class="tdtnm">'+esc(o.d.title)+'</span>'+(o.d.always?'':whyChipHtml(drillReason(o.d,_wctxT)))+'<span class="tddots">'+dots+'</span></div>';}
+  var cols=TODOCATS.map(function(c){var arr=itemsOf(c[0]);var e2=execTotals(arr.map(function(o){return o.it;}));var p2=e2.t?Math.round(100*e2.d/e2.t):0;
+   arr.sort(function(a,b){return (itemFull(a.it)?1:0)-(itemFull(b.it)?1:0)||(a.d.title||"").localeCompare(b.d.title||"","nl");});
+   return '<div class="card tpcol"><div class="cardhd"><h3><span class="cvdot" style="background:'+mcAccent(c[0])+'"></span>'+c[1]+'</h3><span class="row" style="gap:6px;align-items:center"><span class="hdnote">'+e2.d+'/'+e2.t+'</span><button class="xbtn sm" data-tpadd="'+c[0]+'" title="Oefening toevoegen" style="font-size:15px;font-weight:700">+</button></span></div><div class="tpkbar"><i style="width:'+p2+'%;background:'+mcAccent(c[0])+'"></i></div>'
+    +(arr.length?arr.map(_row).join(""):'<p class="muted" style="margin:6px 0 0;font-size:12.5px">Geen oefeningen in deze categorie.</p>')+'</div>';}).join("");
+  body='<div class="tpkan">'+cols+'</div>';
+  var _regen='<button class="xbtn sm" id="tpRegen" title="Opnieuw genereren">↻</button>';
+  head=head.replace('<button class="xbtn sm" id="tpNext">›</button>','<button class="xbtn sm" id="tpNext">›</button>'+(plan.edited?'<span class="sx">(aangepast)</span>':'')+(progRow?'<span class="tpprog">'+progRow+'</span>':'')).replace('id="tpToday" style="margin-left:auto;','id="tpToday" style="').replace('</svg></button></div>','</svg></button>'+_regen+'</div>');
  }
  /* --- focus --- */
  var phase=(wk&&wk.phase)||"ond";
@@ -11570,7 +11634,7 @@ function fillTodoTab(box){ if(!box)return; if(!tpPlayer){box.innerHTML='<div cla
  _gsw2.forEach(function(o){var rows9=(o.inh.drillIds||[]).map(function(did){var d9=_pool9.find(function(z){return z.id===did;});var on9=gsTicked(pid,ws,o.s.id,did);
   return '<div class="tdcatrow"><span style="flex:1;min-width:0;display:block"><b>'+esc(d9?d9.title:"Oefening")+'</b></span><button class="infobtn" data-gsinfo="'+did+'">i</button><button class="tpchk'+(on9?' on':'')+'" data-gstick="'+o.s.id+'|'+did+'">'+(on9?'\u2713':'')+'</button></div>';}).join("");
   gsCards+='<div class="card"><div class="row spread" style="align-items:center"><h3 style="margin:0">Groepsopdrachten \u00b7 '+esc(o.s.name)+'</h3></div><div class="sx" style="margin:2px 0 8px">Week '+o.week+(o.inh.thema?' \u00b7 '+esc(o.inh.thema):'')+' \u00b7 naast je eigen weekplan</div>'+(o.inh.notitie?'<p class="muted" style="font-size:13px;margin:0 0 8px">'+esc(o.inh.notitie)+'</p>':'')+rows9+'</div>';});}catch(_e){}
- box.innerHTML=head+focusCard+body+gsCards;
+ box.innerHTML=head+focusCard+gsCards+body;
  box.querySelectorAll("[data-gstick]").forEach(function(b){b.onclick=function(){var p9=b.dataset.gstick.split("|");gsTick(pid,ws,p9[0],p9[1],function(){renderPlanning();});};});
  box.querySelectorAll("[data-gsinfo]").forEach(function(b){b.onclick=function(){drillDetail(b.dataset.gsinfo,{mode:'view'});};});
  var fh=$("#tpFocusH");if(fh)fh.onclick=function(){tpFocusOpen=!tpFocusOpen;renderPlanning();};
@@ -11589,6 +11653,9 @@ function fillTodoTab(box){ if(!box)return; if(!tpPlayer){box.innerHTML='<div cla
  var gen=$("#tpGen");if(gen)gen.onclick=function(){var p=genWeekPlan(pid,ws);state.trainPlans=state.trainPlans||[];state.trainPlans.push(p);save();renderPlanning();toast("Weekplan gegenereerd ✓");};
  var rg=$("#tpRegen");if(rg)rg.onclick=function(){var doIt=function(){state.trainPlans=(state.trainPlans||[]).filter(function(p){return !(p.playerId===pid&&p.weekStart===ws);});var p=genWeekPlan(pid,ws);state.trainPlans.push(p);save();renderPlanning();toast("Opnieuw gegenereerd ✓");};if(plan&&plan.edited)confirmDlg("Dit weekplan is handmatig aangepast. Opnieuw genereren overschrijft je aanpassingen. Doorgaan?",doIt);else doIt();};
  box.querySelectorAll("[data-copen]").forEach(function(r){r.onclick=function(){openCatTodos(pid,ws,r.dataset.copen);};});
+ box.querySelectorAll(".tpkan [data-chk]").forEach(function(b){b.onclick=function(ev){ev.stopPropagation();var pl=planItemsNorm(planFor(pid,ws));planTick(pl,pid,b.dataset.chk,null);};});
+ box.querySelectorAll(".tpkan .tdtodo[data-open]").forEach(function(r){r.onclick=function(e){if(e.target.closest("[data-chk]"))return;drillDetail(r.dataset.open,{mode:'plan',pid:pid,ws:ws});};});
+ box.querySelectorAll("[data-tpadd]").forEach(function(b){b.onclick=function(){openDrillPicker(pid,ws,b.dataset.tpadd);};});
 }
 function openDrillPicker(pid,ws,mk){var plan=planItemsNorm(planFor(pid,ws));if(!plan){toast("Genereer eerst een weekplan");return;}
  var sel={};var _pph=playerMjop(pid);var f={q:"",sub:"",tt:"",sk:[],mj:!!_pph};
@@ -12115,7 +12182,7 @@ var _xp=(o.bwMax||18)/2+3;function X(t){return Lp+_xp+(t-t0)/(t1-t0)*(pw-2*_xp);
  wlAxisT(L).forEach(function(t){s2+='<text class="axd" x="'+X(t.t).toFixed(1)+'" y="'+(H-9)+'" text-anchor="middle">'+t.lab+'</text>';});
  s2+='</svg>';
  return '<div class="chartwrap scchart">'+s2+'</div>';}
-var WL_C={grey:"#D9DCE0",red:"#C2383A",red2:"#E08A8D",zone:"rgba(194,56,58,.07)",blue:"#4A6FA5",ink:"#2B2F33"};
+var WL_C={grey:"#B9BEC4",red:"#C2383A",red2:"#E08A8D",zone:"rgba(194,56,58,.07)",blue:"#4A6FA5",ink:"#2B2F33"};
 function wlReadySvg(L){
  return wlBarSvg(L,{get:function(w){return wellReadiness(w);},min:0,max:100,ticks:[0,25,50,75,100],zone:50,
   col:function(v){return v<25?WL_C.red:(v<50?WL_C.red2:WL_C.grey);},fmt:function(v){var b=readyBracket(v);return v+"%"+(b.lab?" \u00b7 "+b.lab:"");},h:300,W:1280,Lp:56,bwMax:30,
@@ -12187,7 +12254,7 @@ function wlComplaintSvg(L){
  s2+='</svg>';
  return '<div class="chartwrap scchart">'+s2+'</div>';}
 /* ===== v271: Klachten — stroken (A), lichaamskaart (B), weekstaven (C) ===== */
-var wlKlView="stroken",klZone=null,klWeek=null,KL_LANG=3;
+var wlKlView="body",klZone=null,klWeek=null,KL_LANG=3;
 function klDagen(L){return L.filter(function(w){return (w.bodyParts||[]).length||w.illness;});}
 function klRuns(dates){dates=dates.slice().sort();var runs=[];var cur=null;
  dates.forEach(function(d){if(cur&&dDiffDays(cur.end,d)<=2){cur.end=d;cur.n++;}else{cur={start:d,end:d,n:1};runs.push(cur);}});
@@ -13382,11 +13449,13 @@ function logbookEntries(pid){
 var lbFilt={mode:"all",year:"",from:"",to:""};
 function lbFiltApply(L,f){f=f||lbFilt;
  if(f.mode==="year"&&f.year)return L.filter(function(e){return String(e.date).slice(0,4)===String(f.year);});
+ if(f.mode==="wk"){var _ws=weekStart(todayISO());return L.filter(function(e){return e.date>=_ws&&e.date<=dAddDays(_ws,6);});}
+ if(f.mode==="mnd"){var _m0=todayISO().slice(0,7);return L.filter(function(e){return String(e.date).slice(0,7)===_m0;});}
  if(f.mode==="m1"||f.mode==="m3"||f.mode==="m6"||f.mode==="m12"||f.mode==="m60"){var cut=scMonthsAgo({m1:1,m3:3,m6:6,m12:12,m60:60}[f.mode]);return L.filter(function(e){return e.date>=cut;});}
  if(f.mode==="period"){if(f.from)L=L.filter(function(e){return e.date>=f.from;});if(f.to)L=L.filter(function(e){return e.date<=f.to;});}
  return L;}
 function lbFiltHtml(all){var f=lbFilt;var years=[];all.forEach(function(e){var y=String(e.date).slice(0,4);if(years.indexOf(y)<0)years.push(y);});years.sort();
- var o='<option value="all"'+(f.mode==="all"?" selected":"")+'>Alles</option><option value="m1"'+(f.mode==="m1"?" selected":"")+'>Laatste maand</option><option value="m3"'+(f.mode==="m3"?" selected":"")+'>Laatste 3 maanden</option><option value="m6"'+(f.mode==="m6"?" selected":"")+'>Laatste 6 maanden</option><option value="m12"'+(f.mode==="m12"?" selected":"")+'>Laatste jaar</option><option value="m60"'+(f.mode==="m60"?" selected":"")+'>Laatste 5 jaar</option><option value="period"'+(f.mode==="period"?" selected":"")+'>Periode (van–tot)…</option>';
+ var o='<option value="all"'+(f.mode==="all"?" selected":"")+'>Alles</option><option value="wk"'+(f.mode==="wk"?" selected":"")+'>Deze week</option><option value="mnd"'+(f.mode==="mnd"?" selected":"")+'>Deze maand</option><option value="m1"'+(f.mode==="m1"?" selected":"")+'>Laatste maand</option><option value="m3"'+(f.mode==="m3"?" selected":"")+'>Laatste 3 maanden</option><option value="m6"'+(f.mode==="m6"?" selected":"")+'>Laatste 6 maanden</option><option value="m12"'+(f.mode==="m12"?" selected":"")+'>Laatste jaar</option><option value="m60"'+(f.mode==="m60"?" selected":"")+'>Laatste 5 jaar</option><option value="period"'+(f.mode==="period"?" selected":"")+'>Periode (van–tot)…</option>';
  if(years.length)o+='<optgroup label="Jaar">'+years.slice().reverse().map(function(y){return '<option value="y'+y+'"'+((f.mode==="year"&&String(f.year)===y)?" selected":"")+'>'+y+'</option>';}).join("")+'</optgroup>';
  var H='<select class="in" id="lbFMode" style="flex:0 0 auto;width:auto;font-size:12px;padding:4px 26px 4px 8px;height:auto;border-radius:999px">'+o+'</select>';
  if(f.mode==="period")H+='<span class="row" style="gap:6px;flex:0 0 auto"><input class="in" type="date" id="lbFA" value="'+esc(f.from||"")+'" style="width:auto;font-size:12px;padding:4px 8px;height:auto"><span class="sx">t/m</span><input class="in" type="date" id="lbFB" value="'+esc(f.to||"")+'" style="width:auto;font-size:12px;padding:4px 8px;height:auto"></span>';
@@ -13731,6 +13800,13 @@ function openSplFilters(){
   $("#splfOk").onclick=function(){closeSheet();renderSpelers();};
   $("#splfX").onclick=function(){closeSheet();renderSpelers();};}
  draw();}
+/* v316: kiezer "voor welk toernooi?" (toernooidoelen vanuit Vandaag) */
+function tdKiesToernooi(upc,pid,dt){var sh=$("#sheet");if(!sh)return;
+ sh.innerHTML='<div class="shead"><div><h2>Toernooidoelen</h2><div class="sx">Voor welk toernooi? · '+esc(nameOf(pid))+'</div></div><button class="xbtn" onclick="closeSheet()">×</button></div>'
+  +'<div class="card">'+upc.map(function(e){var m2=edMeta(e.ed);var pk=peakNum(e.pp.peak);var days=dDiffDays(dt,e.start);var tg=edTourGoalsGet(e.ed,pid);
+   return '<div class="cvrow" data-kies-ed="'+e.ed.id+'"><span class="tlpk" style="background:'+(pk?peakColor(pk):'#e6ebef')+';color:'+(pk>=4?"#fff":"#16202B")+'">'+(pk?'P'+pk:'–')+'</span><span style="flex:1;min-width:0"><b>'+esc(m2.name)+'</b><small>'+fmtRange(e.ed)+(e.ed.location?' · '+esc(e.ed.location):'')+(tg?' · doelen gezet ✓':'')+'</small></span><span class="cvtijd">'+(e.start<=dt?'bezig':(days===0?'vandaag':'over '+days+' dgn'))+'</span><span class="cvpijl">›</span></div>';}).join("")+'</div>';
+ sh.querySelectorAll("[data-kies-ed]").forEach(function(r){r.onclick=function(){openTourGoalsForm(r.dataset.kiesEd,pid);};});
+ openSheet();}
 function tdIco(id,title,svg){return '<button class="xbtn sm" id="'+id+'" title="'+title+'" aria-label="'+title+'">'+svg+'</button>';}
 var tdPiekIdx=0;
 var TD_ICO={
@@ -13971,7 +14047,7 @@ function renderToday(){var box=$("#todayBody");if(!box)return;
  var tpl=$("#tdPlanBtn");if(tpl)tpl.onclick=function(){tpPlayer=pid;tpWeek=ws;planTab="todo";show("planning");};
  var _twb=$("#tdWeekBtn");if(_twb&&rolIsSpeler()&&!modusToont(pid,"plan_timeline"))_twb.style.display="none";if(_twb)_twb.onclick=function(){state.calMode="week";save();planTab="timeline";show("planning");};
  var _tkb=$("#tdKalB");if(_tkb&&rolIsSpeler()&&!modusToont(pid,"plan_timeline"))_tkb.style.display="none";if(_tkb)_tkb.onclick=function(){state.calMode="maand";save();planTab="timeline";show("planning");};
- var _ttg=$("#tdTgB");if(_ttg)_ttg.onclick=function(){if(_upc.length)openTourGoalsForm(_upc[0].ed.id,pid);};
+ var _ttg=$("#tdTgB");if(_ttg)_ttg.onclick=function(){if(!_upc.length)return;if(_upc.length===1){openTourGoalsForm(_upc[0].ed.id,pid);return;}tdKiesToernooi(_upc,pid,dt);};
  box.querySelectorAll("[data-copen]").forEach(function(r){r.onclick=function(){openTrainTodos(pid,ws,r.dataset.copen,null);};});
  cvScrollPas(box);setTimeout(function(){cvScrollPas(box);},50);
  cvSwipeBind($("#cvAgenda"),function(d){todayDate=dAddDays(todayDate,d);renderToday();});
@@ -14119,14 +14195,32 @@ function calWeekHtml(){
   K+='</div>';}
  K+='</div>'+calLagenChips()+'</div>';
  if(pid){
+  /* v317: fase naast het weeklabel; uren als ingeklapte Urenbalans onder het weekraster */
   var pd=(mw&&mw.phase)?phaseDef(mw.phase):null;
-  var phB=pd?'<button class="tpphase" onclick="openPhaseInfo(\''+mw.phase+'\')"><span class="phbadge sm" style="background:'+pd[2]+'">'+pd[5]+'</span><b>'+esc(pd[1])+'</b></button>':'<span class="muted" style="font-size:12.5px">Geen periodisering</span>';
-  var _cats=[["golf","Golf (Z)"],["golfb","Golf (B)"],["fysiek","Fysiek (Z)"],["fysb","Fysiek (B)"]];
-  var _tot=0;var subStats=_cats.map(function(c){var m2=typeMinutesWeek(pid,ws,c[0]);_tot+=m2;return '<span class="wg-si"><i style="background:'+wkTypeMeta(c[0])[2]+'"></i>'+c[1]+' '+fmtUren(m2)+'</span>';}).join("");
-  subStats='<div class="wg-sub">'+subStats+'<span class="wg-si wg-tot">Totaal '+fmtUren(_tot)+'</span></div>';
-  K+='<div class="card"><div class="cardhd"><h3>Uren deze week</h3>'+phB+'</div>'+wkUrenHtml(pid,ws)+'</div>';
+  var phB=pd?'<button class="tpphase" onclick="openPhaseInfo(\''+mw.phase+'\')" style="margin-left:4px"><span class="phbadge sm" style="background:'+pd[2]+'">'+pd[5]+'</span><b>'+esc(pd[1])+'</b></button>':'';
+  if(phB)K=K.replace('data-cnav="1">\u203a</button>','data-cnav="1">\u203a</button>'+phB);
+  K+=wkUrenBalansCard(pid,ws);
  }
  return K;}
+var wkUrenOpen=false;
+function wkUrenBalansCard(pid,ws){
+ var gz=0,gb=0,fz=0,fb=0;try{gz=typeMinutesWeek(pid,ws,"golf");gb=typeMinutesWeek(pid,ws,"golfb");fz=typeMinutesWeek(pid,ws,"fysiek");fb=typeMinutesWeek(pid,ws,"fysb");}catch(_e){}
+ var tot=gz+gb+fz+fb;var N=urenNormFor(pid,ws);var nT=N.golf+N.fysiek;
+ function pil(v,lab,norm){var ok=norm>0?(v>=norm):null;return '<span class="ubpil"><b'+(ok===true?' class="groen"':(ok===false?' class="oranje"':''))+'>'+fmtUren(v)+'</b><small>'+lab+'</small></span>';}
+ var sum=tot?(pil(gz+gb,"golf",N.golf)+pil(fz+fb,"fysiek",N.fysiek)+pil(tot,"totaal",nT)+'<span class="ubpil"><b>'+fmtUren(nT)+'</b><small>norm</small></span>'):'<span class="sx">nog geen trainingsuren</span>';
+ function balk(lab,z,b,norm,cz,cb){var mx=Math.max(norm,z+b,1);var pz=Math.round(100*z/mx),pb=Math.round(100*b/mx),pn=Math.round(100*norm/mx);
+  return '<div class="ub"><div class="t"><span>'+lab+'</span><small>'+fmtUren(z+b)+(norm?' · norm '+fmtUren(norm):'')+'</small></div><div class="tr"><i style="left:0;width:'+pz+'%;background:'+cz+'"></i><i style="left:'+pz+'%;width:'+pb+'%;background:'+cb+'"></i>'+(norm?'<span class="mk" style="left:'+Math.min(99,pn)+'%"></span>':'')+'</div></div>';}
+ var body='';
+ if(!tot)body='<p class="muted" style="margin:0;font-size:13px">Nog geen trainingsuren in deze week — zet je weekrooster klaar via het roostericoon bovenin.</p>';
+ else{
+  var wb=null;try{wb=activeBlocksWeek(pid,ws);}catch(_e){}
+  var perDag=[0,0,0,0,0,0,0];if(wb)wb.blocks.forEach(function(b){if(["golf","golfb","fysiek","fysb"].indexOf(b.type)<0)return;perDag[b.day]+=blockMin(b);});
+  var mxD=Math.max.apply(null,perDag.concat([1]));var vandaag=todayISO();
+  var dag='<div class="ubmini">'+CAL_WD.map(function(w,i){var dd=dAddDays(ws,i);return '<span class="'+(dd===vandaag?'nu':'')+'"><i style="height:'+Math.round(100*perDag[i]/mxD)+'%"></i><small>'+w+'</small><b>'+(perDag[i]?fmtUren(perDag[i]).replace(' u',''):'')+'</b></span>';}).join("")+'</div>';
+  body='<div class="ubwrap"><div>'+balk("Golf",gz,gb,N.golf,wkTypeMeta("golf")[2],wkTypeMeta("golfb")[2])+balk("Fysiek",fz,fb,N.fysiek,wkTypeMeta("fysiek")[2],wkTypeMeta("fysb")[2])+balk("Totaal",gz+fz,gb+fb,nT,"#B9BEC4","#2B2F33")
+   +'<div class="ulegend" style="margin-top:8px"><span><i style="background:'+wkTypeMeta("golf")[2]+'"></i>golf zelfst.</span><span><i style="background:'+wkTypeMeta("golfb")[2]+'"></i>golf begeleid</span><span><i style="background:'+wkTypeMeta("fysiek")[2]+'"></i>fysiek zelfst.</span><span><i style="background:'+wkTypeMeta("fysb")[2]+'"></i>fysiek begeleid</span><span class="unorm">streepje = norm'+(N.fase?' · fase '+esc(phaseAb(N.fase)):'')+'</span></div></div>'
+   +'<div><div class="trlbl" style="margin:0 0 6px">Per dag</div>'+dag+'</div></div>';}
+ return '<div class="card ubcard'+(wkUrenOpen?' open':'')+'"><div class="ubh" onclick="wkUrenOpen=!wkUrenOpen;renderPlanning()"><h3>Urenbalans</h3><span class="ubsum">'+sum+'</span><span class="chev">\u25b6</span></div>'+(wkUrenOpen?'<div class="ubb">'+body+'</div>':'')+'</div>';}
 /* v269: urenoverzicht onder de weekkalender (speler) */
 function urenNormFor(pid,ws){var p=registryPlayer(pid)||{};var st=(state.urenNorm||{})[pid];
  var m="pro";try{m=modusNu(pid);}catch(_e){}
