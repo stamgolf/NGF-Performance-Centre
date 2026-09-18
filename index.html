@@ -99,7 +99,42 @@ header.bar{background:#fff;color:var(--ink);padding:calc(env(safe-area-inset-top
 @media(max-width:600px){.drmx .mxw{display:none}.drmx .mxs{display:table}.drmx th.r,.drmx td.r{width:88px;font-size:11px}}
 .drseg{display:inline-flex;background:var(--paper);border-radius:9px;padding:3px;gap:2px}.drseg button{border:0;background:none;padding:5px 10px;font-size:12px;font-weight:600;color:var(--muted);border-radius:7px;cursor:pointer;font-family:inherit;line-height:1.2}.drseg button.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08)}
 .drseg.dark button.on{background:var(--ink);color:#fff}
-@media(min-width:700px){.cvkpi.drkpi{grid-template-columns:repeat(4,1fr)}}@media(max-width:699px){.cvkpi.drkpi{grid-template-columns:repeat(2,1fr)}.cvkpi.drkpi.drie{grid-template-columns:repeat(3,1fr)}}
+.mxtog{display:inline-flex;align-items:center;gap:8px;background:none;border:0;padding:0;cursor:pointer;font-family:inherit;color:var(--ink)}.mxtog .chev{font-size:9px;color:var(--muted);transition:transform .15s;display:inline-block}.drmx.open .mxtog .chev{transform:rotate(90deg)}
+.drmx tr.mxsub td.r{padding-left:16px;font-weight:500;color:var(--muted)}.drmx tr.mxgrp td.r{font-weight:700}
+@media(min-width:700px){.cvkpi.drkpi{grid-template-columns:repeat(4,1fr)}}@media(max-width:699px){.cvkpi.drkpi{grid-template-columns:repeat(2,1fr)}}
+/* v333: mediakaart + detailvenster met tabs */
+.dc{grid-template-columns:96px minmax(0,1fr);gap:0;padding:0;overflow:hidden;background:#fff;border:1px solid var(--line);border-left:1px solid var(--line);align-items:stretch;min-height:88px}
+.dc:hover{border-color:#cfd4d9;box-shadow:var(--shadow)}
+.dc.mc-golfskills,.dc.mc-spelen,.dc.mc-fysiek,.dc.mc-prestatiegedrag{border-left-color:var(--line)}
+.dcimg{position:relative;background-size:cover;background-position:center;min-height:88px}
+.dctk{position:absolute;left:8px;bottom:5px;font-family:var(--fd);font-size:17px;font-weight:600;letter-spacing:.04em;line-height:1;opacity:.75;pointer-events:none}
+.dcimg.has:after{content:"";position:absolute;left:0;right:0;bottom:0;height:46%;background:linear-gradient(to top,rgba(43,47,51,.55),rgba(43,47,51,0));pointer-events:none}
+.dcimg.has .dctk{color:#fff!important;opacity:.95;z-index:1;text-shadow:0 1px 3px rgba(0,0,0,.35)}
+.dcplay{position:absolute;right:6px;top:6px;width:22px;height:22px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.dcbody{padding:9px 11px 8px;min-width:0;display:flex;flex-direction:column;gap:4px}
+.dchd{display:flex;align-items:flex-start;gap:8px}.dchd .t{min-width:0;flex:1}
+.dc .t b{font-size:14px}.dc .t small{font-size:12px}
+.dc .dcr{flex:0 0 auto}
+.dcdoel{font-size:12.5px;line-height:1.4;color:var(--ink);opacity:.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dc .meta{grid-column:auto;margin-top:auto;gap:8px;font-size:11.5px}
+.dc .meta>span{background:none;border:0;padding:0;border-radius:0}
+.dc .meta .sep{width:3px;height:3px;border-radius:50%;background:#cfd3d7;display:inline-block}
+.drdots{display:inline-flex;gap:7px;align-items:center}.drdots span{display:inline-flex;align-items:center;gap:2px}.drdots i{width:6px;height:6px;border-radius:50%;background:#E3E6E9;display:inline-block}.drdots i.on{background:var(--orange)}.drdots b{font-size:10.5px;font-weight:800;color:var(--muted);margin-right:2px}
+@media(max-width:480px){.dc{grid-template-columns:72px minmax(0,1fr)}.dcimg{min-height:80px}.dc .meta{gap:6px}}
+.drmedia{display:block;border-radius:12px;overflow:hidden;background:var(--paper);margin:0 0 10px;position:relative}
+.drmedia img{display:block;width:100%;max-height:220px;object-fit:cover}
+.drplay{position:absolute;right:10px;top:10px;width:30px;height:30px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--ink);box-shadow:0 1px 4px rgba(0,0,0,.18);text-decoration:none}
+.drmedia.drlink{position:static;display:flex;align-items:center;gap:10px;padding:10px 12px;font-size:13px;font-weight:600;color:var(--ink);text-decoration:none}.drmedia.drlink .drplay{position:static}
+.drtabs{display:flex;gap:2px;background:var(--paper);border-radius:10px;padding:3px;margin:0 0 10px}
+.drtabs button{flex:1;border:0;background:none;padding:7px 4px;border-radius:8px;font-size:12.5px;font-weight:600;color:var(--muted);cursor:pointer;font-family:inherit}.drtabs button.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.drp{margin:0;font-size:13.5px;line-height:1.5}
+.drsteps{margin:0;padding:0;list-style:none;counter-reset:s}.drsteps li{position:relative;padding:0 0 9px 30px;font-size:13.5px;line-height:1.45;counter-increment:s}.drsteps li:last-child{padding-bottom:0}.drsteps li:before{content:counter(s);position:absolute;left:0;top:1px;width:21px;height:21px;border-radius:50%;background:var(--ink);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.drrels{display:flex;gap:6px;flex-wrap:wrap}.drrel{border:1px solid var(--line);border-radius:999px;padding:4px 11px;font-size:12.5px;background:#fff;cursor:pointer;font-family:inherit;color:var(--ink)}.drrel b{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-right:5px;font-weight:700}
+.drkpi{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:6px;margin-bottom:10px}.drkpi span{background:var(--paper);border-radius:10px;padding:8px 6px;text-align:center;min-width:0}.drkpi b{display:block;font-size:15px;font-weight:600;font-family:var(--fd)}.drkpi b i{font-style:normal;font-size:11px;color:var(--muted);margin-left:2px}.drkpi small{font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+.card .drkpi{margin-bottom:0}
+.drfasebar{display:grid;grid-template-columns:repeat(12,1fr);gap:2px;margin:4px 0 2px}.drfasebar i{height:8px;border-radius:2px;background:#E3E6E9;display:block}.drfasebar i.on{background:#2e78e8}
+.drfaselbl{display:grid;grid-template-columns:repeat(12,1fr);font-size:9px;color:var(--muted);text-align:center;font-weight:700}
+.drspark{display:inline-flex;gap:3px;align-items:flex-end;height:24px}.drspark i{width:7px;background:#D5D8DB;border-radius:2px;display:inline-block}.drspark i.on{background:var(--orange)}
 /* v325: toernooidatabase tweeluik */
 .tdbgrid{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;margin-bottom:14px}
 @media(min-width:700px){.tdbgrid{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)}}
@@ -2014,7 +2049,7 @@ nav.tabs button:active{opacity:1}
 <section class="view" id="v-teams"><button class="bkbtn ccback" onclick="show('coachcorner')" style="margin:0 0 8px;display:inline-block">‹ Coachcorner</button><p class="eyebrow">Groepen</p><h1 class="title">Teams</h1><div id="teamsBody"></div></section>
 <section class="view" id="v-toernooien"><button class="bkbtn ccback" onclick="show('coachcorner')" style="margin:0 0 8px;display:inline-block">‹ Coachcorner</button><p class="eyebrow">Toernooien</p><h1 class="title">Toernooidatabase</h1><div id="tdbBody"></div></section>
 <section class="view" id="v-gschemas"><button class="bkbtn ccback" onclick="show('coachcorner')" style="margin:0 0 8px;display:inline-block">‹ Coachcorner</button><p class="eyebrow">Schema’s</p><h1 class="title">Rooster &amp; groepsschema’s</h1><div id="gsvBody"></div></section>
-<section class="view" id="v-teaminsight"><div id="teamSwitchTI"></div><h1 class="title">Teamprestaties</h1><div id="teamInsightBody"></div></section><section class="view" id="v-logbook"><h1 class="title" style="margin-bottom:2px">Logboek</h1><p class="plansub">Alle voltooide acties van de speler</p><div id="logbookBody"></div></section><section class="view" id="v-scoring"><h1 class="title" style="margin-bottom:2px">Scoring</h1><p class="plansub">Scoreverloop en scoringsoverzicht<span class="alleencoach"> per speler</span></p><div id="scBody"></div></section><section class="view" id="v-baanstats"><h1 class="title" style="margin-bottom:2px">Baanstats</h1><p class="plansub">Upgame-snapshots en strokes gained</p><div id="bsBody"></div></section><section class="view" id="v-trainen"><button class="bkbtn ccback" onclick="show('coachcorner')" style="margin:0 0 8px;display:inline-block">‹ Coachcorner</button><button class="bkbtn" id="trBack" style="margin:0 0 8px;display:none">‹ Terug</button><h1 class="title" style="margin-bottom:2px">Drills-database</h1><p class="plansub" id="trSub">Oefeningen, testen en challenges</p><div id="trainBody"></div></section><section class="view active" id="v-today"><h1 class="title" style="margin-bottom:2px">Vandaag</h1><div id="todayBody"></div></section><section class="view" id="v-planning"><div id="planSwitch"></div><h1 class="title" style="margin-bottom:2px">Planning</h1><p class="plansub" id="planSub"></p><div id="planBody"></div></section><section class="view" id="v-goals"><button class="bkbtn ccback" onclick="show('coachcorner')" style="margin:0 0 8px;display:inline-block">‹ Coachcorner</button><div id="goalScope"></div><h1 class="title">Doelen</h1><div id="goalsBody"></div></section><section class="view" id="v-spelen"><button class="bkbtn ccback" onclick="show('coachcorner')" style="margin:0 0 8px;display:inline-block">‹ Coachcorner</button><div id="spTop"></div><h1 class="title" style="margin-bottom:2px">Spelen</h1><p class="plansub">Rondeoverzicht en score-invoer per speler</p><div id="spBody"></div></section><section class="view" id="v-coachcorner"><div id="ccBody"></div></section><section class="view" id="v-spelers"><h1 class="title" style="margin-bottom:2px">Spelers</h1><p class="plansub">Alle spelers · tik voor het dagprogramma</p><div id="splBody"></div></section>
+<section class="view" id="v-teaminsight"><div id="teamSwitchTI"></div><h1 class="title">Teamprestaties</h1><div id="teamInsightBody"></div></section><section class="view" id="v-logbook"><h1 class="title" style="margin-bottom:2px">Logboek</h1><p class="plansub">Alle voltooide acties van de speler</p><div id="logbookBody"></div></section><section class="view" id="v-scoring"><h1 class="title" style="margin-bottom:2px">Scoring</h1><p class="plansub">Scoreverloop en scoringsoverzicht<span class="alleencoach"> per speler</span></p><div id="scBody"></div></section><section class="view" id="v-baanstats"><h1 class="title" style="margin-bottom:2px">Baanstats</h1><p class="plansub">Upgame-snapshots en strokes gained</p><div id="bsBody"></div></section><section class="view" id="v-trainen"><button class="bkbtn ccback" onclick="show('coachcorner')" style="margin:0 0 8px;display:inline-block">‹ Coachcorner</button><button class="bkbtn" id="trBack" style="margin:0 0 8px;display:none">‹ Terug</button><h1 class="title" style="margin-bottom:2px">Drills-database</h1><p class="plansub" id="trSubtitel">Oefeningen, testen en challenges</p><div id="trainBody"></div></section><section class="view active" id="v-today"><h1 class="title" style="margin-bottom:2px">Vandaag</h1><div id="todayBody"></div></section><section class="view" id="v-planning"><div id="planSwitch"></div><h1 class="title" style="margin-bottom:2px">Planning</h1><p class="plansub" id="planSub"></p><div id="planBody"></div></section><section class="view" id="v-goals"><button class="bkbtn ccback" onclick="show('coachcorner')" style="margin:0 0 8px;display:inline-block">‹ Coachcorner</button><div id="goalScope"></div><h1 class="title">Doelen</h1><div id="goalsBody"></div></section><section class="view" id="v-spelen"><button class="bkbtn ccback" onclick="show('coachcorner')" style="margin:0 0 8px;display:inline-block">‹ Coachcorner</button><div id="spTop"></div><h1 class="title" style="margin-bottom:2px">Spelen</h1><p class="plansub">Rondeoverzicht en score-invoer per speler</p><div id="spBody"></div></section><section class="view" id="v-coachcorner"><div id="ccBody"></div></section><section class="view" id="v-spelers"><h1 class="title" style="margin-bottom:2px">Spelers</h1><p class="plansub">Alle spelers · tik voor het dagprogramma</p><div id="splBody"></div></section>
 </main>
 <div class="subbar" id="subbar" role="tablist"></div></div>
 <div class="scrim" id="scrim"><div class="sheet" id="sheet"></div></div>
@@ -2456,7 +2491,7 @@ const LIES={f:"Fairway",r:"Rough",s:"Sand",g:"Green"};const DLIES={f:"Fairway",r
 const LV=["PGA Tour"];
 function spread(min,max,n){if(n===1)return [Math.round((min+max)/2)];const a=[];for(let i=0;i<n;i++)a.push(Math.round(min+(max-min)*i/(n-1)));return a;}
 const NSIT=[3,6,9,12,15,18], NHOLE=[6,9,12,18];
-const APP_VERSION="v331";
+const APP_VERSION="v334";
 const TESTS={
 putt_3_5:{name:"Putt 3–5 ft",cat:"Putten",eng:"putt_cat",dists:[3,4,5],per:8,info:"24 putts (8× vanaf 3, 4 en 5 ft). Per afstand: holed, mis binnen 3 ft, mis buiten 3 ft. Output: SG + make%."},
 putt_6_10:{name:"Putt 6–10 ft",cat:"Putten",eng:"putt_cat",dists:[6,8,10],per:8,info:"24 putts (8× vanaf 6, 8 en 10 ft). Zelfde invoer als 3–5 ft."},
@@ -6304,7 +6339,7 @@ function drillBadge(d){var txt,cls,full;if(d.isTest){txt="TE";cls="tb-test";full
 function drillSubLine(d){var subs=(d.subCats||[]).map(function(s){return taxSubLabel(d.mainCat,s);}).filter(Boolean);if(subs.length)return subs.join(" · ");if(d.goal){var g=d.goal.replace(/\s+/g," ").trim();return g.length>80?g.slice(0,80).replace(/\s\S*$/,"")+"…":g;}return "";}
 function mcAccent(mk){return ({fysiek:"#0f9e73",prestatiegedrag:"#c8791a",golfskills:"#2e78e8",spelen:"#7a5ad2"})[mk]||"#94a3b8";}
 function trTypeRank(d){if(d.isTest)return 3;var r={techniek:0,skill:1,performance:2}[d.trainingType];return r==null?2.5:r;}
-let trainMain="",trainQ="",trainFiltOpen=false,trainMore=false,trainSort="naam",trainMx="fase",trainCtx=null,trainUsage={},trainUsageMax=0;
+let trainMain="",trainQ="",trainFiltOpen=false,trainMore=false,trainSort="naam",trainMx="fase",trainMxOpen=false,trainCtx=null,trainUsage={},trainUsageMax=0;
 var trainF={subs:[],types:[],skills:[],auds:[],locs:[],wfs:[],mats:[],ages:[],fases:[],ngf:false,eigen:false};
 function trainFReset(){trainF={subs:[],types:[],skills:[],auds:[],locs:[],wfs:[],mats:[],ages:[],fases:[],ngf:false,eigen:false};}
 function trainFiltCount(){return trainF.subs.length+trainF.types.length+trainF.skills.length+trainF.auds.length+trainF.locs.length+trainF.wfs.length+trainF.mats.length+trainF.ages.length+(trainF.fases||[]).length+(trainF.ngf?1:0)+(trainF.eigen?1:0);}
@@ -6350,42 +6385,55 @@ function trainAddTodo(id){var c=trainPlayerCtx();if(!c)return;var p=planFor(c.pi
   state.trainPlans=state.trainPlans||[];p={id:uid(),playerId:c.pid,weekStart:c.ws,phase:ph,items:[],edited:true,manual:true,created:todayISO()};state.trainPlans.push(p);}
  p=planItemsNorm(p);if(p.items.some(function(it){return it.id===id;})){toast("Staat al in je to-do");return;}
  p.items.push({id:id,x:1,done:false,doneN:0});p.edited=true;save();toast("Toegevoegd aan je to-do ✓");trainRenderList();}
+function lvDots(k,v){var lv=lmhLv(v);var h='<span><b>'+k+'</b>';for(var i=1;i<=5;i++)h+='<i'+(i<=lv?' class="on"':'')+'></i>';return h+'</span>';}
+function drDoelLine(d){var g=(d.goal||d.exec||"").replace(/\s+/g," ").trim();return g;}
+function drTypeShort(d){if(d.isTest)return ["Test","t-test"];if(d.mainCat==="golfskills"&&d.trainingType)return [trTypeLabel(d.trainingType),"t-"+d.trainingType];return [taxMainLabel(d.mainCat),"t-main"];}
+function drTypeCode(d){if(d.isTest)return "TE";if(d.mainCat==="golfskills")return ({techniek:"TK",skill:"SK",performance:"PF"})[d.trainingType]||"GS";return ({fysiek:"FY",prestatiegedrag:"PG",spelen:"SP"})[d.mainCat]||"";}
 function drCard(d,player){var n=trainUsage[d.id]||0;var lv=drillPopLv(n,trainUsageMax);
  var sub=[taxMainLabel(d.mainCat)].concat((d.subCats||[]).map(function(k){return taxSubLabel(d.mainCat,k);})).filter(Boolean).join(" · ");
- var meta=[];var fr=mjopRangeLabel(d);meta.push('<span title="MJOP-fase">'+(fr?esc(fr):"alle fases")+'</span>');
- var dur=[];if(+d.durMin>0)dur.push(d.durMin+" min");if(d.durValue!==""&&d.durValue!=null)dur.push(d.durValue+" "+durUnitShort(d.durUnit)+(d.sets?" ×"+d.sets:""));if(dur.length)meta.push('<span>'+esc(dur.join(" · "))+'</span>');
- if(d.intensity||d.volume)meta.push('<span title="Intensiteit · Volume">I <b style="color:'+lmhColor(d.intensity)+'">'+esc(lmhLabel(d.intensity))+'</b> · V <b style="color:'+lmhColor(d.volume)+'">'+esc(lmhLabel(d.volume))+'</b></span>');
- if((d.location||[]).length)meta.push('<span>'+esc(d.location.slice(0,2).join(", "))+'</span>');
- meta.push('<span class="drpop" title="'+n+'× gebruikt in weekplannen, groepsschema\'s en logboek">'+n+'× <i'+(lv>=1?' class="on"':'')+'></i><i'+(lv>=2?' class="on"':'')+'></i><i'+(lv>=3?' class="on"':'')+'></i></span>');
- var right=(d.ngfFav?'<span class="drtag ngf">NGF favoriet</span>':'')+drTypeTag(d);
- var act="";if(player){act=trainInPlan(d.id)?'<span class="drin" title="Staat in je to-do">✓</span>':'<button class="xbtn sm plusb" data-dradd="'+d.id+'" title="Aan mijn to-do" aria-label="Aan mijn to-do">+</button>';}
- return '<div class="dc mc-'+esc(d.mainCat)+'" data-drill="'+d.id+'"><div class="t"><b>'+esc(d.title)+'</b><small>'+esc(sub)+'</small></div><div class="dcr">'+right+act+'</div><div class="meta">'+meta.join("")+'</div></div>';}
+ var tt=drTypeShort(d);
+ var foot=[];var fr=mjopRangeLabel(d);foot.push('<span title="MJOP-fase">'+(fr?esc(fr):"alle fases")+'</span>');
+ var dur=[];if(+d.durMin>0)dur.push(d.durMin+" min");if(d.durValue!==""&&d.durValue!=null)dur.push(d.durValue+" "+durUnitShort(d.durUnit)+(d.sets?" ×"+d.sets:""));if(dur.length)foot.push('<span>'+esc(dur.join(" · "))+'</span>');
+ if(d.intensity||d.volume)foot.push('<span class="drdots" title="Intensiteit · Volume">'+lvDots("I",d.intensity)+lvDots("V",d.volume)+'</span>');
+ foot.push('<span class="drpop" title="'+n+'× gebruikt in weekplannen, groepsschema\'s en logboek">'+n+'× <i'+(lv>=1?' class="on"':'')+'></i><i'+(lv>=2?' class="on"':'')+'></i><i'+(lv>=3?' class="on"':'')+'></i></span>');
+ var right=(d.ngfFav?'<span class="drtag ngf">NGF favoriet</span>':'');
+ if(player)right+=trainInPlan(d.id)?'<span class="drin" title="Staat in je to-do">✓</span>':'<button class="xbtn sm plusb" data-dradd="'+d.id+'" title="Aan mijn to-do" aria-label="Aan mijn to-do">+</button>';
+ var doel=drDoelLine(d);
+ return '<div class="dc mc-'+esc(d.mainCat)+'" data-drill="'+d.id+'"><div class="dcimg" style="background-image:linear-gradient(135deg,'+mcAccent(d.mainCat)+'22,'+mcAccent(d.mainCat)+'55)"'+(d.image?' data-timg="'+d.id+'"':'')+'><span class="dctk" title="'+esc(tt[0])+'" style="color:'+(d.isTest?"#17805a":(d.mainCat==="golfskills"?({techniek:"#2e78e8",skill:"#1ea05a",performance:"#F47C20"})[d.trainingType]||mcAccent(d.mainCat):mcAccent(d.mainCat)))+'">'+drTypeCode(d)+'</span>'+(d.link?'<span class="dcplay" title="Video / link">▶</span>':'')+'</div><div class="dcbody"><div class="dchd"><div class="t"><b>'+esc(d.title)+'</b><small>'+esc(sub)+'</small></div><div class="dcr">'+right+'</div></div>'+(doel?'<div class="dcdoel">'+esc(doel)+'</div>':'')+'<div class="meta">'+foot.join('<i class="sep"></i>')+'</div></div></div>';}
 function trainRenderList(){var box=$("#drList");if(!box)return;var player=!!trainPlayerCtx();trainUsage=drillUsageMap();trainUsageMax=0;Object.keys(trainUsage).forEach(function(k){if(trainUsage[k]>trainUsageMax)trainUsageMax=trainUsage[k];});
  var list=trainSorted(trainFiltered());var cnt=$("#drCnt");if(cnt)cnt.textContent=list.length;
  if(!list.length){box.innerHTML='<p class="muted" style="margin:6px 0 0;font-size:13px">Geen oefeningen met deze filters.</p>';return;}
  box.innerHTML=list.map(function(d){return drCard(d,player);}).join("");
  box.querySelectorAll("[data-drill]").forEach(function(c){c.onclick=function(e){if(e.target.closest("[data-dradd]"))return;drillDetail(c.dataset.drill,player?{mode:"view"}:null);};});
- box.querySelectorAll("[data-dradd]").forEach(function(b){b.onclick=function(e){e.stopPropagation();trainAddTodo(b.dataset.dradd);};});}
+ box.querySelectorAll("[data-dradd]").forEach(function(b){b.onclick=function(e){e.stopPropagation();trainAddTodo(b.dataset.dradd);};});
+ box.querySelectorAll("[data-timg]").forEach(function(el){drillImgGet(el.dataset.timg,function(u){if(u){el.style.backgroundImage='url("'+u+'")';el.classList.add("has");}});});}
 function trainChipSet(id,items,arr,mini){var html='<div class="drchips'+(mini?" mini":"")+'" id="'+id+'"><button data-v="" class="'+(arr.length?"":"on")+'">Alle</button>'+items.map(function(o){var isA=Array.isArray(o);var k=isA?o[0]:o,l=isA?o[1]:o;return '<button data-v="'+esc(String(k))+'" class="'+(arr.indexOf(k)>=0?"on":"")+'">'+esc(String(l))+'</button>';}).join("")+'</div>';return html;}
 function trainBindSet(id,arr){var el=$("#"+id);if(!el)return;el.querySelectorAll("button").forEach(function(b){b.onclick=function(){var v=b.dataset.v;if(!v)arr.length=0;else{var i=arr.indexOf(v);if(i>=0)arr.splice(i,1);else arr.push(v);}renderTrain();};});}
 /* dekkingsmatrix: rijen = subcategorieën (of hoofdcategorieën bij 'Alle'), kolommen = fases of types */
-function trainMatrixHtml(){var rowsMain=!trainMain;var rows=rowsMain?taxMain().map(function(m){return {k:m.key,l:m.label};}):taxSubs(trainMain).map(function(s){return {k:s.key,l:s.label};});
+const MX_GOLF_ORDER=[["putten"],["shortgame",["lageappr","hogeappr","bunker","lobshot"]],["distwedge"],["fullswing"],["approachplay"],["driving"],["totalgolf"]];
+function trainMatrixRows(){if(!trainMain)return taxMain().map(function(m){return {k:m.key,keys:[m.key],l:m.label,main:true};});
+ var subs=taxSubs(trainMain);function lab(k){var o=subs.find(function(x){return x.key===k;});return o?o.label:k;}
+ if(trainMain!=="golfskills")return subs.map(function(x){return {k:x.key,keys:[x.key],l:x.label};});
+ var rows=[],used={};MX_GOLF_ORDER.forEach(function(g){var k=g[0],kids=(g[1]||[]).filter(function(c){return subs.some(function(x){return x.key===c;});});if(!subs.some(function(x){return x.key===k;})&&!kids.length)return;
+  rows.push({k:k,keys:[k].concat(kids),l:lab(k),grp:!!kids.length});used[k]=1;kids.forEach(function(c){rows.push({k:c,keys:[c],l:lab(c),sub:true});used[c]=1;});});
+ subs.forEach(function(x){if(!used[x.key])rows.push({k:x.key,keys:[x.key],l:x.label});});return rows;}
+function trainMatrixHtml(){var rowsMain=!trainMain;var rows=trainMatrixRows();
  var base=allDrills().filter(function(d){return trainMatch(d,{main:rowsMain,subs:!rowsMain,fases:trainMx==="fase",types:trainMx==="type"});});
- function inRow(d,r){return rowsMain?d.mainCat===r.k:(d.subCats||[]).indexOf(r.k)>=0;}
+ function inRow(d,r){return rowsMain?d.mainCat===r.k:r.keys.some(function(k){return (d.subCats||[]).indexOf(k)>=0;});}
  var cols,colsS;
  if(trainMx==="fase"){cols=MJOP_PHASES.map(function(ph){return {k:ph[0],l:ph[0],s:ph[0],t:ph[1],test:function(d){return drillMjopOk(d,ph[0]);}};});
   colsS=[["F","F1","F3"],["A","A1","A2"],["T","T1","T3"],["E","E1","E2"],["M","M1","M2"]].map(function(g){var a=mjopIdx(g[1]),b=mjopIdx(g[2]);return {k:g[1],l:g[0],s:g[0],t:g[1]+"–"+g[2],test:function(d){for(var i=a;i<=b;i++)if(drillMjopOk(d,MJOP_PHASES[i][0]))return true;return false;}};});}
  else{cols=[{k:"techniek",l:"Techniek",s:"TK"},{k:"skill",l:"Skill",s:"SK"},{k:"performance",l:"Performance",s:"PF"},{k:"test",l:"Test",s:"TE"}].map(function(c){c.t=c.l;c.test=function(d){return (d.isTest?"test":(d.trainingType||""))===c.k;};return c;});colsS=cols;}
- function selCell(r,c){var rowSel=rowsMain?trainMain===r.k:(trainF.subs.length===1&&trainF.subs[0]===r.k);var colSel=trainMx==="fase"?((trainF.fases||[]).length===1&&trainF.fases[0]===c.k):(trainF.types.length===1&&trainF.types[0]===c.k);return rowSel&&colSel;}
+ function selCell(r,c){var rowSel=rowsMain?trainMain===r.k:(trainF.subs.length===r.keys.length&&r.keys.every(function(k){return trainF.subs.indexOf(k)>=0;}));var colSel=trainMx==="fase"?((trainF.fases||[]).length===1&&trainF.fases[0]===c.k):(trainF.types.length===1&&trainF.types[0]===c.k);return rowSel&&colSel;}
  function tbl(cs,cls,small){var counts=rows.map(function(r){return cs.map(function(c){return base.filter(function(d){return inRow(d,r)&&c.test(d);}).length;});});var max=0;counts.forEach(function(rr){rr.forEach(function(n){if(n>max)max=n;});});
   var h='<table class="'+cls+'"><tr><th class="r"></th>'+cs.map(function(c){return '<th title="'+esc(c.t)+'">'+esc(small?c.s:c.l)+'</th>';}).join("")+'</tr>';
-  rows.forEach(function(r,ri){h+='<tr><td class="r" title="'+esc(r.l)+'">'+esc(r.l)+'</td>'+cs.map(function(c,ci){var n=counts[ri][ci];var lv=n?Math.max(1,Math.ceil(4*n/max)):0;return '<td><button class="c'+lv+(selCell(r,c)?" sel":"")+'" data-mxr="'+esc(r.k)+'" data-mxc="'+esc(c.k)+'" title="'+esc(r.l)+' · '+esc(c.t)+': '+n+'">'+(n||"–")+'</button></td>';}).join("")+'</tr>';});
+  rows.forEach(function(r,ri){h+='<tr'+(r.sub?' class="mxsub"':'')+(r.grp?' class="mxgrp"':'')+'><td class="r" title="'+esc(r.l)+'">'+esc(r.l)+'</td>'+cs.map(function(c,ci){var n=counts[ri][ci];var lv=n?Math.max(1,Math.ceil(4*n/max)):0;return '<td><button class="c'+lv+(selCell(r,c)?" sel":"")+'" data-mxr="'+esc(r.k)+'" data-mxk="'+esc(r.keys.join(","))+'" data-mxc="'+esc(c.k)+'" title="'+esc(r.l)+' · '+esc(c.t)+': '+n+'">'+(n||"–")+'</button></td>';}).join("")+'</tr>';});
   return h+'</table>';}
  if(!rows.length)return '<p class="muted" style="margin:0;font-size:13px">Geen subcategorieën.</p>';
  return tbl(cols,"mxw",false)+tbl(colsS,"mxs",true);}
 function renderTrain(){var box=$("#trainBody");if(!box)return;var mains=taxMain();var player=!!trainPlayerCtx();
  var bk=$("#trBack");if(bk){bk.style.display=(player&&trainCtx&&trainCtx.back)?"inline-block":"none";bk.onclick=function(){var v=(trainCtx&&trainCtx.back)||"today";show(v);};}
- var sub=$("#trSub");if(sub)sub.textContent=player?"Oefeningen, testen en challenges · + zet een oefening in je to-do van deze week":"Oefeningen, testen en challenges";
+ var sub=$("#trSubtitel");if(sub)sub.textContent=player?"Oefeningen, testen en challenges · + zet een oefening in je to-do van deze week":"Oefeningen, testen en challenges";
  var all=allDrills();var nOef=all.filter(function(d){return !d.isTest;}).length,nTest=all.filter(function(d){return d.isTest;}).length,nNgf=all.filter(function(d){return d.ngfFav;}).length,nEigen=all.filter(function(d){return !d.builtin&&!d.virtual;}).length;
  var kop='<div class="cvkop"><div class="cvkpi drkpi'+(player?" drie":"")+'"><span><b>'+nOef+'</b><small>oefeningen</small></span><span><b>'+nTest+'</b><small>testen</small></span><span><b>'+nNgf+'</b><small>NGF favoriet</small></span>'+(player?'':'<span><b>'+nEigen+'</b><small>eigen</small></span>')+'</div>'
   +(player?'':'<span class="row" style="gap:6px;margin-left:auto"><button class="xbtn sm" id="trMenu" title="Beheer" aria-label="Beheer">≡</button><button class="xbtn sm plusb" id="trAdd" title="Nieuwe oefening" aria-label="Nieuwe oefening">+</button></span>')+'</div>';
@@ -6408,7 +6456,7 @@ function renderTrain(){var box=$("#trainBody");if(!box)return;var mains=taxMain(
  var rechts='<div class="card" id="drLib"><div class="drhd"><h3>Bibliotheek<span class="cvn" id="drCnt">0</span></h3><input class="in" id="trQ" placeholder="Zoek oefening…" value="'+esc(trainQ)+'">'+sortSeg+'</div><div class="cvbody" id="drList"></div></div>';
  /* dekking */
  var mxTitle=trainMain?taxMainLabel(trainMain):"alle categorieën";
- var mx='<div class="card drmx" id="drMx"><div class="drhd" style="border-bottom:0;margin-bottom:2px"><h3>Dekking <span class="muted" style="font-weight:500;font-size:12.5px">· '+esc(mxTitle)+'</span></h3><div class="drseg dark" id="trMx" style="margin-left:auto"><button data-x="fase" class="'+(trainMx==="fase"?"on":"")+'">Fase</button><button data-x="type" class="'+(trainMx==="type"?"on":"")+'">Type</button></div></div><div style="overflow-x:auto">'+trainMatrixHtml()+'</div><p class="muted" style="margin:6px 0 0;font-size:11.5px">Aantal oefeningen per '+(trainMain?"onderdeel":"hoofdcategorie")+' en '+(trainMx==="fase"?"MJOP-fase":"type")+' · tik op een cel om erop te filteren.</p></div>';
+ var mx='<div class="card drmx'+(trainMxOpen?" open":"")+'" id="drMx"><div class="drhd" style="border-bottom:0;margin-bottom:'+(trainMxOpen?'2px':'0')+';padding-bottom:'+(trainMxOpen?'8px':'0')+'"><button class="mxtog" id="trMxTog" aria-expanded="'+(trainMxOpen?"true":"false")+'"><span class="chev">▶</span><h3>Dekking <span class="muted" style="font-weight:500;font-size:12.5px">· '+esc(mxTitle)+'</span></h3></button>'+(trainMxOpen?'<div class="drseg dark" id="trMx" style="margin-left:auto"><button data-x="fase" class="'+(trainMx==="fase"?"on":"")+'">Fase</button><button data-x="type" class="'+(trainMx==="type"?"on":"")+'">Type</button></div>':'')+'</div>'+(trainMxOpen?'<div style="overflow-x:auto">'+trainMatrixHtml()+'</div><p class="muted" style="margin:6px 0 0;font-size:11.5px">Aantal oefeningen per '+(trainMain?"onderdeel":"hoofdcategorie")+' en '+(trainMx==="fase"?"MJOP-fase":"type")+' · tik op een cel om erop te filteren.</p>':'')+'</div>';
  var _fid=(document.activeElement&&document.activeElement.id)||"";
  box.innerHTML=kop+'<div class="drgrid">'+links+rechts+'</div>'+mx;
  var _q=$("#trQ");if(_q)_q.oninput=function(){trainQ=_q.value;trainRenderList();};
@@ -6419,10 +6467,11 @@ function renderTrain(){var box=$("#trainBody");if(!box)return;var mains=taxMain(
  trainBindSet("trSub",trainF.subs);trainBindSet("trType",trainF.types);trainBindSet("trFase",trainF.fases);trainBindSet("trSkill",trainF.skills);trainBindSet("trAud",trainF.auds);trainBindSet("trLoc",trainF.locs);trainBindSet("trWf",trainF.wfs);trainBindSet("trMat",trainF.mats);trainBindSet("trAge",trainF.ages);
  var _lb=$("#trLbl");if(_lb)_lb.querySelectorAll("button").forEach(function(b){b.onclick=function(){trainF[b.dataset.k]=!trainF[b.dataset.k];renderTrain();};});
  var _so=$("#trSort");if(_so)_so.querySelectorAll("button").forEach(function(b){b.onclick=function(){trainSort=b.dataset.s;renderTrain();};});
+ var _mxt=$("#trMxTog");if(_mxt)_mxt.onclick=function(){trainMxOpen=!trainMxOpen;renderTrain();};
  var _mx=$("#trMx");if(_mx)_mx.querySelectorAll("button").forEach(function(b){b.onclick=function(){trainMx=b.dataset.x;renderTrain();};});
  box.querySelectorAll("[data-mxr]").forEach(function(b){b.onclick=function(){var r=b.dataset.mxr,c=b.dataset.mxc;var was=b.classList.contains("sel");
   if(was){if(trainMain)trainF.subs=[];if(trainMx==="fase")trainF.fases=[];else trainF.types=[];renderTrain();return;}
-  if(!trainMain){trainMain=r;trainF.subs=[];trainF.skills=[];trainF.locs=[];}else trainF.subs=[r];
+  if(!trainMain){trainMain=r;trainF.subs=[];trainF.skills=[];trainF.locs=[];}else trainF.subs=(b.dataset.mxk||r).split(",");
   if(trainMx==="fase")trainF.fases=[c];else trainF.types=[c];renderTrain();};});
  var _a=$("#trAdd");if(_a)_a.onclick=function(){openDrillForm(null);};
  var _m=$("#trMenu");if(_m)_m.onclick=function(){openTrainMenu();};
@@ -6452,64 +6501,81 @@ function drillRelGroups(d){var out={easier:[],harder:[],variant:[]};var seen={};
  (state.drills||[]).forEach(function(o){(o.rels||[]).forEach(function(r){if(r.id===d.id)add(inv[r.type]||"variant",o);});});
  return out;}
 function drillMeter(label,val){var lv=lmhLv(val);var col=lmhColor(val);var seg="";for(var i=1;i<=5;i++)seg+='<i'+(i<=lv?' style="background:'+col+'"':'')+'></i>';return '<div class="svmeter"><div class="svm-top"><span class="svm-l">'+esc(label)+'</span><span class="svm-v'+(lv?"":" off")+'"'+(lv?' style="color:'+col+'"':'')+'>'+(lv?lmhLabel(val):"–")+'</span></div><div class="svm-bar">'+seg+'</div></div>';}
+var drillTab="oef";
+function drillUsageInfo(d){var pid=null;try{pid=rolSpelerId();}catch(e){}
+ var logs=(state.trainLog||[]).filter(function(e){return e.drillId===d.id&&(!pid||e.playerId===pid);});
+ var plans=(state.trainPlans||[]).filter(function(p){return (!pid||p.playerId===pid)&&(p.items||[]).some(function(it){return (typeof it==="string"?it:(it&&it.id))===d.id;});});
+ var gs=(state.groupSchemas||[]).filter(function(g){return (g.weken_inhoud||[]).some(function(w){return (w.drillIds||[]).indexOf(d.id)>=0;});});
+ var players={};plans.forEach(function(p){players[p.playerId]=1;});logs.forEach(function(e){players[e.playerId]=1;});
+ var ws0=weekStart(todayISO());var weeks=[];for(var i=7;i>=0;i--)weeks.push(dAddDays(ws0,-7*i));
+ var spark=weeks.map(function(ws){var wsE=dAddDays(ws,7);return logs.filter(function(e){return (e.weekStart===ws)||(e.date>=ws&&e.date<wsE);}).length+plans.filter(function(p){return p.weekStart===ws;}).length;});
+ logs.sort(function(a,b){return String(b.date||"").localeCompare(String(a.date||""));});
+ return {pid:pid,logs:logs,plans:plans,gs:gs,players:Object.keys(players),spark:spark,total:logs.length+plans.length+gs.length};}
 function drillDetail(id,ctx){var d=allDrills().find(function(x){return x.id===id;});if(!d)return;var sh=$("#sheet");var _dbMode=!ctx||!ctx.mode||ctx.mode==="db";
- function _di(k,v){return '<div class="dinfo"><span class="di-k">'+esc(k)+'</span><span class="di-v">'+v+'</span></div>';}
+ if(!ctx||!ctx._keepTab)drillTab="oef";
+ var player=false;try{player=!!rolSpelerId();}catch(e){}
+ function _row(k,v){return '<div class="row"><span>'+esc(k)+'</span><span>'+v+'</span></div>';}
  var subs=(d.subCats||[]).map(function(s){return taxSubLabel(d.mainCat,s);}).filter(Boolean);
  var _dparts=[];if(d.durMin!==""&&d.durMin!=null&&+d.durMin>0)_dparts.push(d.durMin+" min");if(d.durValue!==""&&d.durValue!=null)_dparts.push(String(d.durValue)+" "+durUnitShort(d.durUnit)+(d.sets?(" × "+d.sets+" set"+(+d.sets===1?"":"s")):""));else if(d.sets)_dparts.push(d.sets+" set"+(+d.sets===1?"":"s"));var durText=_dparts.join(" · ");
- var infoHtml;
- if(d.mainCat==="golfskills"&&!d.isTest){
-  var L="";
-  if(subs.length)L+=_di("Subcategorie",esc(subs.join(", ")));
-  if(d.audience)L+=_di("Voor",esc(audLabel(d.audience)));
-  if((d.location||[]).length)L+=_di("Locatie",esc(d.location.join(", ")));
-  if(d.workform)L+=_di("Werkvorm",esc(wfLabel(d.workform)));
-  if(grpText(d))L+=_di("Groepsgrootte",esc(grpText(d)));
-  if((d.material||[]).length)L+=_di("Materiaal",esc(d.material.join(", ")));
-  if(ageText(d))L+=_di("Leeftijd",esc(ageText(d)));
-  if(durText)L+=_di("Duur / omvang",esc(durText));
-  if(d.trainingType)L+=_di("Type training",esc(trTypeLabel(d.trainingType)));
-  if((d.skillLabels||[]).length)L+=_di("Skills",esc(d.skillLabels.map(skillLabelName).join(", ")));
-  if(mjopRangeLabel(d))L+=_di("MJOP-fases",esc(mjopRangeLabel(d)));
-  if(!L)L='<div class="sx">Geen details ingevuld.</div>';
-  var R='<div class="dcolh">Belasting</div>'+drillMeter("Intensiteit",d.intensity)+drillMeter("Volume",d.volume);
-  var sv="";SVCCC.forEach(function(o){if(d.svccc&&d.svccc[o[0]])sv+=drillMeter(o[1],d.svccc[o[0]]);});
-  if(sv)R+='<div class="dcolh" style="margin-top:14px">SVCCC</div>'+sv;
-  infoHtml='<div class="drows dcols"><div class="dcol-l">'+L+'</div><div class="dcol-r">'+R+'</div></div>';
- }else{
-  var rows='<div class="drow"><span class="dk">Hoofdcategorie</span><span>'+esc(taxMainLabel(d.mainCat))+'</span></div>';
-  if(subs.length)rows+='<div class="drow"><span class="dk">Subcategorie</span><span>'+esc(subs.join(", "))+'</span></div>';
-  (d.subCats||[]).forEach(function(sk){var so=taxSubObj(d.mainCat,sk);if(so&&so.subs){var picked=(d.subSubCats||[]).filter(function(ss){return so.subs.some(function(x){return x.key===ss;});}).map(function(ss){return taxSubSubLabel(d.mainCat,sk,ss);});if(picked.length)rows+='<div class="drow"><span class="dk">'+esc(so.label)+'</span><span>'+esc(picked.join(", "))+'</span></div>';}});
-  if(!d.isTest){
-   if(d.audience)rows+='<div class="drow"><span class="dk">Voor</span><span>'+esc(audLabel(d.audience))+'</span></div>';
-   if((d.location||[]).length)rows+='<div class="drow"><span class="dk">Locatie</span><span>'+esc(d.location.join(", "))+'</span></div>';
-   if(d.workform)rows+='<div class="drow"><span class="dk">Werkvorm</span><span>'+esc(wfLabel(d.workform))+'</span></div>';
-   if(grpText(d))rows+='<div class="drow"><span class="dk">Groepsgrootte</span><span>'+esc(grpText(d))+'</span></div>';
-   if((d.material||[]).length)rows+='<div class="drow"><span class="dk">Materiaal</span><span>'+esc(d.material.join(", "))+'</span></div>';
-   if(ageText(d))rows+='<div class="drow"><span class="dk">Leeftijd</span><span>'+esc(ageText(d))+'</span></div>';
-   if(mjopRangeLabel(d))rows+='<div class="drow"><span class="dk">MJOP-fases</span><span>'+esc(mjopRangeLabel(d))+'</span></div>';
-   if(durText)rows+='<div class="drow"><span class="dk">Duur / omvang</span><span>'+esc(durText)+'</span></div>';
-   if(d.intensity)rows+='<div class="drow"><span class="dk">Intensiteit</span><span>'+lmhLabel(d.intensity)+'</span></div>';
-   if(d.volume)rows+='<div class="drow"><span class="dk">Volume</span><span>'+lmhLabel(d.volume)+'</span></div>';
-  }
-  infoHtml='<div class="drows">'+rows+'</div>';
- }
+ /* kop (stijl 4) */
+ var tt=drTypeShort(d);var fr=mjopRangeLabel(d);
+ var chips='<span class="drtag '+tt[1]+'">'+esc(tt[0])+'</span>'+(d.ngfFav?'<span class="drtag ngf">NGF favoriet</span>':'')+'<span class="drtag">'+(fr?esc(fr):"alle fases")+'</span>'+((d.location||[]).length?'<span class="drtag">'+esc(d.location.join(", "))+'</span>':'');
+ var subLine=[taxMainLabel(d.mainCat)].concat(subs).join(" · ");
+ var actIcons="";
+ if(player&&!(ctx&&ctx.mode==="plan"))actIcons+=trainInPlan(d.id)?'<span class="drin" title="Staat in je to-do">✓</span>':'<button class="xbtn plusb" id="drAddTodo" title="Aan mijn to-do" aria-label="Aan mijn to-do">+</button>';
+ if(!d.virtual&&_dbMode&&!player)actIcons+='<button class="xbtn" id="drEdit" title="Bewerk">✎</button><button class="xbtn xbtn-del" id="drDel" title="Verwijder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></button>';
+ var head='<div class="shead adhead">'+(ctx&&ctx.back?'<button class="bkbtn" id="drBack" style="align-self:flex-start">‹</button>':'')+'<div class="adkop"><div class="adtit"><h2>'+esc(d.title)+'</h2><div class="adtijd">'+esc(subLine)+'</div><div class="adchips">'+chips+'</div></div></div><div class="sheadact">'+actIcons+'<button class="xbtn" onclick="closeSheet()">×</button></div></div>';
+ /* mediavenster */
+ var media="";if(d.image)media='<div class="drmedia" id="drImgWrap"><img id="drImg" alt="">'+(d.link?'<a class="drplay" href="'+esc(d.link)+'" target="_blank" rel="noopener" title="Video / link">▶</a>':'')+'</div>';
+ else if(d.link)media='<a class="drmedia drlink" href="'+esc(d.link)+'" target="_blank" rel="noopener"><span class="drplay">▶</span><span>Video / link bekijken</span></a>';
+ /* tabs */
+ var tabs='<div class="drtabs" id="drTabs">'+[["oef","Oefening"],["det","Details"],["geb","Gebruik"]].map(function(t){return '<button data-t="'+t[0]+'" class="'+(drillTab===t[0]?"on":"")+'">'+t[1]+'</button>';}).join("")+'</div>';
  var body="";
- if(d.goal)body+='<div class="dsec"><div class="dsh">Doel</div><p>'+esc(d.goal).replace(/\n/g,"<br>")+'</p></div>';
- if(d.exec)body+='<div class="dsec"><div class="dsh">Uitvoering</div><p>'+esc(d.exec).replace(/\n/g,"<br>")+'</p></div>';
- if(d.vars)body+='<div class="dsec"><div class="dsh">Variaties</div><p>'+esc(d.vars).replace(/\n/g,"<br>")+'</p></div>';
- if((d.compLabels||[]).length)body+='<div class="dsec"><div class="dsh">Competenties</div><div class="trchips" style="margin-top:4px">'+d.compLabels.map(function(k){return '<span class="trchip-static">'+esc(compLabelName(k))+'</span>';}).join("")+'</div></div>';
- var _rg=drillRelGroups(d);var _relHtml="";RELTYPES.forEach(function(rt){var arr=_rg[rt[0]];if(!arr.length)return;_relHtml+='<div class="relgrp"><span class="rel-k">'+rt[1]+'</span><span class="rel-items">'+arr.map(function(t){return '<button class="relchip" data-rel="'+t.id+'">'+esc(t.title)+'</button>';}).join("")+'</span></div>';});
- if(_relHtml)body+='<div class="dsec"><div class="dsh">Progressie & relaties</div>'+_relHtml+'</div>';
- if(d.link)body+='<div class="dsec"><div class="dsh">Video / link</div><a href="'+esc(d.link)+'" target="_blank" rel="noopener">Bekijk ↗</a></div>';
- var imgHtml=d.image?'<div class="dsec" id="drImgWrap"><img id="drImg" style="max-width:100%;border-radius:10px;display:block" alt=""></div>':'';
- var catChip=d.isTest?'<span class="dcatchip" style="background:rgba(120,90,200,.14);color:#7a5ad2">Test</span>':'<span class="dcatchip" style="background:'+mcAccent(d.mainCat)+'22;color:'+mcAccent(d.mainCat)+'">'+esc(taxMainLabel(d.mainCat))+'</span>';
- var actIcons=(!d.virtual&&_dbMode)?'<button class="xbtn" id="drEdit" title="Bewerk">✎</button><button class="xbtn xbtn-del" id="drDel" title="Verwijder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></button>':'';
- var bottom=(d.isTest&&d.testId)?'<button class="btn block blue" id="drStart" style="margin-top:14px">Start challenge →</button>':'';if(ctx&&ctx.mode==='plan')bottom+='<button class="btn danger block" id="drPlanRm" style="margin-top:14px">Uit weekplan verwijderen</button>';
- sh.innerHTML='<div class="shead">'+(ctx&&ctx.back?'<button class="bkbtn" id="drBack" style="align-self:flex-start">‹</button>':'')+'<div><h2>'+esc(d.title)+'</h2><div style="margin-top:5px">'+catChip+'</div></div><div class="sheadact">'+actIcons+'<button class="xbtn" onclick="closeSheet()">×</button></div></div>'+infoHtml+body+imgHtml+bottom;
+ if(drillTab==="oef"){
+  if(d.goal)body+='<div class="card"><div class="dsh">Doel</div><p class="drp">'+esc(d.goal).replace(/\n/g,"<br>")+'</p></div>';
+  if(d.exec){var lines=d.exec.split(/\n+/).map(function(x){return x.trim();}).filter(Boolean);body+='<div class="card"><div class="dsh">Uitvoering</div>'+(lines.length>1?'<ol class="drsteps">'+lines.map(function(l){return '<li>'+esc(l.replace(/^\s*(\d+[\.\)]|[-•])\s*/,""))+'</li>';}).join("")+'</ol>':'<p class="drp">'+esc(d.exec)+'</p>')+'</div>';}
+  if(d.vars)body+='<div class="card"><div class="dsh">Variaties</div><p class="drp">'+esc(d.vars).replace(/\n/g,"<br>")+'</p></div>';
+  if((d.compLabels||[]).length)body+='<div class="card"><div class="dsh">Competenties</div><div class="drchips">'+d.compLabels.map(function(k){return '<button type="button" disabled>'+esc(compLabelName(k))+'</button>';}).join("")+'</div></div>';
+  var _rg=drillRelGroups(d);var _relHtml="";RELTYPES.forEach(function(rt){var arr=_rg[rt[0]];if(!arr.length)return;_relHtml+=arr.map(function(t){return '<button class="drrel" data-rel="'+t.id+'"><b>'+esc(rt[1])+'</b>'+esc(t.title)+'</button>';}).join("");});
+  if(_relHtml)body+='<div class="card"><div class="dsh">Progressie</div><div class="drrels">'+_relHtml+'</div></div>';
+  if(!body)body='<p class="muted" style="margin:6px 0;font-size:13px">Nog geen beschrijving.</p>';
+ }else if(drillTab==="det"){
+  var kpi='<div class="drkpi">'+(+d.durMin>0?'<span><b>'+d.durMin+'</b><small>min</small></span>':'')+((d.durValue!==""&&d.durValue!=null)?'<span><b>'+esc(String(d.durValue))+(d.sets?'<i>×'+d.sets+'</i>':'')+'</b><small>'+esc(durUnitShort(d.durUnit))+'</small></span>':'')+(d.intensity?'<span><b style="color:'+lmhColor(d.intensity)+'">'+esc(lmhLabel(d.intensity))+'</b><small>intensiteit</small></span>':'')+(d.volume?'<span><b style="color:'+lmhColor(d.volume)+'">'+esc(lmhLabel(d.volume))+'</b><small>volume</small></span>':'')+'</div>';
+  if(kpi!=='<div class="drkpi"></div>')body+=kpi;
+  var a=d.mjopFrom?mjopIdx(d.mjopFrom):-1,b=d.mjopTo?mjopIdx(d.mjopTo):-1;var all=(a<0&&b<0);if(a<0)a=0;if(b<0)b=MJOP_PHASES.length-1;
+  body+='<div class="card"><div class="dsh">MJOP-fase <span class="muted" style="font-weight:600;text-transform:none;letter-spacing:0">· '+(fr?esc(fr):"alle fases")+'</span></div><div class="drfasebar">'+MJOP_PHASES.map(function(ph,i){return '<i'+((all||(i>=a&&i<=b))?' class="on"':'')+' title="'+esc(ph[0]+" "+ph[1])+'"></i>';}).join("")+'</div><div class="drfaselbl">'+MJOP_PHASES.map(function(ph){return '<span>'+ph[0]+'</span>';}).join("")+'</div></div>';
+  var rows="";
+  if(subs.length)rows+=_row("Subcategorie",esc(subs.join(", ")));
+  (d.subCats||[]).forEach(function(sk){var so=taxSubObj(d.mainCat,sk);if(so&&so.subs){var picked=(d.subSubCats||[]).filter(function(ss){return so.subs.some(function(x){return x.key===ss;});}).map(function(ss){return taxSubSubLabel(d.mainCat,sk,ss);});if(picked.length)rows+=_row(so.label,esc(picked.join(", ")));}});
+  if(!d.isTest){
+   if(d.audience)rows+=_row("Voor",esc(audLabel(d.audience)));
+   if((d.location||[]).length)rows+=_row("Locatie",esc(d.location.join(", ")));
+   if(d.workform)rows+=_row("Werkvorm",esc(wfLabel(d.workform)));
+   if(grpText(d))rows+=_row("Groepsgrootte",esc(grpText(d)));
+   if((d.material||[]).length)rows+=_row("Materiaal",esc(d.material.join(", ")));
+   if(ageText(d))rows+=_row("Leeftijd",esc(ageText(d)));
+   if(durText)rows+=_row("Duur / omvang",esc(durText));
+   if(d.trainingType)rows+=_row("Type training",esc(trTypeLabel(d.trainingType)));
+   if((d.skillLabels||[]).length)rows+=_row("Skills",esc(d.skillLabels.map(skillLabelName).join(", ")));
+  }
+  if(rows)body+='<div class="card adrows">'+rows+'</div>';
+  if(d.mainCat==="golfskills"&&!d.isTest){var M=drillMeter("Intensiteit",d.intensity)+drillMeter("Volume",d.volume);var sv="";SVCCC.forEach(function(o){if(d.svccc&&d.svccc[o[0]])sv+=drillMeter(o[1],d.svccc[o[0]]);});body+='<div class="card"><div class="dsh">Belasting</div>'+M+(sv?'<div class="dsh" style="margin-top:12px">SVCCC</div>'+sv:'')+'</div>';}
+ }else{
+  var u=drillUsageInfo(d);var mx=Math.max.apply(null,u.spark.concat([1]));
+  var spark='<div class="drspark">'+u.spark.map(function(n){return '<i style="height:'+(n?Math.max(4,Math.round(22*n/mx)):3)+'px"'+(n?' class="on"':'')+' title="'+n+'"></i>';}).join("")+'</div>';
+  body+='<div class="card"><div class="dsh">'+(u.pid?"Jouw gebruik":"Gebruik")+'</div><div class="drkpi"><span><b>'+u.logs.length+'</b><small>gedaan</small></span><span><b>'+u.plans.length+'</b><small>weekplannen</small></span>'+(u.pid?'':'<span><b>'+u.players.length+'</b><small>spelers</small></span>')+'<span><b>'+u.gs.length+'</b><small>groepsschema\'s</small></span></div><div class="row" style="align-items:flex-end;gap:10px;margin-top:10px">'+spark+'<span class="muted" style="font-size:12px">laatste 8 weken</span></div></div>';
+  if(u.logs.length)body+='<div class="card"><div class="dsh">Laatst gedaan</div>'+u.logs.slice(0,6).map(function(e){return '<div class="row" style="font-size:13px;padding:5px 0;border-bottom:1px solid var(--line)"><span>'+esc(u.pid?"":(nameOf(e.playerId)||""))+'</span><span class="muted" style="margin-left:auto">'+esc(fmtDate(e.date))+'</span></div>';}).join("")+'</div>';
+  if(u.gs.length)body+='<div class="card"><div class="dsh">In groepsschema\'s</div>'+u.gs.map(function(g){return '<div style="font-size:13px;padding:4px 0">'+esc(g.naam||g.name||"Groepsschema")+'</div>';}).join("")+'</div>';
+  if(!u.total)body+='<p class="muted" style="margin:6px 0;font-size:13px">Nog niet gebruikt.</p>';
+ }
+ var bottom=(d.isTest&&d.testId)?'<button class="btn block" id="drStart" style="margin-top:14px;background:var(--orange);color:#fff">Start challenge →</button>':'';if(ctx&&ctx.mode==='plan')bottom+='<button class="btn danger block" id="drPlanRm" style="margin-top:14px">Uit weekplan verwijderen</button>';
+ sh.innerHTML=head+media+tabs+body+bottom;
  openSheet();
  if(d.image)drillImgGet(d.id,function(u){var el=$("#drImg");if(el&&u){el.src=u;}else{var w=$("#drImgWrap");if(w)w.style.display="none";}});
- sh.querySelectorAll("[data-rel]").forEach(function(b){b.onclick=function(){drillDetail(b.dataset.rel,ctx);};});
+ sh.querySelectorAll("#drTabs button").forEach(function(b){b.onclick=function(){drillTab=b.dataset.t;var c=Object.assign({},ctx||{});c._keepTab=true;drillDetail(id,c);};});
+ sh.querySelectorAll("[data-rel]").forEach(function(b){b.onclick=function(){drillTab="oef";drillDetail(b.dataset.rel,ctx);};});
  var _bk2=$("#drBack");if(_bk2&&ctx&&ctx.back)_bk2.onclick=function(){ctx.back();};
+ var _at=$("#drAddTodo");if(_at)_at.onclick=function(){trainAddTodo(d.id);var c=Object.assign({},ctx||{});c._keepTab=true;drillDetail(id,c);};
  var _prm=$("#drPlanRm");if(_prm)_prm.onclick=function(){confirmDlg("Deze oefening uit het weekplan van deze week verwijderen? Gelogde uitvoeringen blijven bewaard in het logboek.",function(){var plan=planFor(ctx.pid,ctx.ws);if(!plan)return;plan.items=(plan.items||[]).filter(function(it){return it.id!==id;});plan.edited=true;save();closeSheet();if(activeView==="today")renderToday();else renderPlanning();toast("Uit weekplan verwijderd ✓");});};
  var _s=$("#drStart");if(_s)_s.onclick=function(){closeSheet();startChallenge(d.testId);};
  var _e=$("#drEdit");if(_e)_e.onclick=function(){openDrillForm(d.id);};
