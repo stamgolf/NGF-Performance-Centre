@@ -43,6 +43,24 @@ header.bar{background:#fff;color:var(--ink);padding:calc(env(safe-area-inset-top
 #splash .spl-wm em{font-style:normal;color:var(--orange)}
 @keyframes splin{from{opacity:0}to{opacity:1}}
 @keyframes splweg{to{opacity:0;visibility:hidden}}
+/* v329: detailvenster activiteit */
+.adhead{align-items:flex-start}
+.adkop{display:flex;align-items:flex-start;gap:12px;min-width:0;flex:1}
+.addat{width:46px;flex:0 0 auto;text-align:center;line-height:1;padding-top:2px}.addat b{display:block;font-size:24px;font-weight:600;font-family:var(--fd)}.addat small{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.adtit{min-width:0}.adtit h2{margin:0;font-size:18px}
+.adtijd{font-size:13px;color:var(--muted);margin-top:2px}
+.adchips{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.adchip{display:inline-block;font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;padding:3px 8px;border-radius:7px}
+.adlink{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);font-size:13.5px;cursor:pointer}.adlink:last-child{border-bottom:0}
+.adst{margin-left:auto;flex:0 0 auto;font-size:11px;font-weight:700;border-radius:999px;padding:2px 8px;background:#FFF4EC;color:#B4551A}.adst.ok{background:#E6F6EE;color:#17805a}
+.xbtn.adles{color:var(--orange)}
+.card>.dsh{font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin:0 0 6px}
+/* v328: maandkiezer */
+.calmk{position:absolute;top:calc(100% + 6px);left:0;z-index:30;background:#fff;border-radius:14px;box-shadow:0 8px 30px rgba(43,47,51,.18);padding:10px;width:250px}
+.calmkkop{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}.calmkkop b{font-size:14px}
+.calmkgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
+.calmkgrid button{border:1px solid var(--line);background:#fff;border-radius:9px;padding:8px 0;font-size:12.5px;font-weight:600;color:var(--ink);cursor:pointer;font-family:inherit}
+.calmkgrid button.nu{border-color:var(--orange)}.calmkgrid button.on{background:var(--orange);border-color:var(--orange);color:#fff}
 /* v325: toernooidatabase tweeluik */
 .tdbgrid{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;margin-bottom:14px}
 @media(min-width:700px){.tdbgrid{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)}}
@@ -2399,7 +2417,7 @@ const LIES={f:"Fairway",r:"Rough",s:"Sand",g:"Green"};const DLIES={f:"Fairway",r
 const LV=["PGA Tour"];
 function spread(min,max,n){if(n===1)return [Math.round((min+max)/2)];const a=[];for(let i=0;i<n;i++)a.push(Math.round(min+(max-min)*i/(n-1)));return a;}
 const NSIT=[3,6,9,12,15,18], NHOLE=[6,9,12,18];
-const APP_VERSION="v327";
+const APP_VERSION="v329";
 const TESTS={
 putt_3_5:{name:"Putt 3–5 ft",cat:"Putten",eng:"putt_cat",dists:[3,4,5],per:8,info:"24 putts (8× vanaf 3, 4 en 5 ft). Per afstand: holed, mis binnen 3 ft, mis buiten 3 ft. Output: SG + make%."},
 putt_6_10:{name:"Putt 6–10 ft",cat:"Putten",eng:"putt_cat",dists:[6,8,10],per:8,info:"24 putts (8× vanaf 6, 8 en 10 ft). Zelfde invoer als 3–5 ft."},
@@ -8823,7 +8841,7 @@ loadPdfLib().then(function(PL){
      dt("Periode: "+_PR.label+(_PR.van?("   ·   "+fmtDate(_PR.van)+" – "+fmtDate(_PR.tot)):""),M,y4-6,9,F,MUT);y4-=24;
      y4=_tiles(y4,[
       ["Oefeningen afgevinkt",_TS.drills,INK,null],
-      ["Trainingslogs",_TS.lessen,INK,null],
+      ["Lesadministratie",_TS.lessen,INK,null],
       ["Testen",_TS.tests,INK,null],
       ["Rondes",_TS.rondes,INK,null],
       ["Weekplan afgerond",(_TS.wkPct!=null?(_TS.wkPct+"%"):"–"),
@@ -9208,8 +9226,36 @@ function openPlayerForm(tid,pid){
 }
 /* ===== Batch 4: jaar-tijdlijn + blokkades ===== */
 var blockDraft=null;
-var BLOCKTYPES=[["vakantie","Vakantie","#3C9A78"],["training","Training","#3E6FB0"],["stage","Trainingsstage","#4A6FA5"],["anders","Anders","#7A7F85"]];
+var BLOCKTYPES=[["golfz","Golftraining (Z)","#3E6FB0"],["golfb","Golftraining (B)","#B0782E"],["fysz","Fysiek (Z)","#3C9A78"],["fysb","Fysiek (B)","#2E7A60"],["stage","Trainingsstage","#4A6FA5"],["vakantie","Vakantie","#9AA1A8"],["schoolvak","Schoolvakantie","#C4C8CC"],["anders","Anders","#7A7F85"]];
 var AVAILS=[["niet","Niet beschikbaar"],["beperkt","Beperkt beschikbaar"],["extra","Extra ruimte"]];
+/* ===== v329: één detailvenster voor activiteiten en roosterblokken (voorstel 1) ===== */
+var AD_MN=["jan","feb","mrt","apr","mei","jun","jul","aug","sep","okt","nov","dec"];
+function adTodoInfo(pid,ws,kind){var mains=(kind==="golf")?["golfskills","spelen"]:["fysiek"];var plan=null;try{plan=planItemsNorm(planFor(pid,ws));}catch(_e){}if(!plan||!plan.items||!plan.items.length)return null;var pool=[];try{pool=allDrills();}catch(_e){}var its=plan.items.filter(function(it){var d=pool.find(function(x){return x.id===it.id;});return d&&mains.indexOf(d.mainCat)>=0;});if(!its.length)return null;var open=its.filter(function(it){return !itemFull(it);}).length;return {tot:its.length,open:open};}
+/* o: {dag,dagEind,tijd,tot,titel,sub,typeNaam,typeKleur,chips[],rows[[k,v]],omschr,acts[{id,title,ico,del}],links[{kleur,label,status,ok,id}],knop{id,label}} */
+function actDetailSheet(o){var sh=$("#sheet");
+ var dat=o.dag?'<span class="addat"><b>'+(+o.dag.slice(8,10))+'</b><small>'+AD_MN[+o.dag.slice(5,7)-1]+'</small></span>':'';
+ var tijd=[];if(o.tijd)tijd.push(o.tijd+(o.tot?" – "+o.tot:""));if(o.dagEind&&o.dagEind!==o.dag)tijd.push("t/m "+fmtDate(o.dagEind));if(o.sub)tijd.push(o.sub);
+ var chips=(o.chips||[]).map(function(c){return '<span class="adchip" style="background:'+(c.kleur||"#7A7F85")+'1f;color:'+(c.kleur||"#7A7F85")+'">'+esc(c.t)+'</span>';}).join("");
+ var acts=(o.acts||[]).map(function(a){return '<button class="xbtn'+(a.del?" xbtn-del":"")+(a.oranje?" adles":"")+'" id="'+a.id+'" title="'+esc(a.title)+'" aria-label="'+esc(a.title)+'">'+a.ico+'</button>';}).join("");
+ var H='<div class="shead adhead"><div class="adkop">'+dat+'<div class="adtit"><h2>'+esc(o.titel)+'</h2>'+(tijd.length?'<div class="adtijd">'+tijd.join(" · ")+'</div>':'')+(chips?'<div class="adchips">'+chips+'</div>':'')+'</div></div><div class="sheadact">'+acts+'<button class="xbtn" onclick="closeSheet()">×</button></div></div>';
+ var rows=(o.rows||[]).filter(function(r){return r&&r[1]!==""&&r[1]!=null;});
+ if(rows.length)H+='<div class="card">'+rows.map(function(r){return _drow(r[0],r[1]);}).join("")+'</div>';
+ if(o.omschr)H+='<div class="card"><div class="dsh">Omschrijving</div><p style="margin:0;font-size:13.5px;line-height:1.5">'+esc(o.omschr)+'</p></div>';
+ var links=(o.links||[]).filter(Boolean);
+ if(links.length)H+='<div class="card"><div class="dsh">Gekoppeld</div>'+links.map(function(l){return '<div class="adlink" data-adl="'+l.id+'"><span class="cvdot" style="background:'+l.kleur+'"></span><span style="flex:1;min-width:0">'+esc(l.label)+'</span>'+(l.status?'<span class="adst'+(l.ok?" ok":"")+'">'+esc(l.status)+'</span>':'')+'</div>';}).join("")+'</div>';
+ if(o.knop)H+='<button class="btn block" id="'+o.knop.id+'">'+esc(o.knop.label)+'</button>';
+ sh.innerHTML=H;openSheet();
+ links.forEach(function(l){var el=sh.querySelector('[data-adl="'+l.id+'"]');if(el&&l.klik)el.onclick=l.klik;});
+ if(o.knop&&o.knop.klik){var kb=$("#"+o.knop.id);if(kb)kb.onclick=o.knop.klik;}
+ (o.acts||[]).forEach(function(a){var b=$("#"+a.id);if(b&&a.klik)b.onclick=a.klik;});}
+var DEL_ICO='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>';
+/* gekoppelde items, alleen wat relevant is */
+function adLinksFor(pid,dag,blokId,type,label,ws){if(!pid||pid==="coach")return [];var out=[];var isB=(type==="golfb"||type==="fysb"),isZ=(type==="golf"||type==="golfz"||type==="fysiek"||type==="fysz");
+ if(isB){var ll=lessonLogFor(pid,dag,blokId);out.push({id:"les",kleur:"#c8791a",label:"Lesadministratie",status:ll?"ingevuld":"nog invullen",ok:!!ll,klik:function(){if(ll)lessonLogDetail(ll.id);else openLessonLog(pid,dag,blokId,type,label);}});}
+ if(isZ){var kind=(type==="golf"||type==="golfz")?"golf":"fys";var ti=adTodoInfo(pid,ws||weekStart(dag),kind);if(ti)out.push({id:"todo",kleur:(kind==="golf")?"#3E6FB0":"#3C9A78",label:"To-do "+(kind==="golf"?"golf":"fysiek")+" · "+(ti.tot-ti.open)+" van "+ti.tot+" gedaan",status:ti.open?(ti.open+" open"):"klaar",ok:!ti.open,klik:function(){openTrainTodos(pid,ws||weekStart(dag),kind,blokId);}});}
+ if(dag===todayISO()&&(isB||isZ)){var w=wellnessFor(pid,dag);out.push({id:"well",kleur:"#0ea5a3",label:"Wellness vandaag",status:w?"ingevuld":"nog invullen",ok:!!w,klik:function(){if(w)wellnessDetail(w.id);else openWellness(pid,dag);}});}
+ return out;}
+var LES_ICO='<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h11l5 5v11a1 1 0 0 1-1 1H4z"/><path d="M15 4v5h5M8 13h8M8 17h5"/></svg>';
 function blockColor(ty){var f=BLOCKTYPES.find(function(x){return x[0]===ty;});return f?f[2]:"#64748b";}
 function blockTypeName(ty){var f=BLOCKTYPES.find(function(x){return x[0]===ty;});return f?f[1]:ty;}
 function availName(a){var f=AVAILS.find(function(x){return x[0]===a;});return f?f[1]:a;}
@@ -9218,7 +9264,8 @@ function availColor(a){return !a?"transparent":a==="niet"?"#C2383A":a==="beperkt
 function availIcon(a){return !a?"":a==="niet"?"\u26d4":a==="beperkt"?"\u26a0\ufe0f":"\u2795";}
 function evIconSpan(ev){if(!ev.avail)return "";return '<span class="avchip" style="--ac:'+availColor(ev.avail)+'">'+(ev.avail==="niet"?"niet":ev.avail==="beperkt"?"beperkt":"extra")+'</span> ';}
 function evTime(ev){if(!ev.startTime)return "";return ev.endTime?ev.startTime+"\u2013"+ev.endTime:ev.startTime;}
-function evDisp(ev){return ev.disp||(ev.type==="vakantie"?"band":"block");}
+function evDisp(ev){return ev.disp||((ev.type==="vakantie"||ev.type==="schoolvak")?"band":"block");}
+function evIsLes(ev){return ev&&(ev.type==="golfb"||ev.type==="fysb");}
 function evAbbr(ev){return ev.type==="training"?"TR":ev.type==="stage"?"TS":ev.type==="vakantie"?"VK":"";}
 function evLegend(ev){var meta=ev.type==="anders"?[ev.desc,ev.location,fmtBlockRange(ev),evTime(ev)].filter(Boolean).join(" \u00b7 "):[evTypeLabel(ev),ev.location,fmtBlockRange(ev),evTime(ev),evTargets(ev)].filter(Boolean).join(" \u00b7 ");var title=ev.name||(ev.type==="anders"?"Anders":evTypeLabel(ev));var _lg=tlEvLaag(ev,null);var _li=(_lg==="sact"||_lg==="strain"||_lg==="svak")?tlIniEv(ev):"";return '<div class="tlleg"><span class="tllegdot" style="background:'+blockColor(ev.type)+'"></span>'+evIconSpan(ev)+(_li?'<em class="tlini">'+esc(_li)+'</em> ':'')+esc(title)+' <span class="tllegmeta">\u00b7 '+esc(meta)+'</span></div>';}
 function evListMeta(ev){return ev.type==="anders"?[ev.desc,ev.location,fmtBlockRange(ev),evTime(ev)].filter(Boolean).join(" \u00b7 "):[evTypeLabel(ev),ev.location,fmtBlockRange(ev),availName(ev.avail),evTime(ev),evTargets(ev)].filter(Boolean).join(" \u00b7 ");}
@@ -9364,7 +9411,20 @@ function renderTimeline(host){
 }
 
 function _drow(k,v){return '<div class="row" style="justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px solid #F2F3F5"><span class="muted" style="flex:0 0 auto">'+esc(k)+'</span><span style="font-weight:600;text-align:right">'+v+'</span></div>';}
-function eventDetail(id,scope){if(id&&String(id).slice(0,3)==="gs_"){var _p9=String(id).split("_");gsSessieDetail(_p9[1],_p9.slice(2).join("_"),scope);return;}var ev=(state.events||[]).find(function(x){return x.id===id;});if(!ev)return;var sh=$("#sheet");var rows="";rows+=_drow("Type",esc(blockTypeName(ev.type)));rows+=_drow("Periode",esc(fmtRange(ev)));if(ev.startTime||ev.endTime)rows+=_drow("Tijd",esc((ev.startTime||"")+(ev.endTime?" \u2013 "+ev.endTime:"")));if(ev.location)rows+=_drow("Locatie",esc(ev.location));if(ev.type==="anders"&&ev.desc)rows+=_drow("Omschrijving",esc(ev.desc));var who=[];(ev.teams||[]).forEach(function(tid){var t=teamById(tid);if(t)who.push(t.name);});(ev.players||[]).forEach(function(pid){who.push(nameOf(pid));});if(who.length)rows+=_drow("Voor",esc(who.join(", ")));sh.innerHTML='<div class="shead"><div><h2>'+esc(ev.name||blockTypeName(ev.type))+'</h2><div class="sx">Activiteit</div></div><div class="sheadact"><button class="xbtn" id="evEditB" title="Bewerk">\u270e</button><button class="xbtn xbtn-del" id="evDelB" title="Verwijder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></button><button class="xbtn" onclick="closeSheet()">\u00d7</button></div></div><div class="card">'+rows+'</div>';openSheet();$("#evEditB").onclick=function(){openBlockForm(id,scope);};$("#evDelB").onclick=function(){confirmDlg("Dit event verwijderen?",function(){state.events=(state.events||[]).filter(function(x){return x.id!==id;});save();closeSheet();renderPlanning();toast("Verwijderd \u2713");});};}
+function eventDetail(id,scope){if(id&&String(id).slice(0,3)==="gs_"){var _p9=String(id).split("_");gsSessieDetail(_p9[1],_p9.slice(2).join("_"),scope);return;}var ev=(state.events||[]).find(function(x){return x.id===id;});if(!ev)return;
+ var _lpid=(scope&&scope.player)?scope.player:(rolIsSpeler()?rolSpelerId():null);var _t=todayISO();var _dag=(ev.start<=_t&&(ev.end||ev.start)>=_t)?_t:ev.start;
+ var col=(ev.avail==="niet")?"#94a3b8":blockColor(ev.type);var chips=[{t:blockTypeName(ev.type),kleur:col}];
+ if(ev.avail)chips.push({t:(ev.avail==="niet"?"Niet beschikbaar":(ev.avail==="beperkt"?"Beperkt beschikbaar":"Extra ruimte")),kleur:availColor(ev.avail)});
+ if(evDisp(ev)==="band")chips.push({t:"op de achtergrond",kleur:"#9AA1A8"});
+ var who=[];(ev.teams||[]).forEach(function(tid){var t=teamById(tid);if(t)who.push(t.name);});(ev.players||[]).forEach(function(pid){who.push(nameOf(pid));});
+ var rows=[];if(ev.end&&ev.end!==ev.start)rows.push(["Periode",esc(fmtBlockRange(ev))]);if(!_lpid)rows.push(["Voor",who.length?esc(who.join(", ")):"Eigen agenda"]);else if(who.length>1)rows.push(["Samen met",esc(who.filter(function(n){return n!==nameOf(_lpid);}).join(", "))]);
+ var acts=[];var lbl=ev.name||blockTypeName(ev.type);
+ if(evIsLes(ev)&&_lpid)acts.push({id:"evLesB",title:"Lesadministratie",ico:LES_ICO,oranje:true,klik:function(){var _ll=lessonLogFor(_lpid,_dag,ev.id);if(_ll)lessonLogDetail(_ll.id);else openLessonLog(_lpid,_dag,ev.id,ev.type,lbl);}});
+ acts.push({id:"evEditB",title:"Bewerk",ico:"✎",klik:function(){openBlockForm(id,scope);}});
+ acts.push({id:"evDelB",title:"Verwijder",ico:DEL_ICO,del:true,klik:function(){confirmDlg("Dit event verwijderen?",function(){state.events=(state.events||[]).filter(function(x){return x.id!==id;});save();closeSheet();renderPlanning();if(activeView==="today")renderToday();toast("Verwijderd ✓");});}});
+ var links=adLinksFor(_lpid,_dag,ev.id,ev.type,lbl,weekStart(_dag));
+ var knop=null;var _les=links.find(function(l){return l.id==="les";});if(_les&&!_les.ok)knop={id:"adKnop",label:"Lesadministratie invullen",klik:_les.klik};else{var _td=links.find(function(l){return l.id==="todo";});if(_td&&!_td.ok)knop={id:"adKnop",label:"To-do openen",klik:_td.klik};}
+ actDetailSheet({dag:ev.start,dagEind:ev.end,tijd:ev.startTime||"",tot:ev.endTime||"",titel:lbl,sub:ev.location||"",chips:chips,rows:rows,omschr:(ev.type==="anders"?ev.desc:(ev.desc||"")),acts:acts,links:links,knop:knop});}
 function edGoalIds(ed,pid){var pp=(ed.participants||{})[pid];return (pp&&pp.goalIds)||[];}
 function goalLabel(g){return g.type==="prestatie"?goalDerivedTitle(g):(g.title||goalTypeMeta(g.type)[1]);}
 function goalTourEditions(goalId,pid){return (state.tourEditions||[]).filter(function(ed){return edGoalIds(ed,pid).indexOf(goalId)>=0;}).sort(function(a,b){return (a.start||"").localeCompare(b.start||"");});}
@@ -10458,6 +10518,7 @@ function normalizePlanning(){
   if(!state.tourDefs)state.tourDefs=[];
   if(!state.tourDefsV320){state.tourDefsV320=1;SEED_TOURDEFS_V320.forEach(function(d){if(state.tourDefs.some(function(x){return (x.name||"").toLowerCase()===d.name.toLowerCase();}))return;state.tourDefs.push({id:uid(),name:d.name,cat:d.cat,labels:d.labels.slice(),klasse:d.klasse,tourId:"",vorm:d.vorm,gender:d.gender,rondes:d.rondes,load:d.load,invitation:d.invitation,seed:true});});}
   if(!state.tourDefsV321){state.tourDefsV321=1;/* v321: Toms correcties uit het voorstelbestand op de geseede definities */SEED_TOURDEFS_V320.forEach(function(d){var x=state.tourDefs.find(function(y){return y.seed&&((y.name||"").toLowerCase()===d.name.toLowerCase()||(d.was&&(y.name||"").toLowerCase()===d.was.toLowerCase()));});if(!x)return;x.name=d.name;x.cat=d.cat;x.labels=d.labels.slice();x.klasse=d.klasse;x.vorm=d.vorm;x.gender=d.gender;x.rondes=d.rondes;x.load=d.load;x.invitation=d.invitation;});}
+  if(!state.eventsV328){state.eventsV328=1;(state.events||[]).forEach(function(ev){if(ev.type==="training")ev.type="golfz";});}
   if(!state.tourLandV326){state.tourLandV326=1;/* v326: land per toernooi (geseede definities krijgen een schatting op naam) */(state.tourDefs||[]).forEach(function(d){if(d.land)return;if(d.seed){var l=tourLandRaad(d.name);if(l)d.land=l;}});}
   if(!state.tourEditions)state.tourEditions=[];
   if(!state.tours)state.tours=[];
@@ -11788,16 +11849,16 @@ function openWeekPicker(pid,year){var micro=[];try{micro=perMicro(pid,year);}cat
  sh.querySelectorAll("[data-wk]").forEach(function(b){b.onclick=function(){tpWeek=b.dataset.wk;closeSheet();renderPlanning();};});
  var focusEl=sh.querySelector(".bkpitem.sel")||sh.querySelector(".bkpitem.now");if(focusEl)setTimeout(function(){try{focusEl.scrollIntoView({block:"center"});}catch(e){}},60);}
 function openRoosterBlock(pid,ws,bid){var wbRaw=weekBlocksFor(pid,ws);var isOv=wbRaw.override;var src=isOv?state.weekOv[weekOvKey(pid,ws)].blocks:weekTplFor(pid);
- var b=src.find(function(x){return x.id===bid;});if(!b)return;var mt=wkTypeMeta(b.type);var sh=$("#sheet");
- var rows='<div class="drow"><span class="dk">Dag</span><span>'+WKDAYSF[b.day]+'</span></div><div class="drow"><span class="dk">Tijd</span><span>'+fmtHM(b.start)+' – '+fmtHM(b.end)+'</span></div><div class="drow"><span class="dk">Type</span><span>'+mt[1]+'</span></div>';
- if(b.mode)rows+='<div class="drow"><span class="dk">Vorm</span><span>'+wkModeLabel(b.mode)+'</span></div>';
- if(b.loc)rows+='<div class="drow"><span class="dk">Locatie</span><span>'+esc(b.loc)+'</span></div>';
- rows+='<div class="drow"><span class="dk">Geldt voor</span><span>'+(isOv?'Alleen deze week':'Standaardweek (elke week)')+'</span></div>';
- var descHtml=b.desc?'<div class="dsec"><div class="dsh">Omschrijving</div><p>'+esc(b.desc)+'</p></div>':'';
- sh.innerHTML='<div class="shead"><div><h2>'+esc(b.label||mt[1])+'</h2><div style="margin-top:5px"><span class="dcatchip" style="background:'+mt[2]+'22;color:'+mt[2]+'">'+mt[1]+'</span></div></div><div class="sheadact"><button class="xbtn" id="rbEdit" title="Bewerk">✎</button><button class="xbtn xbtn-del" id="rbDel" title="Verwijder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></button><button class="xbtn" onclick="closeSheet()">×</button></div></div><div class="drows">'+rows+'</div>'+descHtml;
- openSheet();
- $("#rbEdit").onclick=function(){openRoosterBlockEdit(pid,ws,bid);};
- $("#rbDel").onclick=function(){confirmDlg('Blok "'+esc(b.label||mt[1])+'" ('+WKDAYSF[b.day]+') verwijderen'+(isOv?' uit deze week?':' uit de standaardweek (vanaf deze week)?'),function(){if(!isOv)tplSnapshot(pid);var i=src.findIndex(function(x){return x.id===bid;});if(i>=0)src.splice(i,1);save();closeSheet();renderPlanning();toast("Verwijderd ✓");});};}
+ var b=src.find(function(x){return x.id===bid;});if(!b)return;var mt=wkTypeMeta(b.type);var dag=dAddDays(ws,b.day);var lbl=b.label||mt[1];
+ var chips=[{t:mt[1],kleur:mt[2]}];if(b.mode)chips.push({t:wkModeLabel(b.mode),kleur:"#7A7F85"});
+ var rows=[["Geldt voor",isOv?'Alleen deze week':'Standaardweek (elke week)']];
+ var acts=[];var isB=(b.type==="golfb"||b.type==="fysb");
+ if(isB&&pid&&pid!=="coach")acts.push({id:"rbLes",title:"Lesadministratie",ico:LES_ICO,oranje:true,klik:function(){var _ll=lessonLogFor(pid,dag,bid);if(_ll)lessonLogDetail(_ll.id);else openLessonLog(pid,dag,bid,b.type,lbl);}});
+ acts.push({id:"rbEdit",title:"Bewerk",ico:"✎",klik:function(){openRoosterBlockEdit(pid,ws,bid);}});
+ acts.push({id:"rbDel",title:"Verwijder",ico:DEL_ICO,del:true,klik:function(){confirmDlg('Blok "'+esc(lbl)+'" ('+WKDAYSF[b.day]+') verwijderen'+(isOv?' uit deze week?':' uit de standaardweek (vanaf deze week)?'),function(){if(!isOv)tplSnapshot(pid);var i=src.findIndex(function(x){return x.id===bid;});if(i>=0)src.splice(i,1);save();closeSheet();renderPlanning();if(activeView==="today")renderToday();toast("Verwijderd ✓");});}});
+ var links=adLinksFor(pid,dag,bid,b.type,lbl,ws);
+ var knop=null;var _les=links.find(function(l){return l.id==="les";});if(_les&&!_les.ok)knop={id:"adKnop",label:"Lesadministratie invullen",klik:_les.klik};else{var _td=links.find(function(l){return l.id==="todo";});if(_td&&!_td.ok)knop={id:"adKnop",label:"To-do openen",klik:_td.klik};}
+ actDetailSheet({dag:dag,tijd:fmtHM(b.start),tot:fmtHM(b.end),titel:lbl,sub:b.loc||"",chips:chips,rows:rows,omschr:b.desc||"",acts:acts,links:links,knop:knop});}
 function openRoosterBlockEdit(pid,ws,bid){var wbRaw=weekBlocksFor(pid,ws);var isOv=wbRaw.override;var src=isOv?state.weekOv[weekOvKey(pid,ws)].blocks:weekTplFor(pid);
  var b=src.find(function(x){return x.id===bid;});if(!b)return;var sh=$("#sheet");
  var draft={day:b.day,start:b.start,end:b.end,type:b.type,mode:b.mode||"ind",label:b.label||"",loc:b.loc||"",desc:b.desc||""};
@@ -13353,13 +13414,13 @@ function seedDemoT2(yr,vandaag,tid){
  /* --- standaardweek --- */
  if(!state.weekTpl)state.weekTpl={};
  state.weekTpl[pid]=[
-  {id:uid(),day:1,start:"08:30",end:"14:30",type:"school",label:"School"},{id:uid(),day:1,start:"16:00",end:"18:00",type:"golf",mode:"ind",label:"Wedges + putten"},
-  {id:uid(),day:2,start:"08:30",end:"14:30",type:"school",label:"School"},{id:uid(),day:2,start:"16:30",end:"18:00",type:"fysb",label:"Kracht (S&C)"},
-  {id:uid(),day:3,start:"08:30",end:"12:30",type:"school",label:"School"},{id:uid(),day:3,start:"14:00",end:"17:00",type:"golfb",label:"Les Tom"},
-  {id:uid(),day:4,start:"08:30",end:"14:30",type:"school",label:"School"},{id:uid(),day:4,start:"16:00",end:"18:00",type:"golf",mode:"ind",label:"Short game"},
-  {id:uid(),day:5,start:"08:30",end:"12:30",type:"school",label:"School"},{id:uid(),day:5,start:"14:00",end:"15:30",type:"fysb",label:"Kracht (S&C)"},{id:uid(),day:5,start:"16:00",end:"18:00",type:"golf",mode:"ind",label:"Range + baan"},
-  {id:uid(),day:6,start:"09:00",end:"13:30",type:"golf",mode:"ind",label:"Speeltraining 18 holes"},
-  {id:uid(),day:0,start:"10:00",end:"12:00",type:"golf",mode:"ind",label:"Putten + wedges"}];
+  {id:uid(),day:0,start:"08:30",end:"14:30",type:"school",label:"School"},{id:uid(),day:0,start:"16:00",end:"18:00",type:"golf",mode:"ind",label:"Wedges + putten"},
+  {id:uid(),day:1,start:"08:30",end:"14:30",type:"school",label:"School"},{id:uid(),day:1,start:"16:30",end:"18:00",type:"fysb",mode:"ind",label:"Kracht (S&C)"},
+  {id:uid(),day:2,start:"08:30",end:"12:30",type:"school",label:"School"},{id:uid(),day:2,start:"14:00",end:"17:00",type:"golfb",mode:"ind",label:"Les Tom"},
+  {id:uid(),day:3,start:"08:30",end:"14:30",type:"school",label:"School"},{id:uid(),day:3,start:"16:00",end:"18:00",type:"golf",mode:"ind",label:"Short game"},
+  {id:uid(),day:4,start:"08:30",end:"12:30",type:"school",label:"School"},{id:uid(),day:4,start:"14:00",end:"15:30",type:"fysb",mode:"ind",label:"Kracht (S&C)"},{id:uid(),day:4,start:"16:00",end:"18:00",type:"golf",mode:"ind",label:"Range + baan"},
+  {id:uid(),day:5,start:"09:00",end:"13:30",type:"golf",mode:"ind",label:"Speeltraining 18 holes"},
+  {id:uid(),day:6,start:"10:00",end:"12:00",type:"golf",mode:"ind",label:"Putten + wedges"}];
  /* --- agenda --- */
  state.events=state.events||[];
  state.events.push({id:uid(),demo:true,type:"vakantie",name:"Wintersport",start:dAddDays(vandaag,60),end:dAddDays(vandaag,66),players:[pid],teams:[]},
@@ -13565,7 +13626,7 @@ function lessonLogDetail(id){var l=lessonLogById(id);if(!l)return;var sh=$("#she
  var rows="";function _r(lbl,val){if(!val)return;rows+='<div class="lldrow"><div class="lldlbl">'+lbl+'</div><div class="lldval">'+esc(val)+'</div></div>';}
  _r("Focus",(l.cats||[]).map(function(c){return taxSubLabel(mk,c);}).join(" · "));
  _r("Thema",l.theme);_r("Wat is er gedaan?",l.done);_r("Vervolg / huiswerk",l.homework);if(!rolIsSpeler()){var _cn=coachLogFor("les",l.id);if(_cn)_r("Uit je logboek",_cn.tekst);}
- sh.innerHTML='<div class="shead"><div><h2>Trainingslog</h2><div class="sx">'+esc(l.blockLabel||wkTypeMeta(l.blockType)[1])+' · '+fmtDate(l.date)+' · '+esc(nameOf(l.playerId))+'</div></div><div class="sheadact"><button class="xbtn" id="lldEdit" title="Bewerk">✎</button><button class="xbtn xbtn-del" id="lldDel" title="Verwijder">'+TRASH_SVG+'</button><button class="xbtn" onclick="closeSheet()">×</button></div></div>'
+ sh.innerHTML='<div class="shead"><div><h2>Lesadministratie</h2><div class="sx">'+esc(l.blockLabel||wkTypeMeta(l.blockType)[1])+' · '+fmtDate(l.date)+' · '+esc(nameOf(l.playerId))+'</div></div><div class="sheadact"><button class="xbtn" id="lldEdit" title="Bewerk">✎</button><button class="xbtn xbtn-del" id="lldDel" title="Verwijder">'+TRASH_SVG+'</button><button class="xbtn" onclick="closeSheet()">×</button></div></div>'
  +'<div class="card">'+(rows||'<p class="muted" style="margin:0">Leeg log.</p>')+'</div>'
  +'<div class="card" id="lldMedia" style="display:none"><label class="fld">Foto’s</label><div class="llimgs" id="lldImgs"></div></div>'
  +videoLinksList((l.videoUrls&&l.videoUrls.length)?l.videoUrls:(((l.videoUrl||"").trim())?[l.videoUrl]:[]));
@@ -13596,7 +13657,7 @@ function openLessonLog(pid,date,blockId,blockType,blockLabel){
  if(blockLabel&&!d.blockLabel)d.blockLabel=blockLabel;
  var media=[];var sh=$("#sheet");var mk=lessonMainFor(d.blockType);
  var chips='<div class="trchips" id="llCats">'+taxSubs(mk).map(function(c){return '<button type="button" data-c="'+c.key+'" class="'+((d.cats||[]).indexOf(c.key)>=0?"on":"")+'">'+esc(c.label)+'</button>';}).join("")+'</div>';
- sh.innerHTML='<div class="shead"><div><h2>Trainingslog</h2><div class="sx">'+esc(d.blockLabel||wkTypeMeta(d.blockType)[1])+' · '+fmtDate(d.date)+' · '+esc(nameOf(pid))+'</div></div><button class="xbtn" onclick="closeSheet()">×</button></div>'
+ sh.innerHTML='<div class="shead"><div><h2>Lesadministratie</h2><div class="sx">'+esc(d.blockLabel||wkTypeMeta(d.blockType)[1])+' · '+fmtDate(d.date)+' · '+esc(nameOf(pid))+'</div></div><button class="xbtn" onclick="closeSheet()">×</button></div>'
  +'<div class="card"><label class="fld">Focus van de les</label>'+chips
  +'<label class="fld" style="margin-top:12px">Thema <span class="sx">(optioneel)</span></label><input class="in" id="llTheme" value="'+esc(d.theme||"")+'" placeholder="Bijv. startrichting bij korte putts">'
  +'<label class="fld" style="margin-top:12px">Wat is er gedaan?</label><textarea class="in" id="llDone" rows="3" placeholder="Inhoud van de les…">'+esc(d.done||"")+'</textarea>'
@@ -13622,7 +13683,7 @@ function openLessonLog(pid,date,blockId,blockType,blockLabel){
   if(_llCn!==null)coachLogZet("les",d.id,d.playerId,d.date,_llCn);
   lessonImgsSet(d.id,media);save();closeSheet();
   if(activeView==="today")renderToday();else if(activeView==="logbook")renderLogbook();
-  toast("Trainingslog opgeslagen ✓");};
+  toast("Lesadministratie opgeslagen ✓");};
  var db=$("#llDel");if(db)db.onclick=function(){confirmDlg("Dit trainingslog verwijderen?",function(){state.lessonLogs=lessonLogs().filter(function(x){return x.id!==d.id;});lessonImgsSet(d.id,[]);save();closeSheet();if(activeView==="today")renderToday();else if(activeView==="logbook")renderLogbook();toast("Verwijderd");});};
 }
 /* ===== Logboek (tijdlijn per speler) ===== */
@@ -13637,7 +13698,7 @@ function logbookEntries(pid){
   var moods=es.filter(function(e){return e.mood;}).map(function(e){return e.mood;});
   var notes=es.filter(function(e){return e.note;}).map(function(e){return e.note;});
   out.push({date:es[0].date,type:"train",title:d?d.title:"Oefening",sub:es.length+"× uitgevoerd",moodLvls:moods,note:notes.join(" · "),open:(moods.length||notes.length)?{f:"tlog",id:es[0].date+"|"+es[0].drillId}:(d?{f:"drill",id:d.id}:null)});});
- (state.lessonLogs||[]).forEach(function(l){if(l.playerId!==pid||!l.date)return;out.push({date:l.date,type:"les",title:(l.blockLabel||wkTypeMeta(l.blockType)[1]),sub:lessonLogSummary(l)||"Trainingslog",note:l.done||"",open:{f:"lesson",id:l.id}});});
+ (state.lessonLogs||[]).forEach(function(l){if(l.playerId!==pid||!l.date)return;out.push({date:l.date,type:"les",title:(l.blockLabel||wkTypeMeta(l.blockType)[1]),sub:lessonLogSummary(l)||"Lesadministratie",note:l.done||"",open:{f:"lesson",id:l.id}});});
  (state.tourEvals||[]).forEach(function(t){if(t.playerId!==pid)return;var dd=t.end||t.start;if(!dd)return;out.push({date:dd,type:"eval",title:"Toernooi-evaluatie · "+(t.name||"Toernooi"),sub:[t.scorePar?("Score "+t.scorePar):"",t.ranking||""].filter(Boolean).join(" · "),open:{f:"toureval",id:t.id}});});
  (state.wellness||[]).forEach(function(w){if(w.playerId!==pid||!w.date)return;var r=wellReadiness(w);out.push({date:w.date,type:"well",title:"Wellness check",sub:(r!=null?("Readiness "+r+"%"):"")+(w.illness?" · ziek":"")+((w.bodyParts||[]).length?" · klachten":""),open:{f:"well",id:w.id}});});
  (state.sessions||[]).forEach(function(s){if(!s.finalized||!s.date)return;var r=(s.results||[]).find(function(x){return x.playerId===pid;});if(!r)return;var t=TESTS[s.testId];if(!t)return;
@@ -14148,8 +14209,11 @@ function renderToday(){var box=$("#todayBody");if(!box)return;
  if(isToday){try{gsSessiesVoor(pid,dt,dAddDays(dt,60)).forEach(function(o){var s9=o.s,x9=o.x;var lead=dDiffDays(dt,x9.datum);var term=(s9.actieDagen!=null?+s9.actieDagen:7);if(lead>term)return;var r9=gsRsvp(s9.id,x9.datum,pid);var her=(s9.herinnerDagen!=null?+s9.herinnerDagen:2);
   if(r9){if(x9.datum===dt)acts.push({key:'gs_'+s9.id+'_'+x9.datum,kind:'gs',sid:s9.id,datum:x9.datum,klaar:1,title:'Groepstraining \u2014 '+esc(s9.name),sub:(r9.status==="ja"?"Aangemeld \u2713":"Afgemeld")+(r9.reden?' \u00b7 '+esc(r9.reden):'')+(x9.van?' \u00b7 '+fmtHM(x9.van):'')});return;}
   acts.push({key:'gs_'+s9.id+'_'+x9.datum,kind:'gs',sid:s9.id,datum:x9.datum,herin:(lead<=her),title:(lead<=her?'Herinnering: aanmelden \u2014 ':'Aanmelden \u2014 ')+esc(s9.name),sub:dayLbl(x9.datum)+(x9.van?' \u00b7 '+fmtHM(x9.van)+(x9.tot?'\u2013'+fmtHM(x9.tot):''):'')+(x9.locatie?' \u00b7 '+esc(x9.locatie):'')+' \u00b7 meld je aan of af'});});}catch(_e){}}
- function lesAct(b,d,overdue){var mt2=wkTypeMeta(b.type);var _ll=lessonLogFor(pid,d,b.id);if(overdue&&_ll)return;acts.push({key:'log_'+b.id+'_'+d,kind:'log',blkId:b.id,blkType:b.type,blkLabel:(b.label||mt2[1]),date:d,ll:_ll,title:'Trainingslog'+(_ll?'':' invullen')+' — '+esc(b.label||mt2[1]),sub:_ll?('Ingevuld ✓'+(lessonLogSummary(_ll)?' · '+esc(lessonLogSummary(_ll)):'')):(overdue?'Van '+dayLbl(d):'Na de begeleide training')});}
+ function lesAct(b,d,overdue){var mt2=wkTypeMeta(b.type);var _ll=lessonLogFor(pid,d,b.id);if(overdue&&_ll)return;acts.push({key:'log_'+b.id+'_'+d,kind:'log',blkId:b.id,blkType:b.type,blkLabel:(b.label||mt2[1]),date:d,ll:_ll,title:'Lesadministratie'+(_ll?'':' invullen')+' — '+esc(b.label||mt2[1]),sub:_ll?('Ingevuld ✓'+(lessonLogSummary(_ll)?' · '+esc(lessonLogSummary(_ll)):'')):(overdue?'Van '+dayLbl(d):'Na de begeleide training')});}
  bl.forEach(function(b){if((b.type==="golfb"||b.type==="fysb")&&b.mode==="ind")lesAct(b,dt,false);});
+ function lesEvs(d){return (state.events||[]).filter(function(ev){return evIsLes(ev)&&ev.start&&ev.start<=d&&(ev.end||ev.start)>=d&&evAppliesToPlayer(ev,pid);});}
+ lesEvs(dt).forEach(function(ev){lesAct({id:ev.id,type:ev.type,label:ev.name||blockTypeName(ev.type)},dt,false);});
+ if(isToday){var _seenEv={};for(var _j=1;_j<=LOOKB;_j++){var _dj=dAddDays(dt,-_j);lesEvs(_dj).forEach(function(ev){if(_seenEv[ev.id])return;_seenEv[ev.id]=1;lesAct({id:ev.id,type:ev.type,label:ev.name||blockTypeName(ev.type)},_dj,true);});}}
  if(isToday){var _seenLes={};for(var _i=1;_i<=LOOKB;_i++){var _d=dAddDays(dt,-_i);var _ws2=weekStart(_d);var _di2=dDiffDays(_ws2,_d);
   activeBlocksWeek(pid,_ws2).blocks.filter(function(b){return b.day===_di2&&(b.type==="golfb"||b.type==="fysb")&&b.mode==="ind";}).forEach(function(b){if(_seenLes[b.id])return;_seenLes[b.id]=1;lesAct(b,_d,true);});}}
  var _tG=allTodos(["golfskills","spelen"]),_tF=allTodos(["fysiek"]);
@@ -14326,7 +14390,7 @@ function calCoachItems(van,tot){
  if(L.gtrain){try{gsEventsRange(van,tot,pid).forEach(function(ev){out.push({date:ev.start,laag:"gtrain",tijd:ev.startTime||"",tot:ev.endTime||"",naam:ev.name,sub:"Groepstraining",open:"ev",id:ev.id});});}catch(_e){}}
  (state.events||[]).forEach(function(ev){var st=ev.start,e=ev.end||ev.start;if(!st||st>tot||e<van)return;
   if(pid&&typeof evAppliesToPlayer==="function"&&!evAppliesToPlayer(ev,pid))return;
-  var laag=(ev.type==="vakantie")?"vak":"agenda";if(laag==="agenda"&&!pid&&(((ev.players||[]).length)||((ev.teams||[]).length)))laag="sact";if(!L[laag])return;
+  var laag=(ev.type==="vakantie"||ev.type==="schoolvak")?"vak":"agenda";if(laag==="agenda"&&!pid&&(((ev.players||[]).length)||((ev.teams||[]).length)))laag="sact";if(!L[laag])return;
   var d=(st>van?st:van),last=(e<tot?e:tot);
   while(d<=last){out.push({date:d,laag:laag,tijd:ev.startTime||"",tot:ev.endTime||"",naam:ev.name||blockTypeName(ev.type),sub:blockTypeName(ev.type),open:"ev",id:ev.id});d=dAddDays(d,1);}});
  if(L.wed||(L.swed&&!pid))(state.tourEditions||[]).forEach(function(ed){if(!ed.start)return;var e=ed.end||ed.start;if(ed.start>tot||e<van)return;
@@ -14340,6 +14404,9 @@ function calCoachItems(van,tot){
    d=dAddDays(d,1);}});
  out.sort(function(a,b){return a.date.localeCompare(b.date)||(a.tijd||"99:99").localeCompare(b.tijd||"99:99");});
  return out;}
+var calMkJaar=null;
+function calMaandKiezerHtml(yr,mIdx){var y=(calMkJaar!=null)?calMkJaar:yr;var MK=["jan","feb","mrt","apr","mei","jun","jul","aug","sep","okt","nov","dec"];var nu=todayISO();
+ return '<div class="calmk" id="calMk" hidden><div class="calmkkop"><button class="xbtn sm" data-mky="-1">\u2039</button><b>'+y+'</b><button class="xbtn sm" data-mky="1">\u203a</button></div><div class="calmkgrid">'+MK.map(function(m,i){var v=y+"-"+("0"+(i+1)).slice(-2);return '<button data-mkm="'+v+'" class="'+((y===yr&&i===mIdx)?"on":"")+((v===nu.slice(0,7))?" nu":"")+'">'+m+'</button>';}).join("")+'</div></div>';}
 function calMaandShift(n){var y=+calDatum.slice(0,4),mo=+calDatum.slice(5,7)-1+n;var y2=y+Math.floor(mo/12),m2=((mo%12)+12)%12;calDatum=y2+"-"+("0"+(m2+1)).slice(-2)+"-01";renderPlanning();}
 function calLagenChips(){
  var L=calLagen();
@@ -14358,21 +14425,25 @@ function calMaandHtml(){
  var nm=(mIdx===11)?((yr+1)+"-01-01"):(yr+"-"+("0"+(mIdx+2)).slice(-2)+"-01");
  var last=dAddDays(nm,-1);
  var gs=weekStart(d0),ge=dAddDays(weekStart(last),6);
- var its=calCoachItems(gs,ge);var per={};its.forEach(function(i){(per[i.date]=per[i.date]||[]).push(i);});
+ var its=calCoachItems(gs,ge);
+ /* v328: weekrooster (standaardweek + weekafwijkingen) van de speler ook in de maand */
+ (function(){var pid=calKalPid();if(!pid)return;var w=gs;while(w<=ge){var wb=null;try{wb=activeBlocksWeek(pid,w);}catch(_e){}if(wb)wb.blocks.forEach(function(b){var mt=wkTypeMeta(b.type);var d=dAddDays(w,b.day);if(d<gs||d>ge)return;its.push({date:d,laag:"rooster",kleur:mt[2],tijd:b.start||"",tot:b.end||"",naam:b.label||mt[1],sub:mt[1],open:"blk",id:w+"~"+b.id});});w=dAddDays(w,7);}
+  its.sort(function(a,b){return a.date.localeCompare(b.date)||(a.tijd||"99:99").localeCompare(b.tijd||"99:99");});})();
+ var per={};its.forEach(function(i){(per[i.date]=per[i.date]||[]).push(i);});
  var vandaag=todayISO();
- var H='<div class="card">'+calKopHtml(CAL_MN[mIdx]+' '+yr,'<input type="month" id="calKiesInp" value="'+calDatum.slice(0,7)+'">');
+ var H='<div class="card">'+calKopHtml(CAL_MN[mIdx]+' '+yr,calMaandKiezerHtml(yr,mIdx));
  H+='<div class="calgrid" id="calGrid">'+CAL_WD.map(function(w){return '<span class="calwd">'+w+'</span>';}).join("");
  var d=gs;
  while(d<=ge){var dl=per[d]||[];var oth=d.slice(0,7)!==calDatum.slice(0,7);
   H+='<div class="calcel'+(oth?" oth":"")+(d===vandaag?" nu":"")+(d===calSel?" sel":"")+'" data-cd="'+d+'"><b>'+(+d.slice(8,10))+'</b>'
-   +'<span class="caldots">'+dl.slice(0,4).map(function(i){return '<i style="background:'+CAL_KLEUR[i.laag]+'"></i>';}).join("")+'</span>'
-   +'<span class="calevts">'+dl.slice(0,3).map(function(i){return '<em style="'+calBlokStyle(CAL_KLEUR[i.laag],i.laag==="wed"&&!i.dim)+(i.dim?';opacity:.55':'')+'">'+(i.tijd?i.tijd+" ":"")+esc(i.naam)+'</em>';}).join("")+(dl.length>3?'<em class="meer">+'+(dl.length-3)+'</em>':'')+'</span></div>';
+   +'<span class="caldots">'+dl.slice(0,4).map(function(i){return '<i style="background:'+(i.kleur||CAL_KLEUR[i.laag])+'"></i>';}).join("")+'</span>'
+   +'<span class="calevts">'+dl.slice(0,3).map(function(i){return '<em style="'+calBlokStyle(i.kleur||CAL_KLEUR[i.laag],i.laag==="wed"&&!i.dim)+(i.dim?';opacity:.55':'')+'">'+(i.tijd?i.tijd+" ":"")+esc(i.naam)+'</em>';}).join("")+(dl.length>3?'<em class="meer">+'+(dl.length-3)+'</em>':'')+'</span></div>';
   d=dAddDays(d,1);}
  H+='</div>'+calLagenChips()+'</div>';
  if(calSel&&calSel>=gs&&calSel<=ge){
   var sel=per[calSel]||[];
   H+='<div class="card" id="calDag"><div class="cardhd"><h3>'+esc(calDagKort(calSel))+'</h3><span class="hdnote">'+(sel.length?sel.length+(sel.length===1?" activiteit":" activiteiten"):"")+'</span></div>'
-   +(sel.length?sel.map(function(i){return '<div class="cvrow" data-op="'+i.open+'|'+i.id+'"><span class="cvdot" style="background:'+CAL_KLEUR[i.laag]+'"></span><span style="flex:1;min-width:0"><b>'+esc(i.naam)+'</b>'+(i.sub?'<small>'+esc(i.sub)+'</small>':'')+'</span>'+(i.tijd?'<span class="cvtijd">'+i.tijd+(i.tot?"–"+i.tot:"")+'</span>':'')+'</div>';}).join(""):'<p class="muted" style="margin:0;font-size:13px">Geen activiteiten.</p>')+'</div>';}
+   +(sel.length?sel.map(function(i){return '<div class="cvrow" data-op="'+i.open+'|'+i.id+'"><span class="cvdot" style="background:'+(i.kleur||CAL_KLEUR[i.laag])+'"></span><span style="flex:1;min-width:0"><b>'+esc(i.naam)+'</b>'+(i.sub?'<small>'+esc(i.sub)+'</small>':'')+'</span>'+(i.tijd?'<span class="cvtijd">'+i.tijd+(i.tot?"–"+i.tot:"")+'</span>':'')+'</div>';}).join(""):'<p class="muted" style="margin:0;font-size:13px">Geen activiteiten.</p>')+'</div>';}
  return H;}
 function calWeekHtml(){
  var ws=weekStart(calDatum),we=dAddDays(ws,6);
@@ -14488,14 +14559,17 @@ function renderCalCoach(host){
  var ad=wrap.querySelector("#calAdd");if(ad)ad.onclick=function(){
   if(rolIsSpeler()){tlPlayer=rolSpelerId();tlTeam=null;}else{tlPlayer=null;tlTeam=null;}
   openAddChooser();};
- var kb=wrap.querySelector("#calKiesB"),ki=wrap.querySelector("#calKiesInp");
+ var kb=wrap.querySelector("#calKiesB"),ki=wrap.querySelector("#calKiesInp"),mk=wrap.querySelector("#calMk");
  if(kb&&ki)kb.onclick=function(){try{if(ki.showPicker)ki.showPicker();else ki.click();}catch(_e){ki.click();}};
+ if(kb&&mk){kb.onclick=function(ev){ev.stopPropagation();mk.hidden=!mk.hidden;if(!mk.hidden){var _cl=function(e2){if(!mk.contains(e2.target)&&e2.target!==kb){mk.hidden=true;document.removeEventListener("click",_cl);}};setTimeout(function(){document.addEventListener("click",_cl);},0);}};
+  mk.querySelectorAll("[data-mky]").forEach(function(b){b.onclick=function(ev){ev.stopPropagation();calMkJaar=(+mk.querySelector(".calmkkop b").textContent)+(+b.dataset.mky);renderPlanning();var m2=$("#calMk");if(m2)m2.hidden=false;};});
+  mk.querySelectorAll("[data-mkm]").forEach(function(b){b.onclick=function(ev){ev.stopPropagation();calMkJaar=null;calDatum=b.dataset.mkm+"-01";renderPlanning();};});}
  if(ki)ki.onchange=function(){if(!ki.value)return;calDatum=(ki.type==="month")?(ki.value+"-01"):ki.value;renderPlanning();};
  wrap.querySelectorAll(".calcel").forEach(function(c){
   c.onclick=function(){calSel=c.dataset.cd;renderPlanning();};
   c.ondblclick=function(){calDatum=c.dataset.cd;calSel=c.dataset.cd;state.calMode="week";save();renderPlanning();};});
  wrap.querySelectorAll("[data-laag]").forEach(function(bb){bb.onclick=function(){var L=calLagen();L[bb.dataset.laag]=!L[bb.dataset.laag];save();renderPlanning();};});
- wrap.querySelectorAll("[data-op]").forEach(function(r){r.onclick=function(){var q=r.dataset.op.split("|");var sc=rolIsSpeler()?{player:rolSpelerId()}:undefined;if(q[0]==="ev")eventDetail(q[1],sc);else editionDetail(q[1],sc);};});
+ wrap.querySelectorAll("[data-op]").forEach(function(r){r.onclick=function(){var q=r.dataset.op.split("|");var sc=rolIsSpeler()?{player:rolSpelerId()}:undefined;if(q[0]==="ev")eventDetail(q[1],sc);else if(q[0]==="blk"){var _q=q[1].split("~");openRoosterBlock(calKalPid(),_q[0],_q[1]);}else editionDetail(q[1],sc);};});
  wrap.querySelectorAll("[data-blk]").forEach(function(bb){bb.onclick=function(){openRoosterBlock(calKalPid(),weekStart(calDatum),bb.dataset.blk);};});
  /* swipe */
  var sx=null;
@@ -14654,8 +14728,9 @@ function openEditionForm(edId,scope){edViewScope=scope||null;var ed=state.tourEd
 function renderEditionForm(){
   var sh=$("#sheet");var d=edDraft;var inc=!d.defId;var m=edMeta(d);
   var head='<div class="shead"><div><h2>'+(edIsNew?"Nieuw toernooi":"Toernooi bewerken")+'</h2><div class="sx">'+(inc?"Incidenteel":esc(m.name))+' \u00b7 '+d.year+'</div></div><button class="xbtn" onclick="closeSheet()">\u00d7</button></div>';
-  var incCard="";
-  if(inc){
+  var incCard="";var _spel=!!(edViewScope&&edViewScope.player);
+  if(inc&&_spel){incCard='<div class="card"><label class="fld">Naam</label><input class="in" id="edName" value="'+esc(d.name)+'" placeholder="Toernooinaam"></div>';}
+  else if(inc){
     var cats=state.tourCats||[];var labs=state.tourLabels||[];
     var catOpts=tourCatOptions(d.cat,"\u2014 geen \u2014");
     var labPills=labs.map(function(l){return '<button class="dvtile'+(( d.labels||[]).indexOf(l)>=0?" on":"")+'" data-lab="'+esc(l)+'">'+esc(l)+'</button>';}).join("");
@@ -14681,10 +14756,11 @@ function renderEditionForm(){
     var klSeg='<div class="seg pkseg" data-pk="'+pid+'" data-kind="kl">'+[["","\u2013"],["A","A"],["B","B"]].map(function(o){return '<button data-v="'+o[0]+'" class="'+((pp.klasse||"")===o[0]?"on":"")+'">'+o[1]+'</button>';}).join("")+'</div>';
     var pkSeg='<div class="seg pkseg" data-pk="'+pid+'" data-kind="pk">'+[["","\u2013"],["1","1"],["2","2"],["3","3"],["4","4"],["5","5"]].map(function(o){return '<button data-v="'+o[0]+'" class="'+((pp.peak||"")===o[0]?"on":"")+'">'+o[1]+'</button>';}).join("")+'</div>';
     var ldSeg='<div class="seg pkseg" data-pk="'+pid+'" data-kind="ld">'+[["","\u2013"],["1","1"],["2","2"],["3","3"],["4","4"],["5","5"]].map(function(o){return '<button data-v="'+o[0]+'" class="'+((pp.load?String(pp.load):"")===o[0]?"on":"")+'">'+o[1]+'</button>';}).join("")+'</div>';
+    if(_spel)return '<div class="edpart"><div class="pkwrap"><div class="pkg"><span class="pkl">Klasse</span>'+klSeg+'</div><div class="pkg"><span class="pkl">Piekniveau</span>'+pkSeg+'</div><div class="pkg"><span class="pkl">Belasting</span>'+ldSeg+'</div></div></div>';
     return '<div class="edpart"><div class="row spread"><span class="plpn">'+nm+'</span><button class="bkrm" data-rm="'+pid+'">\u00d7</button></div><div class="pkwrap"><div class="pkg"><span class="pkl">Klasse</span>'+klSeg+'</div><div class="pkg"><span class="pkl">Piekniveau</span>'+pkSeg+'</div><div class="pkg"><span class="pkl">Belasting</span>'+ldSeg+'</div></div><label class="rubtoggle" style="margin-top:6px"><input type="checkbox" data-mustp="'+pid+'"'+(pp.must?" checked":"")+'><span class="sx">Verplichte wedstrijd</span></label></div>';
   }).join(""):'<p class="muted" style="margin:0">Nog geen deelnemers.</p>';
   var _addUI=(edViewScope&&edViewScope.player)?"":'<div class="sx" style="margin-bottom:8px">Voeg een heel team toe of zoek losse spelers.</div>'+teamSearch+'<input class="in" id="edPQ" placeholder="Zoek speler\u2026" autocomplete="off" style="margin-top:8px"><div id="edPSug" class="bkplist"></div>';
-  var partCard='<div class="card"><h3>Deelnemers</h3>'+_addUI+'<div id="edParts" class="scrollbox" style="margin-top:10px">'+partRows+'</div></div>';
+  var partCard='<div class="card"><h3>'+(_spel?"Mijn instellingen":"Deelnemers")+'</h3>'+_addUI+'<div id="edParts"'+(_spel?'':' class="scrollbox"')+' style="margin-top:10px">'+partRows+'</div></div>';
   var _sp=(edViewScope&&edViewScope.player)?edViewScope.player:null;
   function _ppv(key){var v=(d.participants[_sp]||{})[key];return (v!=null&&v!=="")?v:"";}
   function _def(key){return Math.max(0,parseInt(d[key],10)||0);}
@@ -14702,7 +14778,8 @@ function renderEditionForm(){
   if(_sp){var pbind=function(sel,key){var e=$(sel);if(e)e.oninput=function(){if(!d.participants[_sp])d.participants[_sp]={};d.participants[_sp][key]=e.value;};};pbind("#edTravPre","travelPre");pbind("#edTravPost","travelPost");pbind("#edPrep","prepDays");}
   else{bind("#edTravPre","travelPre");bind("#edTravPost","travelPost");bind("#edPrep","prepDays");}
   var _es=$("#edStart"),_ee=$("#edEnd");if(_es&&_ee){if(_es.value)_ee.min=_es.value;_es.addEventListener("change",function(){_ee.min=_es.value||"";if(_es.value&&(!_ee.value||_ee.value<_es.value)){_ee.value=_es.value;edDraft.end=_es.value;}});_ee.addEventListener("focus",function(){if(!_ee.value&&_es.value){_ee.value=_es.value;edDraft.end=_es.value;}});}
-  if(inc){bind("#edName","name");var cs=$("#edCat");if(cs)cs.onchange=function(){edDraft.cat=cs.value;};
+  if(inc&&_spel){bind("#edName","name");}
+  else if(inc){bind("#edName","name");var cs=$("#edCat");if(cs)cs.onchange=function(){edDraft.cat=cs.value;};
    var _eg=$("#edGen");
    if(_eg)_eg.querySelectorAll("[data-g]").forEach(function(b){b.onclick=function(){edDraft.gender=b.dataset.g;_eg.querySelectorAll("[data-g]").forEach(function(x){x.classList.toggle("on",x.dataset.g===edDraft.gender);});};});
    var _ev=$("#edVorm"),_evh=$("#edVormHint");
