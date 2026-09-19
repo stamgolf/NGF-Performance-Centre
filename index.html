@@ -149,9 +149,43 @@ header.bar{background:#fff;color:var(--ink);padding:calc(env(safe-area-inset-top
 .drmat ul{margin:0;padding:0 0 0 14px;font-size:12.5px;line-height:1.5}.drmat li{margin:0 0 2px}
 @media(max-width:480px){.drdetgrid{grid-template-columns:1fr}}
 .drorg img{display:block;width:100%;border-radius:10px}
+.drusesel{margin-left:auto;display:inline-block;width:auto!important;max-width:60%;flex:0 0 auto;padding:5px 26px 5px 8px;font-size:12px}
+#sheet .card>.row:first-child{display:flex}
+.drusehd{margin:0!important;font-size:11px!important;font-weight:800!important;color:var(--muted)!important;text-transform:uppercase;letter-spacing:.07em}
+.drkpi b.up{color:#17a05c}.drkpi b.dn{color:#C2383A}
+.drspark i.avg{background:#B9C7D8}
+.drpopbar{display:inline-block;width:90px;height:6px;border-radius:3px;background:#E3E6E9;overflow:hidden;flex:0 0 auto}.drpopbar i{display:block;height:100%;background:var(--orange)}
+.drchips.mini button b{font-weight:800;margin-left:2px}
+.drfacts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px 14px}.drfacts>div{padding:5px 0;border-bottom:1px solid #F2F3F5;min-width:0}.drfacts span{font-size:9.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:700;display:block}.drfacts b{font-size:12.5px;font-weight:600;display:block;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media(max-width:480px){.drfacts{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.drblgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.drbl{background:var(--paper);border-radius:10px;padding:9px 10px}.drbl span{font-size:9.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:700;display:block}.drbl b{font-size:14px;font-weight:600;display:block;margin:2px 0 5px}.drbl .seg5{display:flex;gap:3px}.drbl .seg5 i{flex:1;height:6px;border-radius:3px;background:#E3E6E9}.drbl .seg5 i.on{background:var(--orange)}
+.drsvc{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;text-align:center}.drsvc>div{background:var(--paper);border-radius:8px;padding:6px 2px;min-width:0}.drsvc span{font-size:9px;text-transform:uppercase;letter-spacing:.03em;color:var(--muted);font-weight:700;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.drsvc b{font-size:13px;display:block;font-weight:600}.drsvc .bar{height:4px;border-radius:2px;background:#E3E6E9;margin:4px 4px 0;overflow:hidden}.drsvc .bar i{display:block;height:100%;background:#2e78e8}
+.drrows .drrow{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-bottom:1px solid #F2F3F5;font-size:12.5px;line-height:1.35}.drrows .drrow:last-child{border-bottom:0}.drrows .drrow>span:first-child{flex:0 0 auto}.drrows .drrow>span:last-child{font-weight:600;text-align:right;max-width:62%}
+.drmat ul{font-size:12.5px}
 .dfprev{margin:0 0 12px}.dfprev .dc{margin-bottom:0}
 .drchip1{border:1px solid var(--line);border-radius:999px;padding:7px 11px;font-size:12px;font-weight:600;color:var(--muted);background:#fff;cursor:pointer;font-family:inherit;white-space:nowrap;flex:0 0 auto}.drchip1.on{background:#fff;color:var(--orange);border:1.5px solid var(--orange)}
 .dfsteps{display:flex;flex-direction:column;gap:6px}.dfst{display:flex;align-items:center;gap:8px}.dfst i{width:22px;height:22px;border-radius:50%;background:var(--ink);color:#fff;font-size:11px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;font-style:normal;flex:0 0 auto}.dfst .in{margin:0;flex:1}.dfstx{border:0;background:none;color:var(--muted);font-size:18px;cursor:pointer;padding:0 2px;font-family:inherit}
+/* v342: teams */
+@media(min-width:700px){.cvkpi.tmkpi{grid-template-columns:repeat(4,1fr)}}@media(max-width:699px){.cvkpi.tmkpi{grid-template-columns:repeat(2,1fr)}}
+.tmgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;margin-bottom:12px}
+@media(max-width:600px){.tmgrid{display:flex;overflow-x:auto;gap:10px;padding-bottom:6px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}.tmgrid .tmcard{flex:0 0 86%;scroll-snap-align:start}}
+.tmcard{background:#fff;border-radius:14px;box-shadow:var(--shadow);padding:13px 14px 12px;min-width:0;cursor:pointer;border:2px solid transparent;transition:.12s}
+.tmcard:hover{box-shadow:0 4px 16px rgba(43,47,51,.12)}.tmcard.los{background:var(--paper);box-shadow:none}
+.tmhd{display:flex;align-items:flex-start;gap:8px}.tmnm{min-width:0;flex:1;display:flex;align-items:center;gap:7px;flex-wrap:wrap}.tmnm b{font-size:15.5px;font-weight:600;font-family:var(--fd);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tmtag{display:inline-block;font-size:10.5px;font-weight:700;border-radius:6px;padding:2px 7px;background:var(--paper);color:var(--muted)}.tmtag.act{background:#E6F6EE;color:#17805a}
+.tmsub{font-size:12px;color:var(--muted);margin-top:2px}
+.tmmeta{display:flex;gap:14px;margin:10px 0 10px;font-size:11px;color:var(--muted);flex-wrap:wrap}.tmmeta b{display:block;font-size:15px;color:var(--ink);font-weight:600;font-family:var(--fd)}
+.tmfoot{display:flex;align-items:center;gap:8px;min-height:32px;flex-wrap:wrap}
+.tmavs{display:flex;align-items:center;cursor:pointer}.tmavs .tmav{margin-left:-3px}.tmavs .tmav:first-child{margin-left:0}
+.tmav{width:32px;height:32px;border-radius:50%;background:var(--paper);display:inline-flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:700;color:var(--ink);flex:0 0 auto;overflow:hidden}.tmav img{width:100%;height:100%;object-fit:cover}
+.tmav.lg{width:40px;height:40px;font-size:12px}.tmav.meer{background:var(--ink);color:#fff;box-shadow:0 0 0 2px #fff!important}
+.tmselb{margin-left:auto;background:none;border:1px solid var(--line);border-radius:999px;padding:5px 10px;font-size:11.5px;font-weight:600;color:var(--muted);cursor:pointer;font-family:inherit;white-space:nowrap}
+#tmList .cvbody{max-height:none}
+.tmrow{display:flex;align-items:center;gap:11px;padding:8px 2px;border-bottom:1px solid var(--line);cursor:pointer}.tmrow:last-child{border-bottom:0}.tmrow.sm{padding:7px 2px}
+.tmpnm{min-width:0;flex:1}.tmpnm b{display:block;font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.tmpnm small{color:var(--muted);font-size:11.5px}
+.tmfz{display:flex;justify-content:flex-end;min-width:0;flex:0 0 auto}
+.tmchev{color:var(--muted);font-size:16px;flex:0 0 auto}
+@media(max-width:480px){.tmfz{display:none}.tmrow .modusbadge{display:none}}
 /* v325: toernooidatabase tweeluik */
 .tdbgrid{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;margin-bottom:14px}
 @media(min-width:700px){.tdbgrid{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)}}
@@ -2063,7 +2097,7 @@ nav.tabs button:active{opacity:1}
 <section class="view" id="v-new"><button class="bkbtn ccback" onclick="show('coachcorner')" style="margin:0 0 8px;display:inline-block">‹ Coachcorner</button><div id="newSwitch"></div><div id="newPlayerPick"></div><h1 class="title">Kies een test</h1><div id="testPicker"></div></section>
 <section class="view" id="v-progress"><div id="progSwitch"></div><h1 class="title">Voortgang</h1><div id="progressBody"></div></section>
 <section class="view" id="v-kansen"><div id="kansenSwitch"></div><h1 class="title" style="margin-bottom:2px">Kansen</h1><p class="plansub">Waar levert trainen het meeste op, en klopt je wedstrijdmix?</p><div id="kansenBody"></div></section><section class="view" id="v-wellness"><h1 class="title" style="margin-bottom:2px">Wellness</h1><p class="plansub">Dagelijkse fitheid-check en readiness</p><div id="wlBody"></div></section>
-<section class="view" id="v-teams"><button class="bkbtn ccback" onclick="show('coachcorner')" style="margin:0 0 8px;display:inline-block">‹ Coachcorner</button><p class="eyebrow">Groepen</p><h1 class="title">Teams</h1><div id="teamsBody"></div></section>
+<section class="view" id="v-teams"><button class="bkbtn ccback" onclick="show('coachcorner')" style="margin:0 0 8px;display:inline-block">‹ Coachcorner</button><h1 class="title" style="margin-bottom:2px">Teams</h1><p class="plansub">Teams en hun spelers · het actieve team is de standaard voor challenges en klassement</p><div id="teamsBody"></div></section>
 <section class="view" id="v-toernooien"><button class="bkbtn ccback" onclick="show('coachcorner')" style="margin:0 0 8px;display:inline-block">‹ Coachcorner</button><p class="eyebrow">Toernooien</p><h1 class="title">Toernooidatabase</h1><div id="tdbBody"></div></section>
 <section class="view" id="v-gschemas"><button class="bkbtn ccback" onclick="show('coachcorner')" style="margin:0 0 8px;display:inline-block">‹ Coachcorner</button><p class="eyebrow">Schema’s</p><h1 class="title">Rooster &amp; groepsschema’s</h1><div id="gsvBody"></div></section>
 <section class="view" id="v-teaminsight"><div id="teamSwitchTI"></div><h1 class="title">Teamprestaties</h1><div id="teamInsightBody"></div></section><section class="view" id="v-logbook"><h1 class="title" style="margin-bottom:2px">Logboek</h1><p class="plansub">Alle voltooide acties van de speler</p><div id="logbookBody"></div></section><section class="view" id="v-scoring"><h1 class="title" style="margin-bottom:2px">Scoring</h1><p class="plansub">Scoreverloop en scoringsoverzicht<span class="alleencoach"> per speler</span></p><div id="scBody"></div></section><section class="view" id="v-baanstats"><h1 class="title" style="margin-bottom:2px">Baanstats</h1><p class="plansub">Upgame-snapshots en strokes gained</p><div id="bsBody"></div></section><section class="view" id="v-trainen"><button class="bkbtn ccback" onclick="show('coachcorner')" style="margin:0 0 8px;display:inline-block">‹ Coachcorner</button><button class="bkbtn" id="trBack" style="margin:0 0 8px;display:none">‹ Terug</button><h1 class="title" style="margin-bottom:2px">Drills-database</h1><p class="plansub" id="trSubtitel">Oefeningen, testen en challenges</p><div id="trainBody"></div></section><section class="view active" id="v-today"><h1 class="title" style="margin-bottom:2px">Vandaag</h1><div id="todayBody"></div></section><section class="view" id="v-planning"><div id="planSwitch"></div><h1 class="title" style="margin-bottom:2px">Planning</h1><p class="plansub" id="planSub"></p><div id="planBody"></div></section><section class="view" id="v-goals"><button class="bkbtn ccback" onclick="show('coachcorner')" style="margin:0 0 8px;display:inline-block">‹ Coachcorner</button><div id="goalScope"></div><h1 class="title">Doelen</h1><div id="goalsBody"></div></section><section class="view" id="v-spelen"><button class="bkbtn ccback" onclick="show('coachcorner')" style="margin:0 0 8px;display:inline-block">‹ Coachcorner</button><div id="spTop"></div><h1 class="title" style="margin-bottom:2px">Spelen</h1><p class="plansub">Rondeoverzicht en score-invoer per speler</p><div id="spBody"></div></section><section class="view" id="v-coachcorner"><div id="ccBody"></div></section><section class="view" id="v-spelers"><h1 class="title" style="margin-bottom:2px">Spelers</h1><p class="plansub">Alle spelers · tik voor het dagprogramma</p><div id="splBody"></div></section>
@@ -2508,7 +2542,7 @@ const LIES={f:"Fairway",r:"Rough",s:"Sand",g:"Green"};const DLIES={f:"Fairway",r
 const LV=["PGA Tour"];
 function spread(min,max,n){if(n===1)return [Math.round((min+max)/2)];const a=[];for(let i=0;i<n;i++)a.push(Math.round(min+(max-min)*i/(n-1)));return a;}
 const NSIT=[3,6,9,12,15,18], NHOLE=[6,9,12,18];
-const APP_VERSION="v338";
+const APP_VERSION="v343";
 const TESTS={
 putt_3_5:{name:"Putt 3–5 ft",cat:"Putten",eng:"putt_cat",dists:[3,4,5],per:8,info:"24 putts (8× vanaf 3, 4 en 5 ft). Per afstand: holed, mis binnen 3 ft, mis buiten 3 ft. Output: SG + make%."},
 putt_6_10:{name:"Putt 6–10 ft",cat:"Putten",eng:"putt_cat",dists:[6,8,10],per:8,info:"24 putts (8× vanaf 6, 8 en 10 ft). Zelfde invoer als 3–5 ft."},
@@ -6519,7 +6553,49 @@ function drillRelGroups(d){var out={easier:[],harder:[],variant:[]};var seen={};
  (state.drills||[]).forEach(function(o){(o.rels||[]).forEach(function(r){if(r.id===d.id)add(inv[r.type]||"variant",o);});});
  return out;}
 function drillMeter(label,val){var lv=lmhLv(val);var col=lmhColor(val);var seg="";for(var i=1;i<=5;i++)seg+='<i'+(i<=lv?' style="background:'+col+'"':'')+'></i>';return '<div class="svmeter"><div class="svm-top"><span class="svm-l">'+esc(label)+'</span><span class="svm-v'+(lv?"":" off")+'"'+(lv?' style="color:'+col+'"':'')+'>'+(lv?lmhLabel(val):"–")+'</span></div><div class="svm-bar">'+seg+'</div></div>';}
-var drillTab="oef";
+var drillTab="oef",drUsePer="m12";
+/* v341: gebruiksstatistiek per oefening — gedaan (logboek) + gepland (weekplannen) */
+function drUseEvents(d,pid){var ev=[];
+ (state.trainLog||[]).forEach(function(e){if(e.drillId!==d.id)return;if(pid&&e.playerId!==pid)return;ev.push({t:"gedaan",date:e.date,ws:e.weekStart||weekStart(e.date),pid:e.playerId});});
+ (state.trainPlans||[]).forEach(function(p){if(pid&&p.playerId!==pid)return;(p.items||[]).forEach(function(it){var id=typeof it==="string"?it:(it&&it.id);if(id!==d.id)return;ev.push({t:"gepland",date:p.weekStart,ws:p.weekStart,pid:p.playerId,phase:p.phase||null,x:(it&&it.x)||1});});});
+ return ev;}
+function drUseWindow(mode){var t=todayISO();var from=null;var m={m1:1,m3:3,m6:6,m12:12,m60:60}[mode];if(m){var dt=new Date(t);dt.setMonth(dt.getMonth()-m);from=dt.toISOString().slice(0,10);}else if(/^y\d{4}$/.test(mode)){from=mode.slice(1)+"-01-01";t=mode.slice(1)+"-12-31";}return {from:from,to:t};}
+function drUseStats(d,pid,mode){var all=drUseEvents(d,pid);var w=drUseWindow(mode);var inW=all.filter(function(e){return e.date&&(!w.from||e.date>=w.from)&&e.date<=w.to;});
+ var weekly=(mode==="m1"||mode==="m3");var t=todayISO();
+ function bucket(x){return weekly?weekStart(x):x.slice(0,7);}
+ var first=inW.length?inW.map(function(e){return e.date;}).sort()[0]:null;var start=w.from||first||t;if(first&&first>start)start=first;
+ var buckets=[];if(weekly){var ws=weekStart(start);var end=weekStart(w.to);while(ws<=end){buckets.push(ws);ws=dAddDays(ws,7);}}else{var y=+start.slice(0,4),mo=+start.slice(5,7);var ey=+w.to.slice(0,4),em=+w.to.slice(5,7);while(y<ey||(y===ey&&mo<=em)){buckets.push(y+"-"+String(mo).padStart(2,"0"));mo++;if(mo>12){mo=1;y++;}}}
+ var cnt={};inW.forEach(function(e){var b=bucket(e.date);cnt[b]=(cnt[b]||0)+1;});
+ var cur=bucket(t);var nb=Math.max(1,buckets.length);var avg=inW.length/nb;var now=cnt[cur]||0;
+ var series=buckets.slice(-12).map(function(b){return {b:b,n:cnt[b]||0};});
+ var gedaan=inW.filter(function(e){return e.t==="gedaan";}).length,gepland=inW.length-gedaan;
+ var players={};inW.forEach(function(e){if(!players[e.pid])players[e.pid]={n:0,last:""};players[e.pid].n++;if(e.date>players[e.pid].last)players[e.pid].last=e.date;});
+ var ph={};inW.forEach(function(e){var k=e.phase;if(!k&&e.t==="gedaan"){try{var yr=+e.date.slice(0,4);var wk=(perMicro(e.pid,yr)||[]).find(function(x){return x.start===e.ws;});k=wk&&wk.phase;}catch(x){}}if(k)ph[k]=(ph[k]||0)+1;});
+ return {all:all,inW:inW,gedaan:gedaan,gepland:gepland,avg:avg,now:now,weekly:weekly,series:series,nb:nb,players:players,phases:ph,from:w.from,to:w.to};}
+function drPopularity(d){var um=drillUsageMap();var mine=um[d.id]||0;var sub=(d.subCats||[])[0];var peers=allDrills().filter(function(x){return x.mainCat===d.mainCat&&(!sub||(x.subCats||[]).indexOf(sub)>=0);});
+ var rank=1;peers.forEach(function(x){if((um[x.id]||0)>mine)rank++;});var allN=allDrills().length;var rankAll=1;allDrills().forEach(function(x){if((um[x.id]||0)>mine)rankAll++;});
+ return {n:mine,rank:rank,of:peers.length,rankAll:rankAll,ofAll:allN,pct:allN?Math.round(100*rankAll/allN):100};}
+function drUsePerOpts(){var D=[];var yrs={};(state.trainLog||[]).forEach(function(e){if(e.date)yrs[e.date.slice(0,4)]=1;});(state.trainPlans||[]).forEach(function(p){if(p.weekStart)yrs[p.weekStart.slice(0,4)]=1;});
+ var o=[["all","Alles"],["m1","Laatste maand"],["m3","Laatste 3 maanden"],["m6","Laatste 6 maanden"],["m12","Laatste jaar"],["m60","Laatste 5 jaar"]].map(function(x){return '<option value="'+x[0]+'"'+(drUsePer===x[0]?" selected":"")+'>'+x[1]+'</option>';}).join("");
+ var ys=Object.keys(yrs).sort().reverse();if(ys.length)o+='<optgroup label="Jaar">'+ys.map(function(y){return '<option value="y'+y+'"'+(drUsePer==="y"+y?" selected":"")+'>'+y+'</option>';}).join("")+'</optgroup>';return o;}
+function drillUsageBlock(d,player){var pid=null;try{pid=rolSpelerId();}catch(e){}
+ var st=drUseStats(d,pid,drUsePer);var pop=drPopularity(d);
+ function f1(x){return (Math.round(x*10)/10).toString().replace(".",",");}
+ var diff=st.avg>0?Math.round(100*(st.now-st.avg)/st.avg):null;var per=st.weekly?"week":"maand";
+ var mx=Math.max.apply(null,st.series.map(function(x){return x.n;}).concat([1]));
+ var spark='<div class="drspark">'+st.series.map(function(x){return '<i style="height:'+(x.n?Math.max(4,Math.round(24*x.n/mx)):3)+'px" class="'+(x.n>st.avg?"on":(x.n?"avg":""))+'" title="'+esc(x.b)+': '+x.n+'"></i>';}).join("")+'</div>';
+ var head='<div class="row" style="align-items:center;gap:8px;margin-bottom:8px"><div class="dsh drusehd">'+(pid?"Jouw gebruik":"Gebruik")+'</div><select class="in drusesel" id="drUsePer">'+drUsePerOpts()+'</select></div>';
+ var kpi='<div class="drkpi"><span><b>'+f1(st.avg)+'</b><small>gem. / '+per+'</small></span><span><b'+(diff==null?'':(diff>=0?' class="up"':' class="dn"'))+'>'+st.now+'</b><small>deze '+per+(diff==null?'':' · '+(diff>=0?'+':'')+diff+'%')+'</small></span>'+(pid?'':'<span><b>'+Object.keys(st.players).length+'</b><small>spelers</small></span>')+'<span><b>#'+pop.rank+'</b><small>van '+pop.of+' '+esc(d.subCats&&d.subCats[0]?taxSubLabel(d.mainCat,d.subCats[0]).toLowerCase():taxMainLabel(d.mainCat).toLowerCase())+'</small></span></div>';
+ var split='<div class="muted" style="font-size:12px;margin-top:8px">'+st.inW.length+'× in deze periode · '+st.gedaan+' gedaan · '+st.gepland+' gepland'+(st.all.length>st.inW.length?' · '+st.all.length+'× totaal':'')+'</div>';
+ var sp='<div class="row" style="align-items:flex-end;gap:10px;margin-top:8px">'+spark+'<span class="muted" style="font-size:11.5px">laatste '+st.series.length+' '+(st.weekly?"weken":"maanden")+' · oranje = boven gemiddeld</span></div>';
+ var popl='<div class="row" style="align-items:center;gap:8px;margin-top:8px;font-size:11.5px"><span class="muted">Populariteit</span><span class="drpopbar"><i style="width:'+Math.max(4,100-pop.pct)+'%"></i></span><span>top '+pop.pct+'% van alle oefeningen · '+pop.n+'× door iedereen</span></div>';
+ var phases="";var pk=Object.keys(st.phases).sort(function(a,b){return st.phases[b]-st.phases[a];});
+ var showPh=!pid||(function(){try{var m=modusNu(pid);return m==="advanced"||m==="pro";}catch(e){return false;}})();
+ if(showPh&&pk.length){var tot=pk.reduce(function(a,k){return a+st.phases[k];},0);phases='<div class="dsh" style="margin-top:12px">Periodiseringsfase</div><div class="drchips mini">'+pk.slice(0,5).map(function(k){var o=PLANPHASES.find(function(x){return x[0]===k;});return '<button type="button" disabled>'+esc(o?o[1]:k)+' <b>'+Math.round(100*st.phases[k]/tot)+'%</b></button>';}).join("")+'</div>';}
+ var pl="";if(!pid){var ps=Object.keys(st.players).sort(function(a,b){return st.players[b].n-st.players[a].n;});if(ps.length)pl='<div class="dsh" style="margin-top:12px">Spelers</div>'+ps.slice(0,5).map(function(k){return '<div class="drrow" style="display:flex;justify-content:space-between;gap:10px;font-size:12.5px;padding:5px 0;border-bottom:1px solid #F2F3F5"><span>'+esc(nameOf(k)||k)+'</span><span class="muted">'+st.players[k].n+'× · '+esc(fmtDate(st.players[k].last))+'</span></div>';}).join("")+(ps.length>5?'<div class="muted" style="font-size:12px;padding-top:4px">+'+(ps.length-5)+' spelers</div>':'');}
+ var gs=(state.groupSchemas||[]).filter(function(g){return (g.weken_inhoud||[]).some(function(w){return (w.drillIds||[]).indexOf(d.id)>=0;});});
+ var gsh=(!pid&&gs.length)?'<div class="muted" style="font-size:12px;margin-top:8px">Groepsschema’s: '+gs.map(function(g){return esc(g.naam||g.name||"schema");}).join(", ")+'</div>':'';
+ return '<div class="card">'+head+kpi+split+sp+popl+phases+pl+gsh+'</div>';}
 function drillSteps(txt){txt=txt||"";var lines=txt.split(/\n+/).map(function(x){return x.trim();}).filter(Boolean);if(lines.length<2){var _s=txt.replace(/\s+/g," ").match(/[^.!?]+(?:[.!?]+|$)/g);if(_s){_s=_s.map(function(x){return x.trim();}).filter(function(x){return x.length>2;});if(_s.length>=3)lines=_s;}}return lines.map(function(l){return l.replace(/^\s*(\d+[\.\)]|[-\u2022])\s*/,"");});}
 function drillUsageInfo(d){var pid=null;try{pid=rolSpelerId();}catch(e){}
  var logs=(state.trainLog||[]).filter(function(e){return e.drillId===d.id&&(!pid||e.playerId===pid);});
@@ -6533,7 +6609,7 @@ function drillUsageInfo(d){var pid=null;try{pid=rolSpelerId();}catch(e){}
 function drillDetail(id,ctx){var d=allDrills().find(function(x){return x.id===id;});if(!d)return;var sh=$("#sheet");var _dbMode=!ctx||!ctx.mode||ctx.mode==="db";
  if(!ctx||!ctx._keepTab)drillTab="oef";
  var player=false;try{player=!!rolSpelerId();}catch(e){}
- function _row(k,v){return _drow(k,v);}
+ function _row(k,v){return '<div class="row drrow"><span class="muted">'+esc(k)+'</span><span>'+v+'</span></div>';}
  var subs=(d.subCats||[]).map(function(s){return taxSubLabel(d.mainCat,s);}).filter(Boolean);
  var _dparts=[];if(d.durMin!==""&&d.durMin!=null&&+d.durMin>0)_dparts.push(d.durMin+" min");if(d.durValue!==""&&d.durValue!=null)_dparts.push(String(d.durValue)+" "+durUnitShort(d.durUnit)+(d.sets?(" × "+d.sets+" set"+(+d.sets===1?"":"s")):""));else if(d.sets)_dparts.push(d.sets+" set"+(+d.sets===1?"":"s"));var durText=_dparts.join(" · ");
  /* kop (stijl 4) */
@@ -6563,32 +6639,24 @@ function drillDetail(id,ctx){var d=allDrills().find(function(x){return x.id===id
   var kpi='<div class="drkpi">'+(+d.durMin>0?'<span><b>'+d.durMin+'</b><small>min</small></span>':'')+((d.durValue!==""&&d.durValue!=null)?'<span><b>'+esc(String(d.durValue))+(d.sets?'<i>×'+d.sets+'</i>':'')+'</b><small>'+esc(durUnitShort(d.durUnit))+'</small></span>':'')+(d.intensity?'<span><b style="color:'+lmhColor(d.intensity)+'">'+esc(lmhLabel(d.intensity))+'</b><small>intensiteit</small></span>':'')+(d.volume?'<span><b style="color:'+lmhColor(d.volume)+'">'+esc(lmhLabel(d.volume))+'</b><small>volume</small></span>':'')+'</div>';
   var a=d.mjopFrom?mjopIdx(d.mjopFrom):-1,b=d.mjopTo?mjopIdx(d.mjopTo):-1;var all=(a<0&&b<0);if(a<0)a=0;if(b<0)b=MJOP_PHASES.length-1;
   body+='<div class="card"><div class="dsh">MJOP-fase <span class="muted" style="font-weight:600;text-transform:none;letter-spacing:0">· '+(fr?esc(fr):"alle fases")+'</span></div><div class="drfasebar">'+MJOP_PHASES.map(function(ph,i){return '<i'+((all||(i>=a&&i<=b))?' class="on"':'')+' title="'+esc(ph[0]+" "+ph[1])+'"></i>';}).join("")+'</div><div class="drfaselbl">'+MJOP_PHASES.map(function(ph){return '<span>'+ph[0]+'</span>';}).join("")+'</div></div>';
-  var rows="";
-  if(subs.length)rows+=_row("Subcategorie",esc(subs.join(", ")));
-  (d.subCats||[]).forEach(function(sk){var so=taxSubObj(d.mainCat,sk);if(so&&so.subs){var picked=(d.subSubCats||[]).filter(function(ss){return so.subs.some(function(x){return x.key===ss;});}).map(function(ss){return taxSubSubLabel(d.mainCat,sk,ss);});if(picked.length)rows+=_row(so.label,esc(picked.join(", ")));}});
-  if(!d.isTest){
-   if(d.trainingType)rows+=_row("Type training",esc(trTypeLabel(d.trainingType)));
-   if((d.skillLabels||[]).length)rows+=_row("Skills",esc(d.skillLabels.map(skillLabelName).join(", ")));
-   if(d.audience)rows+=_row("Voor",esc(audLabel(d.audience)));
-   if(grpText(d))rows+=_row("Groepsgrootte",esc(grpText(d)));
-   if(d.workform)rows+=_row("Werkvorm",esc(wfLabel(d.workform)));
-   if((d.location||[]).length)rows+=_row("Locatie",esc(d.location.join(", ")));
-   if(ageText(d))rows+=_row("Leeftijd",esc(ageText(d)));
-   if(durText)rows+=_row("Duur / omvang",esc(durText));
-  }
-  var mat=(d.material||[]);
-  var matCol='<div class="card drmat"><div class="dsh">Materiaal</div>'+(mat.length?'<ul>'+mat.map(function(m){return '<li>'+esc(m)+'</li>';}).join("")+'</ul>':'<p class="muted" style="margin:0;font-size:12.5px">Geen extra materiaal</p>')+'</div>';
-  body+='<div class="drdetgrid"><div class="card adrows">'+(rows||'<p class="muted" style="margin:0;font-size:13px">Geen kenmerken ingevuld.</p>')+'</div>'+matCol+'</div>';
-  if(d.mainCat==="golfskills"&&!d.isTest){var M=drillMeter("Intensiteit",d.intensity)+drillMeter("Volume",d.volume);var sv="";SVCCC.forEach(function(o){if(d.svccc&&d.svccc[o[0]])sv+=drillMeter(o[1],d.svccc[o[0]]);});body+='<div class="card"><div class="dsh">Belasting</div>'+M+(sv?'<div class="dsh" style="margin-top:12px">SVCCC</div>'+sv:'')+'</div>';}
-  /* gebruik onder de details */
-  var u=drillUsageInfo(d);var mx=Math.max.apply(null,u.spark.concat([1]));
-  var spark='<div class="drspark">'+u.spark.map(function(n){return '<i style="height:'+(n?Math.max(4,Math.round(22*n/mx)):3)+'px"'+(n?' class="on"':'')+' title="'+n+'"></i>';}).join("")+'</div>';
-  var last=u.logs.length?(' · laatst '+(u.pid?"":esc(nameOf(u.logs[0].playerId)||"")+", ")+esc(fmtDate(u.logs[0].date))):'';
-  body+='<div class="card"><div class="dsh">'+(u.pid?"Jouw gebruik":"Gebruik")+'</div><div class="drkpi"><span><b>'+u.logs.length+'</b><small>gedaan</small></span><span><b>'+u.plans.length+'</b><small>weekplannen</small></span>'+(u.pid?'':'<span><b>'+u.players.length+'</b><small>spelers</small></span>')+'<span><b>'+u.gs.length+'</b><small>schema\'s</small></span></div><div class="row" style="align-items:flex-end;gap:10px;margin-top:10px">'+spark+'<span class="muted" style="font-size:12px">laatste 8 weken'+last+'</span></div>'+(u.gs.length?'<div class="muted" style="font-size:12px;margin-top:6px">In: '+u.gs.map(function(g){return esc(g.naam||g.name||"groepsschema");}).join(", ")+'</div>':'')+'</div>';
+  /* D1: feitenraster */
+  var facts=[];function fact(k,v){if(v)facts.push('<div title="'+esc(k+": "+v)+'"><span>'+esc(k)+'</span><b>'+esc(v)+'</b></div>');}
+  fact("Subcategorie",subs.join(", "));
+  (d.subCats||[]).forEach(function(sk){var so=taxSubObj(d.mainCat,sk);if(so&&so.subs){var picked=(d.subSubCats||[]).filter(function(ss){return so.subs.some(function(x){return x.key===ss;});}).map(function(ss){return taxSubSubLabel(d.mainCat,sk,ss);});if(picked.length)fact(so.label,picked.join(", "));}});
+  if(!d.isTest){fact("Type",d.trainingType?trTypeLabel(d.trainingType):"");fact("Skills",(d.skillLabels||[]).map(skillLabelName).join(", "));fact("Duur",(+d.durMin>0)?d.durMin+" min":"");fact("Omvang",(d.durValue!==""&&d.durValue!=null)?(String(d.durValue)+" "+durUnitShort(d.durUnit)+(d.sets?" × "+d.sets:"")):(d.sets?d.sets+" sets":""));fact("Leeftijd",ageText(d));}
+  body+='<div class="card"><div class="drfacts">'+(facts.length?facts.join(""):'<p class="muted" style="margin:0;font-size:13px">Geen kenmerken ingevuld.</p>')+'</div></div>';
+  if(!d.isTest&&(d.intensity||d.volume||(d.svccc&&Object.keys(d.svccc).some(function(k){return d.svccc[k];})))){
+   function tile(k,v){var lv=lmhLv(v);var seg="";for(var i=1;i<=5;i++)seg+='<i'+(i<=lv?' class="on"':'')+'></i>';return '<div class="drbl"><span>'+esc(k)+'</span><b'+(lv?'':' class="muted"')+'>'+(lv?esc(lmhLabel(v)):"–")+'</b><div class="seg5">'+seg+'</div></div>';}
+   var sv="";SVCCC.forEach(function(o){var v=(d.svccc||{})[o[0]];var lv=lmhLv(v);sv+='<div><span>'+esc(o[1])+'</span><b'+(lv?'':' class="muted"')+'>'+(lv?lv:"–")+'</b><div class="bar"><i style="width:'+(lv*20)+'%"></i></div></div>';});
+   body+='<div class="card"><div class="dsh">Belasting</div><div class="drblgrid">'+tile("Intensiteit",d.intensity)+tile("Volume",d.volume)+'</div>'+(d.mainCat==="golfskills"?'<div class="dsh" style="margin-top:12px">SVCCC</div><div class="drsvc">'+sv+'</div>':'')+'</div>';}
+  /* gebruik onder de details (v341) */
+  body+=drillUsageBlock(d,player);
  }else{
   body+='<div class="card"><div class="dsh">Organisatie</div>'+(d.orgImage?'<div class="drorg" id="drOrgWrap"><img id="drOrgImg" alt=""></div>':'<p class="muted" style="margin:0;font-size:13px">Nog geen organisatietekening'+(player?'.':' — voeg er een toe via ✎ › Media.')+'</p>')+(d.orgNote?'<p class="drp" style="margin-top:10px">'+esc(d.orgNote).replace(/\n/g,"<br>")+'</p>':'')+'</div>';
-  var orows="";if(d.audience)orows+=_row("Voor",esc(audLabel(d.audience)));if(grpText(d))orows+=_row("Groepsgrootte",esc(grpText(d)));if(d.workform)orows+=_row("Werkvorm",esc(wfLabel(d.workform)));if((d.location||[]).length)orows+=_row("Locatie",esc(d.location.join(", ")));if((d.material||[]).length)orows+=_row("Materiaal",esc(d.material.join(", ")));
-  if(orows)body+='<div class="card adrows">'+orows+'</div>';
+  var orows="";if(d.audience)orows+=_row("Trainingsvorm",esc(audLabel(d.audience)));if(grpText(d))orows+=_row("Groepsgrootte",esc(grpText(d)));if(d.workform)orows+=_row("Werkvorm",esc(wfLabel(d.workform)));if((d.location||[]).length)orows+=_row("Locatie",esc(d.location.join(", ")));
+  var mat=(d.material||[]);
+  var matCol='<div class="card drmat"><div class="dsh">Materiaal</div>'+(mat.length?'<ul>'+mat.map(function(m){return '<li>'+esc(m)+'</li>';}).join("")+'</ul>':'<p class="muted" style="margin:0;font-size:12.5px">Geen extra materiaal</p>')+'</div>';
+  body+='<div class="drdetgrid"><div class="card adrows drrows">'+(orows||'<p class="muted" style="margin:0;font-size:13px">Geen organisatiegegevens ingevuld.</p>')+'</div>'+matCol+'</div>';
  }
  var bottom=(d.isTest&&d.testId)?'<button class="btn block" id="drStart" style="margin-top:14px;background:var(--orange);color:#fff">Start challenge →</button>':'';if(ctx&&ctx.mode==='plan')bottom+='<button class="btn danger block" id="drPlanRm" style="margin-top:14px">Uit weekplan verwijderen</button>';
  sh.innerHTML=head+(drillTab==="oef"?media:"")+tabs+body+bottom;
@@ -6597,6 +6665,7 @@ function drillDetail(id,ctx){var d=allDrills().find(function(x){return x.id===id
  if(d.orgImage&&drillTab==="org")drillImgGet(d.id+"_org",function(u){var el=$("#drOrgImg");if(el&&u)el.src=u;else{var w=$("#drOrgWrap");if(w)w.style.display="none";}});
  var _pl=$("#drPlay");if(_pl)_pl.onclick=function(){var bx=$("#drMediaBox");if(!bx)return;bx.style.background="#000";bx.innerHTML='<div class="gattframe"><iframe src="'+esc(bx.dataset.emb)+'" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>';};
  sh.querySelectorAll("#drTabs button").forEach(function(b){b.onclick=function(){drillTab=b.dataset.t;var c=Object.assign({},ctx||{});c._keepTab=true;drillDetail(id,c);};});
+ var _up=$("#drUsePer");if(_up)_up.onchange=function(){drUsePer=_up.value;var c=Object.assign({},ctx||{});c._keepTab=true;drillDetail(id,c);};
  sh.querySelectorAll("[data-rel]").forEach(function(b){b.onclick=function(){drillTab="oef";drillDetail(b.dataset.rel,ctx);};});
  var _bk2=$("#drBack");if(_bk2&&ctx&&ctx.back)_bk2.onclick=function(){ctx.back();};
  var _at=$("#drAddTodo");if(_at)_at.onclick=function(){trainAddTodo(d.id);var c=Object.assign({},ctx||{});c._keepTab=true;drillDetail(id,c);};
@@ -6668,7 +6737,7 @@ function renderDrillForm(){var dd=drillDraft;var sh=$("#sheet");var mains=taxMai
   +'<div class="grid2" style="margin-top:12px"><div><label class="fld" style="margin-top:0">Intensiteit</label>'+lmhSeg("dfInt",dd.intensity)+'</div><div><label class="fld" style="margin-top:0">Volume</label>'+lmhSeg("dfVol",dd.volume)+'</div></div>'
   +'<div class="sx" style="margin-top:8px">Zonder tijdsduur rekent de planner met 30 minuten.</div>')
   +_sec("Organisatie",
-   '<div class="grid2"><div><label class="fld" style="margin-top:0">Voor</label>'+audSeg+'</div><div><label class="fld" style="margin-top:0">Groepsgrootte <span class="sx">(leeg = elk aantal)</span></label><div class="row" style="gap:8px"><input class="in" id="dfGrpA" type="number" inputmode="numeric" min="1" value="'+(dd.grpMin!==""&&dd.grpMin!=null?dd.grpMin:"")+'" placeholder="Min" style="flex:1"><input class="in" id="dfGrpB" type="number" inputmode="numeric" min="1" value="'+(dd.grpMax!==""&&dd.grpMax!=null?dd.grpMax:"")+'" placeholder="Max" style="flex:1"></div></div></div>'
+   '<div class="grid2"><div><label class="fld" style="margin-top:0">Trainingsvorm</label>'+audSeg+'</div><div><label class="fld" style="margin-top:0">Groepsgrootte <span class="sx">(leeg = elk aantal)</span></label><div class="row" style="gap:8px"><input class="in" id="dfGrpA" type="number" inputmode="numeric" min="1" value="'+(dd.grpMin!==""&&dd.grpMin!=null?dd.grpMin:"")+'" placeholder="Min" style="flex:1"><input class="in" id="dfGrpB" type="number" inputmode="numeric" min="1" value="'+(dd.grpMax!==""&&dd.grpMax!=null?dd.grpMax:"")+'" placeholder="Max" style="flex:1"></div></div></div>'
   +'<label class="fld">Werkvorm</label>'+wfSeg
   +'<label class="fld">Locatie</label>'+locChips
   +'<label class="fld">Materiaal</label>'+matBlok)
@@ -7413,26 +7482,80 @@ sh.querySelectorAll("[data-par]").forEach(x=>x.oninput=()=>{const a=x.dataset.pa
 sh.querySelectorAll("[data-len]").forEach(x=>x.oninput=()=>{const a=x.dataset.len.split("_");const h=courseDraft.loops[+a[0]].holes[+a[1]];if(!h.len)h.len={};if(x.value==="")delete h.len[a[2]];else h.len[a[2]]=+x.value||0;updateLoopTotals(+a[0]);});
 sh.querySelectorAll("table.ctbl").forEach(tb=>{const cells=Array.from(tb.querySelectorAll(".cin"));const cols=1+TEES.length;cells.forEach((c,idx)=>{c.addEventListener("keydown",e=>{let ni=-1;if(e.key==="ArrowRight")ni=idx+1;else if(e.key==="ArrowLeft")ni=idx-1;else if(e.key==="ArrowDown"||e.key==="Enter")ni=idx+cols;else if(e.key==="ArrowUp")ni=idx-cols;else return;if(ni>=0&&ni<cells.length){e.preventDefault();cells[ni].focus();if(cells[ni].select)cells[ni].select();}});});});
 $("#cfSave").onclick=()=>{if(!courseDraft.name||!courseDraft.name.trim()){toast("Geef de baan een naam");return;}courseDraft.name=courseDraft.name.trim();courseDraft.loops.forEach((lp,i)=>{if(!lp.name||!lp.name.trim())lp.name="Lus "+(i+1);});const idx=state.courses.findIndex(c=>c.id===courseDraft.id);if(idx>=0)state.courses[idx]=courseDraft;else state.courses.push(courseDraft);save();var _n=0;try{_n=sgHerberekenBaan(courseDraft);}catch(e){}closeSheet();openCoursesSettings();if(_n)toast(_n+(_n===1?" ronde bijgewerkt":" rondes bijgewerkt")+" \u2713");};}
-function renderTeams(){const box=$("#teamsBody");box.innerHTML="";
-const add=el("div","card");add.innerHTML='<h3>Nieuw team</h3><div class="row" style="gap:8px"><input class="in" id="newTeam" placeholder="Teamnaam (bijv. Oranje)" style="flex:1"><button class="btn" id="addTeam">Aanmaken</button></div>';box.appendChild(add);
-$("#addTeam").onclick=()=>{const n=$("#newTeam").value.trim();if(!n)return;const id=uid();state.teams.push({id:id,name:n,playerIds:[],players:[],sessions:[],seasons:[],currentSeasonId:null,bucketsOff:{},goals:[]});state.activeTeamId=id;try{normalizeSeasons();}catch(e){}try{rehydrate();}catch(e){}save();renderTeams();toast("Team aangemaakt \u2713");};
-$("#newTeam").addEventListener("keydown",e=>{if(e.key==="Enter")$("#addTeam").click();});
+var tmSel=null;
+function tmSeason(t){var sid=t.currentSeasonId;var sz=(t.seasons||[]).find(function(x){return x.id===sid;});return sz?sz.name:"";}
+function tmAvatar(p,cls){var k=p.mjopPhase?fasePasKleur(p.mjopPhase):"#E6E8EA";return '<span class="tmav'+(cls?" "+cls:"")+'" style="box-shadow:0 0 0 2px #fff,0 0 0 3.5px '+k+'" title="'+esc(p.name||"")+'">'+(p.photo?'<img src="'+p.photo+'" alt="">':esc(cvIni2(p.name||"")))+'</span>';}
+function tmTeamPlayers(t){return (t.players||[]).slice().sort(function(a,b){return (a.name||"").localeCompare(b.name||"","nl");});}
+function tmLoose(){var inT={};(state.teams||[]).forEach(function(t){(t.playerIds||[]).forEach(function(id){inT[id]=1;});});return (state.players||[]).filter(function(p){return !inT[p.id];}).sort(function(a,b){return (a.name||"").localeCompare(b.name||"","nl");});}
+function tmFaseTop(ps){var c={};ps.forEach(function(p){if(p.mjopPhase)c[p.mjopPhase]=(c[p.mjopPhase]||0)+1;});var ks=Object.keys(c).sort(function(a,b){return mjopIdx(a)-mjopIdx(b);});if(!ks.length)return "–";if(ks.length===1)return ks[0];return ks[0]+"–"+ks[ks.length-1];}
+function tmGemLeeftijd(ps){var a=ps.map(splLeeftijd).filter(function(x){return x!=null;});if(!a.length)return "–";return (Math.round(10*a.reduce(function(x,y){return x+y;},0)/a.length)/10).toString().replace(".",",");}
+function renderTeams(){var box=$("#teamsBody");if(!box)return;
+ var teams=state.teams||[];var loose=tmLoose();var nSpelers=(state.players||[]).length;
+ if(tmSel&&tmSel!=="__los__"&&!teams.some(function(t){return t.id===tmSel;}))tmSel=null;
+ if(!tmSel)tmSel=state.activeTeamId&&teams.some(function(t){return t.id===state.activeTeamId;})?state.activeTeamId:(teams[0]?teams[0].id:(loose.length?"__los__":null));
+ var act=teams.find(function(t){return t.id===state.activeTeamId;});
+ var kop='<div class="cvkop"><div class="cvkpi tmkpi"><span><b>'+teams.length+'</b><small>teams</small></span><span><b>'+nSpelers+'</b><small>spelers</small></span><span><b'+(loose.length?' class="oranje"':'')+'>'+loose.length+'</b><small>zonder team</small></span><span><b>'+esc(act?(tmSeason(act)||"–"):"–")+'</b><small>seizoen</small></span></div><span class="row" style="gap:6px;margin-left:auto"><button class="xbtn sm plusb" id="tmNew" title="Nieuw team" aria-label="Nieuw team">+</button></span></div>';
+ var cards=teams.map(function(t){var ps=tmTeamPlayers(t);var isAct=t.id===state.activeTeamId;var ch=(t.sessions||[]).filter(function(x){return x.finalized;}).length;
+  return '<div class="tmcard'+(tmSel===t.id?" sel":"")+(isAct?" act":"")+'" data-tm="'+t.id+'"><div class="tmhd"><div class="tmnm"><b>'+esc(t.name)+'</b>'+(isAct?'<span class="tmtag act">Actief</span>':'')+'</div><span class="row" style="gap:5px;flex:0 0 auto"><button class="xbtn sm" data-tmedit="'+t.id+'" title="Team bewerken" aria-label="Team bewerken">✎</button><button class="xbtn sm plusb" data-tmaddp="'+t.id+'" title="Speler toevoegen" aria-label="Speler toevoegen">+</button></span></div><div class="tmsub">'+(tmSeason(t)?'Seizoen '+esc(tmSeason(t)):'Geen seizoen')+'</div>'
+   +'<div class="tmmeta"><div><b>'+ps.length+'</b>spelers</div><div><b>'+ch+'</b>challenges</div><div><b>'+tmGemLeeftijd(ps)+'</b>gem. leeftijd</div><div><b>'+esc(tmFaseTop(ps))+'</b>fase</div></div>'
+   +'<div class="tmfoot"><span class="tmavs">'+ps.slice(0,5).map(function(p){return tmAvatar(p);}).join("")+(ps.length>5?'<span class="tmav meer">+'+(ps.length-5)+'</span>':'')+(ps.length?'':'<span class="muted" style="font-size:12px">Nog geen spelers</span>')+'</span>'+(isAct?'':'<button class="tmselb" data-tmact="'+t.id+'">Maak actief</button>')+'</div></div>';}).join("");
+ if(loose.length)cards+='<div class="tmcard los'+(tmSel==="__los__"?" sel":"")+'" data-tm="__los__"><div class="tmhd"><div class="tmnm"><b class="muted">Zonder team</b></div></div><div class="tmsub">Spelers die nog in geen team zitten</div><div class="tmmeta"><div><b>'+loose.length+'</b>spelers</div><div><b>'+tmGemLeeftijd(loose)+'</b>gem. leeftijd</div><div><b>'+esc(tmFaseTop(loose))+'</b>fase</div></div><div class="tmfoot"><span class="tmavs">'+loose.slice(0,5).map(function(p){return tmAvatar(p);}).join("")+(loose.length>5?'<span class="tmav meer">+'+(loose.length-5)+'</span>':'')+'</span></div></div>';
+ var grid=cards?'<div class="tmgrid">'+cards+'</div>':'<div class="card"><p class="muted" style="margin:0;font-size:13px">Nog geen teams. Maak je eerste team aan met de oranje +.</p></div>';
+ var lijst="";
+ box.innerHTML=kop+grid+lijst;
+ $("#tmNew").onclick=function(){openTeamForm(null);};
+ box.querySelectorAll("[data-tm]").forEach(function(c){c.onclick=function(e){if(e.target.closest("button"))return;openTeamList(c.dataset.tm);};});
+ box.querySelectorAll("[data-tmedit]").forEach(function(b){b.onclick=function(e){e.stopPropagation();openTeamForm(b.dataset.tmedit);};});
 
-if(!state.teams.length){box.appendChild(el("div","empty",'<div class="em">🎽</div><p>Nog geen teams. Maak je eerste team aan.</p>'));return;}
-state.teams.forEach(t=>{const act=t.id===state.activeTeamId;const open=!!teamOpen[t.id];const c=el("div","collap"+(open?" open":""));
-c.innerHTML='<div class="ch" data-th="'+t.id+'"><div><b style="font-size:15px">'+esc(t.name)+'</b> '+(act?'<span class="tag done">Actief</span>':'')+'<small class="muted" style="display:block">'+t.players.length+' spelers · '+t.sessions.filter(s=>s.finalized).length+' challenges</small></div><div class="row" style="gap:8px">'+(act?'':'<button class="btn ghost sm" data-act="'+t.id+'">Selecteer</button>')+'<span class="chev">▶</span></div></div>'
-+'<div class="cb"><div class="row" style="gap:8px"><input class="in" placeholder="Naam speler" data-add="'+t.id+'" style="flex:1"><button class="btn sm" data-addp="'+t.id+'">+ Speler</button></div><div class="plist" style="margin-top:8px" data-list="'+t.id+'"></div><div style="margin-top:10px;display:flex;gap:16px"><button class="link" data-renteam="'+t.id+'">Naam wijzigen</button><button class="link" data-del="'+t.id+'" style="color:var(--bad)">Team verwijderen</button></div></div>';
-box.appendChild(c);
-c.querySelector('[data-th="'+t.id+'"]').onclick=(e)=>{if(e.target.closest("button"))return;teamOpen[t.id]=!teamOpen[t.id];renderTeams();};
-const list=c.querySelector('[data-list="'+t.id+'"]');
-t.players.slice().sort((a,b)=>(a.name||"").localeCompare(b.name||"","nl")).forEach(p=>{const pc=el("div","pcard");var mt=[];if(p.birthYear)mt.push(String(p.birthYear));var _mi2=playerModusInfo(p.id);var _mb=_mi2.m?(' <span class="modusbadge '+_mi2.m+'">'+modusLabel(_mi2.m)+'</span>'):"";var _gi=(p.gender==="jongen")?'<span class="gicon m"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="14" r="6"/><path d="M15 9l5-5M15 4h5v5"/></svg></span>':((p.gender==="meisje")?'<span class="gicon f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="M12 15v7M9 19h6"/></svg></span>':"");pc.innerHTML=(p.photo?'<div class="av"><img src="'+p.photo+'" alt=""></div>':'<div class="av">'+initials(p.name)+'</div>')+'<div class="pn">'+esc(p.name)+'<small class="pmeta2">'+_gi+(mt.length?'<span>'+esc(mt.join(" \u00b7 "))+'</span>':'')+_mb+'</small></div>';
-const e=el("button","link","Bewerk");e.onclick=()=>openPlayerForm(t.id,p.id);pc.appendChild(e);list.appendChild(pc);});
-const sb=c.querySelector('[data-act="'+t.id+'"]');if(sb)sb.onclick=(e)=>{e.stopPropagation();state.activeTeamId=t.id;save();renderTeams();};
-const ai=c.querySelector('[data-add="'+t.id+'"]'),ab=c.querySelector('[data-addp="'+t.id+'"]');
-const addP=()=>{const n=ai.value.trim();if(!n)return;var ex=(state.players||[]).find(function(x){return (x.name||"").toLowerCase()===n.toLowerCase();});var pid;if(ex){pid=ex.id;}else{pid=uid();state.players.push({id:pid,name:n,birthYear:"",gender:""});}if((t.playerIds||[]).indexOf(pid)<0){t.playerIds=t.playerIds||[];t.playerIds.push(pid);}rehydrate();save();renderTeams();};
-ab.onclick=addP;ai.addEventListener("keydown",e=>{if(e.key==="Enter")addP();});
-c.querySelector('[data-del="'+t.id+'"]').onclick=()=>confirmDlg('Team "'+t.name+'" en alle resultaten verwijderen?',()=>{state.sessions=(state.sessions||[]).filter(x=>x.teamId!==t.id);state.teams=state.teams.filter(x=>x.id!==t.id);ensureActive();rehydrate();save();renderTeams();});var _rt=c.querySelector('[data-renteam="'+t.id+'"]');if(_rt)_rt.onclick=function(){promptDlg('Teamnaam wijzigen','Naam',t.name,function(v){if(v&&v.trim()){t.name=v.trim();save();renderTeams();}});};});
+ box.querySelectorAll("[data-tmaddp]").forEach(function(b){b.onclick=function(e){e.stopPropagation();openTeamAddPlayer(b.dataset.tmaddp);};});
+
+ box.querySelectorAll("[data-tmact]").forEach(function(b){b.onclick=function(e){e.stopPropagation();state.activeTeamId=b.dataset.tmact;tmSel=b.dataset.tmact;save();renderTeams();toast("Actief team: "+(teams.find(function(t){return t.id===b.dataset.tmact;})||{}).name+" ✓");};});
 }
+/* v343: volledige teamlijst in een sheet (tik op kaart of initialen) */
+function openTeamList(tid){var teams=state.teams||[];var los=tid==="__los__";var t=los?null:teams.find(function(x){return x.id===tid;});if(!los&&!t)return;var loose=tmLoose();var ps=los?loose:tmTeamPlayers(t);var isAct=t&&t.id===state.activeTeamId;var sh=$("#sheet");
+ var rows=ps.map(function(p){var lt=splLeeftijd(p);var mi=playerModusInfo(p.id);var ph=p.mjopPhase||"";
+  return '<div class="tmrow" data-tmp="'+p.id+'">'+tmAvatar(p,"lg")+'<span class="tmpnm"><b>'+esc(p.name)+'</b><small>'+(p.birthYear?p.birthYear+' \u00b7 ':'')+(lt!=null?lt+' jr':'\u2013')+(ph?' \u00b7 '+esc(ph):'')+'</small></span>'+(mi.m?'<span class="modusbadge '+mi.m+'">'+modusLabel(mi.m)+'</span>':'<span></span>')+'<span class="tmfz">'+faseMiniHtml(p.id)+'</span>'+(los?'<button class="xbtn sm plusb" data-tmto="'+p.id+'" title="In een team plaatsen" aria-label="In een team plaatsen">+</button>':'<button class="xbtn sm" data-tmrm="'+p.id+'" title="Uit team halen" aria-label="Uit team halen">\u00d7</button>')+'<span class="tmchev">\u203a</span></div>';}).join("");
+ sh.innerHTML='<div class="shead adhead"><div class="adkop"><div class="adtit"><h2>'+(los?"Zonder team":esc(t.name))+'</h2><div class="adtijd">'+(los?'Spelers die nog in geen team zitten':(tmSeason(t)?'Seizoen '+esc(tmSeason(t))+' \u00b7 ':'')+ps.length+' spelers'+(t.coach?' \u00b7 coach '+esc(t.coach):''))+'</div>'+(isAct?'<div class="adchips"><span class="tmtag act">Actief</span></div>':'')+'</div></div><div class="sheadact">'+(t?'<button class="xbtn" id="tmLEdit" title="Team bewerken" aria-label="Team bewerken">\u270e</button><button class="xbtn plusb" id="tmLAdd" title="Speler toevoegen" aria-label="Speler toevoegen">+</button>':'')+'<button class="xbtn" onclick="closeSheet()">\u00d7</button></div></div>'
+  +'<div class="card">'+(rows||'<p class="muted" style="margin:0;font-size:13px">'+(los?'Alle spelers zitten in een team.':'Nog geen spelers in dit team \u2014 voeg ze toe met de oranje +.')+'</p>')+'</div>'
+  +((t&&!isAct)?'<button class="btn block ghost" id="tmLAct" style="margin-top:4px">Maak dit het actieve team</button>':'');
+ openSheet();
+ var _le=$("#tmLEdit");if(_le)_le.onclick=function(){openTeamForm(t.id);};
+ var _la=$("#tmLAdd");if(_la)_la.onclick=function(){openTeamAddPlayer(t.id);};
+ var _ac=$("#tmLAct");if(_ac)_ac.onclick=function(){state.activeTeamId=t.id;save();renderTeams();openTeamList(t.id);toast("Actief team: "+t.name+" \u2713");};
+ sh.querySelectorAll("[data-tmp]").forEach(function(r){r.onclick=function(e){if(e.target.closest("button"))return;closeSheet();cvNaarSpeler(r.dataset.tmp);};});
+ sh.querySelectorAll("[data-tmrm]").forEach(function(b){b.onclick=function(e){e.stopPropagation();var p=registryPlayer(b.dataset.tmrm);confirmDlg((p?p.name:"Speler")+" uit "+t.name+" halen? De speler blijft bestaan in de spelerslijst.",function(){t.playerIds=(t.playerIds||[]).filter(function(id){return id!==b.dataset.tmrm;});rehydrate();save();renderTeams();openTeamList(t.id);});};});
+ sh.querySelectorAll("[data-tmto]").forEach(function(b){b.onclick=function(e){e.stopPropagation();openTeamPick(b.dataset.tmto);};});}
+function openTeamForm(tid){var t=tid?(state.teams||[]).find(function(x){return x.id===tid;}):null;var sh=$("#sheet");
+ var seiz=t?tmSeason(t):"";var yr=+todayISO().slice(0,4);var m=+todayISO().slice(5,7);var defSeiz=m>=9?(yr+"/"+String(yr+1).slice(2)):((yr-1)+"/"+String(yr).slice(2));
+ sh.innerHTML='<div class="shead"><div><h2>'+(t?"Team bewerken":"Nieuw team")+'</h2><div class="sx">'+(t?esc(t.name):"Seizoen "+esc(defSeiz))+'</div></div><button class="xbtn" onclick="closeSheet()">×</button></div>'
+  +'<div class="card"><label class="fld" style="margin-top:0">Naam</label><input class="in" id="tfNaam" value="'+esc(t?t.name:"")+'" placeholder="bv. Jong Oranje Heren"><label class="fld">Seizoen</label><input class="in" id="tfSeiz" value="'+esc(t?seiz:defSeiz)+'" placeholder="bv. 2025/26"><label class="fld">Coach <span class="sx">(optioneel)</span></label><input class="in" id="tfCoach" value="'+esc(t?(t.coach||""):"")+'" placeholder="bv. Tom">'
+  +(t?'':'<label class="rubtoggle" style="margin-top:12px"><input type="checkbox" id="tfAct" checked><span class="sx">Direct als actief team gebruiken</span></label>')+'</div>'
+  +'<button class="btn block" id="tfSave" style="background:var(--orange);color:#fff">'+(t?"Opslaan":"Team aanmaken")+'</button>'
+  +(t?'<div class="row" style="justify-content:space-between;margin-top:14px"><button class="link" id="tfAct2"'+(t.id===state.activeTeamId?' disabled style="opacity:.4"':'')+'>Selecteer als actief team</button><button class="link" id="tfDel" style="color:var(--bad)">Team verwijderen</button></div>':'');
+ openSheet();
+ var _n=$("#tfNaam");setTimeout(function(){try{_n.focus();}catch(e){}},50);
+ $("#tfSave").onclick=function(){var n=(_n.value||"").trim();if(!n){toast("Geef een teamnaam");return;}var sz=($("#tfSeiz").value||"").trim();var co=($("#tfCoach").value||"").trim();
+  if(t){t.name=n;t.coach=co;if(sz){var cur=(t.seasons||[]).find(function(x){return x.id===t.currentSeasonId;});if(cur)cur.name=sz;else{t.seasons=t.seasons||[];var sid=uid();t.seasons.push({id:sid,name:sz});t.currentSeasonId=sid;}}save();closeSheet();renderTeams();toast("Opgeslagen ✓");return;}
+  var id=uid();var team={id:id,name:n,coach:co,playerIds:[],players:[],sessions:[],seasons:[],currentSeasonId:null,bucketsOff:{},goals:[]};if(sz){var sid2=uid();team.seasons.push({id:sid2,name:sz});team.currentSeasonId=sid2;}
+  state.teams.push(team);if($("#tfAct")&&$("#tfAct").checked)state.activeTeamId=id;try{normalizeSeasons();}catch(e){}try{rehydrate();}catch(e){}save();tmSel=id;closeSheet();renderTeams();toast("Team aangemaakt ✓");};
+ var _a2=$("#tfAct2");if(_a2)_a2.onclick=function(){state.activeTeamId=t.id;save();closeSheet();renderTeams();toast("Actief team: "+t.name+" ✓");};
+ var _d=$("#tfDel");if(_d)_d.onclick=function(){confirmDlg('Team “'+t.name+'” en alle challenge-resultaten van dit team verwijderen? Spelers blijven bestaan.',function(){state.sessions=(state.sessions||[]).filter(function(x){return x.teamId!==t.id;});state.teams=state.teams.filter(function(x){return x.id!==t.id;});ensureActive();rehydrate();save();tmSel=null;closeSheet();renderTeams();toast("Team verwijderd");});};}
+function openTeamAddPlayer(tid){var t=(state.teams||[]).find(function(x){return x.id===tid;});if(!t)return;var sh=$("#sheet");
+ var cand=(state.players||[]).filter(function(p){return (t.playerIds||[]).indexOf(p.id)<0;}).sort(function(a,b){return (a.name||"").localeCompare(b.name||"","nl");});
+ var loose=tmLoose();
+ sh.innerHTML='<div class="shead"><div><h2>Speler toevoegen</h2><div class="sx">'+esc(t.name)+'</div></div><button class="xbtn" onclick="closeSheet()">×</button></div>'
+  +'<div class="card"><label class="fld" style="margin-top:0">Naam</label><span class="acwrap" style="display:block"><input class="in" id="tpQ" autocomplete="off" placeholder="Zoek in de spelerslijst of typ een nieuwe naam…"></span><p class="sx" style="margin:6px 0 0">Kies een bestaande speler of typ een nieuwe naam en druk op Enter.</p></div>'
+  +(loose.length?'<div class="card"><div class="dsh">Zonder team</div>'+loose.slice(0,8).map(function(p){return '<div class="tmrow sm" data-tpadd="'+p.id+'">'+tmAvatar(p)+'<span class="tmpnm"><b>'+esc(p.name)+'</b><small>'+(p.birthYear||"")+(p.mjopPhase?' · '+esc(p.mjopPhase):'')+'</small></span><span class="xbtn sm plusb">+</span></div>';}).join("")+'</div>':'');
+ openSheet();
+ function add(pid){if((t.playerIds||[]).indexOf(pid)>=0)return;t.playerIds=t.playerIds||[];t.playerIds.push(pid);rehydrate();save();renderTeams();}
+ var q=$("#tpQ");acAttach(q,cand,function(p){return p.name;},function(p){add(p.id);toast(p.name+" toegevoegd \u2713");q.value="";openTeamList(tid);});
+ q.addEventListener("keydown",function(e){if(e.key!=="Enter")return;var n=(q.value||"").trim();if(!n)return;var ex=(state.players||[]).find(function(x){return (x.name||"").toLowerCase()===n.toLowerCase();});var pid;if(ex)pid=ex.id;else{pid=uid();state.players.push({id:pid,name:n,birthYear:"",gender:""});}add(pid);toast(n+" toegevoegd \u2713");openTeamList(tid);});
+ setTimeout(function(){try{q.focus();}catch(e){}},50);
+ sh.querySelectorAll("[data-tpadd]").forEach(function(r){r.onclick=function(){var p=registryPlayer(r.dataset.tpadd);add(r.dataset.tpadd);toast((p?p.name:"Speler")+" toegevoegd \u2713");openTeamList(tid);};});}
+function openTeamPick(pid){var p=registryPlayer(pid);var sh=$("#sheet");var teams=state.teams||[];
+ sh.innerHTML='<div class="shead"><div><h2>In een team plaatsen</h2><div class="sx">'+esc(p?p.name:"")+'</div></div><button class="xbtn" onclick="closeSheet()">×</button></div><div class="card">'+(teams.length?teams.map(function(t){return '<div class="tmrow sm" data-tpick="'+t.id+'"><span class="tmpnm"><b>'+esc(t.name)+'</b><small>'+(t.players||[]).length+' spelers'+(t.id===state.activeTeamId?' · actief':'')+'</small></span><span class="xbtn sm plusb">+</span></div>';}).join(""):'<p class="muted" style="margin:0;font-size:13px">Nog geen teams.</p>')+'</div>';
+ openSheet();
+ sh.querySelectorAll("[data-tpick]").forEach(function(r){r.onclick=function(){var t=teams.find(function(x){return x.id===r.dataset.tpick;});if(!t)return;t.playerIds=t.playerIds||[];if(t.playerIds.indexOf(pid)<0)t.playerIds.push(pid);rehydrate();save();tmSel=t.id;renderTeams();openTeamList(t.id);toast((p?p.name:"Speler")+" \u2192 "+t.name+" \u2713");};});}
 var challengePlayer=null;
 function renderNew(){
  var sw=$("#newSwitch");if(sw)sw.innerHTML="";
