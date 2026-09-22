@@ -2935,7 +2935,7 @@ const LIES={f:"Fairway",r:"Rough",s:"Sand",g:"Green"};const DLIES={f:"Fairway",r
 const LV=["PGA Tour"];
 function spread(min,max,n){if(n===1)return [Math.round((min+max)/2)];const a=[];for(let i=0;i<n;i++)a.push(Math.round(min+(max-min)*i/(n-1)));return a;}
 const NSIT=[3,6,9,12,15,18], NHOLE=[6,9,12,18];
-const APP_VERSION="v361";
+const APP_VERSION="v362";
 const TESTS={
 putt_3_5:{name:"Putt 3–5 ft",cat:"Putten",eng:"putt_cat",dists:[3,4,5],per:8,info:"24 putts (8× vanaf 3, 4 en 5 ft). Per afstand: holed, mis binnen 3 ft, mis buiten 3 ft. Output: SG + make%."},
 putt_6_10:{name:"Putt 6–10 ft",cat:"Putten",eng:"putt_cat",dists:[6,8,10],per:8,info:"24 putts (8× vanaf 6, 8 en 10 ft). Zelfde invoer als 3–5 ft."},
@@ -11782,6 +11782,16 @@ function normalizePlanning(){
   if(!state.tourDefsV320){state.tourDefsV320=1;SEED_TOURDEFS_V320.forEach(function(d){if(state.tourDefs.some(function(x){return (x.name||"").toLowerCase()===d.name.toLowerCase();}))return;state.tourDefs.push({id:uid(),name:d.name,cat:d.cat,labels:d.labels.slice(),klasse:d.klasse,tourId:"",vorm:d.vorm,gender:d.gender,rondes:d.rondes,load:d.load,invitation:d.invitation,seed:true});});}
   if(!state.tourDefsV321){state.tourDefsV321=1;/* v321: Toms correcties uit het voorstelbestand op de geseede definities */SEED_TOURDEFS_V320.forEach(function(d){var x=state.tourDefs.find(function(y){return y.seed&&((y.name||"").toLowerCase()===d.name.toLowerCase()||(d.was&&(y.name||"").toLowerCase()===d.was.toLowerCase()));});if(!x)return;x.name=d.name;x.cat=d.cat;x.labels=d.labels.slice();x.klasse=d.klasse;x.vorm=d.vorm;x.gender=d.gender;x.rondes=d.rondes;x.load=d.load;x.invitation=d.invitation;});}
   if(!state.eventsV328){state.eventsV328=1;(state.events||[]).forEach(function(ev){if(ev.type==="training")ev.type="golfz";});}
+  if(!state.tourAddV362){state.tourAddV362=1;/* v362: Papendal Open, Heuvelrug Jeugd Open, Road to La Hacienda (7 events) */try{
+   state.tours=state.tours||[];state.tourDefs=state.tourDefs||[];state.tourEditions=state.tourEditions||[];
+   function _tour(nm){var t=state.tours.find(function(x){return (x.name||"").toLowerCase()===nm.toLowerCase();});if(!t){t={id:uid(),name:nm};state.tours.push(t);}return t;}
+   function _def(o){var d=state.tourDefs.find(function(x){return (x.name||"").toLowerCase()===o.name.toLowerCase();});if(!d){d={id:uid(),name:o.name,cat:o.cat,labels:o.labels||[],klasse:o.klasse||"B",tourId:o.tourId||"",vorm:o.vorm||"sp",gender:"",rondes:o.rondes||3,load:o.load||3,invitation:false,land:o.land||"",seed:true};state.tourDefs.push(d);}return d;}
+   function _ed(d,start,end,loc){if(state.tourEditions.some(function(e){return e.defId===d.id&&e.start===start;}))return;state.tourEditions.push({id:uid(),defId:d.id,name:"",cat:"",labels:[],klasse:"",year:+start.slice(0,4),start:start,end:end,location:loc,travelPre:"",travelPost:"",prepDays:"",participants:{}});}
+   _ed(_def({name:"Papendal Open",cat:"3D \u00b7 Nationale pro-events (D4)",labels:["18+","PRO"],klasse:"A",rondes:2,load:4,land:"Nederland"}),"2026-09-23","2026-09-24","Edese Golfclub");
+   _ed(_def({name:"Heuvelrug Jeugd Open",cat:"2B \u00b7 Regionaal prestatie",labels:[],klasse:"B",rondes:2,load:2,land:"Nederland"}),"2026-09-26","2026-09-27","De Pan / Hoge Kleij");
+   var rt=_tour("Road to La Hacienda");
+   [["Road to La Hacienda \u2013 Event 1","2026-11-08","2026-11-10","La Hacienda Heathland"],["Road to La Hacienda \u2013 Event 2","2026-11-24","2026-11-26","Parador M\u00e1laga"],["Road to La Hacienda \u2013 Event 3","2026-12-09","2026-12-11","Villa Padierna Alferini"],["Road to La Hacienda \u2013 Event 4","2026-12-14","2026-12-16","Torrequebrada"],["Road to La Hacienda \u2013 Event 5","2027-01-25","2027-01-27","Villa Padierna Flamingos"],["Road to La Hacienda \u2013 Event 6","2027-01-30","2027-02-01","Rio Real Golf"],["Road to La Hacienda \u2013 Final","2027-03-09","2027-03-11","La Hacienda Links"]].forEach(function(x){_ed(_def({name:x[0],cat:"4B \u00b7 Internationaal amateur",labels:["18+","PRO"],klasse:"B",rondes:3,load:3,land:"Spanje",tourId:rt.id}),x[1],x[2],x[3]);});
+  }catch(e){console.warn("tourAddV362",e);}}
   if(!state.tourLandV326){state.tourLandV326=1;/* v326: land per toernooi (geseede definities krijgen een schatting op naam) */(state.tourDefs||[]).forEach(function(d){if(d.land)return;if(d.seed){var l=tourLandRaad(d.name);if(l)d.land=l;}});}
   if(!state.tourEditions)state.tourEditions=[];
   if(!state.tours)state.tours=[];
