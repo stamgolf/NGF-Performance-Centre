@@ -3087,7 +3087,7 @@ const LIES={f:"Fairway",r:"Rough",s:"Sand",g:"Green"};const DLIES={f:"Fairway",r
 const LV=["PGA Tour"];
 function spread(min,max,n){if(n===1)return [Math.round((min+max)/2)];const a=[];for(let i=0;i<n;i++)a.push(Math.round(min+(max-min)*i/(n-1)));return a;}
 const NSIT=[3,6,9,12,15,18], NHOLE=[6,9,12,18];
-const APP_VERSION="v374";
+const APP_VERSION="v376";
 const TESTS={
 putt_3_5:{name:"Putt 3–5 ft",cat:"Putten",eng:"putt_cat",dists:[3,4,5],per:8,info:"24 putts (8× vanaf 3, 4 en 5 ft). Per afstand: holed, mis binnen 3 ft, mis buiten 3 ft. Output: SG + make%."},
 putt_6_10:{name:"Putt 6–10 ft",cat:"Putten",eng:"putt_cat",dists:[6,8,10],per:8,info:"24 putts (8× vanaf 6, 8 en 10 ft). Zelfde invoer als 3–5 ft."},
@@ -3496,15 +3496,18 @@ function spVormSvg(rows,W0,H0){_spVormRows=rows;var R=rows.filter(function(o){re
  if(R.length<2)return '<div class="spleeg fill">Nog geen strokeplayrondes.</div>';
  var vals=R.map(function(o){return o.tp/o.hh*18;});var avg=vals.reduce(function(a,b){return a+b;},0)/vals.length;
  var mn=Math.min.apply(null,vals.concat([0,avg])),mx=Math.max.apply(null,vals.concat([0,avg]));var pad=Math.max(2,(mx-mn)*0.15);mn-=pad;mx+=pad;
- var W=W0||360,H=H0||130,L=34,Rr=8,T=16,Bt=22;function X(i){return L+(R.length===1?0:i/(R.length-1))*(W-L-Rr);}function Y(v){return T+(v-mn)/(mx-mn)*(H-T-Bt);}
+ var W=W0||360,H=H0||130,L=34,Rr=8,T=16,Bt=22;function X(i){return L+(R.length===1?0:i/(R.length-1))*(W-L-Rr);}function Y(v){return (H-Bt)-(v-mn)/(mx-mn)*(H-T-Bt);}
  var pts=vals.map(function(v,i){return X(i).toFixed(1)+","+Y(v).toFixed(1);}).join(" ");
  var o='<svg class="spsvg" viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none">';
+ /* v376: y-as conventioneel (negatief onder, positief boven), kleinere subtiele cijfers, trendlijn */
  /* v372: y-as = slagen t.o.v. par (per 18 holes): stappen + astitel */
  var _stap=1,_st=[1,2,5,10,20];for(var _si=0;_si<_st.length;_si++){_stap=_st[_si];if((H-T-Bt)/((mx-mn)/_stap)>=12)break;}
- for(var _v=Math.ceil(mn/_stap)*_stap;_v<=mx;_v+=_stap){if(_v===0)continue;var _yy=Y(_v);if(_yy<T+4||_yy>H-Bt-2)continue;o+='<line x1="'+L+'" y1="'+_yy.toFixed(1)+'" x2="'+(W-Rr)+'" y2="'+_yy.toFixed(1)+'" stroke="#F2F3F5"/><text x="'+(L-4)+'" y="'+(_yy+3).toFixed(1)+'" font-size="9" fill="#B9BEC4" text-anchor="end">'+(_v>0?'+':'\u2212')+Math.abs(_v)+'</text>';}
+ for(var _v=Math.ceil(mn/_stap)*_stap;_v<=mx;_v+=_stap){if(_v===0)continue;var _yy=Y(_v);if(_yy<T+4||_yy>H-Bt-2)continue;o+='<line x1="'+L+'" y1="'+_yy.toFixed(1)+'" x2="'+(W-Rr)+'" y2="'+_yy.toFixed(1)+'" stroke="#F2F3F5"/><text x="'+(L-4)+'" y="'+(_yy+2.5).toFixed(1)+'" font-size="7.5" fill="#C9CDD2" text-anchor="end">'+(_v>0?'+':'\u2212')+Math.abs(_v)+'</text>';}
  o+='<text x="'+L+'" y="8" font-size="8.5" fill="#9AA0A6" font-weight="700" letter-spacing=".04em">SLAGEN T.O.V. PAR \u00b7 PER 18 HOLES</text>';
- o+='<line x1="'+L+'" y1="'+Y(0).toFixed(1)+'" x2="'+(W-Rr)+'" y2="'+Y(0).toFixed(1)+'" stroke="#C9CDD2"/><text x="'+(L-4)+'" y="'+(Y(0)+3).toFixed(1)+'" font-size="9" fill="#7A7F85" font-weight="700" text-anchor="end">par</text>';
- o+='<line x1="'+L+'" y1="'+Y(avg).toFixed(1)+'" x2="'+(W-Rr)+'" y2="'+Y(avg).toFixed(1)+'" stroke="#F47C20" stroke-dasharray="3 3"/><text x="'+(W-Rr)+'" y="'+(Y(avg)-3).toFixed(1)+'" font-size="9" fill="#F47C20" font-weight="700" text-anchor="end">gem. '+scF(avg)+'</text>';
+ o+='<line x1="'+L+'" y1="'+Y(0).toFixed(1)+'" x2="'+(W-Rr)+'" y2="'+Y(0).toFixed(1)+'" stroke="#C9CDD2"/><text x="'+(L-4)+'" y="'+(Y(0)+2.5).toFixed(1)+'" font-size="7.5" fill="#9AA0A6" font-weight="700" text-anchor="end">par</text>';
+ o+='<line x1="'+L+'" y1="'+Y(avg).toFixed(1)+'" x2="'+(W-Rr)+'" y2="'+Y(avg).toFixed(1)+'" stroke="#F47C20" stroke-dasharray="3 3"/>';
+ if(vals.length>=3){var _n=vals.length,_sx=0,_sy=0,_sxy=0,_sxx=0;vals.forEach(function(v,i){_sx+=i;_sy+=v;_sxy+=i*v;_sxx+=i*i;});var _b=(_n*_sxy-_sx*_sy)/(_n*_sxx-_sx*_sx||1),_a=(_sy-_b*_sx)/_n;var _y0=Y(_a),_y1=Y(_a+_b*(_n-1));
+  o+='<line x1="'+X(0).toFixed(1)+'" y1="'+_y0.toFixed(1)+'" x2="'+X(_n-1).toFixed(1)+'" y2="'+_y1.toFixed(1)+'" stroke="#9AA0A6" stroke-width="1.2" stroke-dasharray="5 3" vector-effect="non-scaling-stroke"/><text x="'+(W-Rr)+'" y="8" font-size="8" fill="#9AA0A6" font-weight="700" text-anchor="end"><tspan fill="#F47C20">gem. '+scF(avg)+'</tspan> \u00b7 trend '+(_b<-0.02?'\u2198 beter':(_b>0.02?'\u2197 slechter':'\u2192 stabiel'))+'</text>';}
  o+='<polyline fill="none" stroke="#2B2F33" stroke-width="1.6" vector-effect="non-scaling-stroke" points="'+pts+'"/>';
  R.forEach(function(r,i){o+='<circle cx="'+X(i).toFixed(1)+'" cy="'+Y(vals[i]).toFixed(1)+'" r="'+(r.wed?3:2.4)+'" fill="'+(r.wed?"#F47C20":"#2B2F33")+'" data-spdot="'+r.id+'" style="cursor:pointer"><title>'+esc(r.head)+' · '+fmtDate(r.date)+' · '+scF(r.tp,0)+'</title></circle>';});
  o+='<text x="'+L+'" y="'+(H-6)+'" font-size="9" fill="#9AA0A6">'+fmtDate(R[0].date)+'</text><text x="'+(W-Rr)+'" y="'+(H-6)+'" font-size="9" fill="#9AA0A6" text-anchor="end">'+fmtDate(R[R.length-1].date)+'</text></svg>';
@@ -8473,8 +8476,8 @@ function renderNew(){const box=$("#testPicker");if(!box)return;
  var lastAll=(state.sessions||[]).filter(function(x){return x.finalized&&(x.results||[]).some(function(r){return pids.indexOf(r.playerId)>=0;});}).map(function(x){return x.date;}).sort().pop();
  var kpi='<div class="cvkpi chkpi"><span><b>'+vis.length+'</b><small>testen</small></span>'+(simpel?'':'<span><b>'+nSeason+'</b><small>'+(speler?"door jou gedaan":"gedaan dit seizoen")+'</small></span><span><b>'+(lastAll?esc(fmtDate(lastAll)):"–")+'</b><small>laatste</small></span>')+'</div>';
  var pick="";if(!speler){var tms=state.teams||[];var pk=chV.pick||{type:"team",id:state.activeTeamId};
-  pick='<select class="in chpick" id="chPick"><optgroup label="Team">'+tms.map(function(t){return '<option value="t:'+t.id+'"'+((pk.type==="team"&&pk.id===t.id)?" selected":"")+'>'+esc(t.name)+'</option>';}).join("")+'</optgroup><optgroup label="Speler">'+allPlayers().slice().sort(function(a,b){return (a.name||"").localeCompare(b.name||"","nl");}).map(function(p){return '<option value="p:'+p.id+'"'+((pk.type==="player"&&pk.id===p.id)?" selected":"")+'>'+esc(p.name)+'</option>';}).join("")+'</optgroup></select>';}
- var kop='<div class="cvkop met-h1"><h1 class="cvh1">Challenge</h1>'+kpi+(pick?'<span class="row" style="margin-left:auto">'+pick+'</span>':'')+'</div>';
+  pick='<select class="klsel chpick" id="chPick"><optgroup label="Team">'+tms.map(function(t){return '<option value="t:'+t.id+'"'+((pk.type==="team"&&pk.id===t.id)?" selected":"")+'>'+esc(t.name)+'</option>';}).join("")+'</optgroup><optgroup label="Speler">'+allPlayers().slice().sort(function(a,b){return (a.name||"").localeCompare(b.name||"","nl");}).map(function(p){return '<option value="p:'+p.id+'"'+((pk.type==="player"&&pk.id===p.id)?" selected":"")+'>'+esc(p.name)+'</option>';}).join("")+'</optgroup></select>';}
+ var kop='<div class="cvkop met-h1"><h1 class="cvh1">Challenge</h1>__CATSEL__'+kpi+(pick?'<span class="row" style="margin-left:auto">'+pick+'</span>':'')+'</div>';
  /* tegels */
  var cats=CH_CATS.filter(function(c){return vis.some(function(id){return TESTS[id].cat===c[0];});});
  var tiles='<div class="chtiles"><button class="chtile all'+(chV.cat===""?" on":"")+'" data-chc=""><b>Alle</b><small>'+cats.length+' categorieën</small><span class="n">'+vis.length+'</span></button>'+cats.map(function(c){var n=vis.filter(function(id){return TESTS[id].cat===c[0];}).length;return '<button class="chtile'+(chV.cat===c[0]?" on":"")+'" data-chc="'+esc(c[0])+'" style="--cc:'+c[2]+'"><b>'+esc(c[0])+'</b><small>'+esc(c[1])+'</small><span class="n">'+n+'</span></button>';}).join("")+'</div>';
@@ -8487,7 +8490,9 @@ function renderNew(){const box=$("#testPicker");if(!box)return;
   return '<div class="chc'+(simpel?" simpel":"")+'" data-chinfo="'+id+'"><div class="t"><b>'+esc(t.name)+'</b><small title="'+esc(info)+'">'+esc(info)+'</small></div><button class="chgo" data-chstart="'+id+'" aria-label="Start '+esc(t.name)+'"><span></span></button>'+(last?'<div class="last">'+last+'</div>':'')+'</div>';}
  var grp="";if(chV.cat){grp=list.map(card).join("");}else{cats.forEach(function(c){var ids=list.filter(function(id){return TESTS[id].cat===c[0];});if(!ids.length)return;grp+='<div class="chgrp"><span class="dot" style="background:'+c[2]+'"></span>'+esc(c[0])+(c[1]?'<span class="sub">\u00b7 '+esc(c[1])+'</span>':'')+'<span class="c">'+ids.length+'</span></div>'+ids.map(card).join("");});}
  var lijst='<div class="card" id="chList"><div class="drhd"><h3>'+cvTitel(chV.cat?esc(chV.cat):"Alle testen",list.length)+'</h3>'+(simpel?'':'<input class="in" id="chQ" placeholder="Zoek test…" value="'+esc(chV.q)+'" style="margin-left:auto;flex:0 1 220px;min-width:120px">')+'</div><div class="chtests'+(chV.cat?"":" grouped")+'">'+(grp||'<p class="muted" style="margin:6px 0 0;font-size:13px">Geen testen gevonden.</p>')+'</div></div>';
- box.innerHTML=kop+tiles+rec+lijst;
+ var catSel='<select class="klsel" id="chCatSel"><option value="">Alle categorie\u00ebn \u00b7 '+vis.length+'</option>'+cats.map(function(c){var n=vis.filter(function(id){return TESTS[id].cat===c[0];}).length;return '<option value="'+esc(c[0])+'"'+(chV.cat===c[0]?' selected':'')+'>'+esc(c[0])+' \u00b7 '+n+'</option>';}).join("")+'</select>';
+ box.innerHTML=kop.replace('__CATSEL__',catSel)+rec+lijst;
+ var _cs=$("#chCatSel");if(_cs)_cs.onchange=function(){chV.cat=_cs.value;renderNew();};
  var _pk=$("#chPick");if(_pk)_pk.onchange=function(){var v=_pk.value;chV.pick=v.charAt(0)==="t"?{type:"team",id:v.slice(2)}:{type:"player",id:v.slice(2)};if(chV.pick.type==="team"){state.activeTeamId=chV.pick.id;save();}renderNew();};
  box.querySelectorAll("[data-chc]").forEach(function(b){b.onclick=function(){chV.cat=b.dataset.chc;renderNew();};});
  var _q=$("#chQ");if(_q)_q.oninput=function(){chV.q=_q.value;var l=$("#chList");var pos=_q.selectionStart;renderNew();var e=$("#chQ");if(e){e.focus();try{e.setSelectionRange(pos,pos);}catch(x){}}};
