@@ -670,6 +670,15 @@ header.bar{background:#fff;color:var(--ink);padding:calc(env(safe-area-inset-top
 .cltag{display:inline-block;background:var(--paper);border-radius:999px;padding:1px 8px;font-size:10.5px;font-weight:700;color:var(--muted);margin-left:6px;vertical-align:1px}
 .clac{display:flex;gap:6px;flex:none}.clac .xbtn.sm{width:28px;height:28px;font-size:13px;margin:0}
 @media(max-width:699px){.clac{display:none}.clr{padding:9px 0}.tmk{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* v377: Vandaag piek-rijen; tijdlijn T2 (band breed + lade) */
+.tdpkr{display:flex;align-items:center;gap:10px;padding:7px 6px;border-radius:10px;cursor:pointer;margin:2px 0}.tdpkr.on{background:var(--paper)}
+.tdpkr .tx{flex:1;min-width:0}.tdpkr .tx b{display:block;font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.tdpkr .tx small{display:block;font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tdpkr .dg{text-align:center;flex:0 0 auto;min-width:44px}.tdpkr .dg b{display:block;font-family:var(--fd);font-size:20px;font-weight:500;line-height:1}.tdpkr .dg small{display:block;font-size:9px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.tdpkr .tlpk.p5{background:var(--orange);color:#fff}.tdpkr .tlpk.lg{background:#E6E8EA;color:var(--ink)}
+.tdpkchk{margin-top:6px;border-top:1px solid var(--line);padding-top:4px}.tdpkchkh{display:flex;align-items:center;gap:8px;font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:4px 2px 2px;white-space:nowrap;overflow:hidden}.tdpkchkh .xbtn.sm{margin-left:auto;width:24px;height:24px;font-size:14px}
+.tldrawer{margin-top:12px}.tldrawer .tllhd{cursor:pointer;margin-bottom:0;-webkit-tap-highlight-color:transparent}.tldrawer.open .tllhd{margin-bottom:6px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+.tldrarr{margin-left:auto;font-size:12px;color:var(--muted);font-weight:700;white-space:nowrap}
+.tllst.tlcols{max-height:none;overflow:visible}@media(min-width:700px){.tllst.tlcols{column-count:2;column-gap:28px}.tllst.tlcols .tldh,.tllst.tlcols .tlar{break-inside:avoid}.tllst.tlcols .tldh{position:static}}
 /* v325: toernooidatabase tweeluik */
 .tdbgrid{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;margin-bottom:14px}
 @media(min-width:700px){.tdbgrid{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)}}
@@ -3087,7 +3096,7 @@ const LIES={f:"Fairway",r:"Rough",s:"Sand",g:"Green"};const DLIES={f:"Fairway",r
 const LV=["PGA Tour"];
 function spread(min,max,n){if(n===1)return [Math.round((min+max)/2)];const a=[];for(let i=0;i<n;i++)a.push(Math.round(min+(max-min)*i/(n-1)));return a;}
 const NSIT=[3,6,9,12,15,18], NHOLE=[6,9,12,18];
-const APP_VERSION="v376";
+const APP_VERSION="v377";
 const TESTS={
 putt_3_5:{name:"Putt 3–5 ft",cat:"Putten",eng:"putt_cat",dists:[3,4,5],per:8,info:"24 putts (8× vanaf 3, 4 en 5 ft). Per afstand: holed, mis binnen 3 ft, mis buiten 3 ft. Output: SG + make%."},
 putt_6_10:{name:"Putt 6–10 ft",cat:"Putten",eng:"putt_cat",dists:[6,8,10],per:8,info:"24 putts (8× vanaf 6, 8 en 10 ft). Zelfde invoer als 3–5 ft."},
@@ -10823,10 +10832,6 @@ function renderTimeline(host){
   wrap.innerHTML='<div class="tlkop"><h1>Tijdlijn</h1>'+yearSel+scopeSel+kpiH+'<button class="plusb xbtn" id="tlAddTop" title="Toevoegen" aria-label="Toevoegen" style="font-size:19px;font-weight:700">+</button></div>'
    +'<div class="tllagen">'+calLagenChips()+'</div>';
   /* --- speler: eerstvolgende toernooi / piek --- */
-  if(rolIsSpeler()&&_modTl!=="foundation"){var _upc=items.filter(function(it){return it.s>=_today;}).sort(function(a,b){return a.s-b.s;});
-   var _nextT=_upc[0],_next5=_upc.filter(function(it){return _peakLvlOf(it)===5;})[0],_next4=_upc.filter(function(it){return _peakLvlOf(it)===4;})[0];
-   function _nrow(lbl,it,lvl){var pk=(it&&!lvl)?_peakLvlOf(it):lvl;return '<div class="uprow'+(it?' clickable" data-nred="'+it.ed.id+'"':'"')+'><span class="tlpkcol">'+(it&&peakNum(pk)?'<span class="tlpk" style="background:'+peakColor(pk)+';color:'+(peakNum(pk)>=4?"#fff":"#16202B")+'">P'+peakNum(pk)+'</span>':'')+'</span><span class="uplbl2">'+lbl+'</span><span class="upnm">'+(it?esc(it.m.name):'<span class="sx">–</span>')+'</span><span class="updt2">'+(it&&it.ed.start?fmtDate(it.ed.start):'')+'</span><span class="updd">'+(it&&it.ed.start?(function(){var dd=dDiffDays(_tISO,it.ed.start);return dd<0?'bezig':(dd===0?'vandaag':dd+' dgn');})():'')+'</span></div>';}
-   wrap.insertAdjacentHTML("beforeend",'<div class="card">'+_nrow("Eerstvolgende toernooi",_nextT,0)+_nrow("Eerstvolgende Piek 4",_next4,4)+_nrow("Eerstvolgende Piek 5",_next5,5)+'</div>');}
   /* --- jaarband --- */
   var _tY=(new Date()).getFullYear(),_tM=(new Date()).getMonth(),_tD=(new Date()).getDate();
   var monthsHtml="";var _pastCount=0;var _pastActs=0;var _pastMini="";
@@ -10869,22 +10874,21 @@ function renderTimeline(host){
    var past=r.e<_today;
    _rows+='<div class="tlar'+(past?' past':'')+'" data-actid="'+esc(r.id)+'" data-actkind="'+r.akind+'"><span class="tldb'+(r.kind==="wed"?' wed':'')+'"><b>'+r.s.getDate()+'</b><small>'+MK[r.s.getMonth()]+'</small></span><span class="t"><b>'+esc(r.name)+'</b><small>'+r.date+((r.pre||r.post)?' · aanloop '+r.pre+' / uitloop '+r.post+' dg':'')+'</small><span class="m">'+pk+typ+inis+'</span></span><span class="r"><b>'+duLabel(r.s)+'</b>'+(r.e>r.s?'<span>'+(Math.round((r.e-r.s)/86400000)+1)+' dagen</span>':'')+'</span></div>';});
   if(!_rows)_rows='<div class="tlleeg">'+(_kom?'Geen komende activiteiten in '+Y+' binnen de gekozen lagen.':'Nog niets geweest in '+Y+'.')+'</div>';
-  var listCard='<div class="card tllcard" id="tlListCard"><div class="tllhd"><h3>Activiteiten</h3><span class="sx">'+_actsF.length+'</span><div class="seg tlmini" id="tlListSeg" style="max-width:150px"><button data-lm="komend" class="'+(_kom?"on":"")+'">Komend</button><button data-lm="geweest" class="'+(!_kom?"on":"")+'">Geweest</button></div></div><div class="tllst" id="tlLst">'+_rows+'</div></div>';
+  /* v377 (T2): jaarband over de volle breedte; activiteiten als inklapbare lade eronder */
+  var listCard='<div class="card tllcard tldrawer'+(tlListOpen?' open':'')+'" id="tlListCard"><div class="tllhd" id="tlDrTog"><h3>Activiteiten</h3><span class="cvn">'+_actsF.length+'</span><div class="seg tlmini" id="tlListSeg" style="max-width:150px"><button data-lm="komend" class="'+(_kom?"on":"")+'">Komend</button><button data-lm="geweest" class="'+(!_kom?"on":"")+'">Geweest</button></div><span class="tldrarr">'+(tlListOpen?'inklappen \u25b4':'openklappen \u25be')+'</span></div>'+(tlListOpen?'<div class="tllst tlcols" id="tlLst">'+_rows+'</div>':'')+'</div>';
   var bandCard='<div class="card" id="tlBandCard" style="padding:10px 14px">'+pastRow+monthsHtml+'</div>';
-  wrap.insertAdjacentHTML("beforeend",'<div class="tltwo">'+bandCard+listCard+'</div>');
+  wrap.insertAdjacentHTML("beforeend",bandCard+listCard);
   host.appendChild(wrap);
-  /* hoogte van het venster = hoogte van de jaarband (twee kolommen) */
-  function tlFitList(){var bc=$("#tlBandCard"),lc=$("#tlListCard");if(!bc||!lc)return;if(window.innerWidth>820){lc.style.height=bc.offsetHeight+"px";}else lc.style.height="";}
-  setTimeout(tlFitList,0);if(!window._tlFitBound){window._tlFitBound=true;window.addEventListener("resize",function(){tlFitList();});}
   /* --- binden --- */
   var _ys=$("#tlYearSel");if(_ys)_ys.onchange=function(){planYear=+_ys.value;renderPlanning();};
   var _sc=$("#tlScopeSel");if(_sc)_sc.onchange=function(){var v=_sc.value;tlScope=v?{type:v.split(":")[0],id:v.split(":").slice(1).join(":")}:null;renderPlanning();};
   var _tlAdd=$("#tlAddTop");if(_tlAdd)_tlAdd.onclick=function(){tlAddKlik();};
   wrap.querySelectorAll("[data-laag]").forEach(function(bb){bb.onclick=function(){var L=calLagen();L[bb.dataset.laag]=!L[bb.dataset.laag];save();renderPlanning();};});
-  wrap.querySelectorAll("[data-mon]").forEach(function(b){b.onclick=function(){var mm=b.dataset.mon;var lst=$("#tlLst");if(!lst)return;var h=lst.querySelector('.tldh[data-tlmon="'+mm+'"]');if(h){lst.scrollTo({top:h.offsetTop-lst.offsetTop,behavior:"smooth"});}else toast("Geen activiteiten in "+MN[+mm]+" ("+(_kom?"komend":"geweest")+")");};});
+  wrap.querySelectorAll("[data-mon]").forEach(function(b){b.onclick=function(){var mm=b.dataset.mon;if(!tlListOpen){tlListOpen=true;renderPlanning();}var lst=$("#tlLst");if(!lst)return;var h=lst.querySelector('.tldh[data-tlmon="'+mm+'"]');if(h){try{h.scrollIntoView({behavior:"smooth",block:"start"});}catch(_e){h.scrollIntoView();}}else toast("Geen activiteiten in "+MN[+mm]+" ("+(_kom?"komend":"geweest")+")");};});
+  var _dt=$("#tlDrTog");if(_dt)_dt.onclick=function(e){if(e.target.closest("[data-lm]"))return;tlListOpen=!tlListOpen;renderPlanning();};
   var _ptog=$("#tlPastTog");if(_ptog)_ptog.onclick=function(){tlShowPast=!tlShowPast;renderPlanning();};
   wrap.querySelectorAll(".tlar[data-actid]").forEach(function(row){row.onclick=function(){var id=row.dataset.actid,k=row.dataset.actkind;if(k==="ed"){editionDetail(id, pid?{player:pid}:(teamId?{team:teamId}:null));}else{eventDetail(id, pid?{player:pid}:null);}};});
-  var _lseg=$("#tlListSeg");if(_lseg)_lseg.querySelectorAll("[data-lm]").forEach(function(x){x.onclick=function(){tlListMode=x.dataset.lm;renderPlanning();};});
+  var _lseg=$("#tlListSeg");if(_lseg)_lseg.querySelectorAll("[data-lm]").forEach(function(x){x.onclick=function(e){e.stopPropagation();tlListMode=x.dataset.lm;tlListOpen=true;renderPlanning();};});
   document.querySelectorAll("#planBody [data-nred]").forEach(function(r){r.onclick=function(){editionDetail(r.dataset.nred,tlPlayer?{player:tlPlayer}:undefined);};});
   wrap.querySelectorAll(".tlbar.core[data-edid]").forEach(function(b){b.onclick=function(){editionDetail(b.dataset.edid, pid?{player:pid}:(teamId?{team:teamId}:null));};});
   wrap.querySelectorAll(".tlbar.core[data-evid],.tlband[data-evid]").forEach(function(b){b.onclick=function(){eventDetail(b.dataset.evid, pid?{player:pid}:null);};});
@@ -16538,7 +16542,7 @@ function tdKiesToernooi(upc,pid,dt){var sh=$("#sheet");if(!sh)return;
  sh.querySelectorAll("[data-kies-ed]").forEach(function(r){r.onclick=function(){openTourGoalsForm(r.dataset.kiesEd,pid);};});
  openSheet();}
 function tdIco(id,title,svg){return '<button class="xbtn sm" id="'+id+'" title="'+title+'" aria-label="'+title+'">'+svg+'</button>';}
-var tdPiekIdx=0;
+var tdPiekIdx=0,tdPiekSel=null;
 var TD_ICO={
  todo:'<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M3.5 6l1.2 1.2L7 4.8M3.5 12l1.2 1.2L7 10.8M3.5 18l1.2 1.2L7 16.8"/></svg>',
  week:'<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9h18M9 9v11.5M15 9v11.5"/></svg>',
@@ -16734,12 +16738,16 @@ function renderToday(){var box=$("#todayBody");if(!box)return;
    +'</div></div>';}
  /* v312: Volgende piek — P3/P4/P5-toernooien, swipe/‹› door de reeks; P5 subtiel onderaan */
  var _pk=_upc.filter(function(x){return peakNum(x.pp.peak)>=3;});
- if(typeof tdPiekIdx!=="number")tdPiekIdx=0;if(tdPiekIdx>=_pk.length||tdPiekIdx<0)tdPiekIdx=0;
- var _p5n=_pk.find(function(x){return peakNum(x.pp.peak)===5;});var _cur=_pk[tdPiekIdx]||null;
+ /* v377: eerstvolgende P3, P4 en P5 als rijen; tik = checklist van die wedstrijd; P5 oranje, P3/P4 lichtgrijs */
+ var _pkLst=[];[3,4,5].forEach(function(lv){var f=_pk.find(function(x){return peakNum(x.pp.peak)===lv;});if(f&&!_pkLst.some(function(y){return y.ed.id===f.ed.id;}))_pkLst.push(f);});
+ _pkLst.sort(function(a,b){return String(a.start).localeCompare(String(b.start));});
+ if(!tdPiekSel||!_pkLst.some(function(x){return x.ed.id===tdPiekSel;}))tdPiekSel=_pkLst.length?_pkLst[0].ed.id:null;
+ var _cur=_pkLst.find(function(x){return x.ed.id===tdPiekSel;})||null;
  var _pkH="",_pkNote="";
  if(_cur){var _cm=edMeta(_cur.ed),_cpk=peakNum(_cur.pp.peak);var _cd=dDiffDays(dt,_cur.start);var _bezig=(_cur.start<=dt&&dt<=_cur.end);
   var _dagN=_bezig?(dDiffDays(_cur.start,dt)+1):0,_dagM=dDiffDays(_cur.start,_cur.end)+1;
-  var _hero='<div class="tdpkhero"'+(_bezig?' data-uped="'+_cur.ed.id+'"':' data-uped="'+_cur.ed.id+'"')+'><span class="n"><b>'+(_bezig?_dagN:_cd)+'</b><small>'+(_bezig?('dag van '+_dagM):(_cd===1?'dag':'dagen'))+'</small></span><span class="tx"><b>'+esc(_cm.name)+'</b><small>'+fmtRange(_cur.ed)+(_cur.ed.location?' · '+esc(_cur.ed.location):'')+'</small><small>'+(_cm.vorm?esc(taxVormKort(_cm.vorm)):'Wedstrijd')+(_bezig?' · bezig':'')+'</small></span><span class="tlpk">P'+_cpk+'</span></div>';
+  var _hero=_pkLst.map(function(x){var m=edMeta(x.ed),pk=peakNum(x.pp.peak),cd=dDiffDays(dt,x.start),bz=(x.start<=dt&&dt<=x.end),on=x.ed.id===tdPiekSel;
+   return '<div class="tdpkr'+(on?' on':'')+'" data-pksel="'+x.ed.id+'"><span class="tlpk '+(pk===5?'p5':'lg')+'">P'+pk+'</span><span class="tx"><b>'+esc(m.name)+'</b><small>'+fmtRange(x.ed)+(x.ed.location?' \u00b7 '+esc(x.ed.location):'')+'</small></span><span class="dg"><b>'+(bz?(dDiffDays(x.start,dt)+1):cd)+'</b><small>'+(bz?'dag van '+(dDiffDays(x.start,x.end)+1):(cd===1?'dag':'dagen'))+'</small></span></div>';}).join("");
   /* voorbereidingscheck */
   var _chk=[];
   var _tg=edTourGoalsGet(_cur.ed,pid);_chk.push({ok:!!String(_tg||"").trim(),t:'Toernooidoelen',s:_tg?esc(String(_tg).split(/\n/)[0]).slice(0,70):'nog geen doelen gezet',act:'tdpk-doel'});
@@ -16751,9 +16759,9 @@ function renderToday(){var box=$("#todayBody");if(!box)return;
   var _fwd=(_fw&&_fw.phase)?phaseDef(_fw.phase):null;
   _chk.push({ok:!!_fwd,t:'Wedstrijdweek in jaarplan',s:_fwd?esc(_fwd[1]):'geen fase gepland in de wedstrijdweek',act:'tdpk-jaar'});
   _pkH='<div class="tdpk">'+_hero
-   +((_p5n&&_p5n!==_cur)?'<div class="tdpk5" data-uped="'+_p5n.ed.id+'"><span class="tlpk">P5</span><span>'+esc(edMeta(_p5n.ed).name)+'</span><small>'+fmtDate(_p5n.start)+' · over '+dDiffDays(dt,_p5n.start)+' dgn</small></div>':'')
-   +_chk.map(function(c){return '<div class="cvrow" data-pkact="'+c.act+'"><span class="tdok'+(c.ok?' ja':'')+'">'+(c.ok?'✓':'')+'</span><span style="flex:1;min-width:0"><b>'+c.t+'</b><small>'+c.s+'</small></span><span class="cvpijl">›</span></div>';}).join("")+'</div>';
-  _pkNote='<span class="row tdpknav" style="gap:4px"><button class="xbtn sm" id="tdPkPrev"'+(_pk.length>1?'':' disabled')+'>‹</button><small>'+(tdPiekIdx+1)+'/'+_pk.length+'</small><button class="xbtn sm" id="tdPkNext"'+(_pk.length>1?'':' disabled')+'>›</button></span>';}
+   +'<div class="tdpkchk"><div class="tdpkchkh">Checklist \u00b7 '+esc(_cm.name)+'<button class="xbtn sm" data-uped="'+_cur.ed.id+'" title="Toernooi openen" aria-label="Toernooi openen">\u203a</button></div>'
+   +_chk.map(function(c){return '<div class="cvrow" data-pkact="'+c.act+'"><span class="tdok'+(c.ok?' ja':'')+'">'+(c.ok?'✓':'')+'</span><span style="flex:1;min-width:0"><b>'+c.t+'</b><small>'+c.s+'</small></span><span class="cvpijl">›</span></div>';}).join("")+'</div></div>';
+  _pkNote='<span class="hdnote">P3 \u00b7 P4 \u00b7 P5</span>';}
  var _wkNote='wk '+isoWeek(new Date(dt+"T12:00:00"))+(_pd?' · '+esc(_pd[1]):'');
  var _kpi='<div class="cvkpi">'
   +'<span><b'+(_wkPct!=null&&_wkPct>=WK_NORM?' class="groen"':(_wkAchter?' class="oranje"':''))+'>'+(_wkPct!=null?_wkPct+'%':'–')+'</b><small>week</small></span>'
@@ -16785,10 +16793,7 @@ function renderToday(){var box=$("#todayBody");if(!box)return;
  box.querySelectorAll("[data-copen]").forEach(function(r){r.onclick=function(){openTrainTodos(pid,ws,r.dataset.copen,null);};});
  cvScrollPas(box);setTimeout(function(){cvScrollPas(box);},50);
  cvSwipeBind($("#cvAgenda"),function(d){todayDate=dAddDays(todayDate,d);renderToday();});
- var _pkN=(typeof _pk!=="undefined")?_pk.length:0;
- function _pkGo(d){if(_pkN<2)return;tdPiekIdx=((tdPiekIdx+d)%_pkN+_pkN)%_pkN;renderToday();}
- var _pkp=$("#tdPkPrev"),_pkn=$("#tdPkNext");if(_pkp)_pkp.onclick=function(){_pkGo(-1);};if(_pkn)_pkn.onclick=function(){_pkGo(1);};
- cvSwipeBind($("#tdPiek"),function(d){_pkGo(d);});
+ box.querySelectorAll("[data-pksel]").forEach(function(r){r.onclick=function(e){if(e.target.closest("button"))return;tdPiekSel=r.dataset.pksel;renderToday();};});
  box.querySelectorAll("[data-pkact]").forEach(function(r){r.onclick=function(){var k=r.dataset.pkact;if(!_cur)return;
   if(k==="tdpk-doel")openTourGoalsForm(_cur.ed.id,pid);
   else if(k==="tdpk-week"){tpPlayer=pid;tpWeek=ws;planTab="todo";show("planning");}
