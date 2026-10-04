@@ -1,4 +1,4 @@
-const CACHE = 'jo-ladder-v388';
+const CACHE = 'jo-ladder-v392';
 const ASSETS = [
   './',
   './index.html',
@@ -6,7 +6,10 @@ const ASSETS = [
   './icon-192-v2.png','./favicon.ico',
   './icon-512-v2.png',
   './apple-touch-icon-v2.png',
-  './pdf-lib.min.js'
+  './pdf-lib.min.js',
+  './fontkit.umd.min.js',
+  './AlbertSans-Regular.ttf',
+  './AlbertSans-SemiBold.ttf'
 ];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting()));
