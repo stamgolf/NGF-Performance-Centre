@@ -725,7 +725,10 @@ header.bar{background:#fff;color:var(--ink);padding:calc(env(safe-area-inset-top
 .ptg .pt.h{background:var(--good);border-color:var(--good);color:#fff}.ptg .pt.i{background:#F2B705;border-color:#F2B705;color:var(--ink)}.ptg .pt.o{background:var(--bad);border-color:var(--bad);color:#fff}.ptg .pt.cur{border-color:var(--orange);border-width:2px;color:var(--orange)}.ptg .pt.h.cur,.ptg .pt.i.cur,.ptg .pt.o.cur{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--orange);border-width:1.5px}.ptg .pt.h.cur{border-color:var(--good);color:#fff}.ptg .pt.i.cur{border-color:#F2B705;color:var(--ink)}.ptg .pt.o.cur{border-color:var(--bad);color:#fff}
 .p1leg{display:flex;gap:10px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin:4px 2px 10px;align-items:center}.p1leg i{display:inline-block;width:12px;height:12px;border-radius:50%;border:1.5px solid var(--line);vertical-align:-2px;margin-right:4px}.p1leg i.h{background:var(--good);border-color:var(--good)}.p1leg i.i{background:#F2B705;border-color:#F2B705}.p1leg i.o{background:var(--bad);border-color:var(--bad)}
 .p2row{display:flex;align-items:center;gap:10px;margin:2px 0}.p2row .p2d{flex:0 0 58px;font-size:11.5px;font-weight:600;color:var(--muted);text-align:right}.p2row .ptg{flex:1;margin:2px 0}
-.p2card{margin-top:10px}
+.p2card{margin-top:10px}.p2card.p2edit{outline:1.5px solid var(--orange)}
+.sdbadge.p2bn{background:#e1f3e9;color:var(--good)}.sdbadge.p2bw{background:#fde5db;color:var(--orange)}
+.ptg .pt{position:relative}.ptg .pt.lock:after{content:"\2713";position:absolute;right:-4px;top:-4px;width:14px;height:14px;border-radius:50%;background:#fff;border:1.5px solid var(--line);font-size:9px;line-height:11px;color:var(--good);font-weight:800;text-align:center}
+.ptg .pt.ask{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--orange)}.p2ask .cardhd h3{font-size:14.5px}
 .p2chosen{display:flex;gap:18px;margin:2px 0 8px}.p2chosen span{display:flex;flex-direction:column}.p2chosen small{font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:800}.p2chosen b{font-size:22px;font-weight:600}
 .wheels{display:grid;gap:10px;margin-bottom:8px}.wheels.w2{grid-template-columns:1.4fr 1fr}.wheels.w1{grid-template-columns:1fr;max-width:200px}.wheels.w3{grid-template-columns:1fr 1fr 1fr}
 .wheelbox{background:var(--paper);border-radius:14px;padding:6px 4px;position:relative}
@@ -1514,6 +1517,7 @@ input.in:focus,select.in:focus{outline:none;border-color:var(--orange)}
 .empty{text-align:center;padding:30px 18px;color:var(--muted)}.empty .em{font-size:34px;margin-bottom:8px}.empty p{margin:6px 0 16px;font-size:13.5px}
 .scrim{position:fixed;inset:0;background:rgba(4,18,33,.55);backdrop-filter:blur(3px);z-index:100;display:none;align-items:flex-end;justify-content:center}
 .scrim.open{display:flex}
+html.shlock{overflow:hidden}body.shlock{position:fixed;left:0;right:0;width:100%;overflow:hidden}.scrim,.sheet{overscroll-behavior:contain}.wheel{overscroll-behavior:contain;touch-action:pan-y}
 .sheet{background:var(--paper);width:100%;max-width:920px;max-height:92vh;overflow-y:auto;border-radius:20px 20px 0 0;padding:0 16px calc(env(safe-area-inset-bottom) + 16px);animation:up .28s cubic-bezier(.2,.8,.2,1)}
 @keyframes up{from{transform:translateY(40px);opacity:.6}to{transform:none;opacity:1}}
 .sheet .shead{display:flex;justify-content:space-between;align-items:flex-start;position:sticky;top:0;background:var(--paper);z-index:5;margin:0 -16px 14px;padding:16px 16px 10px}textarea.in{font-family:inherit;font-size:14.5px;line-height:1.45;resize:vertical}.sheet textarea{width:100%;box-sizing:border-box}
@@ -3252,7 +3256,7 @@ const LIES={f:"Fairway",r:"Rough",s:"Sand",g:"Green"};const DLIES={f:"Fairway",r
 const LV=["PGA Tour"];
 function spread(min,max,n){if(n===1)return [Math.round((min+max)/2)];const a=[];for(let i=0;i<n;i++)a.push(Math.round(min+(max-min)*i/(n-1)));return a;}
 const NSIT=[3,6,9,12,15,18], NHOLE=[6,9,12,18];
-const APP_VERSION="v395";
+const APP_VERSION="v399";
 const TESTS={
 putt_3_5:{name:"Putt 3–5 ft",cat:"Putten",eng:"putt_cat",dists:[3,4,5],per:8,info:"24 putts (8× vanaf 3, 4 en 5 ft). Per afstand: holed, mis binnen 3 ft, mis buiten 3 ft. Output: SG + make%."},
 putt_6_10:{name:"Putt 6–10 ft",cat:"Putten",eng:"putt_cat",dists:[6,8,10],per:8,info:"24 putts (8× vanaf 6, 8 en 10 ft). Zelfde invoer als 3–5 ft."},
@@ -9483,7 +9487,7 @@ pend.forEach(pid=>{const row=el("div","sbrow pending");row.dataset.pid=pid;row.i
 const nrows=rest.length+pend.length;board.style.gridTemplateRows=(window.innerWidth>=700&&nrows>1)?"repeat("+Math.ceil(nrows/2)+",auto)":"";
 board.querySelectorAll(".sbrow").forEach(r=>{const p=prev[r.dataset.pid];if(p!=null){const d=p-r.getBoundingClientRect().top;if(d){r.style.transform="translateY("+d+"px)";r.style.transition="none";requestAnimationFrame(()=>{r.style.transition="";r.style.transform="";});}}});
 const meer=$("#liveMeer"),sc=$("#liveScroll");if(meer){const hid=sc&&sc.scrollHeight>sc.clientHeight+2;meer.innerHTML=(hid||pend.length)?'<span>'+(hid?'Meer \u25be':'')+(hid&&pend.length?' \u00b7 ':'')+(pend.length?pend.length+' wachten':'')+'</span>':"";meer.onclick=function(){if(sc)sc.scrollTo({top:sc.scrollHeight,behavior:"smooth"});};}
-if(entered.length===0)board.insertAdjacentHTML("afterbegin",'<div class="lvleeg">Voer een eerste resultaat in \u26f3</div>');}
+}
 function defInput(t){
 if(t.eng==="putt_cat")return {blocks:t.dists.map(()=>({holed:0,in3:0,out3:0}))};
 if(t.eng==="putt_prox")return {blocks:t.dists.map(()=>Array.from({length:t.per},()=>({prox:"",score:""})))};
@@ -9499,7 +9503,7 @@ if(t.eng==="putt_cat")body=fPuttCat(t,inp);else if(t.eng==="putt_prox")body=fPut
 else if(t.eng==="course")body=fCourse(t,inp);else if(t.eng==="sit")body=fSit(t,inp);else if(t.eng==="spelen")body=fSpelen(t,inp);else if(t.eng==="sground")body=fSground(t,inp);else if(t.eng==="drivebaan")body=fDriveBaan(t,inp);else if(t.eng==="driverange")body=fDriveRange(t,inp);
 sh.innerHTML='<div class="shead"><div><h2>'+esc(nameOf(pid))+'</h2><div class="sx">'+t.name+'</div></div><button class="xbtn" onclick="openEntry()">×</button></div>'+body
 +'<div id="liveStats" class="card"></div><div class="row" style="gap:8px"><button class="btn ghost" style="flex:1" onclick="openEntry()">Terug</button><button class="btn" style="flex:2" id="savePlayer">Opslaan</button></div>';
-bindForm(t,pid,inp);if(t.eng==="putt_prox"||t.eng==="course")p2Render(t,inp);liveStats(t,inp);}
+bindForm(t,pid,inp);if(t.eng==="putt_prox"||t.eng==="course"){inp._pick=null;inp._editLock=false;inp._ask=null;clearTimeout(inp._adv);p2Render(t,inp);}liveStats(t,inp);}
 function stepHTML(label,val,attrs){return '<div class="cnt"><div class="cl">'+label+'</div><div class="stepper"><button data-step="-1" '+attrs+'>−</button><div class="nv">'+val+'</div><button data-step="1" '+attrs+'>+</button></div></div>';}
 function fPuttCat(t,inp){if(inp._tel)return '<div class="p1sw"><button type="button" class="klvbtn" data-p1mode="tik">\u25cf Per putt tikken</button></div>'+t.dists.map((d,i)=>{const b=inp.blocks[i];return '<div class="dblk"><div class="dh"><b>'+puttHdr(d)+'</b><span class="badge">'+t.per+' putts</span></div><div class="grid3">'+stepHTML("Holed",b.holed,'data-i="'+i+'" data-f="holed"')+stepHTML("Mis &lt;3ft",b.in3,'data-i="'+i+'" data-f="in3"')+stepHTML("Mis &gt;3ft",b.out3,'data-i="'+i+'" data-f="out3"')+'</div><div class="sumline" data-sum="'+i+'"></div></div>';}).join("");
  /* v384: P1 tikraster — één tik per putt: holed → mis ≤3 ft → mis >3 ft → leeg */
@@ -9510,35 +9514,74 @@ function p1Sum(b){puttCatSync(b);return b.holed+' holed \u00b7 '+b.in3+' mis \u2
 function fPuttProx(t,inp){return '<div id="p2box"></div>';}
 /* v384: P2 rolwielen — per putt leave (m+dm of ft) en score; bolletjes kiezen de putt; elke wieldraai wordt direct opgeslagen; wielen starten op 0 */
 function wheelHtml(id,items,sel){return '<div class="wheelbox"><div class="wheel" data-wheel="'+id+'"><div class="pad"></div>'+items.map((it,i)=>'<div class="wi'+(i===sel?' sel':'')+'" data-wi="'+i+'">'+it+'</div>').join("")+'<div class="pad"></div></div></div>';}
-function wheelBind(root,onSel){root.querySelectorAll("[data-wheel]").forEach(function(w){var items=[].slice.call(w.querySelectorAll(".wi"));var cur=items.findIndex(x=>x.classList.contains("sel"));if(cur<0)cur=0;w._prog=true;w.scrollTop=cur*36;setTimeout(function(){w._prog=false;},60);var tm;
- w.addEventListener("scroll",function(){if(w._prog)return;clearTimeout(tm);tm=setTimeout(function(){var idx=Math.max(0,Math.min(items.length-1,Math.round(w.scrollTop/36)));items.forEach((x,i)=>x.classList.toggle("sel",i===idx));onSel(w.dataset.wheel,idx,w);},110);},{passive:true});
- items.forEach(function(x,i){x.onclick=function(){w._prog=true;w.scrollTo({top:i*36,behavior:"smooth"});setTimeout(function(){w._prog=false;items.forEach((y,j)=>y.classList.toggle("sel",j===i));onSel(w.dataset.wheel,i,w);},260);};});});}
-function p2Cur(t,inp){if(!inp._cur){inp._cur=(t.eng==="course")?{h:0}:{di:0,pi:0};}return inp._cur;}
-function p2Get(t,inp){const c=p2Cur(t,inp);return t.eng==="course"?inp.holes[c.h]:inp.blocks[c.di][c.pi];}
-function p2Cls(sc){return sc===""||sc==null?"":(+sc===1?" h":(+sc===2?" i":" o"));}
-function p2Render(t,inp){const box=$("#p2box");if(!box)return;const c=p2Cur(t,inp);const metric=uG()==="m";const rec=p2Get(t,inp);
- let dots='';if(t.eng==="course"){dots='<div class="ptg p2dots c9">'+inp.holes.map((h,i)=>'<button type="button" class="pt'+p2Cls(h.score)+((c.h===i)?' cur':'')+'" data-p2h="'+i+'">'+(i+1)+'</button>').join("")+'</div>';}
- else{dots=t.dists.map((d,di)=>'<div class="p2row"><span class="p2d">'+puttDist(d)+'</span><div class="ptg p2dots">'+inp.blocks[di].map((p,pi)=>'<button type="button" class="pt'+p2Cls(p.score)+((c.di===di&&c.pi===pi)?' cur':'')+'" data-p2d="'+di+'" data-p2p="'+pi+'">'+(pi+1)+'</button>').join("")+'</div></div>').join("");}
- const d0=t.eng==="course"?rec.dist:t.dists[c.di];const title=t.eng==="course"?'Hole '+(c.h+1):'Putt '+(c.pi+1)+' van '+t.per;
- const pxFt=(rec.prox===""||rec.prox==null)?null:+rec.prox;const sc=(rec.score===""||rec.score==null)?null:+rec.score;
- const lvTxt=pxFt==null?'\u2013':(pxFt<=0?'holed':(metric?fmtUk(pxFt*0.3048,"m")+' m':Math.round(pxFt)+' ft'));
- let wheels='';const mI=Array.from({length:16},(_,i)=>String(i)),dI=Array.from({length:10},(_,i)=>String(i)),fI=['holed'].concat(Array.from({length:40},(_,i)=>String(i+1))).concat(['45','50','60']),sI=['\u2013','1','2','3','4'];
- if(t.eng==="course"){const sd=(rec.dist===""||rec.dist==null)?null:+rec.dist;const sdTxt=sd==null?'\u2013':(metric?fmtUk(sd*0.3048,"m")+' m':Math.round(sd)+' ft');
-  wheels+='<div class="p2chosen"><span><small>Startafstand</small><b>'+sdTxt+'</b></span></div><div class="wheels'+(metric?' w3':' w2')+'">'+(metric?wheelHtml("sm",Array.from({length:31},(_,i)=>String(i)),sd==null?0:Math.min(30,Math.floor(Math.round(sd*0.3048*10)/10)))+wheelHtml("sd",dI,sd==null?0:Math.round(sd*0.3048*10)%10):wheelHtml("sf",Array.from({length:60},(_,i)=>String(i+1)),sd==null?0:Math.max(0,Math.round(sd)-1)))+'</div>';}
- if(t.eng==="course")wheels+='<div class="p2chosen"><span><small>Score</small><b>'+(sc==null?'\u2013':sc)+'</b></span></div><div class="wheels w1">'+wheelHtml("sc",sI,sc==null?0:Math.min(4,sc))+'</div>';
- else wheels+='<div class="p2chosen"><span><small>Leave</small><b>'+lvTxt+'</b></span><span><small>Score</small><b>'+(sc==null?'\u2013':sc)+'</b></span></div><div class="wheels'+(metric?' w3':' w2')+'">'
-  +(metric?wheelHtml("lm",mI,pxFt==null?0:Math.min(15,Math.floor(Math.round(pxFt*0.3048*10)/10)))+wheelHtml("ld",dI,pxFt==null?0:Math.round(pxFt*0.3048*10)%10):wheelHtml("lf",fI,pxFt==null?0:(pxFt<=0?0:Math.max(0,fI.indexOf(String(Math.round(pxFt)))>0?fI.indexOf(String(Math.round(pxFt))):1))))
-  +wheelHtml("sc",sI,sc==null?0:Math.min(4,sc))+'</div>';
- box.innerHTML=dots+'<div class="card p2card"><div class="cardhd"><h3>'+title+(t.eng!=="course"?' <span class="sdbadge">'+puttHdr(d0)+'</span>':'')+'</h3><span class="hdnote">'+(metric?'meters \u00b7 decimeters':'feet')+'</span></div>'+wheels+'<p class="sx" style="margin:6px 0 0">'+(t.eng==="course"?'Startafstand en aantal putts per hole. De wielen starten bij elke hole op 0.':(metric?'0 m + 0 dm':'holed')+' = holed \u2192 score 1. De wielen starten bij elke putt op 0.')+'</p></div>';
- box.querySelectorAll("[data-p2h]").forEach(b=>b.onclick=()=>{inp._cur={h:+b.dataset.p2h};p2Render(t,inp);});
- box.querySelectorAll("[data-p2d]").forEach(b=>b.onclick=()=>{inp._cur={di:+b.dataset.p2d,pi:+b.dataset.p2p};p2Render(t,inp);});
- wheelBind(box,function(id,idx){const r=p2Get(t,inp);const rd=v=>String(Math.round(v*100)/100);
-  if(id==="lm"||id==="ld"){const m=+((box.querySelector('[data-wheel="lm"] .sel')||{}).textContent||0),dm=+((box.querySelector('[data-wheel="ld"] .sel')||{}).textContent||0);const v=m+dm/10;r.prox=rd(v/0.3048);if(v===0)r.score="1";}
-  else if(id==="lf"){r.prox=idx===0?"0":fI[idx];if(idx===0)r.score="1";}
-  else if(id==="sc"){r.score=idx===0?"":String(idx);if(idx===1&&(r.prox===""||r.prox==null))r.prox="0";}
+function wheelSet(w,idx,smooth){var items=[].slice.call(w.querySelectorAll(".wi"));idx=Math.max(0,Math.min(items.length-1,idx));items.forEach((x,i)=>x.classList.toggle("sel",i===idx));w._prog=true;clearTimeout(w._pt);if(smooth)w.scrollTo({top:idx*36,behavior:"smooth"});else w.scrollTop=idx*36;w._pt=setTimeout(function(){w._prog=false;if(Math.abs(w.scrollTop-idx*36)>2)w.scrollTop=idx*36;},smooth?480:120);}
+function wheelIdx(w){var s=w.querySelector(".wi.sel");return s?+s.dataset.wi:0;}
+function wheelBind(root,onSel){root.querySelectorAll("[data-wheel]").forEach(function(w){var items=[].slice.call(w.querySelectorAll(".wi"));var cur=items.findIndex(x=>x.classList.contains("sel"));if(cur<0)cur=0;wheelSet(w,cur,false);var tm;
+ function settle(){if(w._prog)return;var idx=Math.max(0,Math.min(items.length-1,Math.round(w.scrollTop/36)));if(idx===wheelIdx(w))return;items.forEach((x,i)=>x.classList.toggle("sel",i===idx));onSel(w.dataset.wheel,idx,w);}
+ w.addEventListener("scroll",function(){if(w._prog)return;clearTimeout(tm);tm=setTimeout(settle,150);},{passive:true});
+ items.forEach(function(x,i){x.onclick=function(){clearTimeout(tm);wheelSet(w,i,true);onSel(w.dataset.wheel,i,w);};});});}
+/* v398: putt-per-putt / hole-voor-hole invoer — vrij meerdere putts invoeren (springt door naar de volgende lege), Opslaan onderaan vergrendelt, wijzigen na vraag */
+function p2Done(t,rec){if(!rec)return false;if(t.eng==="course")return rec.dist!==""&&rec.dist!=null&&rec.score!==""&&rec.score!=null;return rec.prox!==""&&rec.prox!=null&&rec.score!==""&&rec.score!=null;}
+function p2All(t,inp){var out=[];if(t.eng==="course"){inp.holes.forEach(function(h,i){out.push({k:{h:i},rec:h});});}else{inp.blocks.forEach(function(b,di){b.forEach(function(p,pi){out.push({k:{di:di,pi:pi},rec:p});});});}return out;}
+function p2Same(a,b){if(!a||!b)return false;return a.h!=null?a.h===b.h:(a.di===b.di&&a.pi===b.pi);}
+function p2Legacy(t,inp){if(inp._okInit)return;inp._okInit=true;p2All(t,inp).forEach(function(x){if(x.rec._ok==null&&p2Done(t,x.rec))x.rec._ok=true;});}
+function p2First(t,inp){var all=p2All(t,inp);var a=all.find(function(x){return !x.rec._ok&&!p2Done(t,x.rec);})||all.find(function(x){return !x.rec._ok;});return a?a.k:null;}
+function p2Next(t,inp,c){var all=p2All(t,inp);var i=all.findIndex(function(x){return p2Same(x.k,c);});for(var j=1;j<=all.length;j++){var x=all[(i+j)%all.length];if(!x.rec._ok&&!p2Done(t,x.rec))return x.k;}return null;}
+function p2Lock(t,inp){p2All(t,inp).forEach(function(x){if(p2Done(t,x.rec))x.rec._ok=true;});inp._pick=null;inp._editLock=false;inp._ask=null;clearTimeout(inp._adv);}
+function p2Cur(t,inp){p2Legacy(t,inp);if(inp._pick)return inp._pick;var f=p2First(t,inp);inp._cur=f;return f;}
+function p2Rec(t,inp,k){if(!k)return null;return t.eng==="course"?inp.holes[k.h]:inp.blocks[k.di][k.pi];}
+function p2Get(t,inp){return p2Rec(t,inp,p2Cur(t,inp));}
+function p2Hard(pid){try{var p=(state.players||[]).find(function(x){return x.id===pid;});if(!p)return false;var ph=String(p.mjopPhase||"");if(/^[TEM]/.test(ph))return true;if(p.hcp!=null&&p.hcp!==""&&+p.hcp<=10)return true;}catch(e){}return false;}
+function p2Cls(sc,pid){if(sc===""||sc==null)return "";var n=+sc;if(n<=2)return " h";if(n===3)return p2Hard(pid)?" o":" i";return " o";}
+function p2DotCls(t,inp,rec,k,c,pid){return "pt"+p2Cls(rec.score,pid)+(rec._ok?" lock":"")+(p2Same(k,c)?" cur":"")+(p2Same(k,inp._ask)?" ask":"");}
+function p2Lab(t,inp,k){if(!k)return "";if(t.eng==="course")return "Hole "+(k.h+1);return "Putt "+(k.pi+1)+" van "+t.per;}
+function p2Vals(t,rec,metric){var sc=(rec.score===""||rec.score==null)?null:+rec.score;var o={sc:sc==null?"\u2013":String(sc)};
+ if(t.eng==="course"){var sd=(rec.dist===""||rec.dist==null)?null:+rec.dist;o.a=sd==null?"\u2013":(metric?fmtUk(sd*0.3048,"m")+" m":Math.round(sd)+" ft");}
+ else{var px=(rec.prox===""||rec.prox==null)?null:+rec.prox;o.a=px==null?"\u2013":(px<=0?"holed":(metric?fmtUk(px*0.3048,"m")+" m":Math.round(px)+" ft"));}
+ return o;}
+function p2Render(t,inp){const box=$("#p2box");if(!box)return;const c=p2Cur(t,inp);if(c&&!inp._pick)inp._pick=c;const metric=uG()==="m";const rec=p2Rec(t,inp,c);const pid=liveEntry&&liveEntry.pid;
+ const mI=Array.from({length:16},(_,i)=>String(i)),dI=Array.from({length:10},(_,i)=>String(i)),fI=['holed'].concat(Array.from({length:40},(_,i)=>String(i+1))).concat(['45','50','60']),sI=['\u2013'].concat(Array.from({length:10},(_,i)=>String(i+1)));
+ let dots='';if(t.eng==="course"){dots='<div class="ptg p2dots c9">'+inp.holes.map((h,i)=>'<button type="button" class="'+p2DotCls(t,inp,h,{h:i},c,pid)+'" data-p2h="'+i+'">'+(i+1)+'</button>').join("")+'</div>';}
+ else{dots=t.dists.map((d,di)=>'<div class="p2row"><span class="p2d">'+puttDist(d)+'</span><div class="ptg p2dots">'+inp.blocks[di].map((p,pi)=>'<button type="button" class="'+p2DotCls(t,inp,p,{di:di,pi:pi},c,pid)+'" data-p2d="'+di+'" data-p2p="'+pi+'">'+(pi+1)+'</button>').join("")+'</div></div>').join("");}
+ let card='';
+ if(inp._ask){const ak=inp._ask,ar=p2Rec(t,inp,ak),av=p2Vals(t,ar,metric);const where=t.eng==="course"?"":" ("+puttHdr(t.dists[ak.di])+")";
+  card='<div class="card p2card p2ask"><div class="cardhd"><h3>'+p2Lab(t,inp,ak)+where+' wijzigen?</h3></div><p class="sx" style="margin:0 0 10px">Nu: '+av.a+' \u00b7 '+(t.eng==="course"?av.sc+" putts":av.sc+(av.sc==="1"?" putt":" putts"))+'.</p><div class="row" style="gap:8px"><button type="button" class="btn ghost" style="flex:1" id="p2askNo">Annuleren</button><button type="button" class="btn" style="flex:1" id="p2askEdit">Ja, wijzigen</button></div></div>';}
+ else if(!c){card='<div class="card p2card"><div class="cardhd"><h3>'+(t.eng==="course"?"Alle holes ingevoerd":"Alle putts ingevoerd")+'</h3><span class="sdbadge" style="background:#e1f3e9;color:var(--good)">\u2713</span></div><p class="sx" style="margin:0">Tik op een bolletje om een '+(t.eng==="course"?"hole":"putt")+' te wijzigen. Opslaan onderaan vergrendelt de invoer.</p></div>';}
+ else{
+  const d0=t.eng==="course"?rec.dist:t.dists[c.di];const title=p2Lab(t,inp,c);const editing=!!inp._editLock;
+  const pxFt=(rec.prox===""||rec.prox==null)?null:+rec.prox;const sc=(rec.score===""||rec.score==null)?null:+rec.score;const v=p2Vals(t,rec,metric);
+  let wheels='';
+  if(t.eng==="course"){const sd=(rec.dist===""||rec.dist==null)?null:+rec.dist;
+   wheels+='<div class="p2chosen"><span><small>Startafstand</small><b>'+v.a+'</b></span><span><small>Score</small><b>'+v.sc+'</b></span></div><div class="wheels'+(metric?' w3':' w2')+'">'+(metric?wheelHtml("sm",Array.from({length:31},(_,i)=>String(i)),sd==null?0:Math.min(30,Math.floor(Math.round(sd*0.3048*10)/10)))+wheelHtml("sd",dI,sd==null?0:Math.round(sd*0.3048*10)%10):wheelHtml("sf",Array.from({length:60},(_,i)=>String(i+1)),sd==null?0:Math.max(0,Math.round(sd)-1)))+wheelHtml("sc",sI,sc==null?0:Math.min(10,sc))+'</div>';}
+  else wheels+='<div class="p2chosen"><span><small>Leave</small><b>'+v.a+'</b></span><span><small>Score</small><b>'+v.sc+'</b></span></div><div class="wheels'+(metric?' w3':' w2')+'">'
+   +(metric?wheelHtml("lm",mI,pxFt==null?0:Math.min(15,Math.floor(Math.round(pxFt*0.3048*10)/10)))+wheelHtml("ld",dI,pxFt==null?0:Math.round(pxFt*0.3048*10)%10):wheelHtml("lf",fI,pxFt==null?0:(pxFt<=0?0:Math.max(0,fI.indexOf(String(Math.round(pxFt)))>0?fI.indexOf(String(Math.round(pxFt))):1))))
+   +wheelHtml("sc",sI,sc==null?0:Math.min(10,sc))+'</div>';
+  card='<div class="card p2card'+(editing?' p2edit':'')+'"><div class="cardhd"><h3>'+title+(t.eng!=="course"?' <span class="sdbadge">'+puttHdr(d0)+'</span>':'')+'</h3><span class="sdbadge '+(editing?'p2bw':'p2bn')+'">'+(editing?'Wijzigen':'Nieuw')+'</span><span class="hdnote">'+(metric?'meters \u00b7 decimeters':'feet')+'</span></div>'+wheels
+   +'<p class="sx" style="margin:6px 0 0">'+(t.eng==="course"?'Startafstand en aantal putts per hole; tik op een bolletje voor de volgende hole.':(metric?'0 m + 0 dm':'holed')+' = holed = score 1; een restafstand betekent score 2 of meer. Tik op een bolletje voor de volgende putt.')+' Opslaan onderaan vergrendelt de invoer.</p></div>';}
+ box.innerHTML=dots+card;
+ function pick(k){clearTimeout(inp._adv);const r=p2Rec(t,inp,k);if(r._ok){inp._ask=k;}else{inp._pick=k;inp._ask=null;inp._editLock=false;}p2Render(t,inp);}
+ box.querySelectorAll("[data-p2h]").forEach(b=>b.onclick=()=>pick({h:+b.dataset.p2h}));
+ box.querySelectorAll("[data-p2d]").forEach(b=>b.onclick=()=>pick({di:+b.dataset.p2d,pi:+b.dataset.p2p}));
+ let bb;if(bb=$("#p2askNo"))bb.onclick=()=>{inp._ask=null;p2Render(t,inp);};
+ if(bb=$("#p2askEdit"))bb.onclick=()=>{const k=inp._ask;const r=p2Rec(t,inp,k);r._ok=false;inp._pick=k;inp._editLock=true;inp._ask=null;p2Render(t,inp);};
+ wheelBind(box,function(id,idx){const r=p2Get(t,inp);if(!r)return;const rd=v=>String(Math.round(v*100)/100);
+  const wS=box.querySelector('[data-wheel="sc"]'),wF=box.querySelector('[data-wheel="lf"]'),wM=box.querySelector('[data-wheel="lm"]'),wD=box.querySelector('[data-wheel="ld"]');
+  if(id==="lm"||id==="ld"){const m=+((wM&&wM.querySelector('.sel')||{}).textContent||0),dm=+((wD&&wD.querySelector('.sel')||{}).textContent||0);const v=m+dm/10;r.prox=rd(v/0.3048);
+   if(v===0){r.score="1";if(wS)wheelSet(wS,1,true);}else if(r.score==="1"||r.score===""||r.score==null){r.score="2";if(wS)wheelSet(wS,2,true);}}
+  else if(id==="lf"){r.prox=idx===0?"0":fI[idx];if(idx===0){r.score="1";if(wS)wheelSet(wS,1,true);}else if(r.score==="1"||r.score===""||r.score==null){r.score="2";if(wS)wheelSet(wS,2,true);}}
+  else if(id==="sc"){r.score=idx===0?"":String(idx);
+   if(idx===1){r.prox="0";if(wF)wheelSet(wF,0,true);if(wM)wheelSet(wM,0,true);if(wD)wheelSet(wD,0,true);}
+   else if(idx>=2&&r.prox!=null&&r.prox!==""&&+r.prox<=0){r.prox="";}}
   else if(id==="sm"||id==="sd"){const m=+((box.querySelector('[data-wheel="sm"] .sel')||{}).textContent||0),dm=+((box.querySelector('[data-wheel="sd"] .sel')||{}).textContent||0);r.dist=rd((m+dm/10)/0.3048);}
   else if(id==="sf"){r.dist=String(idx+1);}
-  p2Render(t,inp);liveStats(t,inp);});}
+  p2Sync(box,t,inp);liveStats(t,inp);
+});}
+/* alleen bolletjes, gekozen-labels en de opslaanknop bijwerken; de wielen blijven staan */
+function p2Sync(box,t,inp){const c=p2Cur(t,inp);const rec=p2Rec(t,inp,c);if(!rec)return;const metric=uG()==="m";const pid=liveEntry&&liveEntry.pid;
+ if(t.eng==="course"){box.querySelectorAll("[data-p2h]").forEach(b=>{const i=+b.dataset.p2h;b.className=p2DotCls(t,inp,inp.holes[i],{h:i},c,pid);});}
+ else{box.querySelectorAll("[data-p2d]").forEach(b=>{const di=+b.dataset.p2d,pi=+b.dataset.p2p;b.className=p2DotCls(t,inp,inp.blocks[di][pi],{di:di,pi:pi},c,pid);});}
+ const v=p2Vals(t,rec,metric);const bs=box.querySelectorAll(".p2chosen b");if(bs[0])bs[0].textContent=v.a;if(bs[1])bs[1].textContent=v.sc;
+ }
 function fCourse(t,inp){return '<div id="p2box"></div>';}
 function fSit(t,inp){return draft.stations.map((st,i)=>{const r=inp.res[i];const _pd={f:"Front",m:"Middle",b:"Back"},_ps={l:"Links",r:"Rechts"};const pinTxt=t.hasPin&&(st.pinD||st.pinS)?' · pin '+[st.pinD?_pd[st.pinD]:null,st.pinS?_ps[st.pinS]:null].filter(Boolean).join(" "):'';
 let fields='<div><label class="fld" data-restlbl="'+i+'">Proximity ('+restU(r.restLie)+')</label><input class="in" type="number" inputmode="decimal" data-i="'+i+'" data-s="rest" value="'+restDisp(r.rest,r.restLie)+'" placeholder="0 = hole"></div><div><label class="fld">Restligging</label><select class="in" data-i="'+i+'" data-s="restLie">'+Object.keys(LIES).map(l=>'<option value="'+l+'" '+(l===r.restLie?'selected':'')+'>'+LIES[l]+'</option>').join("")+'</select></div>';
@@ -9582,7 +9625,7 @@ sh.querySelectorAll("[data-s]").forEach(n=>n.onchange=n.oninput=()=>{const i=+n.
 const sp=sh.querySelector("[data-spelen]");if(sp)sp.oninput=()=>{inp.toPar=+sp.value||0;inp._t=true;liveStats(t,inp);};sh.querySelectorAll("[data-dvh]").forEach(n=>n.oninput=()=>{inp.holes[+n.dataset.dvh].len=oStoreM(n.value);liveStats(t,inp);});sh.querySelectorAll("[data-dvb]").forEach(n=>{n.onchange=n.oninput=()=>{const a=n.dataset.dvb.split("_");inp.holes[+a[0]].balls[+a[1]][a[2]]=(a[2]==="rest"||a[2]==="dist"||a[2]==="spr")?oStoreM(n.value):n.value;liveStats(t,inp);};});sh.querySelectorAll("[data-dvs]").forEach(n=>{n.onchange=n.oninput=()=>{const a=n.dataset.dvs.split("_");inp.shots[+a[0]][a[1]]=(a[1]==="dist"||a[1]==="spr")?oStoreM(n.value):n.value;liveStats(t,inp);};});
 sh.querySelectorAll("[data-sg]").forEach(n=>{n.addEventListener("wheel",()=>n.blur(),{passive:true});n.oninput=()=>{let v=n.value;if(v!==""){let num=parseInt(v,10);if(isNaN(num)){v="";}else{if(num<1)num=1;if(num>20)num=20;v=String(num);}if(n.value!==v)n.value=v;}inp.holes[+n.dataset.sg].score=v;liveStats(t,inp);};});
 updateSums(t,inp);
-$("#savePlayer").onclick=()=>{const r=compute(t,draft,inp);if(r.completion[0]===0){toast("Voer minstens één resultaat in");return;}draft.inputs[pid]=inp;draft._lvLast=pid;saveDraft();openEntry();};}
+$("#savePlayer").onclick=()=>{const r=compute(t,draft,inp);if(r.completion[0]===0){toast("Voer minstens één resultaat in");return;}if(t.eng==="putt_prox"||t.eng==="course")p2Lock(t,inp);draft.inputs[pid]=inp;draft._lvLast=pid;saveDraft();openEntry();};}
 function renderEntryListSilent(){}
 function updateSums(t,inp){if(t.eng==="putt_cat")document.querySelectorAll("[data-sum]").forEach(s=>{const i=+s.dataset.sum,b=inp.blocks[i];const sum=b.holed+b.in3+b.out3;s.textContent=sum+'/'+t.per;s.classList.toggle("bad",sum>t.per);});}
 function statColor(lbl,val){
@@ -10009,8 +10052,10 @@ if(pts.length>1)xl+='<text class="xl" x="'+(W-R)+'" y="'+(H-9)+'" text-anchor="e
 if(pts.length>=5){const mi=Math.floor((pts.length-1)/2);xl+='<text class="xl" x="'+X(mi).toFixed(1)+'" y="'+(H-9)+'" text-anchor="middle">'+fmtDate(pts[mi].date)+'</text>';}
 host.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" width="'+W+'" height="'+H+'">'+grid+zero+tline+l2+'<path d="'+area+'" fill="rgba(244,124,32,.08)"/>'+(pts.length>1?'<path class="ln" d="'+line+'"/>':'')+dots+xl+'<g class="tip" style="display:none"><rect x="0" y="0" width="0" height="17" rx="5"/><text x="0" y="0"></text></g></svg>';}
 function drawAllCharts(){Object.keys(chartReg).forEach(drawChart);}
-function openSheet(){var _sh=document.getElementById("sheet");if(_sh)_sh.scrollTop=0;setTimeout(function(){if(_sh)_sh.scrollTop=0;},30);$("#scrim").classList.add("open");}
-function closeSheet(){$("#scrim").classList.remove("open");$("#sheet").innerHTML="";}
+var _shLockY=null;function shLock(){if(_shLockY!=null)return;_shLockY=window.scrollY||document.documentElement.scrollTop||0;document.documentElement.classList.add("shlock");document.body.style.top=(-_shLockY)+"px";document.body.classList.add("shlock");}
+function shUnlock(){if(_shLockY==null)return;var y=_shLockY;_shLockY=null;document.body.classList.remove("shlock");document.body.style.top="";document.documentElement.classList.remove("shlock");window.scrollTo(0,y);}
+function openSheet(){var _sh=document.getElementById("sheet");if(_sh)_sh.scrollTop=0;setTimeout(function(){if(_sh)_sh.scrollTop=0;},30);shLock();$("#scrim").classList.add("open");}
+function closeSheet(){$("#scrim").classList.remove("open");$("#sheet").innerHTML="";shUnlock();}
 function cancelDraft(confirmFirst){if(confirmFirst){confirmDlg("Challenge afbreken? Ingevoerde resultaten gaan verloren.",()=>{draft=null;saveDraft();closeSheet();});return;}draft=null;saveDraft();closeSheet();}
 function saveDraft(){try{if(draft)Store.set(DKEY,JSON.stringify({d:draft,le:liveEntry}));else Store.set(DKEY,"");}catch(e){}}
 function resumeDlg(o){const t=TESTS[o.d&&o.d.testId];const ov=el("div","cdlg-ov");ov.innerHTML='<div class="cdlg"><p>Je had een challenge open'+(t?' ('+esc(t.name)+')':'')+'. Verdergaan of weggooien?</p><div class="row" style="gap:8px"><button class="btn ghost" style="flex:1" id="rsNo">Weggooien</button><button class="btn blue" style="flex:1" id="rsYes">Verdergaan</button></div></div>';document.body.appendChild(ov);
