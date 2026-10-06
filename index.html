@@ -725,7 +725,20 @@ header.bar{background:#fff;color:var(--ink);padding:calc(env(safe-area-inset-top
 .ptg .pt.h{background:var(--good);border-color:var(--good);color:#fff}.ptg .pt.i{background:#F2B705;border-color:#F2B705;color:var(--ink)}.ptg .pt.o{background:var(--bad);border-color:var(--bad);color:#fff}.ptg .pt.cur{border-color:var(--orange);border-width:2px;color:var(--orange)}.ptg .pt.h.cur,.ptg .pt.i.cur,.ptg .pt.o.cur{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--orange);border-width:1.5px}.ptg .pt.h.cur{border-color:var(--good);color:#fff}.ptg .pt.i.cur{border-color:#F2B705;color:var(--ink)}.ptg .pt.o.cur{border-color:var(--bad);color:#fff}
 .p1leg{display:flex;gap:10px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin:4px 2px 10px;align-items:center}.p1leg i{display:inline-block;width:12px;height:12px;border-radius:50%;border:1.5px solid var(--line);vertical-align:-2px;margin-right:4px}.p1leg i.h{background:var(--good);border-color:var(--good)}.p1leg i.i{background:#F2B705;border-color:#F2B705}.p1leg i.o{background:var(--bad);border-color:var(--bad)}
 .p2row{display:flex;align-items:center;gap:10px;margin:2px 0}.p2row .p2d{flex:0 0 58px;font-size:11.5px;font-weight:600;color:var(--muted);text-align:right}.p2row .ptg{flex:1;margin:2px 0}
-.p2card{margin-top:10px}.p2card.p2edit{outline:1.5px solid var(--orange)}
+.p2card{margin-top:10px}
+.p3sub{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:10px 0 6px;display:flex;align-items:center;gap:8px}.p3sub:after{content:"";flex:1;border-top:1px solid var(--line)}
+.p3pills{display:flex;gap:6px;flex-wrap:wrap}.p3pill{border:1.5px solid var(--line);background:var(--paper);border-radius:999px;padding:5px 11px;font:inherit;font-size:12.5px;font-weight:600;color:var(--ink);display:inline-flex;align-items:center;gap:5px;cursor:pointer}.p3pill small{font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:800}.p3pill.open{border-color:var(--orange);background:#fff}.p3pill.ro{cursor:default;opacity:.85}
+.p3wheel{margin-top:8px;max-width:220px}.p3wheel .wheel{height:144px}.p3wheel .wheel .pad{height:54px}.wheels.w4{grid-template-columns:1fr 1fr 1.2fr 1fr}
+.station.stRow{padding:8px 10px}
+.wlab{font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;font-weight:800;color:var(--muted);text-align:center;margin-bottom:4px}
+.dvwheels .wheel{height:144px}.dvwheels .wheel .pad{height:54px}
+.p4spr{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center;margin-top:8px}.p4spr .seg{margin-bottom:0}.p4spr .wheel{height:144px}.p4spr .wheel .pad{height:54px}
+.p4clubs .dvtile,.p4lies .dvtile{padding:6px 11px}.p4ballseg{margin-left:auto}
+.p3pills .seg button{font-size:12px}
+.enov{background:var(--paper);border-radius:14px;padding:10px 12px;margin-bottom:10px;display:none}.enov .p3sub{margin-top:0}
+.enovr{display:grid;grid-template-columns:22px minmax(0,1fr) auto;gap:8px;align-items:center;background:#fff;border-radius:10px;padding:0 9px;min-height:32px;margin-bottom:4px;font-size:12px}
+.enovr .n{font-weight:700;color:var(--muted)}.enovr .s{color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.enovr .v{font-weight:700;font-variant-numeric:tabular-nums}.enovr.cur{outline:1.5px solid var(--orange)}.enovr.leeg{opacity:.5}
+@media(min-width:700px){.entwo{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:14px;align-items:start}.enside{position:sticky;top:0}.enov{display:block}}.station.stRow .sh .xbtn{width:28px;height:28px;font-size:13px}.p2card.p2edit{outline:1.5px solid var(--orange)}
 .sdbadge.p2bn{background:#e1f3e9;color:var(--good)}.sdbadge.p2bw{background:#fde5db;color:var(--orange)}
 .ptg .pt{position:relative}.ptg .pt.lock:after{content:"\2713";position:absolute;right:-4px;top:-4px;width:14px;height:14px;border-radius:50%;background:#fff;border:1.5px solid var(--line);font-size:9px;line-height:11px;color:var(--good);font-weight:800;text-align:center}
 .ptg .pt.ask{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--orange)}.p2ask .cardhd h3{font-size:14.5px}
@@ -2917,6 +2930,7 @@ function spProfKaart(key,title,rows,canEdit,ph){var edit=(spEditCard===key);var 
  return '<div class="'+cls+'" data-spc="'+key+'"><div class="dlhd"><h3>'+title+'</h3>'+(edit?'<span class="hdnote">bewerken</span>':(canEdit?'<button class="xbtn sm" data-spedit="'+key+'" title="Bewerk" aria-label="Bewerk">✎</button>':''))+'</div>'+rows+((ph&&!edit)?'<div class="spmeer" data-spmeer="'+key+'">'+(spProfOpen[key]?'minder ▴':'meer ▾')+'</div>':'')+'</div>';}
 function spEditActs(){return '<div class="spacts2"><button class="f" data-spsave="1">Opslaan</button><button data-spcancel="1">Annuleer</button></div>';}
 function spSegH(id,cur,opts){return '<div class="seg" id="'+id+'">'+opts.map(function(o){return '<button type="button" data-v="'+o[0]+'" class="'+(cur===o[0]?"on":"")+'">'+o[1]+'</button>';}).join("")+'</div>';}
+function spOpenKaart(pid,kaart){var p=registryPlayer(pid);if(!p)return;var pr=spProf(p);try{closeSheet();}catch(e){}spEditCard=kaart||"ontw";spEditDraft={gender:p.gender||"",photo:p.photo||null,hand:pr.hand||"",speelt:pr.speelt||"",eenh:unitOf(p.id),sit:spSit(pr),sitVals:{},besch:JSON.parse(JSON.stringify(pr.beschikbaar||{})),tas:(pr.tas||[]).slice()};openSpelerProfiel(pid);setTimeout(function(){var c=document.querySelector("#sheet .spc.ed");if(c){try{c.scrollIntoView({block:"start",behavior:"smooth"});}catch(e){}var f=c.querySelector("select,input.in");if(f)f.focus();}},80);}
 function openSpelerProfiel(pid,opt){opt=opt||{};var p=registryPlayer(pid);if(!p)return;var sh=$("#sheet");var pr=spProf(p);var coach=!rolIsSpeler();
  if(opt.ov!=null)spProfOv=!!opt.ov;
  var tms=(state.teams||[]).filter(function(t){return (t.playerIds||[]).indexOf(pid)>=0;}).map(function(t){return t.name;});
@@ -2939,8 +2953,10 @@ function openSpelerProfiel(pid,opt){opt=opt||{};var p=registryPlayer(pid);if(!p)
  H+=spProfKaart("sit","Situatie",E==="sit"?(spSitFields(pr,d.sit,d.sitVals)+spEditActs()):spSitRows(pr),true,isPh);
  /* Golf */
  H+=spProfKaart("golf","Golf",E==="golf"?(_pin("speHcp","Handicap <span class=\"sx\">(plus-handicap met een + ervoor)</span>",(p.hcp!=null&&p.hcp!==""?hcpFmt(p.hcp):""),"bijv. 28,4 of +2,4")+_pin("speClub","Thuisclub",pr.thuisclub,"")+_pin("speNgf","NGF-nummer",pr.ngfNr,"")+_pin("speSel","Selectie / squad",pr.selectie,"bijv. Jong Oranje U16")+_pin("speSinds","In selectie sinds",pr.sinds,"bijv. 2024")+_pin("speTop","Topsportstatus",pr.topsport===true?"ja":(pr.topsport||""),"bijv. NOC*NSF Belofte")+_pin("speLengte","Lengte (cm)",pr.lengte,"","number")+'<label class="fld">Dominante hand</label>'+spSegH("speHand",d.hand,[["R","Rechts"],["L","Links"],["","–"]])+'<label class="fld">Speelt</label>'+spSegH("speSpeelt",d.speelt,[["R","Rechtshandig"],["L","Linkshandig"],["","–"]])+'<label class="fld">Eenheden</label>'+spSegH("speEenh",d.eenh,UNIT_OPTS)+'<small class="note" style="margin-top:6px">'+esc(UNIT_DESC[d.eenh]||UNIT_DESC.mft)+'. Geldt voor invoer en weergave van testen; de berekening verandert niet.</small>'+spEditActs()):(R("Handicap (WHS)",spHcpHtml(p))+R("Thuisclub",esc(pr.thuisclub||""))+R("NGF-nummer",esc(pr.ngfNr||""))+R("Wedstrijdcategorie",esc(cat))+R("Selectie / squad",esc(pr.selectie||"")+(pr.sinds?' · sinds '+esc(pr.sinds):''))+R("Topsportstatus",spTopChip(pr.topsport))+R("Lengte",pr.lengte?esc(String(pr.lengte))+' cm':'')+R("Dominante hand",SP_HAND[pr.hand]||"")+R("Speelt",pr.speelt?(SP_HAND[pr.speelt]||""):'')+R("Eenheden",esc(UNIT_DESC[unitOf(p.id)]))),coach,isPh);
+ /* Mijn tas (v403) */
+ H+=spProfKaart("tas","Mijn tas",E==="tas"?('<div class="sx" style="margin:2px 0 6px">Clubs langer dan ijzer 5 \u2014 deze verschijnen bij driving-challenges.</div><div class="dvtiles" id="speTas">'+DV_ALLCLUBS.map(function(c){return '<button type="button" class="dvtile'+((d.tas||[]).indexOf(c[0])>=0?" on":"")+'" data-tas="'+c[0]+'">'+c[0]+' <small style="font-weight:500;opacity:.75">'+c[1]+'</small></button>';}).join("")+'</div>'+spEditActs()):R("Clubs",esc(dvBag(pid).join(" \u00b7 "))+((pr.tas&&pr.tas.length)?"":' <span class="sx">(standaard)</span>')),true,isPh);
  /* Ontwikkeling */
- H+=spProfKaart("ontw","Ontwikkeling",E==="ontw"?('<div class="sx" style="margin:2px 0 4px">MJOP-fase, wedstrijdcategorie en weergave stelt de coach in via het spelersformulier.</div>'+_pin("speHc","Hoofdcoach",pr.hoofdcoach,"")+_pin("speTc","Tweede coach",pr.tweedeCoach,"")+_pin("spePc","Putting coach",pr.puttingCoach,"")+_pin("speSgc","Short game coach",pr.shortgameCoach,"")+spEditActs()):(R("MJOP-fase",esc(spFaseVol(pid)))+(fd&&fd.doel?R("Fasedoel",esc(fd.doel)):'')+R("Hoofdcoach",esc(pr.hoofdcoach||""))+R("Tweede coach",esc(pr.tweedeCoach||""))+R("Putting coach",esc(pr.puttingCoach||""))+R("Short game coach",esc(pr.shortgameCoach||""))),coach,isPh);
+ H+=spProfKaart("ontw","Ontwikkeling",E==="ontw"?((coach?(function(){var sg="";try{sg=mjopSuggest(p.birthYear||(p.birthDate||"").slice(0,4));}catch(e){}return '<label class="fld" style="margin-top:2px">MJOP-fase'+(sg?' <span class="sx">(suggestie o.b.v. leeftijd: '+esc(mjopName(sg))+')</span>':'')+'</label>'+mjopSelHtml("speMjop",p.mjopPhase||"","\u2014 geen fase");})():'<div class="sx" style="margin:2px 0 4px">De MJOP-fase stelt de coach in.</div>')+_pin("speHc","Hoofdcoach",pr.hoofdcoach,"")+_pin("speTc","Tweede coach",pr.tweedeCoach,"")+_pin("spePc","Putting coach",pr.puttingCoach,"")+_pin("speSgc","Short game coach",pr.shortgameCoach,"")+spEditActs()):(R("MJOP-fase",esc(spFaseVol(pid)))+(fd&&fd.doel?R("Fasedoel",esc(fd.doel)):'')+R("Hoofdcoach",esc(pr.hoofdcoach||""))+R("Tweede coach",esc(pr.tweedeCoach||""))+R("Putting coach",esc(pr.puttingCoach||""))+R("Short game coach",esc(pr.shortgameCoach||""))),coach,isPh);
  /* Contact */
  var beschH="";if(E==="contact"){beschH='<label class="fld">Beschikbaarheid <span class="sx">(tik de dagdelen aan)</span></label><div class="spbgrid"><span></span>'+SP_DAGEN.map(function(dd){return '<span class="h">'+dd+'</span>';}).join("")+SP_DAGD.map(function(x){return '<span class="lb">'+x[1]+'</span>'+SP_DAGEN.map(function(dd){var on=((d.besch||{})[dd]||[]).indexOf(x[0])>=0;return '<button type="button" class="spbc'+(on?' on':'')+'" data-bd="'+dd+'" data-bp="'+x[0]+'"></button>';}).join("");}).join("")+'</div>';}
  H+=spProfKaart("contact","Contact",E==="contact"?(_pin("speTel","Telefoon",pr.tel,"","tel")+_pin("speMail","E-mail",pr.email,"","email")+beschH+_pin("speBN","Toelichting beschikbaarheid",pr.beschNotitie,"bijv. examens in mei")+spEditActs()):(R("Telefoon",tel(pr.tel))+R("E-mail",mail(pr.email))+'<div class="dldsh" style="margin-top:8px">Beschikbaarheid</div>'+spBeschHtml(pr.beschikbaar)+(pr.beschNotitie?'<div class="sx" style="margin-top:6px">'+esc(pr.beschNotitie)+'</div>':'')+((spVolwassen(p)&&!(pr.noodNaam||pr.noodTel||pr.ouderNaam||pr.ouderTel))?'<div style="margin-top:8px"><button class="dlghost" data-spedit="ouder">+ Noodcontact toevoegen</button></div>':'')),true,isPh);
@@ -2959,9 +2975,10 @@ function openSpelerProfiel(pid,opt){opt=opt||{};var p=registryPlayer(pid);if(!p)
  spBindHcp(pid,p);
  var nb=$("#spfNaar");if(nb)nb.onclick=function(){closeSheet();cvNaarSpeler(pid);};
  sh.querySelectorAll("[data-spmeer]").forEach(function(b){b.onclick=function(){var k=b.dataset.spmeer;spProfOpen[k]=!spProfOpen[k];openSpelerProfiel(pid);};});
- sh.querySelectorAll("[data-spedit]").forEach(function(b){b.onclick=function(e){e.stopPropagation();spEditCard=b.dataset.spedit;spEditDraft={gender:p.gender||"",photo:p.photo||null,hand:pr.hand||"",speelt:pr.speelt||"",eenh:unitOf(p.id),sit:spSit(pr),sitVals:{},besch:JSON.parse(JSON.stringify(pr.beschikbaar||{}))};openSpelerProfiel(pid);setTimeout(function(){var c=sh.querySelector(".spc.ed");if(c){var f=c.querySelector("input.in,textarea");if(f)f.focus();}},50);};});
+ sh.querySelectorAll("[data-spedit]").forEach(function(b){b.onclick=function(e){e.stopPropagation();spEditCard=b.dataset.spedit;spEditDraft={gender:p.gender||"",photo:p.photo||null,hand:pr.hand||"",speelt:pr.speelt||"",eenh:unitOf(p.id),sit:spSit(pr),sitVals:{},besch:JSON.parse(JSON.stringify(pr.beschikbaar||{})),tas:(pr.tas||[]).slice()};openSpelerProfiel(pid);setTimeout(function(){var c=sh.querySelector(".spc.ed");if(c){var f=c.querySelector("input.in,textarea");if(f)f.focus();}},50);};});
  sh.querySelectorAll("[data-spcancel]").forEach(function(b){b.onclick=function(){spEditCard=null;spEditDraft=null;openSpelerProfiel(pid);};});
  function segBind(id,set){var el=$("#"+id);if(!el)return;el.querySelectorAll("button").forEach(function(b){b.onclick=function(){set(b.dataset.v);el.querySelectorAll("button").forEach(function(x){x.classList.toggle("on",x===b);});};});}
+ sh.querySelectorAll("[data-tas]").forEach(function(b){b.onclick=function(){d.tas=d.tas||[];var k=b.dataset.tas,i=d.tas.indexOf(k);if(i>=0)d.tas.splice(i,1);else d.tas.push(k);b.classList.toggle("on");};});
  segBind("speG",function(v){d.gender=v;});segBind("speHand",function(v){d.hand=v;});segBind("speSpeelt",function(v){d.speelt=v;});segBind("speEenh",function(v){d.eenh=v;var _n=sh.querySelector("#speEenh+.note");if(_n)_n.textContent=(UNIT_DESC[v]||UNIT_DESC.mft)+". Geldt voor invoer en weergave van testen; de berekening verandert niet.";});
  var _ss=$("#speSit");if(_ss)_ss.querySelectorAll("button").forEach(function(b){b.onclick=function(){Object.assign(d.sitVals=d.sitVals||{},spSitCapture());d.sit=b.dataset.v;openSpelerProfiel(pid);};});
  sh.querySelectorAll(".spbc").forEach(function(b){b.onclick=function(){var dd=b.dataset.bd,x=b.dataset.bp;d.besch=d.besch||{};var arr=d.besch[dd]=d.besch[dd]||[];var i=arr.indexOf(x);if(i>=0)arr.splice(i,1);else arr.push(x);b.classList.toggle("on",i<0);};});
@@ -2976,7 +2993,8 @@ function spSaveCard(pid,p,pr,E,d){function g(id){var e=$("#"+id);return e?(e.val
  if(E==="persoon"){var nm=g("speNaam");if(!nm){toast("Naam mag niet leeg zijn");return false;}p.name=nm;var gd=g("speGeb");if(gd){p.birthDate=gd;p.birthYear=gd.slice(0,4);}p.gender=d.gender||"";p.photo=d.photo||null;pr.woonplaats=g("speWoon");return true;}
  if(E==="sit"){spSitSave(pr,d.sit,d);return true;}
  if(E==="golf"){var hv=g("speHcp");if(hv){var v=hcpParse(hv);if(v==null){toast("Vul een geldige handicap in");return false;}if(v!==p.hcp)hcpSet(pid,v);}pr.thuisclub=g("speClub");pr.ngfNr=g("speNgf");pr.selectie=g("speSel");pr.sinds=g("speSinds");pr.topsport=g("speTop");pr.lengte=g("speLengte");pr.hand=d.hand||"";pr.speelt=d.speelt||"";pr.eenh=d.eenh||"mft";return true;}
- if(E==="ontw"){pr.hoofdcoach=g("speHc");pr.tweedeCoach=g("speTc");pr.puttingCoach=g("spePc");pr.shortgameCoach=g("speSgc");return true;}
+ if(E==="tas"){pr.tas=(d.tas||[]).slice();return true;}
+ if(E==="ontw"){if($("#speMjop")){var _mj=g("speMjop");if(_mj!==(p.mjopPhase||"")){p.mjopPhase=_mj;try{notifRefresh();}catch(e){}}}pr.hoofdcoach=g("speHc");pr.tweedeCoach=g("speTc");pr.puttingCoach=g("spePc");pr.shortgameCoach=g("speSgc");return true;}
  if(E==="contact"){pr.tel=g("speTel");pr.email=g("speMail");pr.beschikbaar=d.besch||{};pr.beschNotitie=g("speBN");return true;}
  if(E==="ouder"){if(spVolwassen(p)){pr.noodNaam=g("speNN");pr.noodTel=g("speNT");}else{pr.ouderNaam=g("speON");pr.ouderTel=g("speOT");pr.ouderEmail=g("speOE");pr.noodNaam=g("speNN");pr.noodTel=g("speNT");}return true;}
  if(E==="beg"){pr.fysio=g("speFys");pr.sc=g("speSc");pr.mentaal=g("speMen");pr.voeding=g("speVoe");return true;}
@@ -3196,7 +3214,7 @@ const hasLen=(inp.holes||[]).some(h=>+h.len>0);
 if(sess&&sess.playMode==="stroke")return {metric:toPar,sg:-toPar,headline:(toPar>0?"+":"")+toPar,completion:[n,(inp.holes||[]).length||1],stats:[["Score",(toPar>0?"+":"")+toPar],["Holes",String(n)],["Slagen",String(strokes)]],detail:{kind:"sground",play:"stroke",sgTotal:hasLen?sg:0,strokes:hasLen?strokes:0,holes:n,toPar:toPar,totalStrokes:strokes,courseName:inp.courseName,tee:inp.teeName,perHole:ph},rankDir:"low"};
 return {metric:sg,sg:sg,headline:(sg>0?"+":"")+sg.toFixed(1),completion:[n,(inp.holes||[]).length||1],stats:[["SG",(sg>0?"+":"")+sg.toFixed(1),"sg"],["Holes",String(n)],["Slagen",String(strokes)],["t.o.v. par",(toPar>0?"+":"")+toPar]],detail:{kind:"sground",sgTotal:sg,strokes:strokes,holes:n,toPar:toPar,totalStrokes:strokes,courseName:inp.courseName,tee:inp.teeName,perHole:ph},rankDir:"high"};}
 function cDriveBaan(t,sess,inp,lv){let sg=0,n=0;const shots=[];
-(inp.holes||[]).forEach(h=>{const holeYd=M2YD(+h.len||0);if(!(holeYd>0))return;const teeE=E("t",holeYd,0);
+(inp.holes||[]).forEach((h,hi)=>{const holeYd=M2YD(+h.len||0);if(!(holeYd>0))return;const teeE=E("t",holeYd,0);
 (h.balls||[]).forEach(b=>{if(b.rest===""||b.rest==null||!b.lie)return;const restYd=M2YD(+b.rest||0);
 let after;if(b.lie==="pen"){after=E("r",restYd,0)+1;}else{after=E(b.lie,restYd,0);}
 const s_=teeE-after-1;sg+=s_;n++;
@@ -3204,7 +3222,7 @@ const dist=(b.dist!==""&&b.dist!=null)?+b.dist:null;
 const sprMag=(b.spr!==""&&b.spr!=null)?Math.abs(+b.spr):null;
 const sprSigned=sprMag==null?null:(b.side==="L"?-sprMag:sprMag);
 const chs=(b.chs!==""&&b.chs!=null)?+b.chs:null;const bs=(b.bs!==""&&b.bs!=null)?+b.bs:null;
-shots.push({club:b.club||"D",sg:s_,dist:dist,spr:sprSigned,lie:b.lie,chs:chs,bs:bs});});});
+shots.push({hi:hi,club:b.club||"D",sg:s_,dist:dist,spr:sprSigned,lie:b.lie,chs:chs,bs:bs});});});
 const tot=(inp.holes||[]).reduce((a,h)=>a+((h.balls||[]).length),0)||1;const ps=n?sg/n:0;
 return {metric:ps,sg:sg,headline:(ps>0?"+":"")+ps.toFixed(3),completion:[n,tot],stats:[["SG",(sg>0?"+":"")+sg.toFixed(1),"sg"],["SG/slag",(ps>0?"+":"")+ps.toFixed(3)],["Shots",String(n)]],detail:{kind:"drive",sgTotal:sg,strokes:n,n:n,shots:shots},rankDir:"high"};}
 function cDriveRange(t,sess,inp,lv){let sg=0,n=0;const shots=[];
@@ -3251,12 +3269,12 @@ function pxD(ft,pid){if(ft==null||ft===""||isNaN(+ft))return ft;return uG(pid)==
 function puttDist(d,pid){return uG(pid)==="m"?fmtUk(d*0.3048,"m")+" m":d+" ft";}
 function puttHdr(d,pid){return uG(pid)==="m"?puttDist(d,pid)+' <span class="muted" style="font-weight:400;font-size:11px">('+d+' ft)</span>':d+" ft";}
 const DIFF=["Easy","Medium","Hard"], DK=["e","m","h"];
-const PINS=["Back","Middle","Front","Links","Rechts"];const PIN_D=[["f","Front"],["m","Middle"],["b","Back"]],PIN_S=[["l","Links"],["r","Rechts"]];
-const LIES={f:"Fairway",r:"Rough",s:"Sand",g:"Green"};const DLIES={f:"Fairway",r:"Rough",s:"Sand",rec:"Major",pen:"Penalty"};const DCLUBS={D:"Driver","3W":"3W",O:"Other"};const DRIVE_START=4.125;
+const PINS=["Back","Middle","Short","Links","Rechts"];const PIN_D=[["f","Short"],["m","Middle"],["b","Back"]],PIN_S=[["l","Links"],["r","Rechts"]];
+const LIES={f:"Fairway",r:"Rough",s:"Sand",g:"Green"};const DLIES={f:"Fairway",r:"Rough",s:"Sand",rec:"Major",pen:"Penalty"};const DCLUBS={D:"Driver","3W":"3W","5W":"5W","7W":"7W",HY:"Hybride","2i":"IJzer 2","3i":"IJzer 3","4i":"IJzer 4",O:"Other"};const DRIVE_START=4.125;
 const LV=["PGA Tour"];
 function spread(min,max,n){if(n===1)return [Math.round((min+max)/2)];const a=[];for(let i=0;i<n;i++)a.push(Math.round(min+(max-min)*i/(n-1)));return a;}
 const NSIT=[3,6,9,12,15,18], NHOLE=[6,9,12,18];
-const APP_VERSION="v399";
+const APP_VERSION="v403";
 const TESTS={
 putt_3_5:{name:"Putt 3–5 ft",cat:"Putten",eng:"putt_cat",dists:[3,4,5],per:8,info:"24 putts (8× vanaf 3, 4 en 5 ft). Per afstand: holed, mis binnen 3 ft, mis buiten 3 ft. Output: SG + make%."},
 putt_6_10:{name:"Putt 6–10 ft",cat:"Putten",eng:"putt_cat",dists:[6,8,10],per:8,info:"24 putts (8× vanaf 6, 8 en 10 ft). Zelfde invoer als 3–5 ft."},
@@ -3264,14 +3282,14 @@ putt_10_15:{name:"Putt 10–15 ft",cat:"Putten",eng:"putt_cat",dists:[11,13,15],
 putt_15_25:{name:"Putt 15–25 ft",cat:"Putten",eng:"putt_cat",dists:[16,20,24],per:8,info:"24 putts (8× vanaf 16, 20 en 24 ft). Per afstand: holed, mis binnen 3 ft, mis buiten 3 ft."},
 putt_25_40:{name:"Putt 25+ ft",cat:"Putten",eng:"putt_prox",dists:[30,40,50,60],per:4,rankToggle:true,info:"16 putts (4× vanaf 30, 40, 50, 60 ft). Per situatie: proximity van de leave (ft) + score. SG op basis van de eerste putt, plus score. Ranking op SG of score."},
 putt_course:{name:"Random parcours",cat:"Putten",eng:"course",info:"Wisselende afstanden, uitspelen. Per hole: startafstand (ft) + score. Output: SG, make% en 3-putt%."},
-sg_u30:{name:"Strokes gained <30m",cat:"Short game",eng:"sit",measure:"rest",range:[0,30],lieOpts:["f","r","s"],lieDef:"f",info:"Short game binnen 30 m. Per situatie: afstand, ligging, moeilijkheid; noteer proximity (ft) + restligging. Output: SG, proximity, verdeling, SG/proximity per moeilijkheid."},
-sg_30_50:{name:"Strokes gained 30–50m",cat:"Short game",eng:"sit",measure:"rest",range:[30,50],lieOpts:["f","r","s"],lieDef:"f",info:"Zelfde opzet als <30m, vanaf 30–50 m."},
-appr_low:{name:"Lage approach <30m",cat:"Short game",eng:"sit",measure:"rest",range:[0,30],lieOpts:["f","r"],lieDef:"f",info:"Lage approach binnen 30 m."},
-appr_high:{name:"Hoge approach <30m",cat:"Short game",eng:"sit",measure:"rest",range:[0,30],lieOpts:["f","r"],lieDef:"f",info:"Hoge approach binnen 30 m."},
-bunker:{name:"Bunker <30m",cat:"Short game",eng:"sit",measure:"rest",range:[0,30],lieOpts:["s"],lieDef:"s",info:"Bunkershots binnen 30 m (startligging zand)."},
-lob:{name:"Lobshot <30m",cat:"Short game",eng:"sit",measure:"rest",range:[0,30],lieOpts:["f","r","s"],lieDef:"r",info:"Lobshots binnen 30 m."},
-mission:{name:"Mission impossible",cat:"Short game",eng:"sit",measure:"rest",range:[0,30],lieOpts:["f","r","s"],lieDef:"r",diffDef:2,info:"Lastige, creatieve short game-situaties (standaard Hard)."},
-par2:{name:"Par-2",cat:"Short game",eng:"sit",measure:"rest",hasScore:true,rankToggle:true,range:[0,30],lieOpts:["f","r","s"],lieDef:"f",info:"Speel elke situatie uit (par = 2). Per situatie: afstand, ligging, moeilijkheid, proximity (ft) + score. Ranking op SG of score."},
+sg_u30:{name:"Strokes gained <30m",cat:"Short game",eng:"sit",measure:"rest",hasPin:true,range:[0,30],lieOpts:["f","r","s"],lieDef:"f",info:"Short game binnen 30 m. Per situatie: afstand, ligging, moeilijkheid; noteer proximity (ft) + restligging. Output: SG, proximity, verdeling, SG/proximity per moeilijkheid."},
+sg_30_50:{name:"Strokes gained 30–50m",cat:"Short game",eng:"sit",measure:"rest",hasPin:true,range:[30,50],lieOpts:["f","r","s"],lieDef:"f",info:"Zelfde opzet als <30m, vanaf 30–50 m."},
+appr_low:{name:"Lage approach <30m",cat:"Short game",eng:"sit",measure:"rest",hasPin:true,range:[0,30],lieOpts:["f","r"],lieDef:"f",info:"Lage approach binnen 30 m."},
+appr_high:{name:"Hoge approach <30m",cat:"Short game",eng:"sit",measure:"rest",hasPin:true,range:[0,30],lieOpts:["f","r"],lieDef:"f",info:"Hoge approach binnen 30 m."},
+bunker:{name:"Bunker <30m",cat:"Short game",eng:"sit",measure:"rest",hasPin:true,range:[0,30],lieOpts:["s"],lieDef:"s",info:"Bunkershots binnen 30 m (startligging zand)."},
+lob:{name:"Lobshot <30m",cat:"Short game",eng:"sit",measure:"rest",hasPin:true,range:[0,30],lieOpts:["f","r","s"],lieDef:"r",info:"Lobshots binnen 30 m."},
+mission:{name:"Mission impossible",cat:"Short game",eng:"sit",measure:"rest",hasPin:true,range:[0,30],lieOpts:["f","r","s"],lieDef:"r",diffDef:2,info:"Lastige, creatieve short game-situaties (standaard Hard)."},
+par2:{name:"Par-2",cat:"Short game",eng:"sit",measure:"rest",hasScore:true,rankToggle:true,hasPin:true,range:[0,30],lieOpts:["f","r","s"],lieDef:"f",info:"Speel elke situatie uit (par = 2). Per situatie: afstand, ligging, moeilijkheid, proximity (ft) + score. Ranking op SG of score."},
 wedge_random:{name:"Random Wedge",cat:"Wedge play",eng:"sit",measure:"rest",splitLie:true,hasPin:true,range:[50,125],lieOpts:["f","r"],lieDef:"f",info:"Wedges van wisselende afstand. Per situatie: afstand, ligging, moeilijkheid, pin (max 2). Output: SG totaal + fairway vs rough."},
 wedge_50_75:{name:"Wedge 50–75m",cat:"Wedge play",eng:"sit",measure:"rest",splitLie:true,hasPin:true,range:[50,75],lieOpts:["f","r"],lieDef:"f",info:"Wedges 50–75 m. SG totaal + fairway vs rough."},
 wedge_75_100:{name:"Wedge 75–100m",cat:"Wedge play",eng:"sit",measure:"rest",splitLie:true,hasPin:true,range:[75,100],lieOpts:["f","r"],lieDef:"f",info:"Wedges 75–100 m."},
@@ -3310,9 +3328,9 @@ function cSit(t,sess,inp,lv){const sts=sess.stations,res=inp.res;const wedge=!!t
 let sg=0,n=0,proxSum=0,ent=0,holed=0,ud=0,missG=0,le6=0,green=0;const shots=[];
 const bk=wedge?{h:0,b5:0,b10:0,b15:0,b20:0,o20:0,mg:0}:{h:0,b3:0,b6:0,b9:0,b15:0,o15:0,mg:0};
 const byD={e:{s:0,p:0,n:0,l6:0,g:0,ud:0,hd:0},m:{s:0,p:0,n:0,l6:0,g:0,ud:0,hd:0},h:{s:0,p:0,n:0,l6:0,g:0,ud:0,hd:0}};const byL={f:{s:0,p:0,n:0,l6:0,g:0,ud:0,hd:0},r:{s:0,p:0,n:0,l6:0,g:0,ud:0,hd:0},s:{s:0,p:0,n:0,l6:0,g:0,ud:0,hd:0}};
-sts.forEach((st,i)=>{const r=res[i];if(!r)return;if(r.rest===""||r.rest==null||r.restLie==null)return;
+sts.forEach((st0,i)=>{const r=res[i];if(!r)return;const st=(r.st&&!sess.sitPre)?Object.assign({},st0,r.st):st0;if(r.rest===""||r.rest==null||r.restLie==null)return;
 const Es=E(st.lie,M2YD(st.dist),lv);const restFt=+r.rest;let Er;if(restFt<=0)Er=0;else if(r.restLie==='g')Er=E('g',restFt,lv);else Er=E(r.restLie,FT2YD(restFt),lv);
-const s_=Es-Er-1;sg+=s_;n++;ent++;proxSum+=restFt;const dk=DK[st.diff];const onG=(r.restLie==='g');shots.push({sg:s_,prox:restFt,onG,holed:(onG&&restFt<=0),startM:st.dist,pinD:st.pinD||null,pinS:st.pinS||null,lie:st.lie,diff:st.diff,ud:(t.hasScore&&r.score!==""&&r.score!=null&&+r.score<=2)?1:0});
+const s_=Es-Er-1;sg+=s_;n++;ent++;proxSum+=restFt;const dk=DK[st.diff];const onG=(r.restLie==='g');shots.push({i:i,sg:s_,prox:restFt,onG,holed:(onG&&restFt<=0),startM:st.dist,pinD:st.pinD||null,pinS:st.pinS||null,lie:st.lie,diff:st.diff,ud:(t.hasScore&&r.score!==""&&r.score!=null&&+r.score<=2)?1:0});
 if(!onG){missG++;bk.mg++;}else{green++;if(restFt<=0){holed++;bk.h++;}else if(wedge){if(restFt<=5)bk.b5++;else if(restFt<=10)bk.b10++;else if(restFt<=15)bk.b15++;else if(restFt<=20)bk.b20++;else bk.o20++;}else{if(restFt<=3)bk.b3++;else if(restFt<=6)bk.b6++;else if(restFt<=9)bk.b9++;else if(restFt<=15)bk.b15++;else bk.o15++;}}
 if(onG&&restFt<=6)le6++;
 if(t.hasScore&&r.score!==""&&r.score!=null){if(+r.score<=2)ud++;}
@@ -4286,7 +4304,7 @@ function spCourseAddForm(){
  +'<small class="note">Tee-lengtes (voor strokes gained per hole) kun je later toevoegen via Instellingen → Banen.</small></div>'
  +'<button class="btn block blue" id="spCSv">Baan opslaan</button>';
  openSheet();
- $("#spCBk").onclick=function(){var r=d.ret;spCDraft=null;if(r==="settings")openCoursesSettings();else spRoundSheet();};
+ $("#spCBk").onclick=function(){var r=d.ret;spCDraft=null;if(r==="settings")openCoursesSettings();else if(r==="challenge")openConfig();else spRoundSheet();};
  $("#spCN").oninput=function(e){d.name=e.target.value;};
  var _ch=$("#spCH");if(_ch)_ch.querySelectorAll("[data-h]").forEach(function(b){b.onclick=function(){d.n=+b.dataset.h;while(d.pars.length<d.n)d.pars.push(4);spCourseAddForm();};});
  sh.querySelectorAll("[data-cp]").forEach(function(x){x.oninput=function(){var v=+x.value;if(!v||v<3)v=3;if(v>6)v=6;d.pars[+x.dataset.cp]=v;var t=d.pars.slice(0,d.n).reduce(function(a,b){return a+(+b||0);},0);var el=$("#spCTot");if(el)el.textContent=t;var _L2=Math.floor((+x.dataset.cp)/9);var _le=sh.querySelector('[data-lpar="'+_L2+'"]');if(_le)_le.textContent=d.pars.slice(_L2*9,Math.min(d.n,_L2*9+9)).reduce(function(a,b){return a+(+b||0);},0);};});
@@ -4319,10 +4337,11 @@ function spSaveNewCourse(){
  state.courses=state.courses||[];state.courses.push(co);save();
  try{sgHerberekenBaan(co);}catch(e){}
  var ret=d.ret;spCDraft=null;
- if(ret!=="settings"&&spDraft){spDraft.courseId=co.id;spDraft.loopIds=co.loops.map(function(l2){return l2.id;});spDraft.teeName=null;}
- if(ret==="settings")openCoursesSettings();else spRoundSheet();
+ if(ret==="challenge"){if(draft){draft.courseId=co.id;draft.loopIds=[];draft.teeName=null;draft.holeSel=null;}openConfig();}
+ else{if(ret!=="settings"&&spDraft){spDraft.courseId=co.id;spDraft.loopIds=co.loops.map(function(l2){return l2.id;});spDraft.teeName=null;}
+ if(ret==="settings")openCoursesSettings();else spRoundSheet();}
  setTimeout(function(){toast("Baan toegevoegd ✓");},150);}
-function openCourseRegister(){
+function openCourseRegister(ret){ret=ret||"settings";
  var sh=$("#sheet");var q="";
  function draw(){
   var have={};(state.courses||[]).forEach(function(c){have[(c.name||"").trim().toLowerCase()]=1;});
@@ -4338,8 +4357,8 @@ function openCourseRegister(){
    +'<small class="note">De baan wordt toegevoegd met naam en plaats; je vult eenmalig de par per hole in. Lengtes per tee kun je later toevoegen via Bewerk.</small>';
   var qi=$("#crQ");
   if(qi){qi.oninput=function(){q=qi.value;draw();var f=$("#crQ");if(f){f.focus();f.setSelectionRange(f.value.length,f.value.length);}};}
-  $("#crBk").onclick=function(){openCoursesSettings();};
-  sh.querySelectorAll("[data-reg]").forEach(function(b){b.onclick=function(){spCourseAdd(all[+b.dataset.reg],"settings");};});}
+  $("#crBk").onclick=function(){if(ret==="challenge")openConfig();else openCoursesSettings();};
+  sh.querySelectorAll("[data-reg]").forEach(function(b){b.onclick=function(){spCourseAdd(all[+b.dataset.reg],ret);};});}
  draw();openSheet();}
 /* ---- Banen: bulk-import (JSON) ---- */
 function coursesParseJson(txt){
@@ -9228,7 +9247,7 @@ let draft=null;
 function startChallenge(id){const t=TESTS[id];
  var tms=(state.teams||[]);
  var tm0=tms.find(function(x){return x.id===state.activeTeamId;})||tms[0]||null;
- draft={testId:id,level:0,date:todayISO(),counts:true,holes:9,nsit:9,rankMode:"sg",stations:null,
+ draft={testId:id,level:0,date:todayISO(),counts:true,holes:9,nsit:9,rankMode:"sg",stations:null,sitPre:false,
   mode:"team",teamId:tm0?tm0.id:null,players:tm0?teamPlayersOf(tm0.id).map(function(p){return p.id;}):[],
   inputs:{},dvHoles:9,dvBalls:1,dvShots:10,dvOptDist:true,dvOptSpr:true,dvOptChs:false,dvOptBs:false,
   playMode:"sg",entryMode:"hole",holeN:18,holeSel:null};
@@ -9265,22 +9284,27 @@ function openConfig(){const t=TESTS[draft.testId];const sh=$("#sheet");let cfg="
  }
  if(t.eng==="spelen"||sgTotal)cfg+='<div class="card"><h3>Aantal holes</h3><div class="seg" id="holesSeg">'+[6,9,18].map(h=>'<button class="'+(h===draft.holes?'on':'')+'" data-h="'+h+'">'+h+'</button>').join("")+'</div></div>';
  if(t.eng==="course")cfg+='<div class="card"><h3>Aantal holes</h3><div class="seg" id="nholeSeg">'+NHOLE.map(h=>'<button class="'+(h===draft.holes?'on':'')+'" data-h="'+h+'">'+h+'</button>').join("")+'</div></div><div class="card"><h3>Startafstanden ('+uG()+') — optioneel</h3><small class="note" style="margin-top:0;margin-bottom:10px">Vul vooraf in, of laat leeg en vul ze bij de invoer in.</small><div id="courseDistCfg"></div></div>';
- if(sgHole){
-  if(!state.courses.length){cfg+='<div class="card"><h3>Baan</h3><p class="muted" style="font-size:13px;margin:6px 0 0">Nog geen banen. Voeg eerst een baan toe via <b>Instellingen → Banen</b>.</p></div>';}
-  else cfg+='<div class="card"><h3>Baan</h3><span class="acwrap" style="display:block"><input class="in" id="courseSearch" autocomplete="off" placeholder="Zoek baan…"></span><div id="courseSel" style="margin-top:8px"></div>'
+ if(sgHole||(t.eng==="drivebaan"&&draft.dvPre)){
+  if(!state.courses.length){cfg+='<div class="card"><h3>Baan</h3><p class="muted" style="font-size:13px;margin:6px 0 10px">Nog geen banen in de app. Kies je baan uit het banenregister (alle Nederlandse banen).</p><button type="button" class="btn ghost block" id="regCourseCfg">Baan kiezen uit het banenregister \u203a</button></div>';}
+  else cfg+='<div class="card"><h3>Baan</h3><span class="acwrap" style="display:block"><input class="in" id="courseSearch" autocomplete="off" placeholder="Zoek baan…"></span><div id="courseSel" style="margin-top:8px"></div><button type="button" class="link" id="regCourseCfg" style="margin-top:6px;font-size:12.5px">+ Baan uit het banenregister</button>'
    +'<h3 style="margin-top:14px">Aantal holes</h3><div id="holeNCfg"></div>'
    +'<h3 style="margin-top:14px" id="loopHd">Lussen</h3><div id="loopPick"></div>'
    +'<div id="holeCfg"></div>'
    +'<h3 style="margin-top:14px">Tee</h3><div id="teeSeg" class="trchips sm"></div></div>';
  }
- if(t.eng==="sit"){cfg+='<div class="card"><h3>Aantal situaties</h3><div class="seg" id="nsitSeg">'+NSIT.map(h=>'<button class="'+(h===draft.nsit?'on':'')+'" data-n="'+h+'">'+h+'</button>').join("")+'</div></div>';
- cfg+='<div class="card"><h3>Situaties instellen</h3><small class="note" style="margin-top:0;margin-bottom:10px">Geldt voor alle spelers. Spelers vullen straks alleen hun resultaat in.</small><div id="stationCfg"></div></div>';}
- if(t.eng==="drivebaan"){cfg+='<div class="card"><h3>Holes & ballen</h3><div class="grid2"><div><label class="fld">Aantal holes</label><input class="in" type="number" inputmode="numeric" min="1" max="18" id="dvHoles" value="'+draft.dvHoles+'"></div><div><label class="fld">Ballen per hole</label><input class="in" type="number" inputmode="numeric" min="1" max="10" id="dvBalls" value="'+draft.dvBalls+'"></div></div></div>';cfg+='<div class="card"><h3>Extra meten</h3><small class="muted" style="display:block;margin-bottom:8px">Kies welke velden je per bal wilt invoeren.</small><div class="dvtiles">'+[["dvOptDist","Afstand"],["dvOptSpr","Spreiding"],["dvOptChs","Clubheadspeed"],["dvOptBs","Ballspeed"]].map(function(x){return '<button class="dvtile'+(draft[x[0]]?" on":"")+'" data-dvtile="'+x[0]+'">'+x[1]+'</button>';}).join("")+'</div></div>';}
- if(t.eng==="driverange"){cfg+='<div class="card"><h3>Aantal tee shots</h3><input class="in" type="number" inputmode="numeric" min="1" max="50" id="dvShots" value="'+draft.dvShots+'"></div>';cfg+='<div class="card"><h3>Extra meten</h3><small class="muted" style="display:block;margin-bottom:8px">Afstand en spreiding worden altijd ingevoerd. Kies eventueel extra:</small><div class="dvtiles">'+[["dvOptChs","Clubheadspeed"],["dvOptBs","Ballspeed"]].map(function(x){return '<button class="dvtile'+(draft[x[0]]?" on":"")+'" data-dvtile="'+x[0]+'">'+x[1]+'</button>';}).join("")+'</div></div>';}
+ if(t.eng==="sit"){cfg+='<div class="card"><h3>Situaties</h3><label class="fld">Aantal</label><div class="seg" id="nsitSeg">'+NSIT.map(h=>'<button class="'+(h===draft.nsit?'on':'')+'" data-n="'+h+'">'+h+'</button>').join("")+'</div>'
+  +'<label class="fld" style="margin-top:10px">Startsituatie</label><div class="seg" id="sitPreSeg"><button data-sp="0" class="'+(draft.sitPre?'':'on')+'">Tijdens</button><button data-sp="1" class="'+(draft.sitPre?'on':'')+'">Vooraf</button></div><small class="note">Tijdens: elke speler vult per situatie zelf afstand, ligging'+(sitNoDiff(t)?'':', moeilijkheid')+(t.hasPin?' en pin':'')+' in \u2014 handig bij random testen en in de baan. Vooraf: dezelfde set voor iedereen.</small></div>';
+ cfg+='<div class="card" id="stationCard" style="display:'+(draft.sitPre?'':'none')+'"><div class="cardhd"><h3>Situaties vooraf</h3><span class="hdnote">'+oDispM(t.range[0])+'\u2013'+oDispM(t.range[1])+' '+uO()+'</span></div><div class="row" style="gap:8px;margin-bottom:8px;flex-wrap:wrap"><button type="button" class="btn ghost sm" id="stSpread">Verdeel '+oDispM(t.range[0])+'\u2013'+oDispM(t.range[1])+' '+uO()+'</button><button type="button" class="btn ghost sm" id="stAll">Alles '+(LIES[t.lieDef]||'').toLowerCase()+(sitNoDiff(t)?'':' \u00b7 medium')+'</button></div><div id="stationCfg"></div></div>';}
+ if(t.eng==="drivebaan"){cfg+='<div class="card"><h3>Holes en ballen</h3><label class="fld">Hole-lengtes</label><div class="seg" id="dvPreSeg"><button data-dp="0" class="'+(draft.dvPre?'':'on')+'">Tijdens</button><button data-dp="1" class="'+(draft.dvPre?'on':'')+'">Vooraf</button></div><small class="note">Tijdens: de speler kiest per hole de lengte. Vooraf: kies een baan en lus uit het banenregister, de lengtes staan dan klaar.</small>'
+  +'<div id="dvHolesWrap" style="display:'+(draft.dvPre?'none':'')+'"><label class="fld" style="margin-top:10px">Holes</label><div class="seg" id="dvHoleSeg">'+NHOLE.map(h=>'<button class="'+(h===draft.dvHoles?'on':'')+'" data-h="'+h+'">'+h+'</button>').join("")+'</div></div>'
+  +'<label class="fld" style="margin-top:10px">Ballen per hole</label><div class="wheels w1 p3wheel" style="margin-top:0"><div class="wheel" data-wheel="dvBalls"><div class="pad"></div>'+[1,2,3,4,5].map((v,i)=>'<div class="wi'+(v===draft.dvBalls?' sel':'')+'" data-wi="'+i+'">'+v+'</div>').join("")+'<div class="pad"></div></div></div></div>';
+  cfg+='<div class="card"><h3>Meten per bal</h3><small class="muted" style="display:block;margin-bottom:8px">Ligging en restafstand staan altijd aan (strokes gained). Kies eventueel extra:</small><div class="dvtiles">'+[["dvOptDist","Afstand"],["dvOptSpr","Spreiding"],["dvOptChs","Clubheadspeed"],["dvOptBs","Ballspeed"]].map(function(x){return '<button class="dvtile'+(draft[x[0]]?" on":"")+'" data-dvtile="'+x[0]+'">'+x[1]+'</button>';}).join("")+'</div></div>';}
+ if(t.eng==="driverange"){cfg+='<div class="card"><h3>Tee shots</h3><div class="seg" id="dvShotSeg">'+[5,10,15,20].map(h=>'<button class="'+(h===draft.dvShots?'on':'')+'" data-s="'+h+'">'+h+'</button>').join("")+'</div></div>';cfg+='<div class="card"><h3>Extra meten</h3><small class="muted" style="display:block;margin-bottom:8px">Afstand en spreiding worden altijd ingevoerd. Kies eventueel extra:</small><div class="dvtiles">'+[["dvOptChs","Clubheadspeed"],["dvOptBs","Ballspeed"]].map(function(x){return '<button class="dvtile'+(draft[x[0]]?" on":"")+'" data-dvtile="'+x[0]+'">'+x[1]+'</button>';}).join("")+'</div></div>';}
  if(t.rankToggle)cfg+='<div class="card"><h3>Ranking op</h3><div class="seg" id="rankSeg"><button class="'+(draft.rankMode==='sg'?'on':'')+'" data-m="sg">Strokes Gained</button><button class="'+(draft.rankMode==='score'?'on':'')+'" data-m="score">Score</button></div></div>';
  if(!rolIsSpeler())cfg+='<div class="card"><h3>Telt mee voor klassement</h3><div class="seg" id="countSeg"><button class="'+(draft.counts?'on':'')+'" data-c="1">Ja</button><button class="'+(!draft.counts?'on':'')+'" data-c="0">Nee</button></div><small class="note">Bij één speler altijd "Nee": individuele invoer telt niet voor het klassement, wel voor de voortgang.</small></div>';
  sh.innerHTML='<div class="shead"><div><h2>'+t.name+'</h2><div class="sx">Challenge instellen</div></div><button class="xbtn" onclick="cancelDraft()">×</button></div>'+cfg+'<button class="btn block blue" id="toEntry">Start invoer →</button>';
  openSheet();
+ var _rcc=$("#regCourseCfg");if(_rcc)_rcc.onclick=function(){openCourseRegister("challenge");};
  $("#cfgDate").onchange=e=>{draft.date=e.target.value;};
  if($("#modeSeg"))$("#modeSeg").querySelectorAll("button").forEach(b=>b.onclick=()=>{
   draft.mode=b.dataset.md;segOn("#modeSeg",b);_whoQ="";
@@ -9292,15 +9316,19 @@ function openConfig(){const t=TESTS[draft.testId];const sh=$("#sheet");let cfg="
  if($("#holesSeg"))$("#holesSeg").querySelectorAll("button").forEach(b=>b.onclick=()=>{draft.holes=+b.dataset.h;segOn("#holesSeg",b);});
  if($("#nholeSeg"))$("#nholeSeg").querySelectorAll("button").forEach(b=>b.onclick=()=>{draft.holes=+b.dataset.h;segOn("#nholeSeg",b);renderCourseDists();});
  if($("#nsitSeg"))$("#nsitSeg").querySelectorAll("button").forEach(b=>b.onclick=()=>{draft.nsit=+b.dataset.n;buildStations(t);segOn("#nsitSeg",b);renderStationCfg(t);});
+ if($("#sitPreSeg"))$("#sitPreSeg").querySelectorAll("button").forEach(b=>b.onclick=()=>{draft.sitPre=b.dataset.sp==="1";segOn("#sitPreSeg",b);var sc=$("#stationCard");if(sc)sc.style.display=draft.sitPre?"":"none";if(draft.sitPre)renderStationCfg(t);});
+ var _sp=$("#stSpread");if(_sp)_sp.onclick=()=>{buildStations(t);renderStationCfg(t);};
+ var _sa=$("#stAll");if(_sa)_sa.onclick=()=>{draft.stations.forEach(st=>{st.lie=t.lieDef;st.diff=sitNoDiff(t)?1:(t.diffDef!=null?t.diffDef:1);});renderStationCfg(t);};
  if($("#rankSeg"))$("#rankSeg").querySelectorAll("button").forEach(b=>b.onclick=()=>{draft.rankMode=b.dataset.m;segOn("#rankSeg",b);});
  if($("#countSeg"))$("#countSeg").querySelectorAll("button").forEach(b=>b.onclick=()=>{if(draft.players.length<2)return;draft.counts=b.dataset.c==="1";segOn("#countSeg",b);});
- if($("#dvHoles"))$("#dvHoles").oninput=e=>{draft.dvHoles=Math.max(1,Math.min(18,+e.target.value||1));};
- if($("#dvBalls"))$("#dvBalls").oninput=e=>{draft.dvBalls=Math.max(1,Math.min(10,+e.target.value||1));};
- if($("#dvShots"))$("#dvShots").oninput=e=>{draft.dvShots=Math.max(1,Math.min(50,+e.target.value||1));};
+ if($("#dvHoleSeg"))$("#dvHoleSeg").querySelectorAll("button").forEach(b=>b.onclick=()=>{draft.dvHoles=+b.dataset.h;segOn("#dvHoleSeg",b);});
+ if($("#dvShotSeg"))$("#dvShotSeg").querySelectorAll("button").forEach(b=>b.onclick=()=>{draft.dvShots=+b.dataset.s;segOn("#dvShotSeg",b);});
+ if($("#dvPreSeg"))$("#dvPreSeg").querySelectorAll("button").forEach(b=>b.onclick=()=>{draft.dvPre=b.dataset.dp==="1";openConfig();});
+ if($('[data-wheel="dvBalls"]'))wheelBind(sh,function(id,idx){if(id==="dvBalls")draft.dvBalls=idx+1;});
  sh.querySelectorAll("[data-dvtile]").forEach(b=>b.onclick=()=>{const k=b.dataset.dvtile;draft[k]=!draft[k];b.classList.toggle("on");});
  if(t.eng==="sit")renderStationCfg(t);
  if(t.eng==="course")renderCourseDists();
- if(sgHole&&state.courses.length)bindCourseCfg();
+ if((sgHole||(t.eng==="drivebaan"&&draft.dvPre))&&state.courses.length)bindCourseCfg();
  renderWho();
  $("#toEntry").onclick=()=>{
   if(draft.players.length<1){toast(draft.mode==="solo"?"Kies een speler":"Selecteer minstens 1 speler");return;}
@@ -9361,17 +9389,21 @@ function renderHoleCfg(){
   else{draft.holeSel.push(h);draft.holeSel.sort(function(x,y){return x-y;});
    while(draft.holeSel.length>want)draft.holeSel.shift();}
   renderHoleCfg();};});}
-function renderStationCfg(t){const box=$("#stationCfg");if(!box)return;box.innerHTML="";
-draft.stations.forEach((st,i)=>{const c=el("div","station");let pinHtml="";
-if(t.hasPin)pinHtml='<div style="margin-top:8px"><label class="fld">Pin · diepte</label><div class="pinopts">'+PIN_D.map(p=>'<button data-pd="'+p[0]+'" class="'+(st.pinD===p[0]?'on':'')+'">'+p[1]+'</button>').join("")+'</div><label class="fld" style="margin-top:6px">Pin · zijde</label><div class="pinopts">'+PIN_S.map(p=>'<button data-ps="'+p[0]+'" class="'+(st.pinS===p[0]?'on':'')+'">'+p[1]+'</button>').join("")+'</div></div>';
-c.innerHTML='<div class="sh"><b>Situatie '+(i+1)+'</b></div><div class="grid3">'
-+'<div><label class="fld">Afstand (m)</label><input class="in" type="number" inputmode="decimal" data-k="dist" value="'+st.dist+'"></div>'
-+'<div><label class="fld">Ligging</label><select class="in" data-k="lie">'+t.lieOpts.map(l=>'<option value="'+l+'" '+(l===st.lie?'selected':'')+'>'+LIES[l]+'</option>').join("")+'</select></div>'
-+'<div><label class="fld">Moeilijk</label><select class="in" data-k="diff">'+DIFF.map((d,j)=>'<option value="'+j+'" '+(j===st.diff?'selected':'')+'>'+d+'</option>').join("")+'</select></div>'
-+'</div>'+pinHtml;
-c.querySelectorAll("[data-k]").forEach(inp=>inp.onchange=()=>{const k=inp.dataset.k;if(k==='dist'){var dv=+inp.value||0;if(t.range){if(dv<t.range[0])dv=t.range[0];if(dv>t.range[1])dv=t.range[1];}inp.value=dv;st.dist=dv;}else{st[k]=k==='lie'?inp.value:+inp.value;}});
-if(t.hasPin){c.querySelectorAll("[data-pd]").forEach(btn=>btn.onclick=()=>{st.pinD=(st.pinD===btn.dataset.pd)?null:btn.dataset.pd;c.querySelectorAll("[data-pd]").forEach(b2=>b2.classList.toggle("on",st.pinD===b2.dataset.pd));});c.querySelectorAll("[data-ps]").forEach(btn=>btn.onclick=()=>{st.pinS=(st.pinS===btn.dataset.ps)?null:btn.dataset.ps;c.querySelectorAll("[data-ps]").forEach(b2=>b2.classList.toggle("on",st.pinS===b2.dataset.ps));});}
-box.appendChild(c);});}
+function renderStationCfg(t){const box=$("#stationCfg");if(!box)return;box.innerHTML="";if(!draft.sitPre)return;
+draft.stations.forEach((st,i)=>{const c=el("div","station stRow"+(draft._stOpen===i?" open":""));
+ let edit='';
+ if(draft._stOpen===i){let pinHtml="";
+  if(t.hasPin)pinHtml='<div style="margin-top:8px"><label class="fld">Pin \u00b7 diepte</label><div class="pinopts">'+PIN_D.map(p=>'<button type="button" data-pd="'+p[0]+'" class="'+(st.pinD===p[0]?'on':'')+'">'+p[1]+'</button>').join("")+'</div>'+(sitPinSide(t)?'<label class="fld" style="margin-top:6px">Pin \u00b7 zijde</label><div class="pinopts">'+PIN_S.map(p=>'<button type="button" data-ps="'+p[0]+'" class="'+(st.pinS===p[0]?'on':'')+'">'+p[1]+'</button>').join("")+'</div>':'')+'</div>';
+  edit='<div class="'+(sitNoDiff(t)?'grid2':'grid3')+'" style="margin-top:8px">'
+   +'<div><label class="fld">Afstand ('+uO()+')</label><input class="in" type="number" inputmode="decimal" data-k="dist" value="'+oDispM(st.dist)+'"></div>'
+   +'<div><label class="fld">Ligging</label><select class="in" data-k="lie">'+t.lieOpts.map(l=>'<option value="'+l+'" '+(l===st.lie?'selected':'')+'>'+LIES[l]+'</option>').join("")+'</select></div>'
+   +(sitNoDiff(t)?'':'<div><label class="fld">Moeilijk</label><select class="in" data-k="diff">'+DIFF.map((d,j)=>'<option value="'+j+'" '+(j===st.diff?'selected':'')+'>'+d+'</option>').join("")+'</select></div>')
+   +'</div>'+pinHtml;}
+ c.innerHTML='<div class="sh" style="margin-bottom:0"><b style="width:24px;color:var(--muted)">'+(i+1)+'</b><span style="flex:1;font-size:13px;font-weight:600">'+esc(sitStTxt(t,st))+'</span><button type="button" class="xbtn" data-stedit="'+i+'" title="Wijzigen" aria-label="Wijzigen">'+(draft._stOpen===i?'\u2713':'\u270e')+'</button></div>'+edit;
+ c.querySelector("[data-stedit]").onclick=()=>{draft._stOpen=(draft._stOpen===i)?null:i;renderStationCfg(t);};
+ c.querySelectorAll("[data-k]").forEach(inp=>inp.onchange=()=>{const k=inp.dataset.k;if(k==='dist'){var dv=+inp.value||0;if(uO()==="yd")dv=Math.round(dv/1.09361);if(t.range){if(dv<t.range[0])dv=t.range[0];if(dv>t.range[1])dv=t.range[1];}st.dist=dv;}else{st[k]=k==='lie'?inp.value:+inp.value;}const sp=c.querySelector(".sh span");if(sp)sp.textContent=sitStTxt(t,st);});
+ if(t.hasPin){c.querySelectorAll("[data-pd]").forEach(btn=>btn.onclick=()=>{st.pinD=(st.pinD===btn.dataset.pd)?null:btn.dataset.pd;c.querySelectorAll("[data-pd]").forEach(b2=>b2.classList.toggle("on",st.pinD===b2.dataset.pd));const sp=c.querySelector(".sh span");if(sp)sp.textContent=sitStTxt(t,st);});c.querySelectorAll("[data-ps]").forEach(btn=>btn.onclick=()=>{st.pinS=(st.pinS===btn.dataset.ps)?null:btn.dataset.ps;c.querySelectorAll("[data-ps]").forEach(b2=>b2.classList.toggle("on",st.pinS===b2.dataset.ps));const sp=c.querySelector(".sh span");if(sp)sp.textContent=sitStTxt(t,st);});}
+ box.appendChild(c);});}
 function renderCourseDists(){const box=$("#courseDistCfg");if(!box)return;let h="";for(let i=0;i<draft.holes;i++)h+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="font-size:12px;color:var(--muted);width:52px">Hole '+(i+1)+'</span><input class="in" type="number" inputmode="decimal" data-cd="'+i+'" value="'+gDisp(draft.courseDists[i]||"")+'" placeholder="'+uG()+'"></div>';box.innerHTML=h;
 box.querySelectorAll("[data-cd]").forEach(n=>n.oninput=()=>{draft.courseDists[+n.dataset.cd]=gStore(n.value);});}
 function bindCourseCfg(){
@@ -9492,18 +9524,20 @@ function defInput(t){
 if(t.eng==="putt_cat")return {blocks:t.dists.map(()=>({holed:0,in3:0,out3:0}))};
 if(t.eng==="putt_prox")return {blocks:t.dists.map(()=>Array.from({length:t.per},()=>({prox:"",score:""})))};
 if(t.eng==="course")return {holes:Array.from({length:draft.holes},(_,i)=>({dist:(draft.courseDists&&draft.courseDists[i]!=null&&draft.courseDists[i]!=="")?draft.courseDists[i]:"",score:""}))};
-if(t.eng==="sit")return {res:draft.stations.map(()=>t.hasScore?{rest:"",restLie:'g',score:""}:{rest:"",restLie:'g'})};
-if(t.eng==="drivebaan")return {holes:Array.from({length:draft.dvHoles},()=>({len:"",balls:Array.from({length:draft.dvBalls},()=>({club:"D",rest:"",lie:"f",dist:"",spr:"",side:"R",chs:"",bs:""}))}))};
-if(t.eng==="driverange")return {shots:Array.from({length:draft.dvShots},()=>({club:"D",spr:"",side:"R",dist:"",chs:"",bs:""}))};
+if(t.eng==="sit"){if(!draft.stations){if(!draft.nsit)draft.nsit=9;buildStations(t);}return {res:draft.stations.map(st=>{const r=t.hasScore?{rest:"",restLie:'g',score:""}:{rest:"",restLie:'g'};if(!draft.sitPre)r.st={dist:Math.max(1,st.dist||0),lie:st.lie,diff:(sitNoDiff(t)?1:st.diff),pinD:st.pinD||null,pinS:st.pinS||null};return r;})};}
+if(t.eng==="drivebaan"){const mkB=()=>Array.from({length:draft.dvBalls},()=>({club:dvBag(draft._uPid||null)[0]||"D",rest:"",lie:"",dist:"",spr:"",side:"R",chs:"",bs:""}));
+ if(draft.dvPre){let hl=courseHoleList();if(draft.holeSel&&draft.holeSel.length)hl=hl.filter(h=>draft.holeSel.indexOf(h.hole)>=0);if(hl.length)return {holes:hl.map(h=>({len:h.len||"",balls:mkB()}))};}
+ return {holes:Array.from({length:draft.dvHoles},()=>({len:"",balls:mkB()}))};}
+if(t.eng==="driverange")return {shots:Array.from({length:draft.dvShots},()=>({club:dvBag(draft._uPid||null)[0]||"D",spr:"",side:"R",dist:"",chs:"",bs:""}))};
 if(t.eng==="spelen")return {toPar:0,_t:false};
 if(t.eng==="sground"){const co=getCourse(draft.courseId);if(!co||!draft.loopIds||!draft.loopIds.length)return {courseId:co?co.id:null,courseName:co?co.name:"",teeName:draft.teeName,loopNames:[],holes:[]};let holes=courseHoleList();if(draft.holeSel&&draft.holeSel.length)holes=holes.filter(h=>draft.holeSel.indexOf(h.hole)>=0);return {courseId:co.id,courseName:co.name,teeName:draft.teeName,loopNames:draft.loopIds.map(id=>{const lp=co.loops.find(l=>l.id===id);return lp?lp.name:"";}),holes:holes};}}
-function playerEntry(pid){const t=TESTS[draft.testId];const inp=draft.inputs[pid]||defInput(t);playerEntryWith(pid,inp);}
+function playerEntry(pid){const t=TESTS[draft.testId];draft._uPid=pid;const inp=draft.inputs[pid]||defInput(t);playerEntryWith(pid,inp);}
 function playerEntryWith(pid,inp){const t=TESTS[draft.testId];liveEntry={pid:pid,inp:inp};const sh=$("#sheet");let body="";
 if(t.eng==="putt_cat")body=fPuttCat(t,inp);else if(t.eng==="putt_prox")body=fPuttProx(t,inp);
 else if(t.eng==="course")body=fCourse(t,inp);else if(t.eng==="sit")body=fSit(t,inp);else if(t.eng==="spelen")body=fSpelen(t,inp);else if(t.eng==="sground")body=fSground(t,inp);else if(t.eng==="drivebaan")body=fDriveBaan(t,inp);else if(t.eng==="driverange")body=fDriveRange(t,inp);
-sh.innerHTML='<div class="shead"><div><h2>'+esc(nameOf(pid))+'</h2><div class="sx">'+t.name+'</div></div><button class="xbtn" onclick="openEntry()">×</button></div>'+body
-+'<div id="liveStats" class="card"></div><div class="row" style="gap:8px"><button class="btn ghost" style="flex:1" onclick="openEntry()">Terug</button><button class="btn" style="flex:2" id="savePlayer">Opslaan</button></div>';
-bindForm(t,pid,inp);if(t.eng==="putt_prox"||t.eng==="course"){inp._pick=null;inp._editLock=false;inp._ask=null;clearTimeout(inp._adv);p2Render(t,inp);}liveStats(t,inp);}
+sh.innerHTML='<div class="shead"><div><h2>'+esc(nameOf(pid))+'</h2><div class="sx">'+t.name+'</div></div><button class="xbtn" onclick="openEntry()">×</button></div><div class="entwo"><div class="enmain">'+body
++'</div><div class="enside"><div id="enOv"></div><div id="liveStats" class="card"></div><div class="row" style="gap:8px"><button class="btn ghost" style="flex:1" onclick="openEntry()">Terug</button><button class="btn" style="flex:2" id="savePlayer">Opslaan</button></div></div></div>';
+bindForm(t,pid,inp);if(t.eng==="putt_prox"||t.eng==="course"){inp._pick=null;inp._editLock=false;inp._ask=null;clearTimeout(inp._adv);p2Render(t,inp);}if(t.eng==="sit"){inp._pick=null;inp._editLock=false;inp._ask=null;inp._open=null;sitRender(t,inp);}if(t.eng==="drivebaan"||t.eng==="driverange"){inp._pick=null;inp._editLock=false;inp._ask=null;inp._open=null;inp._ball=0;dvRender(t,inp);}liveStats(t,inp);}
 function stepHTML(label,val,attrs){return '<div class="cnt"><div class="cl">'+label+'</div><div class="stepper"><button data-step="-1" '+attrs+'>−</button><div class="nv">'+val+'</div><button data-step="1" '+attrs+'>+</button></div></div>';}
 function fPuttCat(t,inp){if(inp._tel)return '<div class="p1sw"><button type="button" class="klvbtn" data-p1mode="tik">\u25cf Per putt tikken</button></div>'+t.dists.map((d,i)=>{const b=inp.blocks[i];return '<div class="dblk"><div class="dh"><b>'+puttHdr(d)+'</b><span class="badge">'+t.per+' putts</span></div><div class="grid3">'+stepHTML("Holed",b.holed,'data-i="'+i+'" data-f="holed"')+stepHTML("Mis &lt;3ft",b.in3,'data-i="'+i+'" data-f="in3"')+stepHTML("Mis &gt;3ft",b.out3,'data-i="'+i+'" data-f="out3"')+'</div><div class="sumline" data-sum="'+i+'"></div></div>';}).join("");
  /* v384: P1 tikraster — één tik per putt: holed → mis ≤3 ft → mis >3 ft → leeg */
@@ -9532,8 +9566,10 @@ function p2Cur(t,inp){p2Legacy(t,inp);if(inp._pick)return inp._pick;var f=p2Firs
 function p2Rec(t,inp,k){if(!k)return null;return t.eng==="course"?inp.holes[k.h]:inp.blocks[k.di][k.pi];}
 function p2Get(t,inp){return p2Rec(t,inp,p2Cur(t,inp));}
 function p2Hard(pid){try{var p=(state.players||[]).find(function(x){return x.id===pid;});if(!p)return false;var ph=String(p.mjopPhase||"");if(/^[TEM]/.test(ph))return true;if(p.hcp!=null&&p.hcp!==""&&+p.hcp<=10)return true;}catch(e){}return false;}
-function p2Cls(sc,pid){if(sc===""||sc==null)return "";var n=+sc;if(n<=2)return " h";if(n===3)return p2Hard(pid)?" o":" i";return " o";}
-function p2DotCls(t,inp,rec,k,c,pid){return "pt"+p2Cls(rec.score,pid)+(rec._ok?" lock":"")+(p2Same(k,c)?" cur":"")+(p2Same(k,inp._ask)?" ask":"");}
+function p2Cls(sc,pid,distFt){if(sc===""||sc==null)return "";var n=+sc;var d=(distFt==null||distFt==="")?null:+distFt;
+ if(d!=null&&d>0&&d<=10){if(n<=1)return " h";if(n===2)return p2Hard(pid)?" o":" i";return " o";}
+ if(n<=2)return " h";if(n===3)return p2Hard(pid)?" o":" i";return " o";}
+function p2DotCls(t,inp,rec,k,c,pid){return "pt"+p2Cls(rec.score,pid,t.eng==="course"?rec.dist:null)+(rec._ok?" lock":"")+(p2Same(k,c)?" cur":"")+(p2Same(k,inp._ask)?" ask":"");}
 function p2Lab(t,inp,k){if(!k)return "";if(t.eng==="course")return "Hole "+(k.h+1);return "Putt "+(k.pi+1)+" van "+t.per;}
 function p2Vals(t,rec,metric){var sc=(rec.score===""||rec.score==null)?null:+rec.score;var o={sc:sc==null?"\u2013":String(sc)};
  if(t.eng==="course"){var sd=(rec.dist===""||rec.dist==null)?null:+rec.dist;o.a=sd==null?"\u2013":(metric?fmtUk(sd*0.3048,"m")+" m":Math.round(sd)+" ft");}
@@ -9583,10 +9619,78 @@ function p2Sync(box,t,inp){const c=p2Cur(t,inp);const rec=p2Rec(t,inp,c);if(!rec
  const v=p2Vals(t,rec,metric);const bs=box.querySelectorAll(".p2chosen b");if(bs[0])bs[0].textContent=v.a;if(bs[1])bs[1].textContent=v.sc;
  }
 function fCourse(t,inp){return '<div id="p2box"></div>';}
-function fSit(t,inp){return draft.stations.map((st,i)=>{const r=inp.res[i];const _pd={f:"Front",m:"Middle",b:"Back"},_ps={l:"Links",r:"Rechts"};const pinTxt=t.hasPin&&(st.pinD||st.pinS)?' · pin '+[st.pinD?_pd[st.pinD]:null,st.pinS?_ps[st.pinS]:null].filter(Boolean).join(" "):'';
-let fields='<div><label class="fld" data-restlbl="'+i+'">Proximity ('+restU(r.restLie)+')</label><input class="in" type="number" inputmode="decimal" data-i="'+i+'" data-s="rest" value="'+restDisp(r.rest,r.restLie)+'" placeholder="0 = hole"></div><div><label class="fld">Restligging</label><select class="in" data-i="'+i+'" data-s="restLie">'+Object.keys(LIES).map(l=>'<option value="'+l+'" '+(l===r.restLie?'selected':'')+'>'+LIES[l]+'</option>').join("")+'</select></div>';
-if(t.hasScore)fields+='<div><label class="fld">Score</label><input class="in" type="number" inputmode="numeric" data-i="'+i+'" data-s="score" value="'+(r.score||"")+'"></div>';
-return '<div class="station"><div class="sh"><b>Situatie '+(i+1)+'</b><span class="muted" style="font-size:12px">'+oDispM(st.dist)+' '+uO()+' · '+LIES[st.lie]+' · '+DIFF[st.diff]+pinTxt+'</span></div><div class="'+(t.hasScore?'grid3':'grid2')+'">'+fields+'</div></div>';}).join("");}
+/* ===== v402: situatietesten — per-situatie invoer (bolletjes + kaart), startsituatie tijdens de test (variant B: pillen + rolwielen), Opslaan vergrendelt ===== */
+function sitNoDiff(t){return !!t.splitLie;}            /* wedge/approach: geen moeilijkheidsgraad */
+function sitPinSide(t){return !!t.hasPin&&!!t.splitLie;} /* pin-zijde alleen bij wedge/approach */
+function sitSt(t,inp,i){var base=(draft&&draft.stations&&draft.stations[i])||{};var r=inp.res[i]||{};return (r.st&&!draft.sitPre)?Object.assign({},base,r.st):base;}
+function sitDone(t,r){if(!r)return false;if(r.rest===""||r.rest==null)return false;if(t.hasScore&&(r.score===""||r.score==null))return false;return true;}
+function sitLegacy(t,inp){if(inp._okInit)return;inp._okInit=true;inp.res.forEach(function(r){if(r._ok==null&&sitDone(t,r))r._ok=true;});}
+function sitFirst(t,inp){var i=inp.res.findIndex(function(r){return !r._ok&&!sitDone(t,r);});if(i<0)i=inp.res.findIndex(function(r){return !r._ok;});return i<0?null:i;}
+function sitCur(t,inp){sitLegacy(t,inp);if(inp._pick!=null)return inp._pick;return sitFirst(t,inp);}
+function sitLock(t,inp){inp.res.forEach(function(r){if(sitDone(t,r))r._ok=true;});inp._pick=null;inp._editLock=false;inp._ask=null;inp._open=null;}
+function sitShotSg(t,inp,i){try{var r=compute(t,draft,inp);var sh=(r.detail.shots||[]).find(function(s){return s.i===i;});return sh?sh:null;}catch(e){return null;}}
+function sitDotCls(t,inp,i,cur,pid){var r=inp.res[i];var cls="pt";if(sitDone(t,r)){var sh=sitShotSg(t,inp,i);if(sh){if(sh.holed||sh.sg>=0)cls+=" h";else if(sh.sg>=(p2Hard(pid)?-0.25:-0.5))cls+=" i";else cls+=" o";}}
+ if(r._ok)cls+=" lock";if(i===cur)cls+=" cur";if(inp._ask===i)cls+=" ask";return cls;}
+function sitStTxt(t,st,pid){var a=[];a.push(oDispM(st.dist,pid)+" "+uO(pid));a.push(LIES[st.lie]||"");if(!sitNoDiff(t))a.push(DIFF[st.diff==null?1:st.diff]);if(t.hasPin&&st.pinD)a.push("pin "+({f:"short",m:"middle",b:"back"})[st.pinD]+(sitPinSide(t)&&st.pinS?"-"+({l:"L",r:"R"})[st.pinS]:""));return a.filter(Boolean).join(" · ");}
+function sitResTxt(t,r,pid){if(!sitDone(t,r))return "";var ft=+r.rest;var a=[ft<=0?"holed":(restDisp(ft,r.restLie,pid)+" "+restU(r.restLie,pid))];if(ft>0&&r.restLie!=="g")a.push(LIES[r.restLie]);if(t.hasScore&&r.score!==""&&r.score!=null)a.push("score "+r.score);return a.join(" · ");}
+function fSit(t,inp){return '<div id="p3box"></div>';}
+function sitRender(t,inp){const box=$("#p3box");if(!box)return;const pid=liveEntry&&liveEntry.pid;const cur=sitCur(t,inp);if(cur!=null&&inp._pick==null)inp._pick=cur;
+ const n=inp.res.length;const dots='<div class="ptg p2dots'+(n>8?' c9':'')+'">'+inp.res.map(function(r,i){return '<button type="button" class="'+sitDotCls(t,inp,i,cur,pid)+'" data-p3="'+i+'">'+(i+1)+'</button>';}).join("")+'</div>';
+ let card='';
+ if(inp._ask!=null){const ai=inp._ask,ar=inp.res[ai];card='<div class="card p2card p2ask"><div class="cardhd"><h3>Situatie '+(ai+1)+' wijzigen?</h3></div><p class="sx" style="margin:0 0 10px">Nu: '+esc(sitStTxt(t,sitSt(t,inp,ai),pid))+' → '+esc(sitResTxt(t,ar,pid))+'.</p><div class="row" style="gap:8px"><button type="button" class="btn ghost" style="flex:1" id="p3askNo">Annuleren</button><button type="button" class="btn" style="flex:1" id="p3askEdit">Ja, wijzigen</button></div></div>';}
+ else if(cur==null){card='<div class="card p2card"><div class="cardhd"><h3>Alle situaties ingevoerd</h3><span class="sdbadge" style="background:#e1f3e9;color:var(--good)">✓</span></div><p class="sx" style="margin:0">Tik op een bolletje om een situatie te wijzigen. Opslaan onderaan vergrendelt de invoer.</p></div>';}
+ else{
+  const r=inp.res[cur];const st=sitSt(t,inp,cur);const editing=!!inp._editLock;const pre=!!draft.sitPre;const metric=uG(pid)==="m";
+  /* startsituatie: pillen */
+  const pd={f:"Short",m:"Middle",b:"Back"},ps={l:"Links",r:"Rechts"};
+  const pills=[["dist","Afst.",oDispM(st.dist,pid)+" "+uO(pid)],["lie","Lig.",LIES[st.lie]||"–"]];
+  if(!sitNoDiff(t))pills.push(["diff","Moeil.",DIFF[st.diff==null?1:st.diff]]);
+  if(t.hasPin)pills.push(["pinD","Pin",st.pinD?pd[st.pinD]:"–"]);
+  if(sitPinSide(t))pills.push(["pinS","Zijde",st.pinS?ps[st.pinS]:"–"]);
+  let sh='<div class="p3pills">'+pills.map(function(p){return '<button type="button" class="p3pill'+(pre?' ro':'')+(inp._open===p[0]?' open':'')+'" data-p3pill="'+p[0]+'"'+(pre?' disabled':'')+'><small>'+p[1]+'</small>'+esc(p[2])+'</button>';}).join("")+'</div>';
+  if(!pre&&inp._open){let items=[],sel=0;const k=inp._open;
+   if(k==="dist"){const lo=Math.max(1,Math.round(t.range[0])),hi=Math.round(t.range[1]);for(let v=lo;v<=hi;v++){items.push(oDispM(v,pid)+" "+uO(pid));}sel=Math.max(0,Math.min(items.length-1,Math.round(+st.dist)-lo));}
+   else if(k==="lie"){items=t.lieOpts.map(function(l){return LIES[l];});sel=Math.max(0,t.lieOpts.indexOf(st.lie));}
+   else if(k==="diff"){items=DIFF.slice();sel=st.diff==null?1:+st.diff;}
+   else if(k==="pinD"){items=["–","Short","Middle","Back"];sel=st.pinD?["f","m","b"].indexOf(st.pinD)+1:0;}
+   else if(k==="pinS"){items=["–","Links","Rechts"];sel=st.pinS?["l","r"].indexOf(st.pinS)+1:0;}
+   sh+='<div class="wheels w1 p3wheel">'+wheelHtml("st_"+k,items,sel)+'</div>';}
+  else if(pre)sh+='<p class="sx" style="margin:4px 0 0">Startsituatie vooraf ingesteld door de coach.</p>';
+  /* resultaat */
+  const ft=(r.rest===""||r.rest==null)?null:+r.rest;const onG=r.restLie==="g";
+  const pxTxt=ft==null?"–":(ft<=0?"holed":restDisp(ft,r.restLie,pid)+" "+restU(r.restLie,pid));
+  let res='<div class="p2chosen"><span><small>Proximity</small><b>'+pxTxt+'</b></span><span><small>Restligging</small><b>'+(LIES[r.restLie]||"Green")+'</b></span>'+(t.hasScore?'<span><small>Score</small><b>'+((r.score===""||r.score==null)?"–":r.score)+'</b></span>':'')+'</div>';
+  const lieItems=["g","f","r","s"];const lieSel=Math.max(0,lieItems.indexOf(r.restLie||"g"));
+  let pw='';
+  if(onG){if(metric){const mI=Array.from({length:16},(_,i)=>String(i)),dI=Array.from({length:10},(_,i)=>String(i));const m=ft==null?0:Math.floor(Math.round(ft*0.3048*10)/10),dm=ft==null?0:Math.round(ft*0.3048*10)%10;pw=wheelHtml("pm",mI,Math.min(15,m))+wheelHtml("pdm",dI,dm);}
+   else{const fI=sitFI();let si=0;if(ft!=null&&ft>0){si=fI.indexOf(String(Math.round(ft)));if(si<0)si=1;}pw=wheelHtml("pf",fI,si);}}
+  else{const u=uO(pid);const oI=Array.from({length:80},(_,i)=>String(i+1));let oi=0;if(ft!=null&&ft>0){const v=u==="yd"?Math.round(ft/3):Math.round(ft*0.3048);oi=Math.max(0,Math.min(79,v-1));}pw=wheelHtml("po",oI,oi);}
+  const cols=(onG&&metric)?(t.hasScore?' w4':' w3'):(t.hasScore?' w3':' w2');
+  res+='<div class="wheels'+cols+'">'+pw+wheelHtml("rl",lieItems.map(function(l){return LIES[l];}),lieSel)+(t.hasScore?wheelHtml("ps",["–","1","2","3","4","5","6"],(r.score===""||r.score==null)?0:Math.min(6,+r.score)):'')+'</div>';
+  const unitNote=onG?(metric?'Proximity op de green in m + dm; 0 m + 0 dm = holed.':'Proximity op de green in ft; holed = 0.'):'Restafstand naast de green in '+uO(pid)+'.';
+  card='<div class="card p2card'+(editing?' p2edit':'')+'"><div class="cardhd"><h3>Situatie '+(cur+1)+' <span class="sdbadge">'+(cur+1)+' van '+n+'</span></h3><span class="sdbadge '+(editing?'p2bw':'p2bn')+'">'+(editing?'Wijzigen':'Nieuw')+'</span></div>'
+   +'<div class="p3sub">Startsituatie</div>'+sh+'<div class="p3sub">Resultaat</div>'+res+'<p class="sx" style="margin:6px 0 0">'+unitNote+' Tik op een bolletje voor de volgende situatie. Opslaan onderaan vergrendelt de invoer.</p></div>';}
+ box.innerHTML=dots+card;
+ var _ov=$("#enOv");if(_ov){_ov.innerHTML='<div class="enov"><div class="p3sub">Overzicht</div>'+inp.res.map(function(x,i){var r=inp.res[i];var sh=sitDone(t,r)?sitShotSg(t,inp,i):null;return '<div class="enovr'+(i===cur?' cur':'')+(sitDone(t,r)?'':' leeg')+'"><span class="n">'+(i+1)+'</span><span class="s">'+esc(sitStTxt(t,sitSt(t,inp,i),pid))+(sitDone(t,r)?' \u2192 '+esc(sitResTxt(t,r,pid)):'')+'</span><span class="v'+(sh?(sh.sg>=0?' sgp':' sgn'):'')+'">'+(sh?((sh.sg>0?'+':'')+sh.sg.toFixed(2)):'')+'</span></div>';}).join("")+'</div>';}
+ box.querySelectorAll("[data-p3]").forEach(function(b){b.onclick=function(){const i=+b.dataset.p3;const r=inp.res[i];if(r._ok){inp._ask=i;}else{inp._pick=i;inp._ask=null;inp._editLock=false;inp._open=null;}sitRender(t,inp);};});
+ box.querySelectorAll("[data-p3pill]").forEach(function(b){b.onclick=function(){const k=b.dataset.p3pill;inp._open=(inp._open===k)?null:k;sitRender(t,inp);};});
+ let bb;if(bb=$("#p3askNo"))bb.onclick=function(){inp._ask=null;sitRender(t,inp);};
+ if(bb=$("#p3askEdit"))bb.onclick=function(){const i=inp._ask;inp.res[i]._ok=false;inp._pick=i;inp._editLock=true;inp._ask=null;inp._open=null;sitRender(t,inp);};
+ wheelBind(box,function(id,idx,w){const c=sitCur(t,inp);if(c==null)return;const r=inp.res[c];
+  if(id.indexOf("st_")===0){if(!r.st)r.st=Object.assign({},draft.stations[c]||{});const k=id.slice(3);
+   if(k==="dist"){r.st.dist=Math.max(1,Math.round(t.range[0]))+idx;}else if(k==="lie"){r.st.lie=t.lieOpts[idx]||t.lieDef;}else if(k==="diff"){r.st.diff=idx;}else if(k==="pinD"){r.st.pinD=idx===0?null:["f","m","b"][idx-1];}else if(k==="pinS"){r.st.pinS=idx===0?null:["l","r"][idx-1];}
+   const pill=box.querySelector('[data-p3pill="'+k+'"]');if(pill){const st=sitSt(t,inp,c);const pd={f:"Short",m:"Middle",b:"Back"},ps={l:"Links",r:"Rechts"};const v=k==="dist"?oDispM(st.dist,liveEntry.pid)+" "+uO(liveEntry.pid):k==="lie"?LIES[st.lie]:k==="diff"?DIFF[st.diff]:k==="pinD"?(st.pinD?pd[st.pinD]:"–"):(st.pinS?ps[st.pinS]:"–");pill.innerHTML='<small>'+pill.querySelector("small").textContent+'</small>'+esc(v);}
+   sitSync(box,t,inp);liveStats(t,inp);return;}
+  if(id==="pf"){const fI=sitFI();r.rest=idx===0?"0":fI[idx];}
+  else if(id==="pm"||id==="pdm"){const m=+((box.querySelector('[data-wheel="pm"] .sel')||{}).textContent||0),dm=+((box.querySelector('[data-wheel="pdm"] .sel')||{}).textContent||0);r.rest=String(Math.round(((m+dm/10)/0.3048)*100)/100);}
+  else if(id==="po"){const u=uO(liveEntry.pid);const v=idx+1;r.rest=String(Math.round((u==="yd"?v*3:v/0.3048)*100)/100);}
+  else if(id==="rl"){const nl=["g","f","r","s"][idx];if(nl!==r.restLie){r.restLie=nl;if(nl!=="g"&&r.rest!=null&&r.rest!==""&&+r.rest<=0)r.rest="";sitRender(t,inp);liveStats(t,inp);return;}}
+  else if(id==="ps"){r.score=idx===0?"":String(idx);}
+  sitSync(box,t,inp);liveStats(t,inp);});}
+function sitFI(){return ['holed'].concat(Array.from({length:40},(_,i)=>String(i+1))).concat(['45','50','60']);}
+function sitSync(box,t,inp){const pid=liveEntry&&liveEntry.pid;const cur=sitCur(t,inp);box.querySelectorAll("[data-p3]").forEach(function(b){b.className=sitDotCls(t,inp,+b.dataset.p3,cur,pid);});
+ if(cur==null)return;const r=inp.res[cur];const ft=(r.rest===""||r.rest==null)?null:+r.rest;const bs=box.querySelectorAll(".p2chosen b");
+ if(bs[0])bs[0].textContent=ft==null?"–":(ft<=0?"holed":restDisp(ft,r.restLie,pid)+" "+restU(r.restLie,pid));if(bs[1])bs[1].textContent=LIES[r.restLie]||"Green";if(bs[2])bs[2].textContent=(r.score===""||r.score==null)?"–":r.score;}
 function fSpelen(t,inp){return '<div class="card"><label class="fld">Score t.o.v. par ('+draft.holes+' holes)</label><input class="in" type="number" inputmode="numeric" data-spelen="1" data-neg value="'+inp.toPar+'" placeholder="bv. -2 of 3"><small class="note">Lager is beter.</small></div>';}
 function fSground(t,inp){
  if(!inp.holes||!inp.holes.length)return '<div class="card"><p class="muted">Geen baan/tee geselecteerd.</p></div>';
@@ -9601,18 +9705,84 @@ function fSground(t,inp){
   return t2+'</table>';}
  return '<div class="card" style="padding:11px 13px"><small class="muted">'+esc(inp.courseName||"")+(inp.teeName?' · '+inp.teeName:'')+(inp.loopNames&&inp.loopNames.length?' · '+inp.loopNames.join(" + "):'')+'</small></div>'
   +'<div class="card" style="padding:10px 12px"><div class="hwrap">'+tbl(0,half,(n>half)?"Uit":"Totaal")+(n>half?('<div style="height:12px"></div>'+tbl(half,n,"In")):'')+'</div></div>';}
-function fDriveBaan(t,inp){return inp.holes.map((h,hi)=>{let balls=h.balls.map((b,bi)=>{
-let f='<div class="dvball"><div class="dvbh">Bal '+(bi+1)+'</div><div class="grid2"><div><label class="fld">Club</label><select class="in" data-dvb="'+hi+'_'+bi+'_club">'+Object.keys(DCLUBS).map(c=>'<option value="'+c+'" '+(c===b.club?'selected':'')+'>'+DCLUBS[c]+'</option>').join("")+'</select></div><div><label class="fld">Restafstand ('+uO()+')</label><input class="in" type="number" inputmode="decimal" data-dvb="'+hi+'_'+bi+'_rest" value="'+oDispM(b.rest)+'"></div></div>';
-f+='<div class="grid2" style="margin-top:8px"><div><label class="fld">Restligging</label><select class="in" data-dvb="'+hi+'_'+bi+'_lie">'+Object.keys(DLIES).map(l=>'<option value="'+l+'" '+(l===b.lie?'selected':'')+'>'+DLIES[l]+'</option>').join("")+'</select></div>'+(draft.dvOptDist?'<div><label class="fld">Afstand ('+uO()+')</label><input class="in" type="number" inputmode="decimal" data-dvb="'+hi+'_'+bi+'_dist" value="'+oDispM(b.dist)+'"></div>':'<div></div>')+'</div>';
-if(draft.dvOptSpr)f+='<div class="grid2" style="margin-top:8px"><div><label class="fld">Spreiding ('+uO()+')</label><input class="in" type="number" inputmode="decimal" data-dvb="'+hi+'_'+bi+'_spr" value="'+oDispM(b.spr)+'"></div><div><label class="fld">Kant</label><select class="in" data-dvb="'+hi+'_'+bi+'_side">'+[["L","Links"],["R","Rechts"]].map(s=>'<option value="'+s[0]+'" '+(s[0]===b.side?'selected':'')+'>'+s[1]+'</option>').join("")+'</select></div></div>';
-if(draft.dvOptChs||draft.dvOptBs)f+='<div class="grid2" style="margin-top:8px">'+(draft.dvOptChs?'<div><label class="fld">Clubhead (mph)</label><input class="in" type="number" inputmode="decimal" data-dvb="'+hi+'_'+bi+'_chs" value="'+b.chs+'"></div>':'<div></div>')+(draft.dvOptBs?'<div><label class="fld">Ball speed (mph)</label><input class="in" type="number" inputmode="decimal" data-dvb="'+hi+'_'+bi+'_bs" value="'+b.bs+'"></div>':'<div></div>')+'</div>';
-f+='</div>';return f;}).join("");
-return '<div class="station"><div class="sh"><b>Hole '+(hi+1)+'</b></div><div><label class="fld">Hole-lengte ('+uO()+')</label><input class="in" type="number" inputmode="decimal" data-dvh="'+hi+'" value="'+oDispM(h.len)+'"></div>'+balls+'</div>';}).join("");}
-function fDriveRange(t,inp){return inp.shots.map((s,si)=>{
-let f='<div class="station"><div class="sh"><b>Shot '+(si+1)+'</b></div><div class="grid2"><div><label class="fld">Club</label><select class="in" data-dvs="'+si+'_club">'+Object.keys(DCLUBS).map(c=>'<option value="'+c+'" '+(c===s.club?'selected':'')+'>'+DCLUBS[c]+'</option>').join("")+'</select></div><div><label class="fld">Total distance ('+uO()+')</label><input class="in" type="number" inputmode="decimal" data-dvs="'+si+'_dist" value="'+oDispM(s.dist)+'"></div></div>';
-f+='<div class="grid2" style="margin-top:8px"><div><label class="fld">Spreiding ('+uO()+')</label><input class="in" type="number" inputmode="decimal" data-dvs="'+si+'_spr" value="'+oDispM(s.spr)+'"></div><div><label class="fld">Kant</label><select class="in" data-dvs="'+si+'_side">'+[["L","Links"],["R","Rechts"]].map(x=>'<option value="'+x[0]+'" '+(x[0]===s.side?'selected':'')+'>'+x[1]+'</option>').join("")+'</select></div></div>';
-if(draft.dvOptChs||draft.dvOptBs)f+='<div class="grid2" style="margin-top:8px">'+(draft.dvOptChs?'<div><label class="fld">Clubhead (mph)</label><input class="in" type="number" inputmode="decimal" data-dvs="'+si+'_chs" value="'+s.chs+'"></div>':'<div></div>')+(draft.dvOptBs?'<div><label class="fld">Ball speed (mph)</label><input class="in" type="number" inputmode="decimal" data-dvs="'+si+'_bs" value="'+s.bs+'"></div>':'<div></div>')+'</div>';
-f+='</div>';return f;}).join("");}
+/* ===== v403: driving (baan en range) — bolletjes + kaart, clubs uit "mijn tas", rolwielen, Opslaan vergrendelt ===== */
+var DV_ALLCLUBS=[["D","Driver"],["3W","3-wood"],["5W","5-wood"],["7W","7-wood"],["HY","Hybride"],["2i","IJzer 2"],["3i","IJzer 3"],["4i","IJzer 4"]];
+var DV_DEFBAG=["D","3W","5W","HY","2i","3i","4i"];
+function dvBag(pid){try{var p=pid?registryPlayer(pid):null;var pr=p?spProf(p):null;var b=pr&&Array.isArray(pr.tas)?pr.tas.filter(function(c){return DV_ALLCLUBS.some(function(x){return x[0]===c;});}):[];if(b.length)return DV_ALLCLUBS.map(function(x){return x[0];}).filter(function(c){return b.indexOf(c)>=0;});}catch(e){}return DV_DEFBAG.slice();}
+function dvClubLab(c){var x=DV_ALLCLUBS.find(function(y){return y[0]===c;});return x?x[0]:(DCLUBS[c]||c||"–");}
+function dvBallDone(b){return !!b&&b.lie!=null&&b.lie!==""&&b.rest!==""&&b.rest!=null;}
+function dvHoleDone(h){return !!h&&(+h.len>0)&&(h.balls||[]).every(dvBallDone);}
+function dvShotDone(s){return !!s&&s.dist!==""&&s.dist!=null;}
+function dvItems(t,inp){return t.eng==="drivebaan"?inp.holes:inp.shots;}
+function dvDone(t,x){return t.eng==="drivebaan"?dvHoleDone(x):dvShotDone(x);}
+function dvLegacy(t,inp){if(inp._okInit)return;inp._okInit=true;dvItems(t,inp).forEach(function(x){if(x._ok==null&&dvDone(t,x))x._ok=true;});}
+function dvFirst(t,inp){var a=dvItems(t,inp);var i=a.findIndex(function(x){return !x._ok&&!dvDone(t,x);});if(i<0)i=a.findIndex(function(x){return !x._ok;});return i<0?null:i;}
+function dvCur(t,inp){dvLegacy(t,inp);if(inp._pick!=null)return inp._pick;return dvFirst(t,inp);}
+function dvLock(t,inp){dvItems(t,inp).forEach(function(x){if(dvDone(t,x))x._ok=true;});inp._pick=null;inp._editLock=false;inp._ask=null;inp._ball=0;}
+function dvShotsOf(t,inp){try{return compute(t,draft,inp).detail.shots||[];}catch(e){return [];}}
+function dvDotCls(t,inp,i,cur,pid){var a=dvItems(t,inp);var x=a[i];var cls="pt";
+ if(dvDone(t,x)){var col="";
+  if(t.eng==="drivebaan"){var sh=dvShotsOf(t,inp).filter(function(s){return s.hi===i;});if(sh.length){var sg=sh.reduce(function(q,s){return q+s.sg;},0)/sh.length;col=sg>=0?" h":(sg>=(p2Hard(pid)?-0.25:-0.5)?" i":" o");}}
+  else{var sp=(x.spr===""||x.spr==null)?0:Math.abs(+x.spr);col=sp<=15?" h":(sp<=25?" i":" o");}
+  cls+=col;}
+ if(x._ok)cls+=" lock";if(i===cur)cls+=" cur";if(inp._ask===i)cls+=" ask";return cls;}
+function dvTxt(t,x,pid){if(t.eng==="drivebaan"){var bs=(x.balls||[]).filter(dvBallDone).map(function(b){return dvClubLab(b.club)+" · "+(DLIES[b.lie]||"")+" · "+oDispM(b.rest,pid)+" "+uO(pid);});return (x.len?oDispM(x.len,pid)+" "+uO(pid):"")+(bs.length?" → "+bs.join(" | "):"");}
+ return dvClubLab(x.club)+" · "+oDispM(x.dist,pid)+" "+uO(pid)+((x.spr!==""&&x.spr!=null)?" · "+(x.side==="L"?"L ":"R ")+oDispM(x.spr,pid):"");}
+function fDriveBaan(t,inp){return '<div id="p4box"></div>';}
+function fDriveRange(t,inp){return '<div id="p4box"></div>';}
+function dvWheelNums(lo,hi,step){var a=[];for(var v=lo;v<=hi;v+=step)a.push(String(v));return a;}
+function dvWheelNumsO(lo,hi,step){return ["\u2013"].concat(dvWheelNums(lo,hi,step));}
+function dvNumIdx(items,v,lo,step){if(v===""||v==null)return 0;var i=Math.round((+v-lo)/step)+1;return Math.max(0,Math.min(items.length-1,i));}
+function dvRender(t,inp){const box=$("#p4box");if(!box)return;const pid=liveEntry&&liveEntry.pid;const baan=t.eng==="drivebaan";const cur=dvCur(t,inp);if(cur!=null&&inp._pick==null)inp._pick=cur;
+ const items=dvItems(t,inp);const n=items.length;const lab=baan?"Hole":"Shot";const u=uO(pid);const yd=u==="yd";const cv=function(m){return yd?Math.round(+m*1.09361):Math.round(+m);};const toM=function(v){return yd?Math.round(v/1.09361*100)/100:v;};
+ const dots='<div class="ptg p2dots'+(n>8?' c9':'')+'">'+items.map(function(x,i){return '<button type="button" class="'+dvDotCls(t,inp,i,cur,pid)+'" data-p4="'+i+'">'+(i+1)+'</button>';}).join("")+'</div>';
+ let card='';
+ if(inp._ask!=null){const ai=inp._ask;card='<div class="card p2card p2ask"><div class="cardhd"><h3>'+lab+' '+(ai+1)+' wijzigen?</h3></div><p class="sx" style="margin:0 0 10px">Nu: '+esc(dvTxt(t,items[ai],pid))+'.</p><div class="row" style="gap:8px"><button type="button" class="btn ghost" style="flex:1" id="p4askNo">Annuleren</button><button type="button" class="btn" style="flex:1" id="p4askEdit">Ja, wijzigen</button></div></div>';}
+ else if(cur==null){card='<div class="card p2card"><div class="cardhd"><h3>'+(baan?"Alle holes ingevoerd":"Alle shots ingevoerd")+'</h3><span class="sdbadge" style="background:#e1f3e9;color:var(--good)">✓</span></div><p class="sx" style="margin:0">Tik op een bolletje om te wijzigen. Opslaan onderaan vergrendelt de invoer.</p></div>';}
+ else{
+  const x=items[cur];const editing=!!inp._editLock;const bag=dvBag(pid);
+  let body='';
+  if(baan){
+   const nb=(x.balls||[]).length;if(inp._ball==null||inp._ball>=nb)inp._ball=0;const b=x.balls[inp._ball];if(!bag.some(function(c){return c===b.club;}))b.club=bag[0];
+   const pre=!!draft.dvPre;
+   body+='<div class="p3pills"><button type="button" class="p3pill'+(pre?' ro':'')+(inp._open==="len"?' open':'')+'" data-p4pill="len"'+(pre?' disabled':'')+'><small>Hole</small>'+(x.len?cv(x.len)+" "+u:"–")+'</button>'
+    +(nb>1?'<span class="seg p4ballseg" style="flex:1;max-width:220px">'+x.balls.map(function(bb,bi){return '<button type="button" data-p4ball="'+bi+'" class="'+(bi===inp._ball?"on":"")+'">Bal '+(bi+1)+(dvBallDone(bb)?" ✓":"")+'</button>';}).join("")+'</span>':'')+'</div>';
+   if(!pre&&inp._open==="len"){const li=dvWheelNums(yd?100:90,yd?650:600,5);body+='<div class="wheels w1 p3wheel">'+wheelHtml("hlen",li,x.len?Math.max(0,Math.min(li.length-1,Math.round((cv(x.len)-(yd?100:90))/5))):0)+'</div>';}
+   body+='<div class="p3sub">Club</div><div class="dvtiles p4clubs">'+bag.map(function(c){return '<button type="button" class="dvtile'+(c===b.club?" on":"")+'" data-p4club="'+c+'">'+c+'</button>';}).join("")+'</div>';
+   body+='<div class="p3sub">Resultaat</div><div class="dvtiles p4lies">'+Object.keys(DLIES).map(function(l){return '<button type="button" class="dvtile'+(l===b.lie?" on":"")+'" data-p4lie="'+l+'">'+DLIES[l]+'</button>';}).join("")+'</div>';
+   const rI=dvWheelNumsO(0,yd?450:400,5);let wh='<div><div class="wlab">Restafstand ('+u+')</div>'+wheelHtml("rest",rI,dvNumIdx(rI,(b.rest===""||b.rest==null)?"":cv(b.rest),0,5))+'</div>';
+   if(draft.dvOptDist){const dI=dvWheelNumsO(yd?100:90,yd?380:350,5);wh+='<div><div class="wlab">Afstand ('+u+')</div>'+wheelHtml("dist",dI,dvNumIdx(dI,(b.dist===""||b.dist==null)?"":cv(b.dist),yd?100:90,5))+'</div>';}
+   body+='<div class="wheels dvwheels '+(draft.dvOptDist?'w2':'w1')+'" style="margin-top:8px">'+wh+'</div>';
+   if(draft.dvOptSpr){const sI=dvWheelNumsO(0,yd?70:60,1);body+='<div class="p4spr"><div class="seg" id="p4side"><button type="button" data-p4side="L" class="'+(b.side==="L"?"on":"")+'">◀ Links</button><button type="button" data-p4side="R" class="'+(b.side!=="L"?"on":"")+'">Rechts ▶</button></div><div><div class="wlab">Spreiding ('+u+')</div>'+wheelHtml("spr",sI,dvNumIdx(sI,(b.spr===""||b.spr==null)?"":cv(b.spr),0,1))+'</div></div>';}
+   if(draft.dvOptChs||draft.dvOptBs){const cI=dvWheelNumsO(60,140,1),bI=dvWheelNumsO(90,210,1);body+='<div class="wheels dvwheels w2" style="margin-top:8px">'+(draft.dvOptChs?'<div><div class="wlab">Clubhead (mph)</div>'+wheelHtml("chs",cI,dvNumIdx(cI,b.chs,60,1))+'</div>':'<div></div>')+(draft.dvOptBs?'<div><div class="wlab">Ball speed (mph)</div>'+wheelHtml("bs",bI,dvNumIdx(bI,b.bs,90,1))+'</div>':'')+'</div>';}
+   body+='<p class="sx" style="margin:6px 0 0">'+(pre?'Hole-lengte uit de baan. ':'Tik op de hole-pil om de lengte te kiezen. ')+'Ligging en restafstand bepalen de strokes gained. Tik op een bolletje voor de volgende hole. Opslaan onderaan vergrendelt de invoer.</p>';}
+  else{
+   const s=x;if(!bag.some(function(c){return c===s.club;}))s.club=bag[0];
+   body+='<div class="p3sub" style="margin-top:0">Club</div><div class="dvtiles p4clubs">'+bag.map(function(c){return '<button type="button" class="dvtile'+(c===s.club?" on":"")+'" data-p4club="'+c+'">'+c+'</button>';}).join("")+'</div>';
+   const dI=dvWheelNumsO(yd?100:90,yd?380:350,5),sI=dvWheelNumsO(0,yd?70:60,1);
+   body+='<div class="p3sub">Resultaat</div><div class="wheels dvwheels w1"><div><div class="wlab">Afstand ('+u+')</div>'+wheelHtml("dist",dI,dvNumIdx(dI,(s.dist===""||s.dist==null)?"":cv(s.dist),yd?100:90,5))+'</div></div>';
+   body+='<div class="p4spr"><div class="seg" id="p4side"><button type="button" data-p4side="L" class="'+(s.side==="L"?"on":"")+'">◀ Links</button><button type="button" data-p4side="R" class="'+(s.side!=="L"?"on":"")+'">Rechts ▶</button></div><div><div class="wlab">Spreiding ('+u+')</div>'+wheelHtml("spr",sI,dvNumIdx(sI,(s.spr===""||s.spr==null)?"":cv(s.spr),0,1))+'</div></div>';
+   if(draft.dvOptChs||draft.dvOptBs){const cI=dvWheelNumsO(60,140,1),bI=dvWheelNumsO(90,210,1);body+='<div class="wheels dvwheels w2" style="margin-top:8px">'+(draft.dvOptChs?'<div><div class="wlab">Clubhead (mph)</div>'+wheelHtml("chs",cI,dvNumIdx(cI,s.chs,60,1))+'</div>':'<div></div>')+(draft.dvOptBs?'<div><div class="wlab">Ball speed (mph)</div>'+wheelHtml("bs",bI,dvNumIdx(bI,s.bs,90,1))+'</div>':'')+'</div>';}
+   body+='<p class="sx" style="margin:6px 0 0">Groen = binnen 15 '+u+' van de doellijn, geel tot 25, rood daarbuiten. De club blijft staan voor de volgende shot. Opslaan onderaan vergrendelt de invoer.</p>';}
+  card='<div class="card p2card'+(editing?' p2edit':'')+'"><div class="cardhd"><h3>'+lab+' '+(cur+1)+' <span class="sdbadge">'+(cur+1)+' van '+n+'</span></h3><span class="sdbadge '+(editing?'p2bw':'p2bn')+'">'+(editing?'Wijzigen':'Nieuw')+'</span></div>'+body+'</div>';}
+ box.innerHTML=dots+card;
+ var _ov=$("#enOv");if(_ov){_ov.innerHTML='<div class="enov"><div class="p3sub">Overzicht</div>'+items.map(function(x,i){var done=dvDone(t,x);var sgv=null;if(done){var all=dvShotsOf(t,inp);if(baan){var shs=all.filter(function(s){return s.hi===i;});if(shs.length)sgv=shs.reduce(function(q,s){return q+s.sg;},0)/shs.length;}else{var k=items.slice(0,i+1).filter(dvShotDone).length-1;if(all[k])sgv=all[k].sg;}}return '<div class="enovr'+(i===cur?' cur':'')+(done?'':' leeg')+'"><span class="n">'+(i+1)+'</span><span class="s">'+esc(dvTxt(t,x,pid))+'</span><span class="v'+(sgv!=null?(sgv>=0?' sgp':' sgn'):'')+'">'+(sgv!=null?((sgv>0?'+':'')+sgv.toFixed(2)):'')+'</span></div>';}).join("")+'</div>';}
+ box.querySelectorAll("[data-p4]").forEach(function(bt){bt.onclick=function(){const i=+bt.dataset.p4;if(items[i]._ok){inp._ask=i;}else{inp._pick=i;inp._ask=null;inp._editLock=false;inp._open=null;inp._ball=0;}dvRender(t,inp);};});
+ box.querySelectorAll("[data-p4pill]").forEach(function(bt){bt.onclick=function(){const k=bt.dataset.p4pill;inp._open=(inp._open===k)?null:k;dvRender(t,inp);};});
+ box.querySelectorAll("[data-p4ball]").forEach(function(bt){bt.onclick=function(){inp._ball=+bt.dataset.p4ball;inp._open=null;dvRender(t,inp);};});
+ box.querySelectorAll("[data-p4club]").forEach(function(bt){bt.onclick=function(){const c=bt.dataset.p4club;const tgt=baan?items[cur].balls[inp._ball]:items[cur];tgt.club=c;box.querySelectorAll("[data-p4club]").forEach(function(z){z.classList.toggle("on",z.dataset.p4club===c);});
+  if(!baan){/* club blijft staan voor volgende lege shots */items.forEach(function(s,i){if(i>cur&&!dvShotDone(s)&&!s._ok)s.club=c;});}liveStats(t,inp);};});
+ box.querySelectorAll("[data-p4lie]").forEach(function(bt){bt.onclick=function(){const l=bt.dataset.p4lie;items[cur].balls[inp._ball].lie=l;box.querySelectorAll("[data-p4lie]").forEach(function(z){z.classList.toggle("on",z.dataset.p4lie===l);});dvSync(box,t,inp);liveStats(t,inp);};});
+ box.querySelectorAll("[data-p4side]").forEach(function(bt){bt.onclick=function(){const sd=bt.dataset.p4side;const tgt=baan?items[cur].balls[inp._ball]:items[cur];tgt.side=sd;box.querySelectorAll("[data-p4side]").forEach(function(z){z.classList.toggle("on",z.dataset.p4side===sd);});dvSync(box,t,inp);liveStats(t,inp);};});
+ let bb;if(bb=$("#p4askNo"))bb.onclick=function(){inp._ask=null;dvRender(t,inp);};
+ if(bb=$("#p4askEdit"))bb.onclick=function(){const i=inp._ask;items[i]._ok=false;inp._pick=i;inp._editLock=true;inp._ask=null;inp._open=null;inp._ball=0;dvRender(t,inp);};
+ wheelBind(box,function(id,idx,w){const c=dvCur(t,inp);if(c==null)return;const x=items[c];const val=+((w.querySelector(".wi.sel")||{}).textContent||0);const tgt=baan?x.balls[inp._ball]:x;
+  const leeg=(idx===0&&id!=="hlen");
+  if(id==="hlen"){x.len=toM(val);const pill=box.querySelector('[data-p4pill="len"]');if(pill)pill.innerHTML='<small>Hole</small>'+val+" "+u;}
+  else if(id==="rest"){tgt.rest=leeg?"":toM(val);}else if(id==="dist"){tgt.dist=leeg?"":toM(val);}else if(id==="spr"){tgt.spr=leeg?"":toM(val);if(!tgt.side)tgt.side="R";}else if(id==="chs"){tgt.chs=leeg?"":String(val);}else if(id==="bs"){tgt.bs=leeg?"":String(val);}
+  dvSync(box,t,inp);liveStats(t,inp);});}
+function dvSync(box,t,inp){const pid=liveEntry&&liveEntry.pid;const cur=dvCur(t,inp);box.querySelectorAll("[data-p4]").forEach(function(b){b.className=dvDotCls(t,inp,+b.dataset.p4,cur,pid);});
+ if(t.eng==="drivebaan"&&cur!=null){const x=dvItems(t,inp)[cur];box.querySelectorAll("[data-p4ball]").forEach(function(b){const bi=+b.dataset.p4ball;b.textContent="Bal "+(bi+1)+(dvBallDone(x.balls[bi])?" ✓":"");});}}
 function bindForm(t,pid,inp){const sh=$("#sheet");draft._uPid=pid;
 sh.querySelectorAll("[data-p1mode]").forEach(b=>b.onclick=()=>{inp._tel=(b.dataset.p1mode==="tel");liveEntry={pid:pid,inp:inp};playerEntryWith(pid,inp);});
 sh.querySelectorAll("[data-p1i]").forEach(b=>b.onclick=()=>{const i=+b.dataset.p1i,pi=+b.dataset.p1p;const blk=inp.blocks[i];const cyc=["","h","i","o"];const cur=cyc.indexOf(blk.putts[pi]||"");const nx=cyc[(cur+1)%4];blk.putts[pi]=nx;puttCatSync(blk);b.className="pt"+(nx?" "+nx:"");const bd=sh.querySelector('[data-p1n="'+i+'"]');if(bd)bd.textContent=blk.putts.filter(r=>r).length+' van '+t.per;const sm=sh.querySelector('[data-p1s="'+i+'"]');if(sm)sm.innerHTML=p1Sum(blk);liveStats(t,inp);renderEntryListSilent();});
@@ -9625,7 +9795,7 @@ sh.querySelectorAll("[data-s]").forEach(n=>n.onchange=n.oninput=()=>{const i=+n.
 const sp=sh.querySelector("[data-spelen]");if(sp)sp.oninput=()=>{inp.toPar=+sp.value||0;inp._t=true;liveStats(t,inp);};sh.querySelectorAll("[data-dvh]").forEach(n=>n.oninput=()=>{inp.holes[+n.dataset.dvh].len=oStoreM(n.value);liveStats(t,inp);});sh.querySelectorAll("[data-dvb]").forEach(n=>{n.onchange=n.oninput=()=>{const a=n.dataset.dvb.split("_");inp.holes[+a[0]].balls[+a[1]][a[2]]=(a[2]==="rest"||a[2]==="dist"||a[2]==="spr")?oStoreM(n.value):n.value;liveStats(t,inp);};});sh.querySelectorAll("[data-dvs]").forEach(n=>{n.onchange=n.oninput=()=>{const a=n.dataset.dvs.split("_");inp.shots[+a[0]][a[1]]=(a[1]==="dist"||a[1]==="spr")?oStoreM(n.value):n.value;liveStats(t,inp);};});
 sh.querySelectorAll("[data-sg]").forEach(n=>{n.addEventListener("wheel",()=>n.blur(),{passive:true});n.oninput=()=>{let v=n.value;if(v!==""){let num=parseInt(v,10);if(isNaN(num)){v="";}else{if(num<1)num=1;if(num>20)num=20;v=String(num);}if(n.value!==v)n.value=v;}inp.holes[+n.dataset.sg].score=v;liveStats(t,inp);};});
 updateSums(t,inp);
-$("#savePlayer").onclick=()=>{const r=compute(t,draft,inp);if(r.completion[0]===0){toast("Voer minstens één resultaat in");return;}if(t.eng==="putt_prox"||t.eng==="course")p2Lock(t,inp);draft.inputs[pid]=inp;draft._lvLast=pid;saveDraft();openEntry();};}
+$("#savePlayer").onclick=()=>{const r=compute(t,draft,inp);if(r.completion[0]===0){toast("Voer minstens één resultaat in");return;}if(t.eng==="putt_prox"||t.eng==="course")p2Lock(t,inp);if(t.eng==="sit")sitLock(t,inp);if(t.eng==="drivebaan"||t.eng==="driverange")dvLock(t,inp);draft.inputs[pid]=inp;draft._lvLast=pid;saveDraft();openEntry();};}
 function renderEntryListSilent(){}
 function updateSums(t,inp){if(t.eng==="putt_cat")document.querySelectorAll("[data-sum]").forEach(s=>{const i=+s.dataset.sum,b=inp.blocks[i];const sum=b.holed+b.in3+b.out3;s.textContent=sum+'/'+t.per;s.classList.toggle("bad",sum>t.per);});}
 function statColor(lbl,val){
@@ -9650,12 +9820,12 @@ function finishChallenge(){const t=TESTS[draft.testId];const entered=draft.playe
 const results=entered.map(pid=>{const r=compute(t,draft,draft.inputs[pid]);return {playerId:pid,metric:r.metric,sg:r.sg,stats:r.stats,detail:r.detail,rankDir:r.rankDir};});
 const dir=results[0].rankDir||dirOf(t);const ranked=award(results,dir);
 const cnts=(entered.length>1)?draft.counts:false;
-const sObj={date:new Date(draft.date+"T12:00:00").toISOString(),testId:draft.testId,level:0,holes:draft.holes,nsit:draft.nsit,rankMode:draft.rankMode,stations:draft.stations,results:ranked,finalized:true,counts:cnts,inputs:JSON.parse(JSON.stringify(draft.inputs))};
+const sObj={date:new Date(draft.date+"T12:00:00").toISOString(),testId:draft.testId,level:0,holes:draft.holes,nsit:draft.nsit,rankMode:draft.rankMode,stations:draft.stations,sitPre:!!draft.sitPre,dvPre:!!draft.dvPre,results:ranked,finalized:true,counts:cnts,inputs:JSON.parse(JSON.stringify(draft.inputs))};
  if(TESTS[draft.testId].eng==="sground")sObj.playMode=(draft.playMode==="stroke")?"stroke":"sg";
 const editing=!!draft._editId;const backTo=draft._editFrom||"home";
 sObj.teamId=(draft._teamId||state.activeTeamId);const _sTeam=(state.teams||[]).find(x=>x.id===sObj.teamId)||team()||{};state.sessions=state.sessions||[];if(editing){const gi=state.sessions.findIndex(x=>x.id===draft._editId);if(gi>=0){sObj.id=draft._editId;sObj.seasonId=state.sessions[gi].seasonId;sObj.teamId=state.sessions[gi].teamId;if(state.sessions[gi].edId)sObj.edId=state.sessions[gi].edId;if(state.sessions[gi].rtype)sObj.rtype=state.sessions[gi].rtype;state.sessions[gi]=sObj;}else{sObj.id=uid();sObj.seasonId=_sTeam.currentSeasonId;state.sessions.push(sObj);}}else{sObj.id=uid();sObj.seasonId=_sTeam.currentSeasonId;state.sessions.push(sObj);}rehydrate();
 save();draft=null;saveDraft();closeSheet();show(backTo);setTimeout(()=>toast(editing?t.name+" bijgewerkt ✓":t.name+" afgerond — "+nameOf(ranked[0].playerId)+" wint 🏆"),250);}
-function editSession(s,from){draft={testId:s.testId,level:0,date:(s.date||"").slice(0,10),counts:s.counts===true,holes:s.holes,nsit:s.nsit,rankMode:s.rankMode,playMode:s.playMode||"sg",entryMode:"hole",mode:"team",teamId:s.teamId,_teamId:s.teamId,stations:s.stations?JSON.parse(JSON.stringify(s.stations)):null,players:(s.inputs?Object.keys(s.inputs):s.results.map(r=>r.playerId)),inputs:JSON.parse(JSON.stringify(s.inputs||{})),courseDists:Array.from({length:18},()=>""),_editId:s.id,_editFrom:from||"home"};closeSheet();openEntry();saveDraft();}
+function editSession(s,from){draft={testId:s.testId,level:0,date:(s.date||"").slice(0,10),counts:s.counts===true,holes:s.holes,nsit:s.nsit,rankMode:s.rankMode,sitPre:!!s.sitPre,playMode:s.playMode||"sg",entryMode:"hole",mode:"team",teamId:s.teamId,_teamId:s.teamId,stations:s.stations?JSON.parse(JSON.stringify(s.stations)):null,players:(s.inputs?Object.keys(s.inputs):s.results.map(r=>r.playerId)),inputs:JSON.parse(JSON.stringify(s.inputs||{})),courseDists:Array.from({length:18},()=>""),_editId:s.id,_editFrom:from||"home"};closeSheet();openEntry();saveDraft();}
 function sessionDetail(s){const t=TESTS[s.testId];const sh=$("#sheet");
 const rows=s.results.map((r,i)=>'<div class="lrow r'+(i+1)+'" style="margin-bottom:8px"><div class="rank">'+(i+1)+'</div><div class="nm">'+esc(nameOf(r.playerId))+'<small>'+r.stats.map(x=>x[0]+" "+x[1]).join(" · ")+'</small></div><div class="pts">+'+fmtPts(r.points)+'<span>pt</span></div></div>').join("");
 sh.innerHTML='<div class="shead"><div><h2>'+t.name+'</h2><div class="sx">'+fmtDate(s.date)+' · PGA Tour'+(s.counts===false?' · buiten klassement':'')+'</div></div><button class="xbtn" onclick="closeSheet()">×</button></div>'+rows+(s.inputs?'<button class="btn block" style="margin-top:12px" id="editS">Meting bewerken</button>':'')+'<button class="btn danger block" style="margin-top:'+(s.inputs?'8px':'12px')+'" id="delS">Challenge verwijderen</button>';
@@ -9732,7 +9902,7 @@ function sitShotFilter(shots,vf){if(!vf||vf==="all")return shots;const a=vf.spli
 function sitBarsHtml(shots,buckets,rel){const bk=proxDistrib(shots,buckets,rel);const N=Math.max(1,shots.length);const mx=Math.max(1,...bk.map(b=>b.c));
  return '<div class="sdbars">'+bk.map(b=>'<div class="sdbar'+(b.lab==="Miss"?' m':'')+'"><div class="l">'+esc(b.lab==="Miss"?"miss":(b.lab+(b.op&&b.op!=="holed"&&!rel?' '+pxU():'')))+'</div><div class="t"><div class="f" style="width:'+(100*b.c/mx).toFixed(1)+'%"></div></div><div class="v">'+b.c+'<small>'+Math.round(100*b.c/N)+'%</small></div></div>').join("")+'</div>';}
 function sitCatData(t,A,shots,cat){if(cat==="lie"){return [['f','Fairway'],['r','Rough'],['s','Sand']].filter(l=>(t.lieOpts||[]).indexOf(l[0])>=0||A.perLie[l[0]].n>0).map(l=>{const x=A.perLie[l[0]];return {lab:l[1],sg:x.n?x.s/x.n:null,px:x.n?x.p/x.n:null,g:x.n?100*x.g/x.n:null,n:x.n};});}
- if(cat==="pin"){const pa={f:{s:0,p:0,n:0,g:0},m:{s:0,p:0,n:0,g:0},b:{s:0,p:0,n:0,g:0},l:{s:0,p:0,n:0,g:0},r:{s:0,p:0,n:0,g:0}};shots.forEach(sh=>{const ad=k=>{const a=pa[k];a.s+=sh.sg||0;a.p+=sh.prox||0;a.n++;a.g+=sh.onG?1:0;};if(sh.pinD&&pa[sh.pinD])ad(sh.pinD);if(sh.pinS&&pa[sh.pinS])ad(sh.pinS);});return [["f","Front"],["m","Middle"],["b","Back"],["l","Links"],["r","Rechts"]].map(x=>{const a=pa[x[0]];return {lab:x[1],sg:a.n?a.s/a.n:null,px:a.n?a.p/a.n:null,g:a.n?100*a.g/a.n:null,n:a.n};}).filter(x=>x.n>0);}
+ if(cat==="pin"){const pa={f:{s:0,p:0,n:0,g:0},m:{s:0,p:0,n:0,g:0},b:{s:0,p:0,n:0,g:0},l:{s:0,p:0,n:0,g:0},r:{s:0,p:0,n:0,g:0}};shots.forEach(sh=>{const ad=k=>{const a=pa[k];a.s+=sh.sg||0;a.p+=sh.prox||0;a.n++;a.g+=sh.onG?1:0;};if(sh.pinD&&pa[sh.pinD])ad(sh.pinD);if(sh.pinS&&pa[sh.pinS])ad(sh.pinS);});return [["f","Short"],["m","Middle"],["b","Back"],["l","Links"],["r","Rechts"]].map(x=>{const a=pa[x[0]];return {lab:x[1],sg:a.n?a.s/a.n:null,px:a.n?a.p/a.n:null,g:a.n?100*a.g/a.n:null,n:a.n};}).filter(x=>x.n>0);}
  return DK.map((k,j)=>{const x=A.perDiff[k];return {lab:DIFF[j],sg:x.n?x.s/x.n:null,px:x.n?x.p/x.n:null,g:x.n?100*x.g/x.n:null,n:x.n};});}
 function sitCatSvg(rows,W){if(!rows.length)return '<p class="muted" style="margin:6px 0;font-size:12.5px">Nog geen gegevens.</p>';const ph=W<400;const H=ph?205:190,L=40,R=10,T=18,B=ph?64:52;
  const vals=rows.map(r=>r.sg||0);let mn=Math.min(0,...vals),mx=Math.max(0,...vals);if(mx-mn<0.1){mx=Math.max(mx,0.05);mn=Math.min(mn,-0.05);}const pad=(mx-mn)*0.25;mn-=pad;mx+=pad;
@@ -17356,7 +17526,7 @@ function cvActiepunten(dt){
    var leeg=ses.filter(function(x){return !gsTrnThema(sch,x);}).length;
    if(leeg)out.push({t:"Thema kiezen",s:esc(sch.name)+" · "+leeg+" training"+(leeg===1?"":"en")+" komende week zonder thema",click:"show('gschemas')"});});}catch(_e){}
  (state.players||[]).forEach(function(pp){
-  if(!pp.mjopPhase||!pp.birthYear)out.push({t:"Profiel afmaken",s:esc(pp.name)+" · "+(!pp.mjopPhase?"fase":"geboortejaar")+" ontbreekt",click:"show('teams')"});});
+  if(!pp.mjopPhase||!pp.birthYear)out.push({t:"Profiel afmaken",s:esc(pp.name)+" · "+(!pp.mjopPhase?"fase":"geboortejaar")+" ontbreekt",click:"spOpenKaart('"+pp.id+"','"+(!pp.mjopPhase?"ontw":"persoon")+"')"});});
  try{gsList().forEach(function(sch){gsSessies(sch).forEach(function(x){
   if(x.datum>=dt||dDiffDays(x.datum,dt)>7)return;
   var tel=gsAanwTelling(sch,x.datum);
