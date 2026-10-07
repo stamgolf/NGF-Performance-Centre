@@ -3321,7 +3321,7 @@ const LIES={f:"Fairway",r:"Rough",s:"Sand",g:"Green"};const DLIES={f:"Fairway",r
 const LV=["PGA Tour"];
 function spread(min,max,n){if(n===1)return [Math.round((min+max)/2)];const a=[];for(let i=0;i<n;i++)a.push(Math.round(min+(max-min)*i/(n-1)));return a;}
 const NSIT=[3,6,9,12,15,18], NHOLE=[6,9,12,18];
-const APP_VERSION="v428";
+const APP_VERSION="v429";
 const TESTS={
 putt_3_5:{name:"Putt 3–5 ft",cat:"Putten",eng:"putt_cat",dists:[3,4,5],per:8,info:"24 putts (8× vanaf 3, 4 en 5 ft). Per afstand: holed, mis binnen 3 ft, mis buiten 3 ft. Output: SG + make%."},
 putt_6_10:{name:"Putt 6–10 ft",cat:"Putten",eng:"putt_cat",dists:[6,8,10],per:8,info:"24 putts (8× vanaf 6, 8 en 10 ft). Zelfde invoer als 3–5 ft."},
@@ -7066,6 +7066,7 @@ var RAP_TC=[["putten","Putten"],["short","Short game"],["wedges","Wedge play"],[
 function rapTestSg(t,d){if(!d)return null;if(t.eng==="putt_cat"||t.eng==="putt_prox"||t.eng==="course"||t.eng==="sit"){return (d.sgTotal!=null&&d.strokes)?d.sgTotal/d.strokes:null;}
  if(t.eng==="drivebaan"||t.eng==="driverange")return (d.sgTotal!=null&&d.n)?d.sgTotal/d.n:(d.sg!=null?+d.sg:null);return null;}
 function rapSpeler(pid,cfg,R){var p=registryPlayer(pid)||{};var out={pid:pid,naam:nameOf(pid),geb:p.birthYear||(p.birthDate?String(p.birthDate).slice(0,4):""),fase:playerMjop(pid)||"",hcp:p.hcp,prof:p.prof||{}};
+ out.faseTxt=rapFaseTxt(pid);
  /* scoring */
  var D=scData(pid,cfg.filt);var L=D.list;out.D=D;
  var tps=L.map(function(r){return r.tp;});var h=Math.floor(L.length/2);
@@ -7115,6 +7116,9 @@ function rapKlassement(pids,R){var per={};
  var out={};Object.keys(per).forEach(function(tid){var rows=Object.keys(per[tid]).map(function(pid){return {pid:pid,v:per[tid][pid].v,pts:per[tid][pid].pts};}).sort(function(a,b){return b.v-a.v;});
   rows.forEach(function(r,i){r.rank=i+1;});out[tid]={rows:rows,n:rows.length};});
  return out;}
+function rapFaseTxt(pid){var p=registryPlayer(pid);if(!p)return "";var h=[];try{h=faseHistSorted(p);}catch(_e){}var dt=todayISO();var past=h.filter(function(x){return String(x.van)<=dt;});if(!past.length)return p.mjopPhase||"";
+ var cur=past[past.length-1];var t=cur.fase+" sinds "+fmtDate(cur.van)+" ("+faseHistMnd(cur.van,dt)+" mnd)";var prev=past.slice(0,-1).reverse().slice(0,3);
+ if(prev.length)t+=" · eerder "+prev.map(function(x){return x.fase+" (sinds "+fmtDate(x.van)+")";}).join(", ");return t;}
 function rapSort(rows,sort){var fi=function(r){return r.fase?mjopIdx(r.fase):-1;};
  return rows.slice().sort(function(a,b){
   if(sort==="naam")return a.naam.localeCompare(b.naam,"nl");
@@ -7662,6 +7666,7 @@ function rapSpelerPdf(pid,filt,mods){var cfg=rapCfg();var R=rapRange(filt);var n
   var y=rapNewPage(o,"Spelersrapport",true,intern);var W=o.W,FW=W-2*M;
   var sub=[r.geb,(r.prof.selectie||""),r.fase,(r.hcp!=null?"hcp "+rapF1(r.hcp):""),(r.prof.thuisclub||"")].filter(Boolean).join(" · ");
   y=rapHead(o,y,"Spelersrapport · "+naam,per+(R.van?" · "+fmtDate(R.van)+" – "+fmtDate(R.tot):"")+" · "+sub+" · modules: "+RAP_MODS.filter(function(m){return c2.mods[m[0]];}).map(function(m){return m[1].toLowerCase();}).join(", "));
+  if(r.faseTxt){o.dt("MJOP-fase: "+r.faseTxt,M,y+6,8,o.F,C.MUT);y-=12;}
   y=o.sect("Activiteiten in de periode",M,y,FW);y=rapActivityBlock(o,pid,filt,y,A);y-=6;
   /* modules: dezelfde blokken als de spelerpagina van het groepsrapport */
   rapPdfSpelerBlokken(o,c2,R,r,intern,y,"Spelersrapport · "+naam,sub);
