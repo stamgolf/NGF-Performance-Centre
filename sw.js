@@ -1,11 +1,11 @@
-const CACHE = 'jo-ladder-v409';
+const CACHE = 'jo-ladder-v428';
 const ASSETS = [
   './',
   './index.html',
   './manifest.webmanifest',
-  './icon-192-v2.png','./favicon.ico',
-  './icon-512-v2.png',
-  './apple-touch-icon-v2.png',
+  './icon-192-v3.png','./favicon.ico',
+  './icon-512-v3.png',
+  './apple-touch-icon-v3.png',
   './pdf-lib.min.js',
   './fontkit.umd.min.js',
   './AlbertSans-Regular.ttf',
